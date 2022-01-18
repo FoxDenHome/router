@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 ssh router '/system/backup/save dont-encrypt=yes name=router-secret.backup'
 ssh router '/export file=router-secret.rsc show-sensitive'
@@ -12,10 +13,11 @@ then
     cp router-secret.backup router-secret.rsc router.rsc "$2"
 fi
 
+sed -i '' 's~local key \\".*\\"~local key \\"REMOVED\\"~g' router.rsc
+git commit -a -m "$1" && git push
+
 sleep 1
 
 ssh router '/file/remove router-secret.backup'
 ssh router '/file/remove router-secret.rsc'
 ssh router '/file/remove router.rsc'
-
-git commit -a -m "$1" && git push

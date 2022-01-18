@@ -1,4 +1,4 @@
-# jan/17/2022 16:57:38 by RouterOS 7.1.1
+# jan/17/2022 17:06:42 by RouterOS 7.1.1
 # software id = H573-DR9T
 #
 # model = RB5009UG+S+
@@ -671,7 +671,7 @@ add dont-require-permissions=no name=static-dns-for-dhcp owner=doridian \
     \n}"
 add dont-require-permissions=yes name=dyndns-update owner=doridian policy=\
     read,test source=":local ddnshost \"router.dyn.foxden.network\"\r\
-    \n:local key \"QK3x8xMhsuOb1iPF\"\r\
+    \n:local key \"REMOVED\"\r\
     \n:local updatehost \"dyn.dns.he.net\"\r\
     \n\r\
     \n:local result [/tool fetch mode=https url=\"https://\$updatehost/nic/upd\
@@ -683,7 +683,7 @@ add dont-require-permissions=yes name=dyndns-update owner=doridian policy=\
 add dont-require-permissions=yes name=ipv6tun-update owner=doridian policy=\
     read,test source=":local ddnshost \"596328\"\r\
     \n:local user \"doridian\"\r\
-    \n:local key \"HePmzVDvrr2bDa3r3QvxzS4n\"\r\
+    \n:local key \"REMOVED\"\r\
     \n:local updatehost \"ipv4.tunnelbroker.net\"\r\
     \n\r\
     \n:local result [/tool fetch mode=https url=\"https://\$updatehost/nic/upd\
