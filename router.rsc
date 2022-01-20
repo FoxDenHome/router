@@ -1,4 +1,4 @@
-# jan/17/2022 17:08:18 by RouterOS 7.1.1
+# jan/20/2022 12:40:10 by RouterOS 7.1.1
 # software id = H573-DR9T
 #
 # model = RB5009UG+S+
@@ -246,7 +246,7 @@ add address=10.2.12.3 comment=printer mac-address=E8:D8:D1:79:F5:98 server=\
     lan-dhcp
 add address=10.2.12.1 comment=hue mac-address=00:17:88:AC:31:4B server=\
     lan-dhcp
-add address=10.2.12.2 comment=homeassistant mac-address=52:54:00:49:E3:61 \
+add address=10.2.12.2 comment=homeassistant mac-address=E4:5F:01:62:2D:8E \
     server=lan-dhcp
 add address=10.5.10.1 client-id=1:68:d7:9a:cf:30:9 comment=camera-living-room \
     mac-address=68:D7:9A:CF:30:09 server=security-dhcp
@@ -302,6 +302,16 @@ add address=10.3.10.4 comment=spaceage-gmod mac-address=00:16:3E:CA:7E:31 \
     server=dmz-dhcp
 add address=10.3.10.1 comment=foxcaves mac-address=00:16:3E:CA:7E:00 server=\
     dmz-dhcp
+add address=10.2.13.4 comment=sonoff-s31-bedroom-fan mac-address=\
+    8C:AA:B5:66:3B:BE server=lan-dhcp
+add address=10.2.13.3 comment=sonoff-s31-cr6se mac-address=E8:DB:84:9F:4F:08 \
+    server=lan-dhcp
+add address=10.2.13.8 comment=sonoff-s31-dori-pc mac-address=\
+    8C:AA:B5:66:3D:81 server=lan-dhcp
+add address=10.2.13.2 comment=sonoff-s31-office-fan mac-address=\
+    8C:AA:B5:66:12:00 server=lan-dhcp
+add address=10.2.13.1 comment=sonoff-s31-simon-pc mac-address=\
+    8C:AA:B5:66:10:70 server=lan-dhcp
 /ip dhcp-server network
 add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=\
     10.1.0.1 netmask=16 ntp-server=10.1.0.123
