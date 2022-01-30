@@ -1,4 +1,4 @@
-# jan/26/2022 23:12:35 by RouterOS 7.1.1
+# jan/29/2022 20:58:44 by RouterOS 7.1.1
 # software id = H573-DR9T
 #
 # model = RB5009UG+S+
@@ -32,12 +32,15 @@ add interface=br-network mtu=9000 name=vrrp-ntp-mgmt priority=50 version=2 \
 add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vlan
 add interface=br-network mtu=9000 name=vlan-dmz vlan-id=3
+add interface=br-network mtu=9000 name=vlan-hypervisor vlan-id=6
 add interface=br-network mtu=9000 name=vlan-lab vlan-id=4
 add interface=br-network mtu=9000 name=vlan-lan vlan-id=2
 add interface=br-network mtu=9000 name=vlan-security vlan-id=5
 /interface vrrp
 add interface=vlan-dmz mtu=9000 name=vrrp-dns-dmz priority=50 version=2 vrid=\
     53
+add interface=vlan-hypervisor mtu=9000 name=vrrp-dns-hypervisor priority=50 \
+    version=2 vrid=53
 add interface=vlan-lab mtu=9000 name=vrrp-dns-lab priority=50 version=2 vrid=\
     53
 add interface=vlan-lan mtu=9000 name=vrrp-dns-lan priority=50 version=2 vrid=\
@@ -45,12 +48,16 @@ add interface=vlan-lan mtu=9000 name=vrrp-dns-lan priority=50 version=2 vrid=\
 add interface=vlan-security mtu=9000 name=vrrp-dns-security priority=50 \
     version=2 vrid=53
 add interface=vlan-dmz mtu=9000 name=vrrp-gateway-dmz priority=50 version=2
+add interface=vlan-hypervisor mtu=9000 name=vrrp-gateway-hypervisor priority=\
+    50 version=2
 add interface=vlan-lab mtu=9000 name=vrrp-gateway-lab priority=50 version=2
 add interface=vlan-lan mtu=9000 name=vrrp-gateway-lan priority=50 version=2
 add interface=vlan-security mtu=9000 name=vrrp-gateway-security priority=50 \
     version=2
 add interface=vlan-dmz mtu=9000 name=vrrp-ntp-dmz priority=50 version=2 vrid=\
     123
+add interface=vlan-hypervisor mtu=9000 name=vrrp-ntp-hypervisor priority=50 \
+    version=2 vrid=123
 add interface=vlan-lab mtu=9000 name=vrrp-ntp-lab priority=50 version=2 vrid=\
     123
 add interface=vlan-lan mtu=9000 name=vrrp-ntp-lan priority=50 version=2 vrid=\
@@ -68,6 +75,7 @@ add name=lab-ifaces
 add name=accedian-ifaces
 add name=security-ifaces
 add name=lldp-list
+add name=hypervisor-ifaces
 /interface lte apn
 set [ find default=yes ] default-route-distance=20 use-peer-dns=no
 add apn=fast.t-mobile.com default-route-distance=20 name=tmobile \
@@ -87,6 +95,7 @@ add name=dmz-pool ranges=10.3.128.1-10.3.255.254
 add name=mgmt-pool ranges=10.1.128.1-10.1.255.254
 add name=lab-pool ranges=10.4.128.1-10.4.255.254
 add name=security-pool ranges=10.5.128.1-10.5.255.254
+add name=hypervisor-pool ranges=10.6.128.1-10.6.255.254
 /ip dhcp-server
 add address-pool=lan-pool dhcp-option-set=default-noclassless interface=\
     vlan-lan lease-time=10h name=lan-dhcp
@@ -98,6 +107,8 @@ add address-pool=lab-pool dhcp-option-set=default-classless interface=\
     vlan-lab lease-time=10h name=lab-dhcp
 add address-pool=security-pool dhcp-option-set=default-classless interface=\
     vlan-security lease-time=10h name=security-dhcp
+add address-pool=hypervisor-pool dhcp-option-set=default-classless interface=\
+    vlan-hypervisor lease-time=10h name=hypervisor-dhcp
 /ipv6 pool
 add name=pool-he prefix=2001:470:ea41::/48 prefix-length=64
 /port
@@ -133,6 +144,7 @@ add bridge=br-network tagged=br-network,sfp-rackswitch-agg vlan-ids=4
 add bridge=br-network tagged=br-network,sfp-rackswitch-agg vlan-ids=2
 add bridge=br-network tagged=br-network,sfp-rackswitch-agg vlan-ids=3
 add bridge=br-network tagged=br-network,sfp-rackswitch-agg vlan-ids=5
+add bridge=br-network tagged=br-network,sfp-rackswitch-agg vlan-ids=6
 /interface list member
 add interface=sit1-he list=wan-ifaces
 add interface=wg-vpn list=vpn-ifaces
@@ -155,6 +167,9 @@ add interface=eth2-lte list=lte-ifaces
 add interface=eth8-wan list=wan-ifaces
 add interface=sfp-rackswitch-agg list=lldp-list
 add interface=eth8-wan list=lldp-list
+add interface=vlan-hypervisor list=hypervisor-ifaces
+add interface=vrrp-gateway-hypervisor list=hypervisor-ifaces
+add interface=vrrp-dns-hypervisor list=hypervisor-ifaces
 /interface wireguard peers
 add allowed-address=10.100.10.1/32 comment=fennec interface=wg-vpn \
     public-key="7wBo2+Q88MPXKi2OYZsyDyl16wldEsIeWycng57Jx3A="
@@ -190,6 +205,10 @@ add address=10.2.0.123 interface=vrrp-ntp-lan network=10.2.0.123
 add address=10.3.0.123 interface=vrrp-ntp-dmz network=10.3.0.123
 add address=10.4.0.123 interface=vrrp-ntp-lab network=10.4.0.123
 add address=10.5.0.123 interface=vrrp-ntp-security network=10.5.0.123
+add address=10.6.0.1 interface=vrrp-gateway-hypervisor network=10.6.0.1
+add address=10.6.0.123 interface=vrrp-ntp-hypervisor network=10.6.0.123
+add address=10.6.0.53 interface=vrrp-dns-hypervisor network=10.6.0.53
+add address=10.6.1.1/16 interface=vlan-hypervisor network=10.6.0.0
 /ip cloud
 set update-time=no
 /ip dhcp-client
@@ -204,17 +223,17 @@ add address=10.2.10.3 comment=capefox-wireless dhcp-option=classless \
     mac-address=F0:2F:4B:14:84:F4 server=lan-dhcp
 add address=10.2.10.4 comment=capefox-wired dhcp-option=classless \
     mac-address=00:30:93:12:12:38 server=lan-dhcp
-add address=10.1.12.1 comment=islandfox mac-address=B8:AE:ED:7C:1E:71 server=\
-    mgmt-dhcp
+add address=10.6.10.2 comment=islandfox mac-address=B8:AE:ED:7C:1E:71 server=\
+    hypervisor-dhcp
 add address=10.2.10.1 comment=fennec dhcp-option=classless mac-address=\
-    7C:FE:90:AB:B5:00 server=lan-dhcp
+    00:02:C9:23:3C:E0 server=lan-dhcp
 add address=10.2.11.1 comment=nas dhcp-option=classless mac-address=\
     00:0C:29:C6:9A:DC server=lan-dhcp
 add address=10.2.10.2 comment=wizzy-desktop dhcp-option=classless \
     mac-address=EC:0D:9A:21:DF:70 server=lan-dhcp
-add address=10.1.12.3 comment=bengalfox mac-address=00:25:90:9C:16:AE server=\
-    mgmt-dhcp
-add address=10.1.12.2 comment=bengalfox-ipmi mac-address=00:25:90:6D:05:12 \
+add address=10.6.10.1 comment=bengalfox mac-address=00:25:90:9C:16:AE server=\
+    hypervisor-dhcp
+add address=10.1.12.1 comment=bengalfox-ipmi mac-address=00:25:90:6D:05:12 \
     server=mgmt-dhcp
 add address=10.1.10.4 comment=switch-living-room mac-address=\
     80:2A:A8:DE:F0:AE server=mgmt-dhcp
@@ -232,8 +251,8 @@ add address=10.1.10.6 comment=ap-living-room mac-address=68:D7:9A:1F:57:E2 \
     server=mgmt-dhcp
 add address=10.1.10.5 comment=switch-workbench mac-address=74:83:C2:FF:87:16 \
     server=mgmt-dhcp
-add address=10.1.13.1 comment=telegraf mac-address=00:50:56:2E:16:A0 server=\
-    mgmt-dhcp
+add address=10.6.11.2 comment=telegraf mac-address=00:50:56:2E:16:A0 server=\
+    hypervisor-dhcp
 add address=10.2.11.2 comment=syncthing dhcp-option=classless mac-address=\
     02:42:C0:A8:04:15 server=lan-dhcp
 add address=10.1.11.3 comment=ups-office mac-address=00:0C:15:04:39:93 \
@@ -252,8 +271,8 @@ add address=10.5.10.1 client-id=1:68:d7:9a:cf:30:9 comment=camera-living-room \
     mac-address=68:D7:9A:CF:30:09 server=security-dhcp
 add address=10.2.11.3 comment=plex dhcp-option=classless mac-address=\
     02:42:C0:A8:04:16 server=lan-dhcp
-add address=10.2.11.4 comment=prometheus dhcp-option=classless mac-address=\
-    02:42:C0:A8:04:17 server=lan-dhcp
+add address=10.6.11.1 comment=prometheus dhcp-option=classless mac-address=\
+    02:42:C0:A8:04:17 server=hypervisor-dhcp
 add address=10.2.11.5 comment=grafana dhcp-option=classless mac-address=\
     02:42:C0:A8:04:18 server=lan-dhcp
 add address=10.2.11.6 comment=kiwix dhcp-option=classless mac-address=\
@@ -323,6 +342,8 @@ add address=10.4.0.0/16 dns-server=10.4.0.53 domain=foxden.network gateway=\
     10.4.0.1 netmask=16 ntp-server=10.4.0.123
 add address=10.5.0.0/16 dns-server=10.5.0.53 domain=foxden.network gateway=\
     10.5.0.1 netmask=16 ntp-server=10.5.0.123
+add address=10.6.0.0/16 dns-server=10.6.0.53 domain=foxden.network gateway=\
+    10.6.0.1 netmask=16 ntp-server=10.6.0.123
 /ip dns
 set allow-remote-requests=yes cache-max-ttl=1h cache-size=40960KiB servers=\
     8.8.8.8,8.8.4.4 verify-doh-cert=yes
@@ -336,14 +357,18 @@ add cname=spaceage-web.foxden.network name=forums.spaceage.mp type=CNAME
 add cname=spaceage-web.foxden.network name=www.spaceage.mp type=CNAME
 add cname=spaceage-web.foxden.network name=tts.spaceage.mp type=CNAME
 add cname=spaceage-web.foxden.network name=api.spaceage.mp type=CNAME
+add cname=foxcaves.foxden.network name=foxcav.es type=CNAME
+add cname=foxcaves.foxden.network name=www.foxcav.es type=CNAME
+add cname=foxcaves.foxden.network name=f0x.es type=CNAME
+add cname=foxcaves.foxden.network name=www.f0x.es type=CNAME
 add address=10.2.10.3 name=capefox-wireless.foxden.network
 add address=10.2.10.4 name=capefox-wired.foxden.network
-add address=10.1.12.1 name=islandfox.foxden.network
+add address=10.6.10.2 name=islandfox.foxden.network
 add address=10.2.10.1 name=fennec.foxden.network
 add address=10.2.11.1 name=nas.foxden.network
 add address=10.2.10.2 name=wizzy-desktop.foxden.network
-add address=10.1.12.3 name=bengalfox.foxden.network
-add address=10.1.12.2 name=bengalfox-ipmi.foxden.network
+add address=10.6.10.1 name=bengalfox.foxden.network
+add address=10.1.12.1 name=bengalfox-ipmi.foxden.network
 add address=10.1.10.4 name=switch-living-room.foxden.network
 add address=10.1.11.1 name=pdu-rack.foxden.network
 add address=10.1.10.2 name=switch-rack.foxden.network
@@ -352,7 +377,7 @@ add address=10.1.11.2 name=ups-rack.foxden.network
 add address=10.1.10.1 name=unifi.foxden.network
 add address=10.1.10.6 name=ap-living-room.foxden.network
 add address=10.1.10.5 name=switch-workbench.foxden.network
-add address=10.1.13.1 name=telegraf.foxden.network
+add address=10.6.11.2 name=telegraf.foxden.network
 add address=10.2.11.2 name=syncthing.foxden.network
 add address=10.1.11.3 name=ups-office.foxden.network
 add address=10.1.11.4 name=ups-rack-backup.foxden.network
@@ -362,20 +387,15 @@ add address=10.2.12.1 name=hue.foxden.network
 add address=10.2.12.2 name=homeassistant.foxden.network
 add address=10.5.10.1 name=camera-living-room.foxden.network
 add address=10.2.11.3 name=plex.foxden.network
-add address=10.2.11.4 name=prometheus.foxden.network
+add address=10.6.11.1 name=prometheus.foxden.network
 add address=10.2.11.5 name=grafana.foxden.network
 add address=10.2.11.6 name=kiwix.foxden.network
 add address=10.3.10.6 name=dldr.foxden.network
-add address=10.2.13.8 name=sonoff-s31-dori-pc.foxden.network
 add address=10.2.12.7 name=clock-nixie-zen.foxden.network
 add address=10.2.13.7 name=airgradient-bedroom.foxden.network
 add address=10.2.13.6 name=airgradient-living-room.foxden.network
 add address=10.2.13.5 name=airgradient-office.foxden.network
 add address=10.2.12.9 name=vacuum-neato.foxden.network
-add address=10.2.13.4 name=sonoff-s31-bedroom-fan.foxden.network
-add address=10.2.13.3 name=sonoff-s31-cr6se.foxden.network
-add address=10.2.13.2 name=sonoff-s31-office-fan.foxden.network
-add address=10.2.13.1 name=sonoff-s31-simon-pc.foxden.network
 add address=10.2.12.4 name=homepod-living-room.foxden.network
 add address=10.2.12.5 name=homepod-bedroom.foxden.network
 add address=10.2.14.1 name=dori-phone.foxden.network
@@ -392,10 +412,11 @@ add address=10.2.13.9 name=custom-office-switcher.foxden.network
 add address=10.3.10.5 name=spaceage-web.foxden.network
 add address=10.3.10.4 name=spaceage-gmod.foxden.network
 add address=10.3.10.1 name=foxcaves.foxden.network
-add cname=foxcaves.foxden.network name=foxcav.es type=CNAME
-add cname=foxcaves.foxden.network name=www.foxcav.es type=CNAME
-add cname=foxcaves.foxden.network name=f0x.es type=CNAME
-add cname=foxcaves.foxden.network name=www.f0x.es type=CNAME
+add address=10.2.13.4 name=sonoff-s31-bedroom-fan.foxden.network
+add address=10.2.13.3 name=sonoff-s31-cr6se.foxden.network
+add address=10.2.13.8 name=sonoff-s31-dori-pc.foxden.network
+add address=10.2.13.2 name=sonoff-s31-office-fan.foxden.network
+add address=10.2.13.1 name=sonoff-s31-simon-pc.foxden.network
 /ip firewall address-list
 add address=10.100.0.0/16 list=VPN
 add address=192.168.0.0/16 list=LocalNet
@@ -417,14 +438,10 @@ add action=fasttrack-connection chain=forward comment="related, established" \
 add action=accept chain=forward comment="related, established" \
     connection-state=established,related
 add action=jump chain=forward jump-target=srccheck
-add action=drop chain=forward comment="Block all multi/broad-cast on VPN" \
-    dst-address-type=broadcast,multicast in-interface-list=vpn-ifaces
-add action=drop chain=forward comment="Block all multi/broad-cast on VPN" \
-    in-interface-list=vpn-ifaces src-address-type=broadcast,multicast
-add action=accept chain=forward comment="VPN / WG" in-interface-list=\
-    vpn-ifaces
-add action=accept chain=forward comment="MGMT -> *" in-interface-list=\
-    mgmt-ifaces
+add action=accept chain=forward comment="VPN / WG Trusted" in-interface-list=\
+    vpn-ifaces src-address=10.100.10.0/24
+add action=accept chain=forward comment="MGMT -> *" disabled=yes \
+    in-interface-list=mgmt-ifaces
 add action=jump chain=forward comment=MGMT jump-target=mgmt-out \
     out-interface-list=mgmt-ifaces
 add action=accept chain=forward comment="DMZ Allow All" out-interface-list=\
@@ -435,29 +452,36 @@ add action=jump chain=forward comment=Lab jump-target=lab-out \
     out-interface-list=lab-ifaces
 add action=jump chain=forward comment=Security jump-target=security-out \
     out-interface-list=security-ifaces
+add action=jump chain=forward comment=Hypervisor jump-target=hypervisor-out \
+    out-interface-list=hypervisor-ifaces
 add action=jump chain=forward comment=LTE jump-target=lte-out \
     out-interface-list=lte-ifaces
 add action=accept chain=forward comment=WAN out-interface-list=wan-ifaces
 add action=drop chain=forward
-add action=accept chain=mgmt-out comment="Prometheus -> NodeExporter" \
-    dst-port=9100 in-interface-list=lan-ifaces protocol=tcp src-address=\
-    10.2.11.4
+add action=accept chain=security-out comment="unifi -> Security" \
+    in-interface-list=mgmt-ifaces src-address=10.1.10.1
 add action=accept chain=mgmt-out comment="Security -> unifi" dst-address=\
     10.1.10.1 in-interface-list=security-ifaces
 add action=accept chain=mgmt-out comment="LAN -> unifi" dst-address=10.1.10.1 \
     in-interface-list=lan-ifaces
+add action=accept chain=mgmt-out comment="Hypervisor -> SNMP" dst-port=161 \
+    in-interface-list=hypervisor-ifaces protocol=udp
+add action=accept chain=lan-out comment="Prometheus -> HA NodeExporter" \
+    dst-address=10.2.12.2 dst-port=9100 in-interface-list=hypervisor-ifaces \
+    protocol=tcp src-address=10.6.11.1
 add action=accept chain=lan-out comment=homeassistant dst-address=10.2.12.2 \
-    dst-port=80,8123,443 protocol=tcp
+    dst-port=80,443 protocol=tcp
 add action=accept chain=lan-out comment=plex dst-address=10.2.11.3 dst-port=\
     32400 protocol=tcp
 add action=accept chain=lan-out comment=nas dst-address=10.2.11.1 dst-port=\
-    22,8888 protocol=tcp
+    22,80,443 protocol=tcp
 add action=accept chain=lan-out comment="IoT -> LAN (3722/udp)" dst-port=3722 \
     in-interface-list=*2000012 protocol=udp
 add action=accept chain=lan-out comment="LAN -> LAN" in-interface-list=\
     lan-ifaces
 add action=accept chain=tor-out comment="LAN -> Tor" in-interface-list=\
     lan-ifaces
+add action=accept chain=lte-out protocol=icmp
 add action=accept chain=lte-out dst-address=10.101.10.0/24
 add action=drop chain=lte-out src-address-list=Forbid-LTE
 add action=accept chain=lte-out src-address-list=Allow-LTE
@@ -472,6 +496,8 @@ add action=return chain=srccheck in-interface-list=lab-ifaces src-address=\
     10.4.0.0/16
 add action=return chain=srccheck in-interface-list=security-ifaces \
     src-address=10.5.0.0/16
+add action=return chain=srccheck in-interface-list=hypervisor-ifaces \
+    src-address=10.6.0.0/16
 add action=return chain=srccheck in-interface-list=vpn-ifaces src-address=\
     10.100.0.0/16
 add action=return chain=srccheck in-interface-list=lte-ifaces src-address=\
@@ -556,11 +582,13 @@ add interface=eth7 type=external
 /ipv6 address
 add address=::1 from-pool=pool-wan interface=br-network
 add address=::1 from-pool=pool-wan interface=vlan-dmz
-add address=::1 from-pool=pool-wan
 add address=::1 from-pool=pool-wan interface=vlan-lan
 add address=2001:470:a:5c2::2 advertise=no interface=sit1-he
 add address=2001:470:ea41::1 advertise=no interface=sit1-he
 add address=::1 advertise=no from-pool=pool-wan interface=eth8-wan
+add address=::1 from-pool=pool-wan interface=vlan-hypervisor
+add address=::1 from-pool=pool-wan interface=vlan-lab
+add address=::1 from-pool=pool-wan interface=vlan-security
 /ipv6 dhcp-client
 add add-default-route=yes default-route-distance=15 interface=eth8-wan \
     pool-name=pool-wan prefix-hint=::/56 request=prefix use-peer-dns=no
@@ -571,28 +599,20 @@ add address=grafana.dyn.foxden.network disabled=yes list=grafana-dyndns
 add address=ntp.dyn.foxden.network disabled=yes list=ntp-dyndns
 add address=homeassistant.dyn.foxden.network list=homeassistant-dyndns
 /ipv6 firewall filter
-add action=drop chain=forward out-interface-list=*2000017
-add action=drop chain=forward in-interface-list=*2000017
-add action=drop chain=forward out-interface-list=lab-ifaces
-add action=drop chain=forward in-interface-list=lab-ifaces
-add action=drop chain=forward out-interface-list=security-ifaces
-add action=drop chain=forward in-interface-list=security-ifaces
 add action=drop chain=forward in-interface-list=wan-ifaces \
     out-interface-list=wan-ifaces
 add action=accept chain=forward comment="related, established" \
     connection-state=established,related
 add action=accept chain=forward connection-state=established,related \
     protocol=icmpv6
-add action=accept chain=forward comment="VPN / WG" in-interface-list=\
-    vpn-ifaces
-add action=accept chain=forward comment="MGMT -> *" in-interface-list=\
-    mgmt-ifaces
+add action=accept chain=forward comment="VPN / WG" disabled=yes \
+    in-interface-list=vpn-ifaces
+add action=accept chain=forward comment="MGMT -> *" disabled=yes \
+    in-interface-list=mgmt-ifaces
 add action=jump chain=forward comment=MGMT jump-target=mgmt-out \
     out-interface-list=mgmt-ifaces
 add action=accept chain=forward comment="DMZ Allow All" out-interface-list=\
     dmz-ifaces
-add action=jump chain=forward comment=IoT jump-target=iot-out \
-    out-interface-list=*2000012
 add action=jump chain=forward comment=LAN jump-target=lan-out \
     out-interface-list=lan-ifaces
 add action=accept chain=forward comment=WAN out-interface-list=wan-ifaces
@@ -601,10 +621,6 @@ add action=accept chain=iot-out comment="plex 32400" disabled=yes \
     dst-address-list=plex-dyndns dst-port=32400 protocol=tcp
 add action=accept chain=iot-out comment=homeassistant dst-address-list=\
     homeassistant-dyndns dst-port=80,443 protocol=tcp
-add action=accept chain=iot-out comment="LAN -> IoT" in-interface-list=\
-    lan-ifaces
-add action=accept chain=tor-out comment="LAN -> Tor" in-interface-list=\
-    lan-ifaces
 add action=accept chain=input in-interface-list=mgmt-ifaces
 add action=accept chain=input in-interface-list=vpn-ifaces
 add action=accept chain=input connection-state=established,related
