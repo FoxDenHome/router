@@ -1,21 +1,22 @@
 from yaml import safe_load as yaml_load
-from os.path import dirname, join, isfile, isdir
+from os.path import dirname, join, isfile, isdir, relpath, abspath
 from os import listdir
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+
+CONFIG_DIR = "./config"
+
 env = Environment(
-    loader=FileSystemLoader("config"),
+    loader=FileSystemLoader(CONFIG_DIR),
     autoescape=select_autoescape(["yaml"])
 )
 
 def config_load(file, parent={}):
-    fh = open(file, "r")
-    data = fh.read()
-    fh.close()
-    tpl = env.from_string(data)
+    file = relpath(file, CONFIG_DIR)
+    tpl = env.get_template(file.replace("\\", "/")) # Jinja2 does not like backslashes
     config = yaml_load(tpl.render(parent))
 
     if "parent" in config:
-        add = config_load(join(dirname(file), config["parent"]), config)
+        add = config_load(join(CONFIG_DIR, join(dirname(file), config["parent"])), config)
         config.update(add)
 
     return config
