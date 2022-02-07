@@ -31,9 +31,9 @@ class IptablesService(SystemdService):
             })
 
         return "\n".join([
-            f"-A {chain} {jump['match']} -j {jump['chain']}"
-            for jump in jumps
-        ] + [
             f":{c} - [0:0]"
             for c in set(map(lambda jump: jump['chain'], jumps))
+        ] + [
+            f"-A {chain} {jump['match']} -j {jump['chain']}"
+            for jump in jumps
         ])
