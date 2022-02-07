@@ -4,6 +4,8 @@
 {{ caller.make_rules(rule, rule.action.mangle, "POSTROUTING", caller.V6ONLY) }}
 {% endfor %}
 
+COMMIT
+
 
 
 *nat
