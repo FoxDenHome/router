@@ -5,13 +5,16 @@ class NetworkConfigbuilder():
     def __init__(self):
         pass
 
+    def get_mtu(self, network):
+        return dict_get_deep(network, "mtu", 1500)
+
     def make_network_config(self, network):
         cfg = {
             "dhcp4": dict_get_deep(network, "addresses.v4.dhcp_client", False),
             "dhcp6": dict_get_deep(network, "addresses.v6.dhcp_client", False),
             "addresses": dict_get_deep(network, "addresses.v4.static", []) + dict_get_deep(network, "addresses.v6.static", []),
             "accept_ra": dict_get_deep(network, "addresses.v6.accept_ra", False),
-            "mtu": dict_get_deep(network, "mtu", 1500),
+            "mtu": self.get_mtu(network),
         }
         return cfg
 
@@ -70,6 +73,7 @@ class NetworkConfigbuilder():
                 if "group" in native_network:
                     cfg = {
                         "type": "access",
+                        "mtu": self.get_mtu(native_network),
                         "pvid": native_network["vlan_id"],
                         "bridge": native_network["group"],
                     }
@@ -79,6 +83,7 @@ class NetworkConfigbuilder():
             else:
                 cfg = {
                     "type": "trunk",
+                    "mtu": self.get_mtu(native_network),
                     "bridge": native_network["group"],
                     "vlans": [config_get_network_by_name(network)["vlan_id"] for network in networks],
                 }
