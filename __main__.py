@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from config import config_load_folder
 
 def run():
