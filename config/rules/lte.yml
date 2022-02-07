@@ -1,9 +1,12 @@
 rules:
 - from:
-    networks:
-    - LAN
-    - MGMT
-    - Security
+    addresses:
+    # MGMT
+    - 10.1.0.0/16
+    # LAN
+    - 10.2.0.0/16
+    # Security
+    - 10.5.0.0/16
   to:
     networks:
     - LTE
