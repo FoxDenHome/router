@@ -12,7 +12,8 @@ class IfUpDown2Service(SystemdService):
         cfg = {
             "dhcp4": dict_get_deep(network, "addresses.v4.dhcp_client", False),
             "dhcp6": dict_get_deep(network, "addresses.v6.dhcp_client", False),
-            "addresses": dict_get_deep(network, "addresses.v4.static", []) + dict_get_deep(network, "addresses.v6.static", []),
+            "addresses4": dict_get_deep(network, "addresses.v4.static", []),
+            "addresses6": dict_get_deep(network, "addresses.v6.static", []),
             "accept_ra": dict_get_deep(network, "addresses.v6.accept_ra", False),
             "mtu": dict_get_deep(network, "mtu", 1500),
         }
@@ -41,8 +42,7 @@ class IfUpDown2Service(SystemdService):
                     "vlans": [],
                 }
 
-            if not network.get("is_pvid", False):
-                NETWORK_GROUPS[group]["vlans"].append(network["vlan_id"])
+            NETWORK_GROUPS[group]["vlans"].append(network["vlan_id"])
             
             if bridge_id_name not in NETWORK_CONFIG_GLOBAL:
                 cfg = {}
@@ -76,6 +76,7 @@ class IfUpDown2Service(SystemdService):
                 if "group" in native_network:
                     cfg = {
                         "type": "access",
+                        "pvid": native_network["vlan_id"],
                         "bridge": native_network["group"],
                     }
                 else:
@@ -96,5 +97,5 @@ class IfUpDown2Service(SystemdService):
                 NETWORK_CONFIG_GLOBAL[iface] = cfg
 
         return {
-            "networks": NETWORK_CONFIG_GLOBAL,
+            "interfaces": NETWORK_CONFIG_GLOBAL,
         }

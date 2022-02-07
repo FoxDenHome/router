@@ -1,0 +1,24 @@
+{% for ifname, iface in custom.interfaces.items() %}
+auto {{ ifname }}
+iface {{ ifname }} inet {{ 'dhcp' if iface.dhcp4 else 'manual' }}
+{% for ip in iface.addresses4 %}
+    up ip addr add {{ ip }} dev $IFACE
+{% endfor %}
+
+{% if iface.type == "bridge" %}
+    brige-ports {{ iface.ports | join(" ") }}
+    bridge-pvid {{ iface.pvid }}
+    bridge-vlan-aware yes
+    bridge-vids {{ iface.vlans | join(" ") }}
+{% elif iface.type == "access" %}
+    bridge-access {{ iface.pvid }}
+{% elif iface.type == "trunk" %}
+    bridge-vids {{ iface.vlans | join(" ") }}
+{% endif %}
+
+iface {{ ifname }} inet6 {{ 'dhcp' if iface.dhcp6 else 'manual' }}
+    {% for ip in iface.addresses6 %}
+    up ip addr add {{ ip }} dev $IFACE
+    {% endfor %}
+
+{% endfor %}
