@@ -63,7 +63,7 @@ class IfUpDown2Service(SystemdService):
             else:
                 cfg["ports"].append(vlan_id_name)
                 cfg = self.make_network_config(network)
-                cfg["id"] = network["vlan_id"]
+                cfg["pvid"] = network["vlan_id"]
                 cfg["type"] = "access"
                 NETWORK_CONFIG_GLOBAL[vlan_id_name] = cfg
 
