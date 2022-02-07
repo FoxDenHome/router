@@ -1,0 +1,3 @@
+vlan-id: 6
+name: Hypervisor
+!include templates/vlan.yml

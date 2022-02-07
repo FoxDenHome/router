@@ -1,0 +1,8 @@
+name: WAN
+route-priority: 100
+addresses:
+  v4: 
+    dhcp-client: true
+  v6:
+    accept-ra: true
+    dhcp-pd-client: true

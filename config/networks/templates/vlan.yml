@@ -1,0 +1,29 @@
+route-priority: 100
+addresses:
+  v4:
+    src-filter: true
+    static:
+    - 10.{vlan-id}.1.1/16
+    vrrp:
+    - address: 10.{vlan-id}.0.1
+      id: 1
+    - address: 10.{vlan-id}.0.53
+      id: 53
+    - address: 10.{vlan-id}.0.123
+      id: 123
+    dhcp-server:
+      pool: 10.{vlan-id}.100.0-10.{vlan-id}.255.254
+      suffix: foxden.network
+      dns:
+      - 10.{vlan-id}.0.53
+      ntp:
+      - 10.{vlan-id}.0.123
+      gateway:
+      - 10.{vlan-id}.0.1
+      classless-static-routes:
+      - subnet: 10.0.0.0/8
+        gateway: 10.{vlan-id}.0.1 
+  v6:
+    prefix-id: {vlan-id}
+    pool: wan
+    send-ra: true

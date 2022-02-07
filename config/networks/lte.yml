@@ -1,0 +1,5 @@
+name: LTE
+route-priority: 50
+addresses:
+  v4: 
+    dhcp-client: true

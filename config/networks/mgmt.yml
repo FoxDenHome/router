@@ -1,0 +1,3 @@
+vlan-id: 1
+name: MGMT
+!include templates/vlan.yml

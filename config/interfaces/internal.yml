@@ -1,0 +1,7 @@
+networks:
+- mgmt
+- lan
+- dmz
+- labnet
+- security
+- hypervisor

@@ -1,0 +1,10 @@
+- from:
+    network: mgmt
+  to:
+    all: true
+  action: accept
+- from:
+    all: true
+  to:
+    network: dmz
+  action: accept

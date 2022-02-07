@@ -1,0 +1,5 @@
+- from:
+    all: true
+  to:
+    network: lte
+  action: accept
