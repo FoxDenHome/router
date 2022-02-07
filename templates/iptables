@@ -9,6 +9,9 @@
 :POSTROUTING ACCEPT [0:0]
 {{ caller.make_jumplist("POSTROUTING", caller.OUT) }}
 
+COMMIT
+
+
 
 *filter
 # Input accept all for now, need better rules later
