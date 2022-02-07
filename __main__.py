@@ -29,6 +29,9 @@ def run():
     for service in services:
         service.configure()
 
+    for service in services:
+        service.restart_if_needed()
+
     print("All done!")
 
 if __name__ == "__main__":
