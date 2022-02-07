@@ -1,8 +1,8 @@
 {% for ifname, iface in custom.interfaces.items() %}
 allow-hotplug {{ ifname }}
-iface {{ ifname }} inet {{ 'dhcp' if iface.dhcp4 else 'manual' }}
-{% for ip in iface.addresses4 %}
-    up ip addr add {{ ip }} dev $IFACE
+iface {{ ifname }} {{ 'inet dhcp' if iface.dhcp4 else '' }}
+{% for ip in iface.addresses %}
+    address {{ ip }}
 {% endfor %}
 
 {% if iface.type == "bridge" %}
@@ -16,9 +16,8 @@ iface {{ ifname }} inet {{ 'dhcp' if iface.dhcp4 else 'manual' }}
     bridge-vids {{ iface.vlans | join(" ") }}
 {% endif %}
 
-iface {{ ifname }} inet6 {{ 'dhcp' if iface.dhcp6 else 'manual' }}
-    {% for ip in iface.addresses6 %}
-    up ip addr add {{ ip }} dev $IFACE
-    {% endfor %}
+{% if iface.dhcp6 %}
+iface {{ ifname }} inet6 dhcp
+{% endif %}
 
 {% endfor %}

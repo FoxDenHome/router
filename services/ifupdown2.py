@@ -12,8 +12,7 @@ class IfUpDown2Service(SystemdService):
         cfg = {
             "dhcp4": dict_get_deep(network, "addresses.v4.dhcp_client", False),
             "dhcp6": dict_get_deep(network, "addresses.v6.dhcp_client", False),
-            "addresses4": dict_get_deep(network, "addresses.v4.static", []),
-            "addresses6": dict_get_deep(network, "addresses.v6.static", []),
+            "addresses": dict_get_deep(network, "addresses.v4.static", []) + dict_get_deep(network, "addresses.v6.static", []),
             "accept_ra": dict_get_deep(network, "addresses.v6.accept_ra", False),
             "mtu": dict_get_deep(network, "mtu", 1500),
         }
