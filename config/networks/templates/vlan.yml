@@ -1,35 +1,36 @@
 route-priority: 100
+mtu: 9000
+dhcp_server:
+  pool:
+    start: 10.{{vlan_id}}.100.0
+    end: 10.{{vlan_id}}.255.254
+  network: 10.{{vlan_id}}.0.0/16
+  domain_name: foxden.network
+  dns:
+  - 10.{{vlan_id}}.0.53
+  ntp:
+  - 10.{{vlan_id}}.0.123
+  routers:
+  - 10.{{vlan_id}}.0.1
+  classless_static_routes:
+  - subnet: 10.0.0.0/8
+    router: 10.{{vlan_id}}.0.1
+  - subnet: 0.0.0.0/0
+    router: 10.{{vlan_id}}.0.1
+vrrp:
+- address: 10.{{vlan_id}}.0.1
+  id: 1
+  priority: 50
+- address: 10.{{vlan_id}}.0.53
+  id: 53
+  priority: 50
+- address: 10.{{vlan_id}}.0.123
+  id: 123
+  priority: 50
 addresses:
   v4:
     static:
     - 10.{{vlan_id}}.1.1/16
-    vrrp:
-    - address: 10.{{vlan_id}}.0.1
-      id: 1
-      priority: 50
-    - address: 10.{{vlan_id}}.0.53
-      id: 53
-      priority: 50
-    - address: 10.{{vlan_id}}.0.123
-      id: 123
-      priority: 50
-    dhcp_server:
-      pool:
-        start: 10.{{vlan_id}}.100.0
-        end: 10.{{vlan_id}}.255.254
-      network: 10.{{vlan_id}}.0.0/16
-      domain_name: foxden.network
-      dns:
-      - 10.{{vlan_id}}.0.53
-      ntp:
-      - 10.{{vlan_id}}.0.123
-      routers:
-      - 10.{{vlan_id}}.0.1
-      classless_static_routes:
-      - subnet: 10.0.0.0/8
-        router: 10.{{vlan_id}}.0.1
-      - subnet: 0.0.0.0/0
-        router: 10.{{vlan_id}}.0.1
   v6:
     prefix_id: {{vlan_id}}
     pool: wan

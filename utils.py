@@ -35,3 +35,30 @@ def build_classless_routes_bytes(classless_routes):
         routes += out_ip
         routes += [int(x, 10) for x in route["router"].split(".")]
     return routes
+
+def dict_get_deep(dict, val, default=None):
+    val = val.split(".")
+    for v in val:
+        if v not in dict:
+            return default
+        dict = dict[v]
+    return dict
+
+FILE_TARGET_PREFIX = "./tmp"
+def write_if_different(file, content):
+    content = content.encode("utf8")
+    file = FILE_TARGET_PREFIX + file # We do not use path.join on purpose here!
+
+    try:
+        with open(file, "rb") as fh:
+            oldData = fh.read()
+            fh.close()
+            if oldData == content:
+                return False
+    except FileNotFoundError:
+        pass
+
+    with open(file, "wb") as fh:
+        fh.write(content)
+        fh.close()
+    return True

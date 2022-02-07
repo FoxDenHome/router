@@ -6,8 +6,8 @@ class ServiceTemplate():
         self.template = template
         self.target = target
 
-    def render(self):
-        return render_template(self.template, self.target)
+    def render(self, custom):
+        return render_template(self.template, self.target, custom=custom)
 
 class Service():
     def __init__(self, name, templates, restart_command):
@@ -18,9 +18,13 @@ class Service():
     def validate(self):
         return True
 
+    def custom_template_data(self):
+        return None
+
     def configure(self):
+        custom = self.custom_template_data()
         for template in self.templates:
-            if template.render():
+            if template.render(custom=custom):
                 self.needs_restart = True
 
     def restart_if_needed(self):

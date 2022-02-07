@@ -1,3 +1,5 @@
 networks:
-- wan
+- WAN
 name: WAN
+interfaces:
+- 10g2

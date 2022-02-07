@@ -1,8 +1,10 @@
 networks:
-- mgmt
-- lan
-- dmz
-- labnet
-- security
-- hypervisor
+- MGMT
+- LAN
+- DMZ
+- LabNet
+- Security
+- Hypervisor
 name: Internal
+interfaces:
+- 10g1

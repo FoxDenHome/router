@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
-from service import ServiceTemplate, SystemdService
+from services.dhcpd import DhcpdService
+from services.netplan import NetplanService
 
 def run():
-    services = []
-    services.append(SystemdService("dhcpd", [
-        ServiceTemplate("dhcpd.conf", "/etc/dhcpd/dhcpd.conf")
-    ]))
+    services = [
+        DhcpdService(),
+        NetplanService(),
+    ]
 
     is_valid = True
     for service in services:
@@ -19,6 +20,8 @@ def run():
 
     for service in services:
         service.configure()
+
+    print("All done!")
 
 if __name__ == "__main__":
     run()

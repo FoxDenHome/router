@@ -59,3 +59,9 @@ def config_get_all():
         return _all_config
     _all_config = config_load_all()
     return _all_config
+
+def config_get_network_by_name(name):
+    for network in config_get_all()["NETWORKS"]:
+        if network["name"] == name:
+            return network
+    raise ValueError(f"Network {name} not found")

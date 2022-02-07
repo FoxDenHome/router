@@ -1,3 +1,5 @@
 networks:
-- lte
+- LTE
 name: LTE
+interfaces:
+- 1g1
