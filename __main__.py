@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 from argparse import ArgumentParser
+from utils import set_file_target_prefix
 
 from services.dhcpd import DhcpdService
 from services.ifupdown2 import IfUpDown2Service
-from utils import set_file_target_prefix
 
 def run():
     parser = ArgumentParser()

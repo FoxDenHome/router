@@ -1,7 +1,7 @@
 auto lo
 iface lo inet loopback
 
-{% for ifname, iface in custom.interfaces.items() %}
+{% for ifname, iface in NETWORK_CONFIG.interfaces.items() %}
 auto {{ ifname }}
 iface {{ ifname }} {{ 'inet dhcp' if iface.dhcp4 else '' }}
 {% for ip in iface.addresses %}
