@@ -16,19 +16,22 @@ class NetworkConfigbuilder():
             "accept_ra": dict_get_deep(network, "addresses.v6.accept_ra", False),
             "mtu": self.get_mtu(network),
             "network": network["name"],
-            "exposed": True,
         }
         return cfg
 
     def build(self):
         config = config_get_all()
 
-        NETWORK_CONFIG_GLOBAL = {}
+        network_interfaces_computed = {}
 
-        NETWORK_BRIDGE_PORT_ARRAYS = {}
-        NETWORK_GROUPS = {}
+        bridge_port_arrays = {}
+        network_groups_computed = {}
+
+        network_map = {}
 
         for network in config["NETWORKS"]:
+            network_map[network["name"]] = []
+
             if "group" not in network:
                 continue
 
@@ -36,36 +39,38 @@ class NetworkConfigbuilder():
 
             bridge_id_name = f"br-{group.lower()}"
 
-            if group not in NETWORK_GROUPS:
-                NETWORK_GROUPS[group] = {
+            if group not in network_groups_computed:
+                network_groups_computed[group] = {
                     "vlans": [],
                 }
 
-            NETWORK_GROUPS[group]["vlans"].append(network["vlan_id"])
+            network_groups_computed[group]["vlans"].append(network["vlan_id"])
             
-            if bridge_id_name not in NETWORK_CONFIG_GLOBAL:
+            if bridge_id_name not in network_interfaces_computed:
                 cfg = {}
                 cfg["ports"] = []
-                NETWORK_CONFIG_GLOBAL[bridge_id_name] = cfg
+                network_interfaces_computed[bridge_id_name] = cfg
             else:
-                cfg = NETWORK_CONFIG_GLOBAL[bridge_id_name]
+                cfg = network_interfaces_computed[bridge_id_name]
 
             if network.get("is_pvid", False):
                 ports = cfg["ports"]
                 cfg = self.make_network_config(network)
                 cfg["vlan_aware"] = True
                 cfg["ports"] = ports
-                NETWORK_BRIDGE_PORT_ARRAYS[group] = cfg["ports"]
+                bridge_port_arrays[group] = cfg["ports"]
                 cfg["pvid"] = network["vlan_id"]
-                cfg["vlans"] = NETWORK_GROUPS[group]["vlans"]
+                cfg["vlans"] = network_groups_computed[group]["vlans"]
                 cfg["type"] = "bridge"
-                NETWORK_CONFIG_GLOBAL[bridge_id_name] = cfg
+                network_interfaces_computed[bridge_id_name] = cfg
+                network_map[network["name"]].append(bridge_id_name)
             else:
                 vlan_id_name = f"br-{group.lower()}.{network['vlan_id']}"
                 cfg = self.make_network_config(network)
                 cfg["pvid"] = network["vlan_id"]
                 cfg["type"] = "vlan"
-                NETWORK_CONFIG_GLOBAL[vlan_id_name] = cfg
+                network_interfaces_computed[vlan_id_name] = cfg
+                network_map[network["name"]].append(vlan_id_name)
 
         for interface in config["INTERFACES"]:
             networks = interface["networks"]
@@ -92,13 +97,17 @@ class NetworkConfigbuilder():
 
             for iface in interface["interfaces"]:
                 if "bridge" in cfg:
-                    ports = NETWORK_BRIDGE_PORT_ARRAYS[cfg["bridge"]]
+                    ports = bridge_port_arrays[cfg["bridge"]]
                     if iface not in ports:
                         ports.append(iface)
-                NETWORK_CONFIG_GLOBAL[iface] = cfg
+                else:
+                    for network in networks:
+                        network_map[network].append(iface)
+                network_interfaces_computed[iface] = cfg
 
         return {
-            "interfaces": NETWORK_CONFIG_GLOBAL,
+            "interfaces": network_interfaces_computed,
+            "network_map": network_map,
         }
 
 NETWORK_CONFIG = NetworkConfigbuilder().build()

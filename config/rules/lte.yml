@@ -2,8 +2,9 @@ rules:
 - from:
     all: true
   to:
-    network: lte
+    networks:
+    - LTE
   action:
-    filter: accept
-    nat: masquerade
-    mangle: set-ttl 65
+    filter: ACCEPT
+    nat: MASQUERADE
+    mangle: SET-TTL 65

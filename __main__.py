@@ -31,8 +31,8 @@ def run():
     for service in services:
         service.configure()
 
-    for service in services:
-        service.restart_if_needed()
+    #for service in services:
+    #    service.restart_if_needed()
 
     print("All done!")
 

@@ -2,7 +2,8 @@ rules:
 - from:
     all: true
   to:
-    network: wan
+    networks:
+    - WAN
   action:
-    filter: accept
-    nat: masquerade
+    filter: ACCEPT
+    nat: MASQUERADE

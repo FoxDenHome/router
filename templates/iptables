@@ -1,13 +1,17 @@
 *nat
 :PREROUTING ACCEPT [0:0]
-{{ caller.make_jumplist("PREROUTING", caller.IN) }}
+{% for rule in RULES if rule.action.nat is defined and rule.action.nat == "DNAT" %}
+{{ caller.make_rules(rule, rule.action.nat, "PREROUTING") }}
+{% endfor %}
 
 :INPUT ACCEPT [0:0]
 
 :OUTPUT ACCEPT [0:0]
 
 :POSTROUTING ACCEPT [0:0]
-{{ caller.make_jumplist("POSTROUTING", caller.OUT) }}
+{% for rule in RULES if rule.action.nat is defined and rule.action.nat != "DNAT" %}
+{{ caller.make_rules(rule, rule.action.nat, "POSTROUTING") }}
+{% endfor %}
 
 COMMIT
 
@@ -18,11 +22,15 @@ COMMIT
 :INPUT ACCEPT [0:0]
 -A INPUT -m state --state related,established -j ACCEPT
 -A INPUT -i lo -j ACCEPT
-{{ caller.make_jumplist("INPUT", caller.IN) }}
+{% for rule in RULES if rule.action.filter is defined and rule.to.local %}
+{{ caller.make_rules(rule, rule.action.filter, "INPUT") }}
+{% endfor %}
 
 :FORWARD DROP [0:0]
 -A FORWARD -m state --state related,established -j ACCEPT
-{{ caller.make_jumplist("FORWARD", caller.OUT) }}
+{% for rule in RULES if rule.action.filter is defined and not rule.to.local %}
+{{ caller.make_rules(rule, rule.action.filter, "FORWARD") }}
+{% endfor %}
 
 :OUTPUT ACCEPT [0:0]
 

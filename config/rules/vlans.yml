@@ -1,11 +1,15 @@
 rules:
 - from:
-    network: mgmt
+    networks:
+    - MGMT
   to:
     all: true
-  action: accept
+  action:
+    filter: ACCEPT
 - from:
     all: true
   to:
-    network: dmz
-  action: accept
+    networks:
+    - DMZ
+  action:
+    filter: ACCEPT
