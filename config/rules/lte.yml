@@ -1,3 +1,4 @@
+rules:
 - from:
     all: true
   to:

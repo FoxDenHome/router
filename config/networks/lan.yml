@@ -1,3 +1,3 @@
 vlan-id: 2
 name: LAN
-template: templates/vlan.yml
+parent: templates/vlan.yml
