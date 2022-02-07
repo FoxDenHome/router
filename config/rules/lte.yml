@@ -7,7 +7,6 @@ rules:
   action:
     nat: MASQUERADE
     mangle: SET-TTL 65
-rules:
 - from:
     networks:
     - MGMT
