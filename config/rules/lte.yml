@@ -2,4 +2,7 @@
     all: true
   to:
     network: lte
-  action: accept
+  action:
+    filter: accept
+    nat: masquerade
+    mangle: set-ttl 65

@@ -1,2 +1,4 @@
 .DS_Store
 /tmp_scripts
+*.pyc
+__pycache__

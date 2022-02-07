@@ -2,4 +2,4 @@
     all: true
   to:
     network: wan
-  action: accept
+  action: masquerade-accept
