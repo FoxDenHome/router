@@ -10,12 +10,9 @@ class NetworkConfigbuilder():
 
     def make_network_config(self, network):
         cfg = {
-            "dhcp4": dict_get_deep(network, "addresses.v4.dhcp_client", False),
-            "dhcp6": dict_get_deep(network, "addresses.v6.dhcp_client", False),
             "addresses": dict_get_deep(network, "addresses.v4.static", []) + dict_get_deep(network, "addresses.v6.static", []),
-            "accept_ra": dict_get_deep(network, "addresses.v6.accept_ra", False),
-            "mtu": self.get_mtu(network),
             "network": network["name"],
+            "cfg": network,
         }
         return cfg
 

@@ -3,8 +3,9 @@ iface lo inet loopback
 
 {% for ifname, iface in NETWORK_CONFIG.interfaces.items() %}
 auto {{ ifname }}
-iface {{ ifname }} {{ 'inet dhcp' if iface.dhcp4 else '' }}
-{% for ip in iface.addresses %}
+iface {{ ifname }} {{ 'inet dhcp' if iface.cfg.addresses.v4.dhcp_client else '' }}
+
+{% for ip in iface.cfg.addresses.v4.static + iface.cfg.addresses.v6.static %}
     address {{ ip }}
 {% endfor %}
 
@@ -19,10 +20,13 @@ iface {{ ifname }} {{ 'inet dhcp' if iface.dhcp4 else '' }}
     bridge-vids {{ iface.vlans | join(" ") }}
 {% endif %}
 
+    metric {{ iface.metric }}
     mtu {{ iface.mtu }}
 
-{% if iface.dhcp6 %}
+    
+{% if iface.cfg.addresses.v6.request_prefix %}
 iface {{ ifname }} inet6 dhcp
-{% endif %}
-
+    request_prefix {{ "1" if iface.cfg.addresses.v6.request_prefix else "0" }}
+    accept_ra {{ "1" if iface.cfg.addresses.v6.accept_ra else "0" }}
+    metric {{ iface.metric }}
 {% endfor %}

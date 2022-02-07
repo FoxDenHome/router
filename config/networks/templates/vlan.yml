@@ -1,4 +1,4 @@
-route-priority: 100
+metric: 100
 mtu: 9000
 group: internal
 dhcp_server:

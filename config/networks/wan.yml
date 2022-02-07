@@ -1,8 +1,9 @@
 name: WAN
-route_priority: 100
+metric: 110
 addresses:
   v4: 
     dhcp_client: true
   v6:
     accept_ra: true
-    dhcp_pd_client: true
+    request_prefix: true
+  

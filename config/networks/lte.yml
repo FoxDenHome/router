@@ -1,5 +1,7 @@
 name: LTE
-route_priority: 50
+metric: 120
 addresses:
-  v4: 
+  v4:
+    static:
+    - 10.101.10.1/24
     dhcp_client: true
