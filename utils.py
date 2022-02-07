@@ -70,3 +70,9 @@ def write_if_different(file, content):
         fh.write(content)
         fh.close()
     return True
+
+def address_is_v4(address):
+    return True
+
+def address_is_v6(address):
+    return False

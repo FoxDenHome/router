@@ -1,7 +1,8 @@
-from config import config_get_host_by_name, config_load_all
+from numpy import add
+from config import config_get_host_by_name
 from network import NETWORK_CONFIG
 from service import ServiceTemplate, SystemdService
-from utils import dict_get_deep
+from utils import dict_get_deep, address_is_v4, address_is_v6
 
 class IptablesService(SystemdService):
     IN = 1
@@ -62,6 +63,10 @@ class IptablesService(SystemdService):
         return result
 
     def make_rules(self, rule, action, chain, address_filter):
+        if address_filter == self.V4ONLY:
+            address_filter = address_is_v4
+        elif address_filter == self.V6ONLY:
+            address_filter = address_is_v6
         return self.make_rules_int(rule, action, chain, address_filter)
 
     def make_rules_int(self, rule, action, chain, address_filter):
