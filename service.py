@@ -15,6 +15,9 @@ class Service():
         self.templates = templates
         self.restart_command = restart_command
 
+    def validate(self):
+        return True
+
     def configure(self):
         for template in self.templates:
             if template.render():
