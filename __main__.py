@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from service import ServiceTemplate, SystemdService
-from templates import render_template
 
 def run():
     dhcp_service = SystemdService("dhcpd", [
