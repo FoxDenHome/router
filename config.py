@@ -40,6 +40,7 @@ def config_load_all():
     networks = config_load_folder("config/networks")
     interfaces = config_load_folder("config/interfaces")
     hosts = config_load_folder("config/hosts")
+    system = config_load_folder("config/system")
 
     rulesArray = config_load_folder("config/rules")
     rules = []
@@ -51,6 +52,7 @@ def config_load_all():
         "INTERFACES": interfaces,
         "HOSTS": hosts,
         "RULES": rules,
+        "SYSTEM": system,
     }
 
 def config_get_all():

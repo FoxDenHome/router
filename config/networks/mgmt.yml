@@ -1,3 +1,4 @@
 vlan_id: 1
+is_pvid: True
 name: MGMT
 parent: templates/vlan.yml

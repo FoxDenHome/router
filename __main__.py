@@ -3,7 +3,7 @@
 from argparse import ArgumentParser
 
 from services.dhcpd import DhcpdService
-from services.netplan import NetplanService
+from services.ifupdown2 import IfUpDown2Service
 from utils import set_file_target_prefix
 
 def run():
@@ -14,7 +14,7 @@ def run():
 
     services = [
         DhcpdService(),
-        NetplanService(),
+        IfUpDown2Service(),
     ]
 
     is_valid = True

@@ -1,5 +1,6 @@
 route-priority: 100
 mtu: 9000
+group: internal
 dhcp_server:
   pool:
     start: 10.{{vlan_id}}.100.0
