@@ -1,11 +1,20 @@
 *nat
 :PREROUTING ACCEPT [0:0]
+{% for rule in RULES if rule.action.nat is defined and rule.action.nat == "DNAT" %}
+{{ caller.make_rules(rule, rule.action.nat, "PREROUTING", caller.V6ONLY) }}
+{% endfor %}
 
 :INPUT ACCEPT [0:0]
 
 :OUTPUT ACCEPT [0:0]
 
 :POSTROUTING ACCEPT [0:0]
+{% for rule in RULES if rule.action.nat is defined and rule.action.nat != "DNAT" %}
+{{ caller.make_rules(rule, rule.action.nat, "POSTROUTING", caller.V6ONLY) }}
+{% endfor %}
+
+COMMIT
+
 
 
 *filter
@@ -13,10 +22,17 @@
 :INPUT ACCEPT [0:0]
 -A INPUT -m state --state related,established -j ACCEPT
 -A INPUT -i lo -j ACCEPT
+-A INPUT -p icmpv6 -j ACCEPT
+{% for rule in RULES if rule.action.filter is defined and rule.to.local %}
+{{ caller.make_rules(rule, rule.action.filter, "INPUT", caller.V6ONLY) }}
+{% endfor %}
 
 :FORWARD DROP [0:0]
 -A FORWARD -m state --state related,established -j ACCEPT
-
+-A FORWARD -p icmpv6 -j ACCEPT
+{% for rule in RULES if rule.action.filter is defined and not rule.to.local %}
+{{ caller.make_rules(rule, rule.action.filter, "FORWARD", caller.V6ONLY) }}
+{% endfor %}
 
 :OUTPUT ACCEPT [0:0]
 

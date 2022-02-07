@@ -6,6 +6,9 @@ class IptablesService(SystemdService):
     IN = 1
     OUT = 2
 
+    V4ONLY = 1
+    V6ONLY = 2
+
     def __init__(self):
         super().__init__("iptables", [
             ServiceTemplate("iptables", "/etc/iptables/rules.v4"),
@@ -43,7 +46,10 @@ class IptablesService(SystemdService):
 
         return result
 
-    def make_rules(self, rule, action, chain):
+    def make_rules(self, rule, action, chain, address_filter):
+        return self.make_rules_int(rule, action, chain, address_filter)
+
+    def make_rules_int(self, rule, action, chain, address_filter):
         if not action:
             return ""
 
@@ -57,9 +63,15 @@ class IptablesService(SystemdService):
             permutation_chain.append(
                 self.make_map_networks(dict_get_deep(rule, "from.networks", []), "-i")
             )
+
+            addrs = dict_get_deep(rule, "from.addresses", [])
+            filtered_addrs = [addr for addr in addrs if address_filter(addr)]
+            if len(addrs) >= 1 and len(filtered_addrs) < 1:
+                return ""
             permutation_chain.append(
-                self.make_map_direct(dict_get_deep(rule, "from.addresses", []), "-s")
+                self.make_map_direct(filtered_addrs, "-s")
             )
+
             permutation_chain.append(
                 self.make_map_direct(dict_get_deep(rule, "from.ports", []), "--sport")
             )
@@ -68,9 +80,15 @@ class IptablesService(SystemdService):
             permutation_chain.append(
                 self.make_map_networks(dict_get_deep(rule, "to.networks", []), "-o")
             )
+
+            addrs = dict_get_deep(rule, "to.addresses", [])
+            filtered_addrs = [addr for addr in addrs if address_filter(addr)]
+            if len(addrs) >= 1 and len(filtered_addrs) < 1:
+                return ""
             permutation_chain.append(
-                self.make_map_direct(dict_get_deep(rule, "to.addresses", []), "-d")
+                self.make_map_direct(filtered_addrs, "-d")
             )
+
             permutation_chain.append(
                 self.make_map_direct(dict_get_deep(rule, "to.ports", []), "--dport")
             )

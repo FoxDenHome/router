@@ -1,7 +1,7 @@
 *nat
 :PREROUTING ACCEPT [0:0]
 {% for rule in RULES if rule.action.nat is defined and rule.action.nat == "DNAT" %}
-{{ caller.make_rules(rule, rule.action.nat, "PREROUTING") }}
+{{ caller.make_rules(rule, rule.action.nat, "PREROUTING", caller.V4ONLY) }}
 {% endfor %}
 
 :INPUT ACCEPT [0:0]
@@ -10,7 +10,7 @@
 
 :POSTROUTING ACCEPT [0:0]
 {% for rule in RULES if rule.action.nat is defined and rule.action.nat != "DNAT" %}
-{{ caller.make_rules(rule, rule.action.nat, "POSTROUTING") }}
+{{ caller.make_rules(rule, rule.action.nat, "POSTROUTING", caller.V4ONLY) }}
 {% endfor %}
 
 COMMIT
@@ -22,14 +22,16 @@ COMMIT
 :INPUT ACCEPT [0:0]
 -A INPUT -m state --state related,established -j ACCEPT
 -A INPUT -i lo -j ACCEPT
+-A INPUT -p icmp -j ACCEPT
 {% for rule in RULES if rule.action.filter is defined and rule.to.local %}
-{{ caller.make_rules(rule, rule.action.filter, "INPUT") }}
+{{ caller.make_rules(rule, rule.action.filter, "INPUT", caller.V4ONLY) }}
 {% endfor %}
 
 :FORWARD DROP [0:0]
 -A FORWARD -m state --state related,established -j ACCEPT
+-A FORWARD -p icmp -j ACCEPT
 {% for rule in RULES if rule.action.filter is defined and not rule.to.local %}
-{{ caller.make_rules(rule, rule.action.filter, "FORWARD") }}
+{{ caller.make_rules(rule, rule.action.filter, "FORWARD", caller.V4ONLY) }}
 {% endfor %}
 
 :OUTPUT ACCEPT [0:0]
