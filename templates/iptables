@@ -1,13 +1,13 @@
 *nat
 :PREROUTING ACCEPT [0:0]
-{{ caller.make_jumplist("PREROUTING") }}
+{{ caller.make_jumplist("PREROUTING", caller.IN) }}
 
 :INPUT ACCEPT [0:0]
 
 :OUTPUT ACCEPT [0:0]
 
 :POSTROUTING ACCEPT [0:0]
-{{ caller.make_jumplist("POSTROUTING") }}
+{{ caller.make_jumplist("POSTROUTING", caller.OUT) }}
 
 
 *filter
@@ -15,11 +15,11 @@
 :INPUT ACCEPT [0:0]
 -A INPUT -m state --state related,established -j ACCEPT
 -A INPUT -i lo -j ACCEPT
-{{ caller.make_jumplist("INPUT") }}
+{{ caller.make_jumplist("INPUT", caller.IN) }}
 
 :FORWARD DROP [0:0]
 -A FORWARD -m state --state related,established -j ACCEPT
-{{ caller.make_jumplist("FORWARD") }}
+{{ caller.make_jumplist("FORWARD", caller.IN) }}
 
 :OUTPUT ACCEPT [0:0]
 

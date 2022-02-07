@@ -2,8 +2,8 @@ from network import NETWORK_CONFIG
 from service import ServiceTemplate, SystemdService
 
 class IptablesService(SystemdService):
-    DIRECTION_IN = 1
-    DIRECTION_OUT = 2
+    IN = 1
+    OUT = 2
 
     def __init__(self):
         super().__init__("iptables", [
@@ -11,7 +11,14 @@ class IptablesService(SystemdService):
             ServiceTemplate("ip6tables", "/etc/iptables/rules.v6"),
         ])
 
-    def make_jumplist(self, chain, direction=DIRECTION_IN):
+    def make_map_direction(self, direction, in_str, out_str):
+        if direction == self.IN:
+            return in_str
+        elif direction == self.OUT:
+            return out_str
+        raise ValueError("Invalid direction")
+
+    def make_jumplist(self, chain, direction):
         jumps = []
 
         for name, network in NETWORK_CONFIG["interfaces"].items():
@@ -20,7 +27,7 @@ class IptablesService(SystemdService):
 
             jumps.append({
                 "chain": f"NETWORK_{network['network']}",
-                "match": f"-i {name}",
+                "match": f"-{self.make_map_direction(direction), 'i', 'o'} {name}",
             })
 
         return "\n".join([
