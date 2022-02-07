@@ -25,10 +25,9 @@ iface {{ ifname }} {{ 'inet dhcp' if iface|dict_get_deep("cfg.addresses.v4.dhcp_
 
 
 {% if iface|dict_get_deep("cfg.addresses.v6.request_prefix", None) %}
-iface {{ ifname }} inet6 dhcp
+iface {{ ifname }} inet6 auto
     request_prefix {{ "1" if iface|dict_get_deep("cfg.addresses.v6.request_prefix", False) else "0" }}
-    accept_ra {{ "1" if iface|dict_get_deep("cfg.addresses.v6.accept_ra") else "0" }}
-    autoconf 1
+    accept_ra {{ "2" if iface|dict_get_deep("cfg.addresses.v6.accept_ra") else "0" }}
     metric {{ iface|dict_get_deep("cfg.metric", 100) }}
 {% endif %}
 {% endfor %}
