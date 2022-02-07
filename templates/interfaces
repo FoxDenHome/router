@@ -1,5 +1,5 @@
 {% for ifname, iface in custom.interfaces.items() %}
-auto {{ ifname }}
+allow-hotplug {{ ifname }}
 iface {{ ifname }} inet {{ 'dhcp' if iface.dhcp4 else 'manual' }}
 {% for ip in iface.addresses4 %}
     up ip addr add {{ ip }} dev $IFACE
