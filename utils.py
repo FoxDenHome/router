@@ -47,7 +47,11 @@ def dict_get_deep(dict, val, default=None):
         dict = dict[v]
     return dict
 
-FILE_TARGET_PREFIX = "./tmp"
+FILE_TARGET_PREFIX = ""
+def set_file_target_prefix(prefix):
+    global FILE_TARGET_PREFIX
+    FILE_TARGET_PREFIX = prefix
+
 def write_if_different(file, content):
     content = content.encode("utf8")
     file = FILE_TARGET_PREFIX + file # We do not use path.join on purpose here!
