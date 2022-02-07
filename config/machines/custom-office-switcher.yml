@@ -1,0 +1,5 @@
+addresses:
+  mac: 58:BF:25:33:1F:68
+  v4:
+    static: 10.2.13.9
+name: custom-office-switcher

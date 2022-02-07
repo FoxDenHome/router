@@ -1,0 +1,5 @@
+addresses:
+  mac: F4:34:F0:4B:87:1A
+  v4:
+    static: 10.2.12.4
+name: homepod-living-room

@@ -1,0 +1,5 @@
+addresses:
+  mac: 88:66:5A:53:5E:40
+  v4:
+    static: 10.2.10.6
+name: wizzy-laptop-2

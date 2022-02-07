@@ -1,0 +1,5 @@
+addresses:
+  mac: E0:4F:43:C2:BA:C2
+  v4:
+    static: 10.2.12.7
+name: clock-nixie-zen

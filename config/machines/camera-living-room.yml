@@ -1,0 +1,5 @@
+addresses:
+  mac: 68:D7:9A:CF:30:09
+  v4:
+    static: 10.5.10.1
+name: camera-living-room

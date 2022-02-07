@@ -1,0 +1,5 @@
+addresses:
+  mac: 02:42:C0:A8:04:17
+  v4:
+    static: 10.6.11.1
+name: prometheus

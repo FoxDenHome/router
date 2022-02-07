@@ -1,0 +1,5 @@
+addresses:
+  mac: B8:AE:ED:7C:1E:71
+  v4:
+    static: 10.6.10.2
+name: islandfox

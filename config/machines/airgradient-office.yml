@@ -1,0 +1,5 @@
+addresses:
+  mac: AC:0B:FB:CF:99:15
+  v4:
+    static: 10.2.13.5
+name: airgradient-office

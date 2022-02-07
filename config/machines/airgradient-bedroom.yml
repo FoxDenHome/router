@@ -1,0 +1,5 @@
+addresses:
+  mac: AC:0B:FB:D0:2A:63
+  v4:
+    static: 10.2.13.7
+name: airgradient-bedroom

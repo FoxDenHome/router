@@ -1,0 +1,5 @@
+addresses:
+  mac: 8C:AA:B5:66:3B:BE
+  v4:
+    static: 10.2.13.4
+name: sonoff-s31-bedroom-fan

@@ -1,0 +1,5 @@
+addresses:
+  mac: 00:16:3E:CA:7E:02
+  v4:
+    static: 10.3.10.3
+name: ut2004

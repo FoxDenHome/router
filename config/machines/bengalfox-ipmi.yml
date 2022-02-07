@@ -1,0 +1,5 @@
+addresses:
+  mac: 00:25:90:6D:05:12
+  v4:
+    static: 10.1.12.1
+name: bengalfox-ipmi

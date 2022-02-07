@@ -1,0 +1,5 @@
+addresses:
+  mac: 00:0E:C6:D2:C9:DD
+  v4:
+    static: 10.2.15.1
+name: nintendo-switch-wired

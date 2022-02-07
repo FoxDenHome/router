@@ -1,0 +1,5 @@
+addresses:
+  mac: C4:5B:BE:63:3A:2E
+  v4:
+    static: 10.2.12.8
+name: clock-nixie-office

@@ -1,0 +1,5 @@
+addresses:
+  mac: B8:27:EB:ED:0F:4B
+  v4:
+    static: 10.4.10.1
+name: cr6se
