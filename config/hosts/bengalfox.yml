@@ -1,5 +1,4 @@
 addresses:
   mac: 00:25:90:9C:16:AE
-  v4:
-    static: 10.6.10.1
+  v4: 10.6.10.1
 name: bengalfox

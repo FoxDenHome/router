@@ -1,6 +1,9 @@
 rules:
 - from:
-    all: true
+    networks:
+    - LAN
+    - MGMT
+    - Security
   to:
     networks:
     - LTE

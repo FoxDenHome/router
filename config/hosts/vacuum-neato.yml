@@ -1,5 +1,4 @@
 addresses:
   mac: 40:BD:32:95:26:C0
-  v4:
-    static: 10.2.12.9
+  v4: 10.2.12.9
 name: vacuum-neato

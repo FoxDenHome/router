@@ -1,5 +1,4 @@
 addresses:
   mac: E8:D8:D1:79:F5:98
-  v4:
-    static: 10.2.12.3
+  v4: 10.2.12.3
 name: printer

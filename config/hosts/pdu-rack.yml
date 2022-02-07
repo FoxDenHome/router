@@ -1,5 +1,4 @@
 addresses:
   mac: 00:06:67:41:F2:78
-  v4:
-    static: 10.1.11.1
+  v4: 10.1.11.1
 name: pdu-rack

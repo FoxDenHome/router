@@ -1,5 +1,4 @@
 addresses:
   mac: 94:EA:32:84:DB:90
-  v4:
-    static: 10.2.12.5
+  v4: 10.2.12.5
 name: homepod-bedroom

@@ -1,5 +1,4 @@
 addresses:
   mac: 00:50:56:2E:16:A0
-  v4:
-    static: 10.6.11.2
+  v4: 10.6.11.2
 name: telegraf

@@ -1,5 +1,4 @@
 addresses:
   mac: 00:0C:15:04:39:93
-  v4:
-    static: 10.1.11.3
+  v4: 10.1.11.3
 name: ups-office

@@ -67,3 +67,9 @@ def config_get_network_by_name(name):
         if network["name"] == name:
             return network
     raise ValueError(f"Network {name} not found")
+
+def config_get_host_by_name(name):
+    for host in config_get_all()["HOSTS"]:
+        if host["name"] == name:
+            return host
+    raise ValueError(f"Host {name} not found")

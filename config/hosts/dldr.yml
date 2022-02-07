@@ -1,5 +1,4 @@
 addresses:
   mac: 02:42:C0:A8:04:20
-  v4:
-    static: 10.3.10.6
+  v4: 10.3.10.6
 name: dldr

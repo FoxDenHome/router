@@ -1,5 +1,4 @@
 addresses:
   mac: EC:F4:51:D0:8C:AF
-  v4:
-    static: 10.2.12.10
+  v4: 10.2.12.10
 name: amp-living-room

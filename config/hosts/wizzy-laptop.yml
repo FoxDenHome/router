@@ -1,5 +1,4 @@
 addresses:
   mac: F0:2F:4B:15:2E:54
-  v4:
-    static: 10.2.10.5
+  v4: 10.2.10.5
 name: wizzy-laptop

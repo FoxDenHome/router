@@ -1,5 +1,4 @@
 addresses:
   mac: AC:0B:FB:D0:7B:5B
-  v4:
-    static: 10.2.13.6
+  v4: 10.2.13.6
 name: airgradient-living-room

@@ -1,5 +1,4 @@
 addresses:
   mac: E8:DB:84:9F:4F:08
-  v4:
-    static: 10.2.13.3
+  v4: 10.2.13.3
 name: sonoff-s31-cr6se

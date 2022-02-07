@@ -1,3 +1,4 @@
+from config import config_get_host_by_name, config_load_all
 from network import NETWORK_CONFIG
 from service import ServiceTemplate, SystemdService
 from utils import dict_get_deep
@@ -14,6 +15,20 @@ class IptablesService(SystemdService):
             ServiceTemplate("iptables", "/etc/iptables/rules.v4"),
             ServiceTemplate("ip6tables", "/etc/iptables/rules.v6"),
         ])
+
+    def resolve_host(self, name):
+        host = config_get_host_by_name(name)
+        addr_v4 = dict_get_deep(host, "addresses.v4")
+        addr_v6 = dict_get_deep(host, "addresses.v6")
+
+        if addr_v4 and addr_v6:
+            return [addr_v4, addr_v6]
+        elif addr_v4:
+            return [addr_v4]
+        elif addr_v6:
+            return [addr_v6]
+        else:
+            raise ValueError(f"Host {name} has no addresses")
 
     def make_map_networks(self, networks, prefix):
         network_map = NETWORK_CONFIG["network_map"]
@@ -65,6 +80,8 @@ class IptablesService(SystemdService):
             )
 
             addrs = dict_get_deep(rule, "from.addresses", [])
+            for host in dict_get_deep(rule, "from.hosts", []):
+                addrs += self.resolve_host(host)
             filtered_addrs = [addr for addr in addrs if address_filter(addr)]
             if len(addrs) >= 1 and len(filtered_addrs) < 1:
                 return ""
@@ -82,6 +99,8 @@ class IptablesService(SystemdService):
             )
 
             addrs = dict_get_deep(rule, "to.addresses", [])
+            for host in dict_get_deep(rule, "to.hosts", []):
+                addrs += self.resolve_host(host)
             filtered_addrs = [addr for addr in addrs if address_filter(addr)]
             if len(addrs) >= 1 and len(filtered_addrs) < 1:
                 return ""

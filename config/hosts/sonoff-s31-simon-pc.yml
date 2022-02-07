@@ -1,5 +1,4 @@
 addresses:
   mac: 8C:AA:B5:66:10:70
-  v4:
-    static: 10.2.13.1
+  v4: 10.2.13.1
 name: sonoff-s31-simon-pc

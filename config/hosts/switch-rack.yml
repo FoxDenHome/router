@@ -1,5 +1,4 @@
 addresses:
   mac: 24:5A:4C:A6:6B:9A
-  v4:
-    static: 10.1.10.2
+  v4: 10.1.10.2
 name: switch-rack

@@ -1,5 +1,4 @@
 addresses:
   mac: 80:2A:A8:DE:F0:AE
-  v4:
-    static: 10.1.10.4
+  v4: 10.1.10.4
 name: switch-living-room
