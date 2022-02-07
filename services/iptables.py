@@ -30,6 +30,7 @@ class IptablesService(SystemdService):
     def permutate_all(self, chain, offset=0):
         if offset >= len(chain):
             return [""]
+
         next_offset = offset + 1
         if len(chain[offset]) < 1:
             return self.permutate_all(chain, next_offset)
@@ -75,5 +76,5 @@ class IptablesService(SystemdService):
             )
 
         return "\n".join(
-            [f"-A {chain} {rule} -j {action}" for rule in self.permutate_all(permutation_chain)]
+            [f"-A {chain} {rule.strip()} -j {action}" for rule in self.permutate_all(permutation_chain)]
         )
