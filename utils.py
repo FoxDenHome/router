@@ -71,8 +71,10 @@ def write_if_different(file, content):
         fh.close()
     return True
 
+# TODO: This is bad...
 def address_is_v4(address):
-    return True
+    return "." in address
 
+# TODO: This is bad...
 def address_is_v6(address):
-    return False
+    return ":" in address
