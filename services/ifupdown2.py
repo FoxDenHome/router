@@ -31,10 +31,9 @@ class IfUpDown2Service(SystemdService):
                 continue
 
             group = network["group"]
-            name = network["name"]
 
-            vlan_id_name = f"vlan-{name.lower()}"
             bridge_id_name = f"br-{group.lower()}"
+            vlan_id_name = f"br-{group.lower()}.{network['vlan_id']}"
 
             if group not in NETWORK_GROUPS:
                 NETWORK_GROUPS[group] = {
@@ -64,7 +63,7 @@ class IfUpDown2Service(SystemdService):
                 cfg["ports"].append(vlan_id_name)
                 cfg = self.make_network_config(network)
                 cfg["pvid"] = network["vlan_id"]
-                cfg["type"] = "access"
+                cfg["type"] = "vlan"
                 NETWORK_CONFIG_GLOBAL[vlan_id_name] = cfg
 
         for interface in config["INTERFACES"]:
