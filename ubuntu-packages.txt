@@ -1,1 +1,1 @@
-openvswitch-switch python3-yaml python3-jinja2
+openvswitch-switch python3-yaml python3-jinja2 git
