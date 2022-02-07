@@ -19,6 +19,8 @@ iface {{ ifname }} {{ 'inet dhcp' if iface.dhcp4 else '' }}
     bridge-vids {{ iface.vlans | join(" ") }}
 {% endif %}
 
+    mtu {{ iface.mtu }}
+
 {% if iface.dhcp6 %}
 iface {{ ifname }} inet6 dhcp
 {% endif %}
