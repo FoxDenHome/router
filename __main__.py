@@ -11,7 +11,7 @@ def run():
     is_valid = True
     for service in services:
         if not service.validate():
-            print(f"Service {service.name} configurationm is not valid")
+            print(f"Service {service.name} configuration is not valid")
             is_valid = False
 
     if not is_valid:
