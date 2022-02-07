@@ -2,6 +2,8 @@ from os import makedirs
 from os.path import dirname
 
 def add_ip_offset(ip, offset):
+    if offset != 0:
+        raise ValueError("Offsets not supported yet")
     return ip
 
 def cidr_to_subnet_mask(cidr):
