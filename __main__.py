@@ -15,7 +15,7 @@ def run():
             is_valid = False
 
     if not is_valid:
-        return
+        exit(1)
 
     for service in services:
         service.configure()
