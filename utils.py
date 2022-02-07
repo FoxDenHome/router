@@ -1,3 +1,6 @@
+from os import makedirs
+from os.path import dirname
+
 def add_ip_offset(ip, offset):
     return ip
 
@@ -48,6 +51,7 @@ FILE_TARGET_PREFIX = "./tmp"
 def write_if_different(file, content):
     content = content.encode("utf8")
     file = FILE_TARGET_PREFIX + file # We do not use path.join on purpose here!
+    makedirs(dirname(file), exist_ok=True)
 
     try:
         with open(file, "rb") as fh:

@@ -1,5 +1,3 @@
-from os import makedirs
-from os.path import dirname
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from config import config_get_all
 from utils import cidr_to_ip, cidr_to_subnet_mask, build_classless_routes_bytes, write_if_different
@@ -15,8 +13,6 @@ env.filters["cidr_to_ip"] = cidr_to_ip
 env.filters["build_classless_routes_bytes"] = build_classless_routes_bytes
 
 def render_template(template, target, custom=None):
-    makedirs(dirname(target), exist_ok=True)
-
     tpl = env.get_template(template)
     data = tpl.render(config_get_all(), custom=custom)
 
