@@ -1,2 +1,3 @@
 networks:
 - wan
+name: WAN

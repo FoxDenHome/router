@@ -26,7 +26,7 @@ def config_load(file, parent={}):
 def config_load_folder(folder, config=None):
     if config is None:
         config = []
-    for f in listdir(folder):
+    for f in sorted(listdir(folder)):
         if f[0] == "." or f == "templates":
             continue
         f = join(folder, f)
@@ -38,11 +38,9 @@ def config_load_folder(folder, config=None):
 
 def config_load_all():
     networks = config_load_folder("config/networks")
-    
     interfaces = config_load_folder("config/interfaces")
-    
     hosts = config_load_folder("config/hosts")
-    
+
     rulesArray = config_load_folder("config/rules")
     rules = []
     for ruleVal in rulesArray:
