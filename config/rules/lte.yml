@@ -1,16 +1,20 @@
 rules:
 - from:
-    addresses:
-    # MGMT
-    - 10.1.0.0/16
-    # LAN
-    - 10.2.0.0/16
-    # Security
-    - 10.5.0.0/16
+    all: true
+  to:
+    networks:
+    - LTE
+  action:
+    nat: MASQUERADE
+    mangle: SET-TTL 65
+rules:
+- from:
+    networks:
+    - MGMT
+    - LAN
+    - Security
   to:
     networks:
     - LTE
   action:
     filter: ACCEPT
-    nat: MASQUERADE
-    mangle: SET-TTL 65
