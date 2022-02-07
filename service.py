@@ -14,6 +14,7 @@ class Service():
         self.name = name
         self.templates = templates
         self.restart_command = restart_command
+        self.needs_restart = False
 
     def validate(self):
         return True
