@@ -1,0 +1,26 @@
+*nat
+:PREROUTING ACCEPT [0:0]
+{{ caller.make_jumplist("PREROUTING") }}
+
+:INPUT ACCEPT [0:0]
+
+:OUTPUT ACCEPT [0:0]
+
+:POSTROUTING ACCEPT [0:0]
+{{ caller.make_jumplist("POSTROUTING") }}
+
+
+*filter
+# Input accept all for now, need better rules later
+:INPUT ACCEPT [0:0]
+-A INPUT -m state --state related,established -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+{{ caller.make_jumplist("INPUT") }}
+
+:FORWARD DROP [0:0]
+-A FORWARD -m state --state related,established -j ACCEPT
+{{ caller.make_jumplist("FORWARD") }}
+
+:OUTPUT ACCEPT [0:0]
+
+COMMIT

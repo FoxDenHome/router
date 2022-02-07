@@ -5,6 +5,7 @@ from utils import set_file_target_prefix
 
 from services.dhcpd import DhcpdService
 from services.ifupdown2 import IfUpDown2Service
+from services.iptables import IptablesService
 
 def run():
     parser = ArgumentParser()
@@ -15,6 +16,7 @@ def run():
     services = [
         DhcpdService(),
         IfUpDown2Service(),
+        IptablesService(),
     ]
 
     is_valid = True

@@ -6,8 +6,8 @@ class ServiceTemplate():
         self.template = template
         self.target = target
 
-    def render(self, custom):
-        return render_template(self.template, self.target, custom=custom)
+    def render(self, caller, custom):
+        return render_template(self.template, self.target, custom=custom, caller=caller)
 
 class Service():
     def __init__(self, name, templates, restart_command):
@@ -25,7 +25,7 @@ class Service():
     def configure(self):
         custom = self.custom_template_data()
         for template in self.templates:
-            if template.render(custom=custom):
+            if template.render(custom=custom, caller=self):
                 self.needs_restart = True
 
     def restart_if_needed(self):

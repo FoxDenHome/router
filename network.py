@@ -15,6 +15,8 @@ class NetworkConfigbuilder():
             "addresses": dict_get_deep(network, "addresses.v4.static", []) + dict_get_deep(network, "addresses.v6.static", []),
             "accept_ra": dict_get_deep(network, "addresses.v6.accept_ra", False),
             "mtu": self.get_mtu(network),
+            "network": network["name"],
+            "exposed": True,
         }
         return cfg
 
@@ -33,7 +35,6 @@ class NetworkConfigbuilder():
             group = network["group"]
 
             bridge_id_name = f"br-{group.lower()}"
-            vlan_id_name = f"br-{group.lower()}.{network['vlan_id']}"
 
             if group not in NETWORK_GROUPS:
                 NETWORK_GROUPS[group] = {
@@ -60,6 +61,7 @@ class NetworkConfigbuilder():
                 cfg["type"] = "bridge"
                 NETWORK_CONFIG_GLOBAL[bridge_id_name] = cfg
             else:
+                vlan_id_name = f"br-{group.lower()}.{network['vlan_id']}"
                 cfg = self.make_network_config(network)
                 cfg["pvid"] = network["vlan_id"]
                 cfg["type"] = "vlan"
