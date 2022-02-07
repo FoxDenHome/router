@@ -27,7 +27,7 @@ class IptablesService(SystemdService):
 
             jumps.append({
                 "chain": f"NETWORK_{network['network']}",
-                "match": f"-{self.make_map_direction(direction), 'i', 'o'} {name}",
+                "match": f"-{self.make_map_direction(direction, 'i', 'o')} {name}",
             })
 
         return "\n".join([
