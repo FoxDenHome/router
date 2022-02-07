@@ -1,5 +1,5 @@
-Networks with vlan-id can be assigned to any number of interfaces
-Networks without vlan-id can only be assigned to one interface and must be their only network
+Networks with vlan_id can be assigned to any number of interfaces
+Networks without vlan_id can only be assigned to one interface and must be their only network
 
 
 All traffic denied by default

@@ -1,3 +1,3 @@
-vlan-id: 1
+vlan_id: 1
 name: MGMT
 parent: templates/vlan.yml

@@ -3,4 +3,6 @@ rules:
     all: true
   to:
     network: wan
-  action: masquerade-accept
+  action:
+    filter: accept
+    nat: masquerade
