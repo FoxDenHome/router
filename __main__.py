@@ -1,21 +1,9 @@
 #!/usr/bin/env python3
 
-from config import config_load_folder
+from templates import render_template
 
 def run():
-    networks = config_load_folder("config/networks")
-    
-    interfaces = config_load_folder("config/interfaces")
-    
-    hosts = config_load_folder("config/hosts")
-    
-    rulesArray = config_load_folder("config/rules")
-    rules = []
-    for ruleVal in rulesArray:
-        rules += ruleVal["rules"]
-    print(rules)
-
-    pass
+    print(render_template("dhcpd.conf", "/etc/dhcpd/dhcpd.conf"))
 
 if __name__ == "__main__":
     run()

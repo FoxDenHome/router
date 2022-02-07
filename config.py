@@ -5,6 +5,8 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 CONFIG_DIR = "./config"
 
+_all_config = None
+
 env = Environment(
     loader=FileSystemLoader(CONFIG_DIR),
     autoescape=select_autoescape(["yaml"])
@@ -33,3 +35,29 @@ def config_load_folder(folder, config=None):
         elif isdir(f):
             config_load_folder(f, config)
     return config    
+
+def config_load_all():
+    networks = config_load_folder("config/networks")
+    
+    interfaces = config_load_folder("config/interfaces")
+    
+    hosts = config_load_folder("config/hosts")
+    
+    rulesArray = config_load_folder("config/rules")
+    rules = []
+    for ruleVal in rulesArray:
+        rules += ruleVal["rules"]
+
+    return {
+        "NETWORKS": networks,
+        "INTERFACES": interfaces,
+        "HOSTS": hosts,
+        "RULES": rules,
+    }
+
+def config_get_all():
+    global _all_config
+    if _all_config is not None:
+        return _all_config
+    _all_config = config_load_all()
+    return _all_config

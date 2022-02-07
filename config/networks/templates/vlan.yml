@@ -14,17 +14,22 @@ addresses:
       id: 123
       priority: 50
     dhcp_server:
-      pool: 10.{{vlan_id}}.100.0-10.{{vlan_id}}.255.254
-      suffix: foxden.network
+      pool:
+        start: 10.{{vlan_id}}.100.0
+        end: 10.{{vlan_id}}.255.254
+      network: 10.{{vlan_id}}.0.0/16
+      domain_name: foxden.network
       dns:
       - 10.{{vlan_id}}.0.53
       ntp:
       - 10.{{vlan_id}}.0.123
-      gateway:
+      routers:
       - 10.{{vlan_id}}.0.1
       classless_static_routes:
       - subnet: 10.0.0.0/8
-        gateway: 10.{{vlan_id}}.0.1 
+        router: 10.{{vlan_id}}.0.1
+      - subnet: 0.0.0.0/0
+        router: 10.{{vlan_id}}.0.1
   v6:
     prefix_id: {{vlan_id}}
     pool: wan
