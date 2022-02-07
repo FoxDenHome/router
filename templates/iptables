@@ -22,7 +22,7 @@ COMMIT
 
 :FORWARD DROP [0:0]
 -A FORWARD -m state --state related,established -j ACCEPT
-{{ caller.make_jumplist("FORWARD", caller.IN) }}
+{{ caller.make_jumplist("FORWARD", caller.OUT) }}
 
 :OUTPUT ACCEPT [0:0]
 
