@@ -1,3 +1,11 @@
+*mangle
+:POSTROUTING ACCEPT [0:0]
+{% for rule in RULES if rule.action.mangle is defined %}
+{{ caller.make_rules(rule, rule.action.mangle, "POSTROUTING", caller.V4ONLY) }}
+{% endfor %}
+
+
+
 *nat
 :PREROUTING ACCEPT [0:0]
 {% for rule in RULES if rule.action.nat is defined and rule.action.nat == "DNAT" %}

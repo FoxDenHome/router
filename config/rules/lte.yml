@@ -6,7 +6,7 @@ rules:
     - LTE
   action:
     nat: MASQUERADE
-    mangle: SET-TTL 65
+    mangle: TTL --ttl-set 65
 - from:
     networks:
     - MGMT
