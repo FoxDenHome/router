@@ -62,10 +62,11 @@ class NetworkConfigbuilder():
                 network_interfaces_computed[bridge_id_name] = cfg
                 network_map[network["name"]].append(bridge_id_name)
             else:
-                vlan_id_name = f"br-{group.lower()}.{network['vlan_id']}"
+                vlan_id_name = f"vlan-{network['name']}"
                 cfg = self.make_network_config(network)
                 cfg["pvid"] = network["vlan_id"]
                 cfg["type"] = "vlan"
+                cfg["vlans"] = [cfg["pvid"]]
                 network_interfaces_computed[vlan_id_name] = cfg
                 network_map[network["name"]].append(vlan_id_name)
 
@@ -79,6 +80,7 @@ class NetworkConfigbuilder():
                         "type": "access",
                         "mtu": self.get_mtu(native_network),
                         "pvid": native_network["vlan_id"],
+                        "vlans": [native_network["vlan_id"]],
                         "bridge": native_network["group"],
                     }
                 else:
@@ -89,6 +91,7 @@ class NetworkConfigbuilder():
                     "type": "trunk",
                     "mtu": self.get_mtu(native_network),
                     "bridge": native_network["group"],
+                    "pvid": native_network["vlan_id"],
                     "vlans": [config_get_network_by_name(network)["vlan_id"] for network in networks],
                 }
 

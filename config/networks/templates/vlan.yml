@@ -34,5 +34,5 @@ addresses:
     - 10.{{vlan_id}}.1.1/16
   v6:
     prefix_id: {{vlan_id}}
-    pool: wan
+    prefix_src: wan
     send_ra: true

@@ -1,0 +1,14 @@
+{% set iface = custom.iface %}
+
+[NetDev]
+Name={{ custom.ifname }}
+Kind={{ iface.type }}
+
+{% if iface.type == "bridge" %}
+[Bridge]
+DefaultPVID={{ iface.pvid }}
+VLANFiltering=yes
+{% elif iface.type == "vlan" %}
+[VLAN]
+Id={{ iface.pvid }}
+{% endif %}
