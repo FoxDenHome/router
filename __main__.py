@@ -7,7 +7,7 @@ from services.dhcpd import DhcpdService
 from services.networkd import NetworkdService
 from services.iptables import IptablesService
 from services.resolved import ResolvedService
-from services.timedated import TimedatedService
+from services.timesyncd import TimesyncdService
 
 def run():
     parser = ArgumentParser()
@@ -20,7 +20,7 @@ def run():
         NetworkdService(),
         IptablesService(),
         ResolvedService(),
-        TimedatedService(),
+        TimesyncdService(),
     ]
 
     is_valid = True
