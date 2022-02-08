@@ -1,0 +1,6 @@
+Features:
+- WireGuard
+- Keepalived
+- WAN failover
+Config:
+- Port forwarding
