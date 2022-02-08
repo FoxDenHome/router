@@ -72,7 +72,7 @@ RouteMetric={{ route_metric }}
 {% endif %}
 
 {% if iface|dict_get_deep("cfg.addresses.v6.send_ra", False) %}
-[DHCPPrefixDelegation]
+[DHCPv6PrefixDelegation]
 UplinkInterface={{ iface|dict_get_deep("cfg.addresses.v6.prefix_src", ":auto") }}
 SubnetId={{ iface|dict_get_deep("cfg.addresses.v6.prefix_id", "auto") }}
 Announce=yes
