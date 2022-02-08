@@ -17,10 +17,10 @@ class NetworkdService(SystemdService):
                 "iface": iface,
             }
             if iface["type"] in ["vlan", "bridge"]:
-                tpl = ServiceTemplate("systemd.netdev", f"/etc/systemd/networkd/99-{ifname}.netdev")
+                tpl = ServiceTemplate("systemd.netdev", f"/etc/systemd/network/99-{ifname}.netdev")
                 if tpl.render(custom=data, caller=self):
                     self.needs_restart = True
-            tpl = ServiceTemplate("systemd.network", f"/etc/systemd/networkd/99-{ifname}.network")
+            tpl = ServiceTemplate("systemd.network", f"/etc/systemd/network/99-{ifname}.network")
             if tpl.render(custom=data, caller=self):
                 self.needs_restart = True
 
