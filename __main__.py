@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 from argparse import ArgumentParser
-
 from utils import set_file_target_prefix
+from os import chdir
+from os.path import dirname
 
 from services.dhcpd import DhcpdService
 from services.networkd import NetworkdService
@@ -11,6 +12,8 @@ from services.resolved import ResolvedService
 from services.timesyncd import TimesyncdService
 
 def run():
+    chdir(dirname(__file__))
+
     parser = ArgumentParser()
     parser.add_argument('--prefix', dest='prefix', default='')
     parser.add_argument('--no-restart', dest='no_restart', action='store_true')
