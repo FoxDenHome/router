@@ -56,7 +56,6 @@ RouteMetric={{ route_metric }}
 UseDNS=no
 UseNTP=no
 UseHostname=no
-UseDomains=no
 PrefixDelegationHint=::/{{ dhcpv6 }}
 RouteMetric={{ route_metric }}
 {% endif %}
@@ -68,7 +67,6 @@ UseDomains=no
 {% if dhcpv6 %}
 DHCPv6Client=always
 {% endif %}
-RouteMetric={{ route_metric }}
 {% endif %}
 
 {% if iface|dict_get_deep("cfg.addresses.v6.send_ra", False) %}
