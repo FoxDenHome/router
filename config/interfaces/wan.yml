@@ -2,4 +2,4 @@ networks:
 - WAN
 name: WAN
 interfaces:
-- 10g2
+- eth0

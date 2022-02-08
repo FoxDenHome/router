@@ -7,4 +7,4 @@ networks:
 - Hypervisor
 name: Internal
 interfaces:
-- 10g1
+- eth1
