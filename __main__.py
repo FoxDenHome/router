@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from argparse import ArgumentParser
+from services.keepalived import KeepalivedService
 from utils import set_file_target_prefix
 from os import chdir
 from os.path import dirname
@@ -32,6 +33,7 @@ def run():
         IptablesService(),
         ResolvedService(),
         TimesyncdService(),
+        KeepalivedService(),
     ]
 
     is_valid = True
