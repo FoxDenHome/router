@@ -76,6 +76,8 @@ class NetworkConfigbuilder():
             networks = interface["networks"]
 
             native_network = config_get_network_by_name(networks[0])
+            bridge_id_name = f"br-{native_network['group'].lower()}" if "group" in native_network else None
+
             if len(networks) == 1:
                 if "group" in native_network:
                     cfg = {
@@ -83,7 +85,7 @@ class NetworkConfigbuilder():
                         "mtu": self.get_mtu(native_network),
                         "pvid": native_network["vlan_id"],
                         "vlans": [native_network["vlan_id"]],
-                        "bridge": native_network["group"],
+                        "bridge": bridge_id_name,
                     }
                 else:
                     cfg = self.make_network_config(native_network)
@@ -92,19 +94,18 @@ class NetworkConfigbuilder():
                 cfg = {
                     "type": "trunk",
                     "mtu": self.get_mtu(native_network),
-                    "bridge": native_network["group"],
+                    "bridge": bridge_id_name,
                     "pvid": native_network["vlan_id"],
                     "vlans": [config_get_network_by_name(network)["vlan_id"] for network in networks],
                 }
 
             for iface in interface["interfaces"]:
                 if "bridge" in cfg:
-                    ports = bridge_port_arrays[cfg["bridge"]]
+                    ports = network_interfaces_computed[cfg["bridge"]]["ports"]
                     if iface not in ports:
                         ports.append(iface)
-                else:
-                    for network in networks:
-                        network_map[network].append(iface)
+                for network in networks:
+                    network_map[network].append(iface)
                 network_interfaces_computed[iface] = cfg
 
         return {
