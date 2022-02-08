@@ -4,7 +4,7 @@
 Name={{ custom.ifname }}
 
 [Link]
-MTUBytes={{ iface|dict_get_deep("cfg.mtu", 1500) }}
+MTUBytes={{ iface.mtu }}
 
 [Network]
 {% for ip in iface|dict_get_deep("cfg.addresses.v4.static", []) + iface|dict_get_deep("cfg.addresses.v6.static", []) %}
