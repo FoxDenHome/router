@@ -80,6 +80,8 @@ Announce=yes
 VLAN={{ vlan }}
 {% if vlan == iface.pvid %}
 PVID={{ vlan }}
+{% if iface.bridge %}
 EgressUntagged={{ vlan }}
+{% endif %}
 {% endif %}
 {% endfor %}
