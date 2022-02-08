@@ -14,7 +14,13 @@ def run():
     parser = ArgumentParser()
     parser.add_argument('--prefix', dest='prefix', default='')
     parser.add_argument('--no-restart', dest='no_restart', action='store_true')
+    parser.add_argument('--dry-run', dest='dry_run', action='store_true')
     args = parser.parse_args()
+
+    if args.dry_run:
+        args.prefix = "./tmp"
+        args.no_restart = True
+
     set_file_target_prefix(args.prefix)
 
     services = [
