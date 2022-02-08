@@ -80,5 +80,6 @@ Announce=yes
 VLAN={{ vlan }}
 {% if vlan == iface.pvid %}
 PVID={{ vlan }}
+EgressUntagged={{ vlan }}
 {% endif %}
 {% endfor %}
