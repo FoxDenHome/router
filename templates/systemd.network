@@ -41,6 +41,7 @@ IPv6SendRA=yes
 {% endif %}
 
 ConfigureWithoutCarrier=yes
+IPForward=yes
 
 [DHCPv4]
 UseDNS=no
