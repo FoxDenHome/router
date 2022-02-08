@@ -15,6 +15,10 @@ Address={{ ip }}
 VLAN={{ port }}
 {% endfor %}
 
+{% if iface.bridge %}
+Bridge={{ iface.bridge }}
+{% endif %}
+
 {% set route_metric = iface|dict_get_deep("cfg.metric", 100) %}
 {% set dhcpv4 = iface|dict_get_deep("cfg.addresses.v4.dhcp_client", False) %}
 {% set dhcpv6 = iface|dict_get_deep("cfg.addresses.v6.request_prefix", False) %}
