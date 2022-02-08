@@ -36,7 +36,7 @@ DHCP=no
 IPv6AcceptRA={{ "yes" if accept_ra else "no" }}
 
 {% if iface|dict_get_deep("cfg.addresses.v6.prefix_id", None) %}
-DHCPPrefixDelegation=yes
+DHCPv6PrefixDelegation=yes
 IPv6SendRA=yes
 {% endif %}
 
