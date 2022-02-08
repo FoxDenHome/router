@@ -36,11 +36,17 @@ def config_load_folder(folder, config=None):
             config_load_folder(f, config)
     return config    
 
+def config_merge(list):
+    result = {}
+    for item in list:
+        result.update(item)
+    return result
+
 def config_load_all():
     networks = config_load_folder("config/networks")
     interfaces = config_load_folder("config/interfaces")
     hosts = config_load_folder("config/hosts")
-    system = config_load_folder("config/system")
+    system = config_merge(config_load_folder("config/system"))
 
     rulesArray = config_load_folder("config/rules")
     rules = []
