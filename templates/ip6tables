@@ -33,6 +33,8 @@ COMMIT
 -A INPUT -m state --state related,established -j ACCEPT
 -A INPUT -i lo -j ACCEPT
 -A INPUT -p icmpv6 -j ACCEPT
+-A INPUT -p udp --dport 546 -j ACCEPT
+-A INPUT -p udp --dport 547 -j ACCEPT
 {% for rule in RULES if rule.action.filter is defined and rule.to.local %}
 {{ caller.make_rules(rule, rule.action.filter, "INPUT", caller.V6ONLY) }}
 {% endfor %}
