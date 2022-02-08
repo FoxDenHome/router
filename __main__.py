@@ -2,7 +2,6 @@
 
 from argparse import ArgumentParser
 
-from parso import parse
 from utils import set_file_target_prefix
 
 from services.dhcpd import DhcpdService
