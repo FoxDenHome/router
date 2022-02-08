@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 from argparse import ArgumentParser
+
+from parso import parse
 from utils import set_file_target_prefix
 
 from services.dhcpd import DhcpdService
@@ -12,6 +14,7 @@ from services.timesyncd import TimesyncdService
 def run():
     parser = ArgumentParser()
     parser.add_argument('--prefix', dest='prefix', default='')
+    parser.add_argument('--no-restart', dest='no_restart', action='store_true')
     args = parser.parse_args()
     set_file_target_prefix(args.prefix)
 
@@ -35,8 +38,9 @@ def run():
     for service in services:
         service.configure()
 
-    #for service in services:
-    #    service.restart_if_needed()
+    if not args.no_restart:
+        for service in services:
+            service.restart_if_needed()
 
     print("All done!")
 
