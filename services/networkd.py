@@ -1,6 +1,4 @@
-from config import config_get_all, config_get_network_by_name
 from service import ServiceTemplate, SystemdService
-from utils import dict_get_deep
 from network import NETWORK_CONFIG
 
 class NetworkdService(SystemdService):
@@ -23,4 +21,3 @@ class NetworkdService(SystemdService):
             tpl = ServiceTemplate("systemd.network", f"/etc/systemd/network/99-{ifname}.network")
             if tpl.render(custom=data, caller=self):
                 self.needs_restart = True
-

@@ -6,6 +6,8 @@ from utils import set_file_target_prefix
 from services.dhcpd import DhcpdService
 from services.networkd import NetworkdService
 from services.iptables import IptablesService
+from services.resolved import ResolvedService
+from services.timedated import TimedatedService
 
 def run():
     parser = ArgumentParser()
@@ -17,6 +19,8 @@ def run():
         DhcpdService(),
         NetworkdService(),
         IptablesService(),
+        ResolvedService(),
+        TimedatedService(),
     ]
 
     is_valid = True
