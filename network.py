@@ -63,7 +63,7 @@ class NetworkConfigbuilder():
                 network_interfaces_computed[bridge_id_name] = cfg
                 network_map[network["name"]].append(bridge_id_name)
             else:
-                vlan_id_name = f"vlan-{network['name']}"
+                vlan_id_name = f"vlan-{network['name'].lower()}"
                 cfg = self.make_network_config(network)
                 cfg["pvid"] = network["vlan_id"]
                 cfg["type"] = "vlan"
