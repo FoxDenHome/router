@@ -104,8 +104,9 @@ class NetworkConfigbuilder():
                     ports = network_interfaces_computed[cfg["bridge"]]["ports"]
                     if iface not in ports:
                         ports.append(iface)
-                for network in networks:
-                    network_map[network].append(iface)
+                else:
+                    for network in networks:
+                        network_map[network].append(iface)
                 network_interfaces_computed[iface] = cfg
 
         return {
