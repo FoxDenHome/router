@@ -57,7 +57,7 @@ UseDNS=no
 UseNTP=no
 UseHostname=no
 UseDomains=no
-PrefixDelegationHint={{ dhcpv6 }}
+PrefixDelegationHint=::/{{ dhcpv6 }}
 RouteMetric={{ route_metric }}
 {% endif %}
 

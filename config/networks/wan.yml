@@ -5,5 +5,5 @@ addresses:
     dhcp_client: true
   v6:
     accept_ra: true
-    request_prefix: true
+    request_prefix: 56
   
