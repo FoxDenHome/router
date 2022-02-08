@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 from utils import set_file_target_prefix
 
 from services.dhcpd import DhcpdService
-from services.ifupdown2 import IfUpDown2Service
+from services.networkd import NetworkdService
 from services.iptables import IptablesService
 
 def run():
@@ -15,7 +15,7 @@ def run():
 
     services = [
         DhcpdService(),
-        IfUpDown2Service(),
+        NetworkdService(),
         IptablesService(),
     ]
 
