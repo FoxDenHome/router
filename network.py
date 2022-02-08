@@ -22,7 +22,6 @@ class NetworkConfigbuilder():
 
         network_interfaces_computed = {}
 
-        bridge_port_arrays = {}
         network_groups_computed = {}
 
         network_map = {}
@@ -56,7 +55,6 @@ class NetworkConfigbuilder():
                 cfg = self.make_network_config(network)
                 cfg["vlan_aware"] = True
                 cfg["ports"] = ports
-                bridge_port_arrays[group] = cfg["ports"]
                 cfg["pvid"] = network["vlan_id"]
                 cfg["vlans"] = network_groups_computed[group]["vlans"]
                 cfg["type"] = "bridge"
