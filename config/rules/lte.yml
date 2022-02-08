@@ -1,6 +1,7 @@
 rules:
 - from:
-    all: true
+    addresses:
+    - 0.0.0.0/0
   to:
     networks:
     - LTE
