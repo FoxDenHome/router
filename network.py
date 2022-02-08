@@ -13,6 +13,7 @@ class NetworkConfigbuilder():
             "addresses": dict_get_deep(network, "addresses.v4.static", []) + dict_get_deep(network, "addresses.v6.static", []),
             "network": network["name"],
             "cfg": network,
+            "mtu": self.get_mtu(network),
         }
         return cfg
 
