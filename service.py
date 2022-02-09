@@ -49,6 +49,8 @@ class Service():
     def remove_extra_files(self):
         for file in self.extra_files:
             unlink(file)
+        if self.extra_files:
+            self.needs_restart = True
         self.extra_files = []
 
     def restart_if_needed(self):
