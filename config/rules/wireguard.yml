@@ -1,0 +1,19 @@
+rules:
+- from:
+    networks:
+    - WireGuard
+    addresses:
+    - 10.100.10.0/24
+  to:
+    all: true
+  action:
+    filter: ACCEPT
+rules:
+- from:
+    all: true
+  to:
+    local: true
+    port: 13231
+  protocol: udp
+  action:
+    filter: ACCEPT
