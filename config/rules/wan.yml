@@ -4,6 +4,6 @@ rules:
   to:
     networks:
     - WAN
-  action:
+  actions:
     filter: ACCEPT
     nat: MASQUERADE

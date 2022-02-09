@@ -1,7 +1,7 @@
 *mangle
 :POSTROUTING ACCEPT [0:0]
-{% for rule in RULES if rule.action.mangle is defined %}
-{{ caller.make_rules(rule, rule.action.mangle, "POSTROUTING", caller.V4ONLY) }}
+{% for rule in RULES if rule.actions.mangle is defined %}
+{{ caller.make_rules(rule, rule.actions.mangle, "POSTROUTING", caller.V4ONLY) }}
 {% endfor %}
 
 COMMIT
@@ -10,8 +10,8 @@ COMMIT
 
 *nat
 :PREROUTING ACCEPT [0:0]
-{% for rule in RULES if rule.action.nat is defined and rule.action.nat == "DNAT" %}
-{{ caller.make_rules(rule, rule.action.nat, "PREROUTING", caller.V4ONLY) }}
+{% for rule in RULES if rule.actions.nat is defined and rule.actions.nat == "DNAT" %}
+{{ caller.make_rules(rule, rule.actions.nat, "PREROUTING", caller.V4ONLY) }}
 {% endfor %}
 
 :INPUT ACCEPT [0:0]
@@ -19,8 +19,8 @@ COMMIT
 :OUTPUT ACCEPT [0:0]
 
 :POSTROUTING ACCEPT [0:0]
-{% for rule in RULES if rule.action.nat is defined and rule.action.nat != "DNAT" %}
-{{ caller.make_rules(rule, rule.action.nat, "POSTROUTING", caller.V4ONLY) }}
+{% for rule in RULES if rule.actions.nat is defined and rule.actions.nat != "DNAT" %}
+{{ caller.make_rules(rule, rule.actions.nat, "POSTROUTING", caller.V4ONLY) }}
 {% endfor %}
 
 COMMIT
@@ -32,14 +32,14 @@ COMMIT
 :INPUT ACCEPT [0:0]
 -A INPUT -m state --state related,established -j ACCEPT
 -A INPUT -i lo -j ACCEPT
-{% for rule in RULES if rule.action.filter is defined and rule.to.local %}
-{{ caller.make_rules(rule, rule.action.filter, "INPUT", caller.V4ONLY) }}
+{% for rule in RULES if rule.actions.filter is defined and rule.to.local %}
+{{ caller.make_rules(rule, rule.actions.filter, "INPUT", caller.V4ONLY) }}
 {% endfor %}
 
 :FORWARD DROP [0:0]
 -A FORWARD -m state --state related,established -j ACCEPT
-{% for rule in RULES if rule.action.filter is defined and not rule.to.local %}
-{{ caller.make_rules(rule, rule.action.filter, "FORWARD", caller.V4ONLY) }}
+{% for rule in RULES if rule.actions.filter is defined and not rule.to.local %}
+{{ caller.make_rules(rule, rule.actions.filter, "FORWARD", caller.V4ONLY) }}
 {% endfor %}
 
 :OUTPUT ACCEPT [0:0]

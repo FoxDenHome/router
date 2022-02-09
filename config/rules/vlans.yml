@@ -4,12 +4,12 @@ rules:
     - MGMT
   to:
     all: true
-  action:
+  actions:
     filter: ACCEPT
 - from:
     all: true
   to:
     networks:
     - DMZ
-  action:
+  actions:
     filter: ACCEPT

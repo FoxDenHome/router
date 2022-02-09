@@ -5,7 +5,7 @@ rules:
   to:
     networks:
     - LTE
-  action:
+  actions:
     nat: MASQUERADE
     mangle: TTL --ttl-set 65
 - from:
@@ -16,5 +16,5 @@ rules:
   to:
     networks:
     - LTE
-  action:
+  actions:
     filter: ACCEPT

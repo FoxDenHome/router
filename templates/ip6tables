@@ -1,7 +1,7 @@
 *mangle
 :POSTROUTING ACCEPT [0:0]
-{% for rule in RULES if rule.action.mangle is defined %}
-{{ caller.make_rules(rule, rule.action.mangle, "POSTROUTING", caller.V6ONLY) }}
+{% for rule in RULES if rule.actions.mangle is defined %}
+{{ caller.make_rules(rule, rule.actions.mangle, "POSTROUTING", caller.V6ONLY) }}
 {% endfor %}
 
 COMMIT
@@ -13,14 +13,14 @@ COMMIT
 :INPUT ACCEPT [0:0]
 -A INPUT -m state --state related,established -j ACCEPT
 -A INPUT -i lo -j ACCEPT
-{% for rule in RULES if rule.action.filter is defined and rule.to.local %}
-{{ caller.make_rules(rule, rule.action.filter, "INPUT", caller.V6ONLY) }}
+{% for rule in RULES if rule.actions.filter is defined and rule.to.local %}
+{{ caller.make_rules(rule, rule.actions.filter, "INPUT", caller.V6ONLY) }}
 {% endfor %}
 
 :FORWARD DROP [0:0]
 -A FORWARD -m state --state related,established -j ACCEPT
-{% for rule in RULES if rule.action.filter is defined and not rule.to.local %}
-{{ caller.make_rules(rule, rule.action.filter, "FORWARD", caller.V6ONLY) }}
+{% for rule in RULES if rule.actions.filter is defined and not rule.to.local %}
+{{ caller.make_rules(rule, rule.actions.filter, "FORWARD", caller.V6ONLY) }}
 {% endfor %}
 
 :OUTPUT ACCEPT [0:0]

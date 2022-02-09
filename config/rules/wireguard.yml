@@ -6,7 +6,7 @@ rules:
     - 10.100.10.0/24
   to:
     all: true
-  action:
+  actions:
     filter: ACCEPT
 - from:
     all: true
@@ -16,5 +16,5 @@ rules:
     - 13231
   protocols:
   - udp
-  action:
+  actions:
     filter: ACCEPT
