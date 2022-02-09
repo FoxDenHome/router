@@ -1,4 +1,5 @@
 Features:
+- Configure DNS server with hosts
 - WAN failover
 - Use multiport rule in filters if useful
 - Better network interface planner (maybe avoid bridges unless necessary?)
