@@ -1,7 +1,5 @@
-from os.path import exists
-from ntpath import join
+from os.path import exists, abspath, join
 from os import listdir, unlink
-from posixpath import abspath
 from subprocess import check_call
 from templates import render_template
 from utils import prefix_file_path
