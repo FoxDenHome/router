@@ -35,14 +35,22 @@ class IptablesService(SystemdService):
 
         rule = []
         for net in networks:
+            local_prefix = prefix
+            if net[0] == "!":
+                net = net[1:]
+                local_prefix = f"! {prefix}"
             for iface in network_map[net]:
-                rule.append(f"{prefix} {iface}")
+                rule.append(f"{local_prefix} {iface}")
         return rule
 
-    def make_map_direct(self, addresses, prefix):
-        rule = []
-        for addr in addresses:
-            rule.append(f"{prefix} {addr}")
+    def make_map_direct(self, targets, prefix, rule=None):
+        if rule is None:
+            rule = []
+        for target in targets:
+            if target[0] == "!":
+                rule.append(f"! {prefix} {target[1:]}")
+            else:
+                rule.append(f"{prefix} {target}")
         return rule
 
     def permutate_all(self, chain, offset=0):

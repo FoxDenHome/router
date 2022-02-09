@@ -1,5 +1,6 @@
 Features:
-- WireGuard
 - WAN failover
+- Better network interface planner (maybe avoid bridges unless necessary?)
 Config:
 - Port forwarding
+- WireGuard peers
