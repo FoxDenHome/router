@@ -1,7 +1,8 @@
 from yaml import safe_load as yaml_load
-from os.path import dirname, join, isfile, isdir, relpath, abspath
+from os.path import dirname, join, isfile, isdir, relpath
 from os import listdir
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from mergedeep import merge, Strategy
 
 CONFIG_DIR = "./config"
 
@@ -38,8 +39,7 @@ def config_load_folder(folder, config=None):
 
 def config_merge(list):
     result = {}
-    for item in list:
-        result.update(item)
+    merge(result, *list, strategy=Strategy.TYPESAFE_ADDITIVE)
     return result
 
 def config_load_all():
