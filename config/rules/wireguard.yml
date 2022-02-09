@@ -12,7 +12,7 @@ rules:
     all: true
   to:
     local: true
-    port: 13231
+    ports: 13231
   protocol: udp
   action:
     filter: ACCEPT
