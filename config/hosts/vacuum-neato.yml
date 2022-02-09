@@ -1,6 +1,5 @@
 addresses:
-  ipv4:
-    static: 10.2.12.9
+  ipv4: 10.2.12.9
   mac: 40:BD:32:95:26:C0
 name: vacuum-neato
 network: LAN

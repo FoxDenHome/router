@@ -1,6 +1,5 @@
 addresses:
-  ipv4:
-    static: 10.1.10.2
+  ipv4: 10.1.10.2
   mac: 24:5A:4C:A6:6B:9A
 name: switch-rack
 network: MGMT

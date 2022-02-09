@@ -1,6 +1,5 @@
 addresses:
-  ipv4:
-    static: 10.6.11.1
+  ipv4: 10.6.11.1
   mac: 02:42:C0:A8:04:17
 name: prometheus
 network: Hypervisor

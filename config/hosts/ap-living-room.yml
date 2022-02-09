@@ -1,6 +1,5 @@
 addresses:
-  ipv4:
-    static: 10.1.10.6
+  ipv4: 10.1.10.6
   mac: 68:D7:9A:1F:57:E2
 name: ap-living-room
 network: MGMT

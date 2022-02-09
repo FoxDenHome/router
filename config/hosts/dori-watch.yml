@@ -1,6 +1,5 @@
 addresses:
-  ipv4:
-    static: 10.2.14.2
+  ipv4: 10.2.14.2
   mac: EA:49:8F:A3:91:E5
 name: dori-watch
 network: LAN

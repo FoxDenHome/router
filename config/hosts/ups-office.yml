@@ -1,6 +1,5 @@
 addresses:
-  ipv4:
-    static: 10.1.11.3
+  ipv4: 10.1.11.3
   mac: 00:0C:15:04:39:93
 name: ups-office
 network: MGMT

@@ -1,6 +1,5 @@
 addresses:
-  ipv4:
-    static: 10.2.12.5
+  ipv4: 10.2.12.5
   mac: 94:EA:32:84:DB:90
 name: homepod-bedroom
 network: LAN

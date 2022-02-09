@@ -1,6 +1,5 @@
 addresses:
-  ipv4:
-    static: 10.3.10.3
+  ipv4: 10.3.10.3
   mac: 00:16:3E:CA:7E:02
 name: ut2004
 network: DMZ

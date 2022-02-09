@@ -1,6 +1,5 @@
 addresses:
-  ipv4:
-    static: 10.5.10.1
+  ipv4: 10.5.10.1
   mac: 68:D7:9A:CF:30:09
 name: camera-living-room
 network: Security

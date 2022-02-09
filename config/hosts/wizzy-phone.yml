@@ -1,6 +1,5 @@
 addresses:
-  ipv4:
-    static: 10.2.14.3
+  ipv4: 10.2.14.3
   mac: 56:6C:5E:7A:0E:C7
 name: wizzy-phone
 network: LAN

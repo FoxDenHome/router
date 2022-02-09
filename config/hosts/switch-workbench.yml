@@ -1,6 +1,5 @@
 addresses:
-  ipv4:
-    static: 10.1.10.5
+  ipv4: 10.1.10.5
   mac: 74:83:C2:FF:87:16
 name: switch-workbench
 network: MGMT

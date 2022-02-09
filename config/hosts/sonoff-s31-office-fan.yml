@@ -1,6 +1,5 @@
 addresses:
-  ipv4:
-    static: 10.2.13.2
+  ipv4: 10.2.13.2
   mac: 8C:AA:B5:66:12:00
 name: sonoff-s31-office-fan
 network: LAN

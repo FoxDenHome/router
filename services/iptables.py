@@ -1,3 +1,4 @@
+from math import perm
 from config import config_get_host_by_name
 from network import NETWORK_CONFIG
 from service import ServiceTemplate, SystemdService
@@ -59,12 +60,16 @@ class IptablesService(SystemdService):
             return [""]
 
         next_offset = offset + 1
-        if len(chain[offset]) < 1:
+        ch = chain[offset]
+        if ch is None:
+            return []
+
+        if len(ch) < 1:
             return self.permutate_all(chain, next_offset)
 
         result = []
 
-        for c in chain[offset]:
+        for c in ch:
             for subc in self.permutate_all(chain, next_offset):
                 result.append(f"{c} {subc}")
 
@@ -77,6 +82,51 @@ class IptablesService(SystemdService):
             address_filter = address_is_ipv6
         return self.make_rules_int(rule, action, chain, address_filter)
 
+    def make_rules_host_net_address(self, rule, prefix, iface_matcher, address_matcher, address_filter):
+        permutation_chain = []
+    
+        permutation_chain.append(
+            self.make_map_networks(dict_get_deep(rule, f"{prefix}.networks", []), iface_matcher)
+        )
+
+        addresses_no = False
+        hosts_no = False
+
+        addrs = dict_get_deep(rule, f"{prefix}.addresses", [])
+        filtered_addrs = [addr for addr in addrs if address_filter(addr)]
+        if len(addrs) >= 1 and len(filtered_addrs) < 1:
+            addresses_no = True
+        permutation_chain.append(
+            self.make_map_direct(filtered_addrs, address_matcher)
+        )
+
+        res1 = self.permutate_all(permutation_chain)
+        permutation_chain = []
+
+        res2 = []
+        used_hosts = 0
+        hosts = dict_get_deep(rule, f"{prefix}.hosts", [])
+        for host in hosts:
+            permutation_chain = []
+            permutation_chain.append(
+                self.make_map_networks([host["network"]], iface_matcher)
+            )
+            addrs = self.resolve_host(host)
+            filtered_addrs = [addr for addr in addrs if address_filter(addr)]
+            if len(filtered_addrs) > 0:
+                used_hosts += 1
+            permutation_chain.append(
+                self.make_map_direct(filtered_addrs, address_matcher)
+            )
+            res2 += self.permutate_all(permutation_chain)
+
+        hosts_no = len(hosts) > 0 and used_hosts < 1
+
+        if addresses_no and hosts_no:
+            return None
+
+        return res1 + res2
+
     def make_rules_int(self, rule, action, chain, address_filter):
         if not action:
             return ""
@@ -88,18 +138,9 @@ class IptablesService(SystemdService):
         )
 
         if not dict_get_deep(rule, "from.all", False):
+            res = self.make_rules_host_net_address(rule, "from", "-i", "-s", address_filter)
             permutation_chain.append(
-                self.make_map_networks(dict_get_deep(rule, "from.networks", []), "-i")
-            )
-
-            addrs = dict_get_deep(rule, "from.addresses", [])
-            for host in dict_get_deep(rule, "from.hosts", []):
-                addrs += self.resolve_host(host)
-            filtered_addrs = [addr for addr in addrs if address_filter(addr)]
-            if len(addrs) >= 1 and len(filtered_addrs) < 1:
-                return ""
-            permutation_chain.append(
-                self.make_map_direct(filtered_addrs, "-s")
+                res
             )
 
             permutation_chain.append(
@@ -108,17 +149,7 @@ class IptablesService(SystemdService):
 
         if not dict_get_deep(rule, "to.all", False):
             permutation_chain.append(
-                self.make_map_networks(dict_get_deep(rule, "to.networks", []), "-o")
-            )
-
-            addrs = dict_get_deep(rule, "to.addresses", [])
-            for host in dict_get_deep(rule, "to.hosts", []):
-                addrs += self.resolve_host(host)
-            filtered_addrs = [addr for addr in addrs if address_filter(addr)]
-            if len(addrs) >= 1 and len(filtered_addrs) < 1:
-                return ""
-            permutation_chain.append(
-                self.make_map_direct(filtered_addrs, "-d")
+                self.make_rules_host_net_address(rule, "from", "-o", "-d", address_filter)
             )
 
             permutation_chain.append(
