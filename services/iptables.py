@@ -71,7 +71,7 @@ class IptablesService(SystemdService):
 
         for c in ch:
             for subc in self.permutate_all(chain, next_offset):
-                result.append(f"{c} {subc}")
+                result.append(f"{c} {subc}".strip())
 
         return result
 
@@ -148,7 +148,7 @@ class IptablesService(SystemdService):
             )
 
         if not dict_get_deep(rule, "to.all", False):
-            res = self.make_rules_host_net_address(rule, "from", "-o", "-d", address_filter)
+            res = self.make_rules_host_net_address(rule, "to", "-o", "-d", address_filter)
             if res is None:
                 return ""
             permutation_chain.append(res)
