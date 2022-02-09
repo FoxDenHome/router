@@ -39,7 +39,7 @@ class Service():
         self.extra_files = set(abspath(join(dir, file)) for file in listdir(dir) if file[0] != "." and matcher(dir, file))
 
     def render_template(self, tpl, custom=None):
-        self.extra_files.remove(abspath(tpl.target))
+        self.extra_files.discard(abspath(tpl.target))
         return render_template(tpl, custom=custom, caller=self)
 
     def remove_extra_files(self):
