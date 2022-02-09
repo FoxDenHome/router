@@ -102,6 +102,7 @@ class NetworkConfigbuilder():
 
             cfg["phytype"] = iface_type
             cfg["root"] = interface
+            cfg["cfg"] = native_network
 
             for iface in interface["interfaces"]:
                 if "bridge" in cfg:
