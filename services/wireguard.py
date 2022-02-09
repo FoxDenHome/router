@@ -17,6 +17,6 @@ class WireguardService(SystemdService):
                 "ifname": ifname,
                 "iface": iface,
             }
-            tpl = ServiceTemplate("wireguard.conf", f"/etc/wg-quick/{ifname}.conf")
+            tpl = ServiceTemplate("wireguard.conf", f"/etc/wireguard/{ifname}.conf")
             if tpl.render(custom=data, caller=self):
                 self.needs_restart = True
