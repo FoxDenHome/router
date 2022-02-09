@@ -139,18 +139,19 @@ class IptablesService(SystemdService):
 
         if not dict_get_deep(rule, "from.all", False):
             res = self.make_rules_host_net_address(rule, "from", "-i", "-s", address_filter)
-            permutation_chain.append(
-                res
-            )
+            if res is None:
+                return ""
+            permutation_chain.append(res)
 
             permutation_chain.append(
                 self.make_map_direct(dict_get_deep(rule, "from.ports", []), "--sport")
             )
 
         if not dict_get_deep(rule, "to.all", False):
-            permutation_chain.append(
-                self.make_rules_host_net_address(rule, "from", "-o", "-d", address_filter)
-            )
+            res = self.make_rules_host_net_address(rule, "from", "-o", "-d", address_filter)
+            if res is None:
+                return ""
+            permutation_chain.append(res)
 
             permutation_chain.append(
                 self.make_map_direct(dict_get_deep(rule, "to.ports", []), "--dport")
