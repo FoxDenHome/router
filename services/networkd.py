@@ -6,10 +6,10 @@ class NetworkdService(SystemdService):
         super().__init__("systemd-networkd", [])
 
     def configure(self):
-        custom = self.custom_template_data()
-
-        templates = []
         for ifname, iface in NETWORK_CONFIG["interfaces"].items():
+            if iface["phytype"] != "ethernet":
+                continue
+
             data = {
                 "ifname": ifname,
                 "iface": iface,

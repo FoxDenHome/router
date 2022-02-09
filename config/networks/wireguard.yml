@@ -1,0 +1,5 @@
+name: WireGuard
+addresses:
+  v4:
+    static:
+    - 10.100.0.1/16

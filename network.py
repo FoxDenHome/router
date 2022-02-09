@@ -13,6 +13,7 @@ class NetworkConfigbuilder():
             "addresses": dict_get_deep(network, "addresses.v4.static", []) + dict_get_deep(network, "addresses.v6.static", []),
             "network": network["name"],
             "cfg": network,
+            "phytype": "ethernet",
             "mtu": self.get_mtu(network),
         }
         return cfg
@@ -71,6 +72,8 @@ class NetworkConfigbuilder():
                 network_map[network["name"]].append(vlan_id_name)
 
         for interface in config["INTERFACES"]:
+            iface_type = interface.get("type", "ethernet")
+            
             networks = interface["networks"]
 
             native_network = config_get_network_by_name(networks[0])
@@ -84,16 +87,19 @@ class NetworkConfigbuilder():
                         "pvid": native_network["vlan_id"],
                         "vlans": [native_network["vlan_id"]],
                         "bridge": bridge_id_name,
+                        "phytype": iface_type,
                     }
                 else:
                     cfg = self.make_network_config(native_network)
                     cfg["type"] = "standalone"
+                    cfg["phytype"] = iface_type
             else:
                 cfg = {
                     "type": "trunk",
                     "mtu": self.get_mtu(native_network),
                     "bridge": bridge_id_name,
                     "pvid": native_network["vlan_id"],
+                    "phytype": iface_type,
                     "vlans": [config_get_network_by_name(network)["vlan_id"] for network in networks],
                 }
 
