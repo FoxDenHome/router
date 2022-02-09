@@ -87,21 +87,21 @@ class NetworkConfigbuilder():
                         "pvid": native_network["vlan_id"],
                         "vlans": [native_network["vlan_id"]],
                         "bridge": bridge_id_name,
-                        "phytype": iface_type,
                     }
                 else:
                     cfg = self.make_network_config(native_network)
                     cfg["type"] = "standalone"
-                    cfg["phytype"] = iface_type
             else:
                 cfg = {
                     "type": "trunk",
                     "mtu": self.get_mtu(native_network),
                     "bridge": bridge_id_name,
                     "pvid": native_network["vlan_id"],
-                    "phytype": iface_type,
                     "vlans": [config_get_network_by_name(network)["vlan_id"] for network in networks],
                 }
+
+            cfg["phytype"] = iface_type
+            cfg["interfaces"] = interface["interfaces"]
 
             for iface in interface["interfaces"]:
                 if "bridge" in cfg:
