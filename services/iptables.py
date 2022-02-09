@@ -100,32 +100,31 @@ class IptablesService(SystemdService):
             self.make_map_direct(filtered_addrs, address_matcher)
         )
 
-        res1 = self.permutate_all(permutation_chain)
+        res_addresses = self.permutate_all(permutation_chain)
         permutation_chain = []
 
-        res2 = []
-        used_hosts = 0
+        res_hosts = []
         hosts = dict_get_deep(rule, f"{prefix}.hosts", [])
         for host in hosts:
             permutation_chain = []
+            addrs = self.resolve_host(host)
+            filtered_addrs = [addr for addr in addrs if address_filter(addr)]
+            if len(filtered_addrs) < 1:
+                continue
             permutation_chain.append(
                 self.make_map_networks([host["network"]], iface_matcher)
             )
-            addrs = self.resolve_host(host)
-            filtered_addrs = [addr for addr in addrs if address_filter(addr)]
-            if len(filtered_addrs) > 0:
-                used_hosts += 1
             permutation_chain.append(
                 self.make_map_direct(filtered_addrs, address_matcher)
             )
-            res2 += self.permutate_all(permutation_chain)
+            res_hosts += self.permutate_all(permutation_chain)
 
-        hosts_no = len(hosts) > 0 and used_hosts < 1
+        hosts_no = len(hosts) > 0 and len(res_hosts) < 1
 
-        if addresses_no and hosts_no:
+        if (addresses_no and len(res_hosts) < 1) or (hosts_no and len(res_addresses) < 1):
             return None
 
-        return res1 + res2
+        return res_addresses + res_hosts
 
     def make_rules_int(self, rule, action, chain, address_filter):
         if not action:
