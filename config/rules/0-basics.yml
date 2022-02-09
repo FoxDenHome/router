@@ -1,0 +1,61 @@
+rules:
+- from:
+    addresses:
+    - 0.0.0.0/0
+  to:
+    all: true
+  protocols:
+  - icmp
+  actions:
+    filter: accept
+- from:
+    addresses:
+    - ::/0
+  to:
+    all: true
+  protocols:
+  - icmpv6
+  actions:
+    filter: accept
+
+- from:
+    addresses:
+    - 0.0.0.0/0
+  to:
+    local: true
+  protocols:
+  - icmp
+  actions:
+    filter: accept
+- from:
+    addresses:
+    - ::/0
+  to:
+    local: true
+  protocols:
+  - icmpv6
+  actions:
+    filter: accept
+
+- from:
+    addresses: 0.0.0.0/0
+  to:
+    local: true
+    ports:
+    - 67
+    - 68
+  protocols:
+  - udp
+  actions:
+    filter: accept
+- from:
+    addresses: ::/0
+  to:
+    local: true
+    ports:
+    - 546
+    - 547
+  protocols:
+  - udp
+  actions:
+    filter: accept
