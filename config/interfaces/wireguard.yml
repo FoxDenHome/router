@@ -2,6 +2,8 @@ networks:
 - WireGuard
 name: FoxDen
 type: wireguard
+interfaces:
+- wg-foxden
 wireguard:
   port: 13231
   private_key: {{ "wireguard_private_key" | secret }}
