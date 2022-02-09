@@ -38,7 +38,8 @@ rules:
     filter: ACCEPT
 
 - from:
-    addresses: 0.0.0.0/0
+    addresses: 
+    - 0.0.0.0/0
   to:
     local: true
     ports:
@@ -49,7 +50,8 @@ rules:
   actions:
     filter: ACCEPT
 - from:
-    addresses: ::/0
+    addresses: 
+    - ::/0
   to:
     local: true
     ports:
