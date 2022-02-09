@@ -7,7 +7,7 @@ Name={{ custom.ifname }}
 MTUBytes={{ iface.mtu }}
 
 [Network]
-{% for ip in iface|dict_get_deep("network.addresses.v4.static", []) + iface|dict_get_deep("network.addresses.v6.static", []) %}
+{% for ip in iface.addresses %}
 Address={{ ip }}
 {% endfor %}
 
