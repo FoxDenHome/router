@@ -47,6 +47,7 @@ class IptablesService(SystemdService):
         if rule is None:
             rule = []
         for target in targets:
+            target = str(target)
             if target[0] == "!":
                 rule.append(f"! {prefix} {target[1:]}")
             else:
