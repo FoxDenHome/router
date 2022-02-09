@@ -11,6 +11,7 @@ from services.networkd import NetworkdService
 from services.iptables import IptablesService
 from services.resolved import ResolvedService
 from services.timesyncd import TimesyncdService
+from services.wireguard import WireguardService
 
 def run():
     chdir(dirname(__file__))
@@ -34,6 +35,7 @@ def run():
         ResolvedService(),
         TimesyncdService(),
         KeepalivedService(),
+        WireguardService(),
     ]
 
     is_valid = True
