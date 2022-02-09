@@ -1,4 +1,4 @@
 addresses:
   mac: 24:5A:4C:8A:23:3F
-  v4: 10.1.10.1
+  ipv4: 10.1.10.1
 name: unifi

@@ -1,4 +1,4 @@
 addresses:
   mac: 00:17:88:AC:31:4B
-  v4: 10.2.12.1
+  ipv4: 10.2.12.1
 name: hue

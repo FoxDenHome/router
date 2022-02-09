@@ -29,9 +29,9 @@ vrrp:
   id: 123
   priority: 50
 addresses:
-  v4:
+  ipv4:
     static:
     - 10.{{vlan_id}}.1.1/16
-  v6:
+  ipv6:
     prefix_id: {{vlan_id}}
     send_ra: true

@@ -1,4 +1,4 @@
 addresses:
   mac: EA:49:8F:A3:91:E5
-  v4: 10.2.14.2
+  ipv4: 10.2.14.2
 name: dori-watch

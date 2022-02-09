@@ -1,4 +1,4 @@
 addresses:
   mac: 00:02:C9:23:3C:E0
-  v4: 10.2.10.1
+  ipv4: 10.2.10.1
 name: fennec

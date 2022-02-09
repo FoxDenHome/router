@@ -1,4 +1,4 @@
 addresses:
   mac: 02:42:C0:A8:04:18
-  v4: 10.2.11.5
+  ipv4: 10.2.11.5
 name: grafana

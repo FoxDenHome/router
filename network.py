@@ -10,7 +10,7 @@ class NetworkConfigbuilder():
 
     def make_network_config(self, network):
         cfg = {
-            "addresses": dict_get_deep(network, "addresses.v4.static", []) + dict_get_deep(network, "addresses.v6.static", []),
+            "addresses": dict_get_deep(network, "addresses.ipv4.static", []) + dict_get_deep(network, "addresses.ipv6.static", []),
             "network": network,
             "phytype": "ethernet",
             "mtu": self.get_mtu(network),

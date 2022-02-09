@@ -1,4 +1,4 @@
 addresses:
   mac: EA:46:D1:B8:10:11
-  v4: 10.2.14.1
+  ipv4: 10.2.14.1
 name: dori-phone

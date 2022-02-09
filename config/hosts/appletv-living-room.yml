@@ -1,4 +1,4 @@
 addresses:
   mac: 58:D3:49:E4:02:2D
-  v4: 10.2.12.6
+  ipv4: 10.2.12.6
 name: appletv-living-room

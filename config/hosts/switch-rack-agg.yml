@@ -1,4 +1,4 @@
 addresses:
   mac: 24:5A:4C:56:41:C4
-  v4: 10.1.10.3
+  ipv4: 10.1.10.3
 name: switch-rack-agg

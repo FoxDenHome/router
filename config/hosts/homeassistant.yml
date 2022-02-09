@@ -1,4 +1,4 @@
 addresses:
   mac: E4:5F:01:62:2D:8E
-  v4: 10.2.12.2
+  ipv4: 10.2.12.2
 name: homeassistant

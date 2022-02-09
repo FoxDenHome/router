@@ -1,4 +1,4 @@
 addresses:
   mac: 00:16:3E:CA:7E:01
-  v4: 10.3.10.2
+  ipv4: 10.3.10.2
 name: minecraft

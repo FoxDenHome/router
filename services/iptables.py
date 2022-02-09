@@ -1,14 +1,14 @@
 from config import config_get_host_by_name
 from network import NETWORK_CONFIG
 from service import ServiceTemplate, SystemdService
-from utils import dict_get_deep, address_is_v4, address_is_v6
+from utils import dict_get_deep, address_is_ipv4, address_is_ipv6
 
 class IptablesService(SystemdService):
     IN = 1
     OUT = 2
 
-    V4ONLY = 1
-    V6ONLY = 2
+    IPV4ONLY = 1
+    IPV6ONLY = 2
 
     def __init__(self):
         super().__init__("iptables", [
@@ -18,15 +18,15 @@ class IptablesService(SystemdService):
 
     def resolve_host(self, name):
         host = config_get_host_by_name(name)
-        addr_v4 = dict_get_deep(host, "addresses.v4")
-        addr_v6 = dict_get_deep(host, "addresses.v6")
+        addr_ipv4 = dict_get_deep(host, "addresses.ipv4")
+        addr_ipv6 = dict_get_deep(host, "addresses.ipv6")
 
-        if addr_v4 and addr_v6:
-            return [addr_v4, addr_v6]
-        elif addr_v4:
-            return [addr_v4]
-        elif addr_v6:
-            return [addr_v6]
+        if addr_ipv4 and addr_ipv6:
+            return [addr_ipv4, addr_ipv6]
+        elif addr_ipv4:
+            return [addr_ipv4]
+        elif addr_ipv6:
+            return [addr_ipv6]
         else:
             raise ValueError(f"Host {name} has no addresses")
 
@@ -71,10 +71,10 @@ class IptablesService(SystemdService):
         return result
 
     def make_rules(self, rule, action, chain, address_filter):
-        if address_filter == self.V4ONLY:
-            address_filter = address_is_v4
-        elif address_filter == self.V6ONLY:
-            address_filter = address_is_v6
+        if address_filter == self.IPV4ONLY:
+            address_filter = address_is_ipv4
+        elif address_filter == self.IPV6ONLY:
+            address_filter = address_is_ipv6
         return self.make_rules_int(rule, action, chain, address_filter)
 
     def make_rules_int(self, rule, action, chain, address_filter):

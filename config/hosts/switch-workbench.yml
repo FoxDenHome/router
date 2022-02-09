@@ -1,4 +1,4 @@
 addresses:
   mac: 74:83:C2:FF:87:16
-  v4: 10.1.10.5
+  ipv4: 10.1.10.5
 name: switch-workbench

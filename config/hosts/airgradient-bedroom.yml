@@ -1,4 +1,4 @@
 addresses:
   mac: AC:0B:FB:D0:2A:63
-  v4: 10.2.13.7
+  ipv4: 10.2.13.7
 name: airgradient-bedroom

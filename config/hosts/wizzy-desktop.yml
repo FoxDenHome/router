@@ -1,4 +1,4 @@
 addresses:
   mac: EC:0D:9A:21:DF:70
-  v4: 10.2.10.2
+  ipv4: 10.2.10.2
 name: wizzy-desktop

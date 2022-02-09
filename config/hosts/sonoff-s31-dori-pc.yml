@@ -1,4 +1,4 @@
 addresses:
   mac: 8C:AA:B5:66:3D:81
-  v4: 10.2.13.8
+  ipv4: 10.2.13.8
 name: sonoff-s31-dori-pc

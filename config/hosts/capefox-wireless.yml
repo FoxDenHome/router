@@ -1,4 +1,4 @@
 addresses:
   mac: F0:2F:4B:14:84:F4
-  v4: 10.2.10.3
+  ipv4: 10.2.10.3
 name: capefox-wireless

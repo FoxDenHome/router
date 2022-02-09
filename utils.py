@@ -74,9 +74,9 @@ def write_if_different(file, content):
     return True
 
 # TODO: This is bad...
-def address_is_v4(address):
+def address_is_ipv4(address):
     return "." in address
 
 # TODO: This is bad...
-def address_is_v6(address):
+def address_is_ipv6(address):
     return ":" in address

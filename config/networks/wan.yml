@@ -1,9 +1,9 @@
 name: WAN
 metric: 110
 addresses:
-  v4: 
+  ipv4: 
     dhcp_client: true
-  v6:
+  ipv6:
     accept_ra: true
     request_prefix: 56
   
