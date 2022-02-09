@@ -13,13 +13,13 @@ class WireguardService(SystemdService):
             if iface["type"] != "standalone":
                 raise Exception("Wireguard only supports standalone interfaces")
 
-            if len(iface["interfaces"]) != 1:
+            if len(iface["root"]["interfaces"]) != 1:
                 raise Exception("Wireguard only supports exactly one interface per interface")
 
             data = {
                 "ifname": ifname,
                 "iface": iface,
             }
-            tpl = ServiceTemplate("wireguard.conf", f"/etc/wg-quick/{iface['interfaces'][0]}.conf")
+            tpl = ServiceTemplate("wireguard.conf", f"/etc/wg-quick/{iface['root']['interfaces'][0]}.conf")
             if tpl.render(custom=data, caller=self):
                 self.needs_restart = True
