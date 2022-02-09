@@ -9,8 +9,7 @@ COMMIT
 
 
 *filter
-# Input accept all for now, need better rules later
-:INPUT ACCEPT [0:0]
+:INPUT DROP [0:0]
 -A INPUT -m state --state related,established -j ACCEPT
 -A INPUT -i lo -j ACCEPT
 {% for rule in RULES if rule.actions.filter is defined and rule.to.local %}
