@@ -54,12 +54,12 @@ def set_file_target_prefix(prefix):
     global FILE_TARGET_PREFIX
     FILE_TARGET_PREFIX = prefix
 
-def get_file_target_prefix():
-    return FILE_TARGET_PREFIX
+def prefix_file_path(path):
+    return FILE_TARGET_PREFIX + path # We do not use path.join on purpose here!
 
 def write_if_different(file, content):
     content = content.encode("utf8")
-    file = FILE_TARGET_PREFIX + file # We do not use path.join on purpose here!
+    file = prefix_file_path(file)
     makedirs(dirname(file), exist_ok=True)
 
     try:

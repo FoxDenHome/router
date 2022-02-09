@@ -4,7 +4,7 @@ from os import listdir, unlink
 from posixpath import abspath
 from subprocess import check_call
 from templates import render_template
-from utils import get_file_target_prefix
+from utils import prefix_file_path
 
 class ServiceTemplate():
     def __init__(self, template, target):
@@ -38,14 +38,14 @@ class Service():
                 self.needs_restart = True
 
     def collect_current_files(self, dir, matcher=true_matcher):
-        dir = get_file_target_prefix() + dir # No path.join on purpose!
+        dir = prefix_file_path(dir)
         if not exists(dir):
             self.extra_files = set()
             return
         self.extra_files = set(abspath(join(dir, file)) for file in listdir(dir) if file[0] != "." and matcher(dir, file))
 
     def render_template(self, tpl, custom=None):
-        self.extra_files.discard(abspath(tpl.target))
+        self.extra_files.discard(abspath(prefix_file_path(tpl.target)))
         return tpl.render(custom=custom, caller=self)
 
     def remove_extra_files(self):
