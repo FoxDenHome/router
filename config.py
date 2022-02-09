@@ -3,6 +3,7 @@ from os.path import dirname, join, isfile, isdir, relpath
 from os import listdir
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from mergedeep import merge, Strategy
+from secrets import get_secret
 
 CONFIG_DIR = "./config"
 
@@ -12,6 +13,7 @@ env = Environment(
     loader=FileSystemLoader(CONFIG_DIR),
     autoescape=select_autoescape(["yaml"])
 )
+env.filters["secret"] = get_secret
 
 def config_load(file, parent={}):
     file = relpath(file, CONFIG_DIR)
