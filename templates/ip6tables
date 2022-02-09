@@ -8,25 +8,6 @@ COMMIT
 
 
 
-*nat
-:PREROUTING ACCEPT [0:0]
-{% for rule in RULES if rule.action.nat is defined and rule.action.nat == "DNAT" %}
-{{ caller.make_rules(rule, rule.action.nat, "PREROUTING", caller.V6ONLY) }}
-{% endfor %}
-
-:INPUT ACCEPT [0:0]
-
-:OUTPUT ACCEPT [0:0]
-
-:POSTROUTING ACCEPT [0:0]
-{% for rule in RULES if rule.action.nat is defined and rule.action.nat != "DNAT" %}
-{{ caller.make_rules(rule, rule.action.nat, "POSTROUTING", caller.V6ONLY) }}
-{% endfor %}
-
-COMMIT
-
-
-
 *filter
 # Input accept all for now, need better rules later
 :INPUT ACCEPT [0:0]
