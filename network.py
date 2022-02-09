@@ -11,8 +11,7 @@ class NetworkConfigbuilder():
     def make_network_config(self, network):
         cfg = {
             "addresses": dict_get_deep(network, "addresses.v4.static", []) + dict_get_deep(network, "addresses.v6.static", []),
-            "network": network["name"],
-            "cfg": network,
+            "network": network,
             "phytype": "ethernet",
             "mtu": self.get_mtu(network),
         }
@@ -101,8 +100,7 @@ class NetworkConfigbuilder():
                 }
 
             cfg["phytype"] = iface_type
-            cfg["root"] = interface
-            cfg["cfg"] = native_network
+            cfg["cfg"] = interface
 
             for iface in interface["interfaces"]:
                 if "bridge" in cfg:

@@ -7,7 +7,7 @@ Name={{ custom.ifname }}
 MTUBytes={{ iface.mtu }}
 
 [Network]
-{% for ip in iface|dict_get_deep("cfg.addresses.v4.static", []) + iface|dict_get_deep("cfg.addresses.v6.static", []) %}
+{% for ip in iface|dict_get_deep("network.addresses.v4.static", []) + iface|dict_get_deep("network.addresses.v6.static", []) %}
 Address={{ ip }}
 {% endfor %}
 
@@ -19,10 +19,10 @@ VLAN={{ port }}
 Bridge={{ iface.bridge }}
 {% endif %}
 
-{% set route_metric = iface|dict_get_deep("cfg.metric", 100) %}
-{% set dhcpv4 = iface|dict_get_deep("cfg.addresses.v4.dhcp_client", False) %}
-{% set dhcpv6 = iface|dict_get_deep("cfg.addresses.v6.request_prefix", False) %}
-{% set accept_ra = iface|dict_get_deep("cfg.addresses.v6.accept_ra", False) %}
+{% set route_metric = iface|dict_get_deep("network.metric", 100) %}
+{% set dhcpv4 = iface|dict_get_deep("network.addresses.v4.dhcp_client", False) %}
+{% set dhcpv6 = iface|dict_get_deep("network.addresses.v6.request_prefix", False) %}
+{% set accept_ra = iface|dict_get_deep("network.addresses.v6.accept_ra", False) %}
 {% if dhcpv4 and dhcpv6 %}
 DHCP=yes
 {% elif dhcpv4 %}
@@ -35,7 +35,7 @@ DHCP=no
 
 IPv6AcceptRA={{ "yes" if accept_ra else "no" }}
 
-{% if iface|dict_get_deep("cfg.addresses.v6.prefix_id", None) %}
+{% if iface|dict_get_deep("network.addresses.v6.prefix_id", None) %}
 DHCPv6PrefixDelegation=yes
 IPv6SendRA=yes
 {% endif %}
@@ -70,9 +70,9 @@ DHCPv6Client=always
 {% endif %}
 {% endif %}
 
-{% if iface|dict_get_deep("cfg.addresses.v6.send_ra", False) %}
+{% if iface|dict_get_deep("network.addresses.v6.send_ra", False) %}
 [DHCPv6PrefixDelegation]
-SubnetId={{ iface|dict_get_deep("cfg.addresses.v6.prefix_id", "auto") }}
+SubnetId={{ iface|dict_get_deep("network.addresses.v6.prefix_id", "auto") }}
 Announce=yes
 {% endif %}
 
