@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.10.6
   mac: 88:66:5A:53:5E:40
-  ipv4: 10.2.10.6
 name: wizzy-laptop-2
+network: LAN

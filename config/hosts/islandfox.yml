@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.6.10.2
   mac: B8:AE:ED:7C:1E:71
-  ipv4: 10.6.10.2
 name: islandfox
+network: Hypervisor

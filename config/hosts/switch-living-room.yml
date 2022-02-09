@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.1.10.4
   mac: 80:2A:A8:DE:F0:AE
-  ipv4: 10.1.10.4
 name: switch-living-room
+network: MGMT

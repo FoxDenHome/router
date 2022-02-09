@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.1.12.1
   mac: 00:25:90:6D:05:12
-  ipv4: 10.1.12.1
 name: bengalfox-ipmi
+network: MGMT

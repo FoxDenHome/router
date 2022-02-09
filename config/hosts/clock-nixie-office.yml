@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.12.8
   mac: C4:5B:BE:63:3A:2E
-  ipv4: 10.2.12.8
 name: clock-nixie-office
+network: LAN

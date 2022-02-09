@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.13.5
   mac: AC:0B:FB:CF:99:15
-  ipv4: 10.2.13.5
 name: airgradient-office
+network: LAN

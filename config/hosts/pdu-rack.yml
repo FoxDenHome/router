@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.1.11.1
   mac: 00:06:67:41:F2:78
-  ipv4: 10.1.11.1
 name: pdu-rack
+network: MGMT

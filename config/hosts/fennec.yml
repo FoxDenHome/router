@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.10.1
   mac: 00:02:C9:23:3C:E0
-  ipv4: 10.2.10.1
 name: fennec
+network: LAN

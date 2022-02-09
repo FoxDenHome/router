@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.1.11.4
   mac: 00:C0:B7:E8:AE:82
-  ipv4: 10.1.11.4
 name: ups-rack-backup
+network: MGMT

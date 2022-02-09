@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.10.3
   mac: F0:2F:4B:14:84:F4
-  ipv4: 10.2.10.3
 name: capefox-wireless
+network: LAN

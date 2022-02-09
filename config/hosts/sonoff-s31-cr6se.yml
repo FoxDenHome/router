@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.13.3
   mac: E8:DB:84:9F:4F:08
-  ipv4: 10.2.13.3
 name: sonoff-s31-cr6se
+network: LAN

@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.13.9
   mac: 58:BF:25:33:1F:68
-  ipv4: 10.2.13.9
 name: custom-office-switcher
+network: LAN

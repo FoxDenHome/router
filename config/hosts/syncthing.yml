@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.11.2
   mac: 02:42:C0:A8:04:15
-  ipv4: 10.2.11.2
 name: syncthing
+network: LAN

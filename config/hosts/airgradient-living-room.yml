@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.13.6
   mac: AC:0B:FB:D0:7B:5B
-  ipv4: 10.2.13.6
 name: airgradient-living-room
+network: LAN

@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.3.10.5
   mac: 00:16:3E:CA:7E:30
-  ipv4: 10.3.10.5
 name: spaceage-web
+network: DMZ

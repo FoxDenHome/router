@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.10.4
   mac: 00:30:93:12:12:38
-  ipv4: 10.2.10.4
 name: capefox-wired
+network: LAN

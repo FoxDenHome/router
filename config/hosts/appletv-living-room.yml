@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.12.6
   mac: 58:D3:49:E4:02:2D
-  ipv4: 10.2.12.6
 name: appletv-living-room
+network: LAN

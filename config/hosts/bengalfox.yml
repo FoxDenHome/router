@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.6.10.1
   mac: 00:25:90:9C:16:AE
-  ipv4: 10.6.10.1
 name: bengalfox
+network: Hypervisor

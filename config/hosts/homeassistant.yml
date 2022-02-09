@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.12.2
   mac: E4:5F:01:62:2D:8E
-  ipv4: 10.2.12.2
 name: homeassistant
+network: LAN

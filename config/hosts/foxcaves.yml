@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.3.10.1
   mac: 00:16:3E:CA:7E:00
-  ipv4: 10.3.10.1
 name: foxcaves
+network: DMZ

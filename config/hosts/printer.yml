@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.12.3
   mac: E8:D8:D1:79:F5:98
-  ipv4: 10.2.12.3
 name: printer
+network: LAN

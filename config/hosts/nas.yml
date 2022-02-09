@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.11.1
   mac: 00:0C:29:C6:9A:DC
-  ipv4: 10.2.11.1
 name: nas
+network: LAN

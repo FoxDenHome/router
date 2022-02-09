@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.15.1
   mac: 00:0E:C6:D2:C9:DD
-  ipv4: 10.2.15.1
 name: nintendo-switch-wired
+network: LAN

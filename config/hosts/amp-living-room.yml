@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.2.12.10
   mac: EC:F4:51:D0:8C:AF
-  ipv4: 10.2.12.10
 name: amp-living-room
+network: LAN

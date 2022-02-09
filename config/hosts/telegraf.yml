@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.6.11.2
   mac: 00:50:56:2E:16:A0
-  ipv4: 10.6.11.2
 name: telegraf
+network: Hypervisor

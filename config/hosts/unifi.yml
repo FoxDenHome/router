@@ -1,4 +1,6 @@
 addresses:
+  ipv4:
+    static: 10.1.10.1
   mac: 24:5A:4C:8A:23:3F
-  ipv4: 10.1.10.1
 name: unifi
+network: MGMT
