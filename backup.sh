@@ -4,7 +4,7 @@ set -e
 MSG="$1"
 DST="$2"
 
-ssh root@router 'sysupgrade -b -' > router.tar.gz
+ssh root@router.foxden.network 'sysupgrade -b -' > router.tar.gz
 rm -rf data
 mkdir -p data
 tar -xzf router.tar.gz -C data
@@ -12,7 +12,12 @@ tar -xzf router.tar.gz -C data
 redact() {
 	KEY="$1"
 	FILE="$2"
-	sed -i '' "s/${KEY}.*\$/${KEY} 'REMOVED'/g" "data${FILE}"
+	if [ "$(uname)" = "Linux" ]
+	then
+		sed "s/${KEY}.*\$/${KEY} 'REMOVED'/g" -i "data${FILE}"
+	else
+		sed -i '' "s/${KEY}.*\$/${KEY} 'REMOVED'/g" "data${FILE}"
+	fi
 }
 
 redact 'option private_key' /etc/config/network
