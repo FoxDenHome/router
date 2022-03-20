@@ -1,0 +1,6 @@
+location ~ ^/vmconsole/(?<vmname>[A-Za-z0-9_]+)/(?<sessionid>[A-Za-z0-9_]+)/(?<reqpath>.*)$ {
+	proxy_pass http://unix:/tmp/run/vmttyd/${vmname}.${sessionid}.sock:/$reqpath;
+	proxy_http_version 1.1;
+	proxy_set_header Upgrade $http_upgrade;
+	proxy_set_header Connection "upgrade";
+}

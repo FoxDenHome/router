@@ -1,23 +1,28 @@
 #!/bin/sh
 set -e
 
-ssh router '/system/backup/save dont-encrypt=yes name=router-secret.backup'
-ssh router '/export file=router-secret.rsc show-sensitive'
-ssh router '/export file=router.rsc'
+MSG="$1"
+DST="$2"
 
-sleep 1
+mkdir -p data
+ssh root@router 'sysupgrade -b -' > router.tar.gz
+tar -xzf router.tar.gz -C data
 
-scp router:/router-secret.backup router:/router-secret.rsc router:/router.rsc ./
-if [ ! -z "$2" ]
+redact() {
+	KEY="$1"
+	FILE="$2"
+	sed -i '' "s/${KEY}.*\$/${KEY} 'REMOVED'/g" "data${FILE}"
+}
+
+redact 'option private_key' /etc/config/network
+redact 'option password' /etc/config/ddns
+
+git add -A
+git commit -a -m "$MSG"
+git push
+
+if [ ! -z "$DST" ]
 then
-    cp router-secret.backup router-secret.rsc router.rsc "$2"
+	rm -f "$DST/router.tar.gz"
+	cp router.tar.gz "$DST/router.tar.gz"
 fi
-
-sed -i '' 's~local key \\".*\\"~local key \\"REMOVED\\"~g' router.rsc
-git commit -a -m "$1" && git push
-
-sleep 1
-
-ssh router '/file/remove router-secret.backup'
-ssh router '/file/remove router-secret.rsc'
-ssh router '/file/remove router.rsc'

@@ -1,0 +1,427 @@
+
+config defaults
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	option synflood_protect '1'
+
+config zone
+	option name 'LTE'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	option masq '1'
+	option input 'REJECT'
+	option mtu_fix '1'
+	list network 'LTE'
+
+config zone
+	option name 'WAN'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	option masq '1'
+	option mtu_fix '1'
+	option input 'REJECT'
+	list network 'WAN'
+	list network 'WAN6'
+
+config zone
+	option name 'MGMT'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	list network 'MGMT'
+
+config zone
+	option name 'LAN'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	list network 'LAN'
+	option input 'REJECT'
+
+config forwarding
+	option src 'LAN'
+	option dest 'WAN'
+
+config rule
+	option name 'Allow-DHCP-Renew'
+	option proto 'udp'
+	option target 'ACCEPT'
+	option family 'ipv4'
+	option src '*'
+	option dest_port '67-68'
+
+config rule
+	option name 'Allow-Ping'
+	option proto 'icmp'
+	option family 'ipv4'
+	option target 'ACCEPT'
+	list icmp_type 'echo-request'
+	option src '*'
+
+config rule
+	option name 'Allow-DHCPv6'
+	option proto 'udp'
+	option family 'ipv6'
+	option target 'ACCEPT'
+	option src '*'
+	option dest_port '546-547'
+
+config rule
+	option name 'Allow-MLD'
+	option proto 'icmp'
+	option family 'ipv6'
+	option target 'ACCEPT'
+	option src '*'
+	list src_ip 'fe80::/10'
+
+config rule
+	option name 'Allow-ICMPv6-Input'
+	option proto 'icmp'
+	option limit '1000/sec'
+	option family 'ipv6'
+	option target 'ACCEPT'
+	list icmp_type 'bad-header'
+	list icmp_type 'destination-unreachable'
+	list icmp_type 'echo-reply'
+	list icmp_type 'echo-request'
+	list icmp_type 'neighbour-advertisement'
+	list icmp_type 'neighbour-solicitation'
+	list icmp_type 'packet-too-big'
+	list icmp_type 'router-advertisement'
+	list icmp_type 'router-solicitation'
+	list icmp_type 'time-exceeded'
+	list icmp_type 'unknown-header-type'
+	option src '*'
+
+config rule
+	option name 'Allow HTTP in (ACME)'
+	list proto 'tcp'
+	option src '*'
+	option dest_port '80'
+	option target 'ACCEPT'
+
+config include
+	option path '/etc/firewall.user'
+
+config zone
+	option name 'DMZ'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	list network 'DMZ'
+	option input 'REJECT'
+
+config zone
+	option name 'LabNet'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	list network 'LabNet'
+	option input 'REJECT'
+
+config zone
+	option name 'Security'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	list network 'Security'
+	option input 'REJECT'
+
+config zone
+	option name 'Hypervisor'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	list network 'Hypervisor'
+	option input 'REJECT'
+
+config forwarding
+	option src 'MGMT'
+	option dest 'WAN'
+
+config forwarding
+	option src 'Hypervisor'
+	option dest 'DMZ'
+
+config forwarding
+	option src 'LabNet'
+	option dest 'DMZ'
+
+config forwarding
+	option src 'Security'
+	option dest 'DMZ'
+
+config forwarding
+	option src 'LAN'
+	option dest 'DMZ'
+
+config forwarding
+	option src 'WAN'
+	option dest 'DMZ'
+
+config forwarding
+	option src 'Hypervisor'
+	option dest 'WAN'
+
+config forwarding
+	option src 'DMZ'
+	option dest 'WAN'
+
+config forwarding
+	option src 'LabNet'
+	option dest 'WAN'
+
+config forwarding
+	option src 'Security'
+	option dest 'WAN'
+
+config zone
+	option name 'VPN'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	list network 'VPN'
+
+config rule
+	list proto 'udp'
+	option target 'ACCEPT'
+	option name 'Allow-WireGuard'
+	option src '*'
+	option dest_port '13231-13232'
+
+config rule
+	option name 'Allow-ICMPv6-Forward'
+	option dest '*'
+	option proto 'icmp'
+	option limit '1000/sec'
+	option family 'ipv6'
+	option target 'ACCEPT'
+	list icmp_type 'bad-header'
+	list icmp_type 'destination-unreachable'
+	list icmp_type 'echo-reply'
+	list icmp_type 'echo-request'
+	list icmp_type 'packet-too-big'
+	list icmp_type 'time-exceeded'
+	list icmp_type 'unknown-header-type'
+	option src '*'
+
+config rule
+	option name 'Allow WebUI LAN'
+	list proto 'tcp'
+	option src 'LAN'
+	option dest_port '443'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Allow DNS'
+	list proto 'tcp'
+	list proto 'udp'
+	option src '*'
+	option dest_port '53'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Allow NTP'
+	list proto 'udp'
+	option src '*'
+	option dest_port '123'
+	option target 'ACCEPT'
+
+config forwarding
+	option src 'LAN'
+	option dest 'LTE'
+
+config forwarding
+	option src 'MGMT'
+	option dest 'LTE'
+
+config forwarding
+	option src 'Security'
+	option dest 'LTE'
+
+config forwarding
+	option src 'VPN'
+	option dest 'DMZ'
+
+config forwarding
+	option src 'VPN'
+	option dest 'Hypervisor'
+
+config forwarding
+	option src 'VPN'
+	option dest 'LAN'
+
+config forwarding
+	option src 'VPN'
+	option dest 'LTE'
+
+config forwarding
+	option src 'VPN'
+	option dest 'LabNet'
+
+config forwarding
+	option src 'VPN'
+	option dest 'MGMT'
+
+config forwarding
+	option src 'VPN'
+	option dest 'Security'
+
+config forwarding
+	option src 'VPN'
+	option dest 'WAN'
+
+config forwarding
+	option src 'MGMT'
+	option dest 'DMZ'
+
+config forwarding
+	option src 'LTE'
+	option dest 'DMZ'
+
+config rule
+	option name 'Allow SSH LAN'
+	list proto 'tcp'
+	option src 'LAN'
+	option dest_port '22'
+	option target 'ACCEPT'
+
+config rule
+	option name 'UniFi -> Security'
+	option src 'MGMT'
+	list src_ip '10.1.10.1'
+	option dest 'Security'
+	option target 'ACCEPT'
+	list proto 'all'
+
+config rule
+	option name 'Security -> UniFi'
+	list proto 'all'
+	option src 'Security'
+	option dest 'MGMT'
+	list dest_ip '10.1.10.1'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Hypervisor -> SNMP'
+	list proto 'udp'
+	option src 'Hypervisor'
+	option dest 'MGMT'
+	option dest_port '161'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Prometheus -> HA NodeExporter'
+	list proto 'tcp'
+	option src 'Hypervisor'
+	list src_ip '10.6.11.1'
+	list dest_ip '10.2.12.2'
+	option dest_port '9100'
+	option target 'ACCEPT'
+	option dest 'LAN'
+
+config rule
+	option name 'Prometheus -> Local NodeExporter'
+	list proto 'tcp'
+	option src 'Hypervisor'
+	list src_ip '10.6.11.1'
+	option dest_port '9100'
+	option target 'ACCEPT'
+
+config rule
+	list proto 'tcp'
+	option src '*'
+	option dest 'LAN'
+	list dest_ip '10.2.11.1'
+	option dest_port '22'
+	option target 'ACCEPT'
+	option name '* -> NAS SSH'
+
+config rule
+	list proto 'tcp'
+	option src '*'
+	option dest 'LAN'
+	list dest_ip '10.2.11.1'
+	option dest_port '80'
+	option target 'ACCEPT'
+	option name '* -> NAS HTTP'
+
+config rule
+	list proto 'tcp'
+	option src '*'
+	option dest 'LAN'
+	list dest_ip '10.2.11.1'
+	option dest_port '443'
+	option target 'ACCEPT'
+	option name '* -> NAS HTTPS'
+
+config rule
+	list proto 'tcp'
+	option src '*'
+	option dest 'LAN'
+	list dest_ip '10.2.12.2'
+	option dest_port '80'
+	option target 'ACCEPT'
+	option name '* -> HomeAssistant HTTP'
+
+config rule
+	list proto 'tcp'
+	option src '*'
+	option dest 'LAN'
+	list dest_ip '10.2.12.2'
+	option dest_port '443'
+	option target 'ACCEPT'
+	option name '* -> HomeAssistant HTTPS'
+
+config rule
+	list proto 'tcp'
+	option src '*'
+	option dest 'LAN'
+	list dest_ip '10.2.11.5'
+	option dest_port '443'
+	option target 'ACCEPT'
+	option name '* -> Grafana HTTPS'
+
+config rule
+	list proto 'tcp'
+	option src '*'
+	option dest 'LAN'
+	list dest_ip '10.2.12.5'
+	option dest_port '80'
+	option target 'ACCEPT'
+	option name '* -> Grafana HTTP'
+
+config redirect
+	option target 'DNAT'
+	option name 'Plex'
+	list proto 'tcp'
+	option src 'WAN'
+	option src_dport '32400'
+	option dest 'LAN'
+	option dest_ip '10.2.11.3'
+
+config redirect
+	option target 'DNAT'
+	option name 'Minecraft'
+	list proto 'tcp'
+	option src 'WAN'
+	option src_dport '25565'
+	option dest 'DMZ'
+	option dest_ip '10.3.10.2'
+
+config zone
+	option name 'S2S'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	list network 'S2S'
+	option input 'REJECT'
+
+config forwarding
+	option src 'S2S'
+	option dest 'DMZ'
+
+config redirect
+	option target 'DNAT'
+	option name 'SpaceAge GMod'
+	list proto 'udp'
+	option src 'WAN'
+	option src_dport '27015'
+	option dest_ip '10.3.10.4'
+	option dest 'DMZ'
+

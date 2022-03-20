@@ -1,0 +1,75 @@
+
+config system
+	option ttylogin '0'
+	option log_size '64'
+	option urandom_seed '0'
+	option log_proto 'udp'
+	option conloglevel '8'
+	option cronloglevel '5'
+	option hostname 'router.foxden.network'
+	option zonename 'America/Los Angeles'
+	option timezone 'PST8PDT,M3.2.0,M11.1.0'
+	option notes '
+'
+
+config timeserver 'ntp'
+	option use_dhcp '0'
+	option enable_server '1'
+	list server '10.1.1.2'
+	list server '0.openwrt.pool.ntp.org'
+	list server '1.openwrt.pool.ntp.org'
+	list server '2.openwrt.pool.ntp.org'
+	list server '3.openwrt.pool.ntp.org'
+
+config gpio_switch 'lte_reset'
+	option name 'Cell Modem Reset'
+	option gpio_pin '376'
+	option value '0'
+
+config gpio_switch 'lte_power'
+	option name 'Cell Modem Power'
+	option gpio_pin '377'
+	option value '0'
+
+config gpio_switch 'lte_disable'
+	option name 'Cell Modem Airplane mode'
+	option gpio_pin '378'
+	option value '0'
+
+config gpio_switch 'gnss_disable'
+	option name 'Cell Modem Disable GNSS receiver'
+	option gpio_pin '379'
+	option value '0'
+
+config gpio_switch 'lower_sfp_txidsable'
+	option name 'Lower SFP+ TX Disable'
+	option gpio_pin '369'
+	option value '0'
+
+config gpio_switch 'upper_sfp_txdisable'
+	option name 'Upper SFP+ TX Disable'
+	option gpio_pin '373'
+	option value '0'
+
+config led 'led_sfp1'
+	option name 'SFP 1'
+	option sysfs 'ten64:green:sfp1:down'
+	option trigger 'netdev'
+	list mode 'link'
+	list mode 'tx'
+	list mode 'rx'
+	option dev 'eth4'
+
+config led 'led_sfp2'
+	option name 'SFP 2'
+	option sysfs 'ten64:green:sfp2:up'
+	option trigger 'netdev'
+	option dev 'eth5'
+	list mode 'link'
+	list mode 'tx'
+	list mode 'rx'
+
+config rngd
+	option enabled '0'
+	option device '/dev/urandom'
+

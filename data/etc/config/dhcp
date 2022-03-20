@@ -1,0 +1,455 @@
+
+config dnsmasq
+	option domainneeded '1'
+	option localise_queries '1'
+	option rebind_protection '1'
+	option rebind_localhost '1'
+	option expandhosts '1'
+	option authoritative '1'
+	option readethers '1'
+	option leasefile '/tmp/dhcp.leases'
+	option resolvfile '/tmp/resolv.conf.d/resolv.conf.auto'
+	option localservice '1'
+	option ednspacket_max '1232'
+	option local '/foxden.network/'
+	option domain 'foxden.network'
+	list rebind_domain 'plex.direct'
+	list server '127.0.0.1#5453'
+
+config dhcp 'WAN'
+	option interface 'WAN'
+	option ignore '1'
+	list ra_flags 'none'
+
+config odhcpd 'odhcpd'
+	option maindhcp '0'
+	option leasefile '/tmp/hosts/odhcpd'
+	option leasetrigger '/usr/sbin/odhcpd-update'
+	option loglevel '4'
+
+config dhcp 'MGMT'
+	option interface 'MGMT'
+	option leasetime '8h'
+	option start '25600'
+	option limit '39935'
+	option ra 'server'
+	option force '1'
+	list dhcp_option '3,10.1.0.1'
+	list dhcp_option '6,10.1.0.53'
+	list ra_flags 'none'
+
+config dhcp 'LAN'
+	option interface 'LAN'
+	option leasetime '8h'
+	option start '25600'
+	option limit '39935'
+	option ra 'server'
+	option force '1'
+	list dhcp_option '3,10.2.0.1'
+	list dhcp_option '6,10.2.0.53'
+	list ra_flags 'none'
+
+config dhcp 'DMZ'
+	option interface 'DMZ'
+	option leasetime '8h'
+	option start '25600'
+	option limit '39935'
+	option ra 'server'
+	option force '1'
+	list dhcp_option '3,10.3.0.1'
+	list dhcp_option '6,10.3.0.53'
+	list ra_flags 'none'
+
+config dhcp 'LabNet'
+	option interface 'LabNet'
+	option leasetime '8h'
+	option start '25600'
+	option limit '39935'
+	option ra 'server'
+	option force '1'
+	list dhcp_option '3,10.4.0.1'
+	list dhcp_option '6,10.4.0.53'
+	list ra_flags 'none'
+
+config dhcp 'Security'
+	option interface 'Security'
+	option leasetime '8h'
+	option start '25600'
+	option limit '39935'
+	option ra 'server'
+	option force '1'
+	list dhcp_option '3,10.5.0.1'
+	list dhcp_option '6,10.5.0.53'
+	list ra_flags 'none'
+
+config dhcp 'Hypervisor'
+	option interface 'Hypervisor'
+	option leasetime '8h'
+	option start '25600'
+	option limit '39935'
+	option ra 'server'
+	option force '1'
+	list dhcp_option '3,10.6.0.1'
+	list dhcp_option '6,10.6.0.53'
+	list ra_flags 'none'
+
+config host
+	option dns '1'
+	option mac 'F0:2F:4B:14:84:F4'
+	option ip '10.2.10.3'
+	option name 'capefox-wireless'
+
+config host
+	option dns '1'
+	option mac '00:30:93:12:12:38'
+	option ip '10.2.10.4'
+	option name 'capefox-wired'
+
+config host
+	option dns '1'
+	option mac 'B8:AE:ED:7C:1E:71'
+	option ip '10.6.10.2'
+	option name 'islandfox'
+
+config host
+	option dns '1'
+	option mac '00:02:C9:23:3C:E0'
+	option ip '10.2.10.1'
+	option name 'fennec'
+
+config host
+	option dns '1'
+	option mac '00:0C:29:C6:9A:DC'
+	option ip '10.2.11.1'
+	option name 'nas'
+
+config host
+	option dns '1'
+	option mac 'EC:0D:9A:21:DF:70'
+	option ip '10.2.10.2'
+	option name 'wizzy-desktop'
+
+config host
+	option dns '1'
+	option mac '00:25:90:9C:16:AE'
+	option ip '10.6.10.1'
+	option name 'bengalfox'
+
+config host
+	option dns '1'
+	option mac '00:25:90:6D:05:12'
+	option ip '10.1.12.1'
+	option name 'bengalfox-ipmi'
+
+config host
+	option dns '1'
+	option mac '80:2A:A8:DE:F0:AE'
+	option ip '10.1.10.4'
+	option name 'switch-living-room'
+
+config host
+	option dns '1'
+	option mac '00:06:67:41:F2:78'
+	option ip '10.1.11.1'
+	option name 'pdu-rack'
+
+config host
+	option dns '1'
+	option mac '24:5A:4C:A6:6B:9A'
+	option ip '10.1.10.2'
+	option name 'switch-rack'
+
+config host
+	option dns '1'
+	option mac '24:5A:4C:56:41:C4'
+	option ip '10.1.10.3'
+	option name 'switch-rack-agg'
+
+config host
+	option dns '1'
+	option mac '00:C0:B7:E8:B2:A0'
+	option ip '10.1.11.2'
+	option name 'ups-rack'
+
+config host
+	option dns '1'
+	option mac '24:5A:4C:8A:23:3F'
+	option ip '10.1.10.1'
+	option name 'unifi'
+
+config host
+	option dns '1'
+	option mac '68:D7:9A:1F:57:E2'
+	option ip '10.1.10.6'
+	option name 'ap-living-room'
+
+config host
+	option dns '1'
+	option mac '74:83:C2:FF:87:16'
+	option ip '10.1.10.5'
+	option name 'switch-workbench'
+
+config host
+	option dns '1'
+	option mac '00:50:56:2E:16:A0'
+	option ip '10.6.11.2'
+	option name 'telegraf'
+
+config host
+	option dns '1'
+	option mac '02:42:C0:A8:04:15'
+	option ip '10.2.11.2'
+	option name 'syncthing'
+
+config host
+	option dns '1'
+	option mac '00:0C:15:04:39:93'
+	option ip '10.1.11.3'
+	option name 'ups-office'
+
+config host
+	option dns '1'
+	option mac 'B8:27:EB:ED:0F:4B'
+	option ip '10.4.10.1'
+	option name 'cr6se'
+
+config host
+	option dns '1'
+	option mac 'E8:D8:D1:79:F5:98'
+	option ip '10.2.12.3'
+	option name 'printer'
+
+config host
+	option dns '1'
+	option mac '00:17:88:AC:31:4B'
+	option ip '10.2.12.1'
+	option name 'hue'
+
+config host
+	option dns '1'
+	option mac 'E4:5F:01:62:2D:8E'
+	option ip '10.2.12.2'
+	option name 'homeassistant'
+
+config host
+	option dns '1'
+	option mac '68:D7:9A:CF:30:09'
+	option ip '10.5.10.1'
+	option name 'camera-living-room'
+
+config host
+	option dns '1'
+	option mac '02:42:C0:A8:04:16'
+	option ip '10.2.11.3'
+	option name 'plex'
+
+config host
+	option dns '1'
+	option mac '02:42:C0:A8:04:17'
+	option ip '10.6.11.1'
+	option name 'prometheus'
+
+config host
+	option dns '1'
+	option mac '02:42:C0:A8:04:18'
+	option ip '10.2.11.5'
+	option name 'grafana'
+
+config host
+	option dns '1'
+	option mac '02:42:C0:A8:04:19'
+	option ip '10.2.11.6'
+	option name 'kiwix'
+
+config host
+	option dns '1'
+	option mac '02:42:C0:A8:04:20'
+	option ip '10.3.10.6'
+	option name 'dldr'
+
+config host
+	option dns '1'
+	option mac 'E0:4F:43:C2:BA:C2'
+	option ip '10.2.12.7'
+	option name 'clock-nixie-zen'
+
+config host
+	option dns '1'
+	option mac 'AC:0B:FB:D0:2A:63'
+	option ip '10.2.13.7'
+	option name 'airgradient-bedroom'
+
+config host
+	option dns '1'
+	option mac 'AC:0B:FB:D0:7B:5B'
+	option ip '10.2.13.6'
+	option name 'airgradient-living-room'
+
+config host
+	option dns '1'
+	option mac 'AC:0B:FB:CF:99:15'
+	option ip '10.2.13.5'
+	option name 'airgradient-office'
+
+config host
+	option dns '1'
+	option mac '40:BD:32:95:26:C0'
+	option ip '10.2.12.9'
+	option name 'vacuum-neato'
+
+config host
+	option dns '1'
+	option mac 'F4:34:F0:4B:87:1A'
+	option ip '10.2.12.4'
+	option name 'homepod-living-room'
+
+config host
+	option dns '1'
+	option mac '94:EA:32:84:DB:90'
+	option ip '10.2.12.5'
+	option name 'homepod-bedroom'
+
+config host
+	option dns '1'
+	option mac 'EA:46:D1:B8:10:11'
+	option ip '10.2.14.1'
+	option name 'dori-phone'
+
+config host
+	option dns '1'
+	option mac '58:D3:49:E4:02:2D'
+	option ip '10.2.12.6'
+	option name 'appletv-living-room'
+
+config host
+	option dns '1'
+	option mac '00:0E:C6:D2:C9:DD'
+	option ip '10.2.15.1'
+	option name 'nintendo-switch-wired'
+
+config host
+	option dns '1'
+	option mac '56:6C:5E:7A:0E:C7'
+	option ip '10.2.14.3'
+	option name 'wizzy-phone'
+
+config host
+	option dns '1'
+	option mac '2E:47:59:D7:CF:2D'
+	option ip '10.2.14.4'
+	option name 'wizzy-watch'
+
+config host
+	option dns '1'
+	option mac '88:66:5A:53:5E:40'
+	option ip '10.2.10.6'
+	option name 'wizzy-laptop-2'
+
+config host
+	option dns '1'
+	option mac 'F0:2F:4B:15:2E:54'
+	option ip '10.2.10.5'
+	option name 'wizzy-laptop'
+
+config host
+	option dns '1'
+	option mac 'EC:F4:51:D0:8C:AF'
+	option ip '10.2.12.10'
+	option name 'amp-living-room'
+
+config host
+	option dns '1'
+	option mac 'C4:5B:BE:63:3A:2E'
+	option ip '10.2.12.8'
+	option name 'clock-nixie-office'
+
+config host
+	option dns '1'
+	option mac 'EA:49:8F:A3:91:E5'
+	option ip '10.2.14.2'
+	option name 'dori-watch'
+
+config host
+	option dns '1'
+	option mac '58:BF:25:33:1F:68'
+	option ip '10.2.13.9'
+	option name 'custom-office-switcher'
+
+config host
+	option dns '1'
+	option mac '00:16:3E:CA:7E:30'
+	option ip '10.3.10.5'
+	option name 'spaceage-web'
+
+config host
+	option dns '1'
+	option mac '00:16:3E:CA:7E:31'
+	option ip '10.3.10.4'
+	option name 'spaceage-gmod'
+
+config host
+	option dns '1'
+	option mac '00:16:3E:CA:7E:00'
+	option ip '10.3.10.1'
+	option name 'foxcaves'
+
+config host
+	option dns '1'
+	option mac '8C:AA:B5:66:3B:BE'
+	option ip '10.2.13.4'
+	option name 'sonoff-s31-bedroom-fan'
+
+config host
+	option dns '1'
+	option mac 'E8:DB:84:9F:4F:08'
+	option ip '10.2.13.3'
+	option name 'sonoff-s31-cr6se'
+
+config host
+	option dns '1'
+	option mac '8C:AA:B5:66:3D:81'
+	option ip '10.2.13.8'
+	option name 'sonoff-s31-dori-pc'
+
+config host
+	option dns '1'
+	option mac '8C:AA:B5:66:12:00'
+	option ip '10.2.13.2'
+	option name 'sonoff-s31-office-fan'
+
+config host
+	option dns '1'
+	option mac '8C:AA:B5:66:10:70'
+	option ip '10.2.13.1'
+	option name 'sonoff-s31-simon-pc'
+
+config host
+	option dns '1'
+	option mac '00:16:3E:CA:7E:01'
+	option ip '10.3.10.2'
+	option name 'minecraft'
+
+config host
+	option dns '1'
+	option mac '00:16:3E:CA:7E:02'
+	option ip '10.3.10.3'
+	option name 'ut2004'
+
+config domain
+	option name 'vpn'
+	option ip '162.246.94.124'
+
+config domain
+	option name 'ntp'
+	option ip '10.2.0.123'
+
+config host
+	option name 'custom-office-desk'
+	option ip '10.2.13.10'
+	option mac 'C4:5B:BE:90:68:78'
+
+config host
+	option name 'custom-wizzy-desk'
+	option ip '10.2.13.11'
+	option mac 'E8:9F:6D:87:4C:EA'
+

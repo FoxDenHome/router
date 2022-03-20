@@ -1,0 +1,16 @@
+
+config appstore 'global'
+	option listcache '/mnt/muvirtwork/appstore/'
+
+config store 'officialdistro'
+	option url 'https://archive.traverse.com.au/pub/arm-image-registry/official-distro.json'
+	option enable '1'
+
+config store 'traverse'
+	option url 'https://archive.traverse.com.au/pub/arm-image-registry/traverse.json'
+	option enable '1'
+
+config store 'community'
+	option url 'https://archive.traverse.com.au/pub/arm-image-registry/community.json'
+	option enable '1'
+

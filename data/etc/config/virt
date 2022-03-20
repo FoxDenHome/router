@@ -1,0 +1,10 @@
+
+config muvirt 'system'
+	option hugetlb '0.85'
+	option scratch '/mnt/muvirtwork'
+	option defaultnet 'Hypervisor'
+
+config storage 'vmdata'
+	option device 'vmdata'
+	option driver 'lvm'
+

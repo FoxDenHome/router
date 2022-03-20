@@ -1,0 +1,184 @@
+
+config interface 'loopback'
+	option device 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fd49:d005:574c::/48'
+
+config device
+	option name 'br-lan'
+	option type 'bridge'
+	list ports 'eth4'
+	option mtu '9000'
+
+config interface 'WAN'
+	option device 'eth5'
+	option proto 'dhcp'
+	option peerdns '0'
+	option metric '50'
+
+config interface 'WAN6'
+	option device 'eth5'
+	option proto 'dhcpv6'
+	option reqaddress 'try'
+	option reqprefix 'auto'
+	option peerdns '0'
+	option ip6assign '64'
+	option ip6hint 'f'
+	option ip6ifaceid '::1'
+
+config device
+	option name 'eth4'
+	option mtu '9000'
+
+config bridge-vlan
+	option device 'br-lan'
+	option vlan '1'
+	list ports 'eth4:u*'
+
+config bridge-vlan
+	option device 'br-lan'
+	option vlan '2'
+	list ports 'eth4:t'
+
+config bridge-vlan
+	option device 'br-lan'
+	option vlan '3'
+	list ports 'eth4:t'
+
+config bridge-vlan
+	option device 'br-lan'
+	option vlan '4'
+	list ports 'eth4:t'
+
+config bridge-vlan
+	option device 'br-lan'
+	option vlan '5'
+	list ports 'eth4:t'
+
+config bridge-vlan
+	option device 'br-lan'
+	option vlan '6'
+	list ports 'eth4:t'
+
+config interface 'MGMT'
+	option proto 'static'
+	option device 'br-lan.1'
+	option ipaddr '10.1.1.1'
+	option netmask '255.255.0.0'
+	option ip6assign '64'
+	option ip6hint '1'
+	option ip6ifaceid '::1'
+
+config interface 'LAN'
+	option proto 'static'
+	option device 'br-lan.2'
+	option ipaddr '10.2.1.1'
+	option netmask '255.255.0.0'
+	option ip6assign '64'
+	option ip6hint '2'
+	option ip6ifaceid '::1'
+
+config interface 'DMZ'
+	option proto 'static'
+	option device 'br-lan.3'
+	option ipaddr '10.3.1.1'
+	option netmask '255.255.0.0'
+	option ip6assign '64'
+	option ip6hint '3'
+	option ip6ifaceid '::1'
+
+config interface 'LabNet'
+	option proto 'static'
+	option device 'br-lan.4'
+	option ipaddr '10.4.1.1'
+	option netmask '255.255.0.0'
+	option ip6assign '64'
+	option ip6hint '4'
+	option ip6ifaceid '::1'
+
+config interface 'Security'
+	option proto 'static'
+	option device 'br-lan.5'
+	option ipaddr '10.5.1.1'
+	option netmask '255.255.0.0'
+	option ip6assign '64'
+	option ip6hint '5'
+	option ip6ifaceid '::1'
+
+config interface 'Hypervisor'
+	option proto 'static'
+	option device 'br-lan.6'
+	option ipaddr '10.6.1.1'
+	option netmask '255.255.0.0'
+	option ip6assign '64'
+	option ip6hint '6'
+	option ip6ifaceid '::1'
+
+config interface 'VPN'
+	option proto 'wireguard'
+	option private_key 'REMOVED'
+	option listen_port '13231'
+	list addresses '10.100.0.1/16'
+	option defaultroute '0'
+	option peerdns '0'
+	option delegate '0'
+	option nohostroute '1'
+
+config interface 'LTE'
+	option proto 'modemmanager'
+	option device '/sys/devices/platform/soc/3110000.usb/xhci-hcd.1.auto/usb4/4-1/4-1.2'
+	option apn 'fast.t-mobile.com'
+	option auth 'none'
+	option peerdns '0'
+	option metric '100'
+	option signalrate '60'
+	option delegate '0'
+	option iptype 'ipv4'
+
+config wireguard_VPN
+	option description 'Fennec'
+	option public_key '7wBo2+Q88MPXKi2OYZsyDyl16wldEsIeWycng57Jx3A='
+	list allowed_ips '10.100.10.1'
+	option persistent_keepalive '25'
+
+config wireguard_VPN
+	option description 'CapeFox'
+	option public_key 'jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs='
+	list allowed_ips '10.100.10.2'
+	option persistent_keepalive '25'
+
+config wireguard_VPN
+	option description 'Dori phone'
+	option public_key 'keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g='
+	list allowed_ips '10.100.10.3'
+	option persistent_keepalive '25'
+
+config wireguard_VPN
+	option description 'Wizzy Laptop'
+	option public_key '5QUN5FumE8LM1Ak9tv8gwaF8K4wTXlCw2BSDfBIEL3g='
+	list allowed_ips '10.100.10.4'
+	option persistent_keepalive '25'
+
+config interface 'S2S'
+	option proto 'wireguard'
+	option private_key 'REMOVED'
+	option listen_port '13232'
+	list addresses '10.99.0.1/16'
+	option defaultroute '0'
+	option peerdns '0'
+	option delegate '0'
+	option nohostroute '1'
+
+config wireguard_S2S
+	option description 'RedFox'
+	option public_key 'yY6nKPCqcj+0O6Sm7qcBlG7O5tyQlarlZFIKjp+ivGM='
+	option endpoint_port '13232'
+	option persistent_keepalive '25'
+	list allowed_ips '10.99.10.1'
+	list allowed_ips '::/0'
+	option endpoint_host '66.42.78.232'
+

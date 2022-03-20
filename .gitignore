@@ -1,3 +1,11 @@
 .DS_Store
-/router-secret.backup
-/router-secret.rsc
+/router.tar.gz
+/data/etc/shadow
+/data/etc/acme
+/data/etc/dropbear/*_host_key
+/data/etc/uhttpd.crt
+/data/etc/uhttpd.key
+/data/etc/strongswan.d
+*.key
+*.crt
+*.pem
