@@ -41,5 +41,4 @@ uci add_list dhcp.@dnsmasq[0].server='127.0.0.1#5453'
 uci commit
 /etc/init.d/dnsmasq restart
 
-rm -f /etc/config/*-opkg
-
+rm -f /etc/*/*-opkg
