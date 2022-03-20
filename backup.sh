@@ -4,8 +4,9 @@ set -e
 MSG="$1"
 DST="$2"
 
-mkdir -p data
 ssh root@router 'sysupgrade -b -' > router.tar.gz
+rm -rf data
+mkdir -p data
 tar -xzf router.tar.gz -C data
 
 redact() {
