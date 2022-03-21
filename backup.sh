@@ -25,7 +25,6 @@ redact 'option password' /etc/config/ddns
 
 git add -A
 git commit -a -m "$MSG"
-git push
 
 if [ ! -z "$DST" ]
 then
