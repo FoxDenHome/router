@@ -465,3 +465,20 @@ config host
 	option ip '10.2.13.11'
 	option mac 'E8:9F:6D:87:4C:EA'
 
+config host
+	option name 'sonoff-s31-mister'
+	option ip '10.2.13.12'
+	option mac 'C4:5B:BE:E4:9B:00'
+
+config host
+	option name 'factorio'
+	option dns '1'
+	option mac '00:16:3E:CA:7E:06'
+	option ip '10.3.10.7'
+
+config host
+	option name 'tasks'
+	option dns '1'
+	option mac '00:17:3E:CA:7E:06'
+	option ip '10.3.10.8'
+

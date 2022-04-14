@@ -182,3 +182,18 @@ config wireguard_S2S
 	list allowed_ips '::/0'
 	option endpoint_host '66.42.78.232'
 
+config route
+	option interface 'MGMT'
+	option target '10.0.0.0/8'
+	option type 'unreachable'
+
+config route
+	option interface 'MGMT'
+	option target '192.168.0.0/16'
+	option type 'unreachable'
+
+config route
+	option interface 'MGMT'
+	option target '172.16.0.0/12'
+	option type 'unreachable'
+

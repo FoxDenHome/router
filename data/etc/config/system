@@ -73,3 +73,12 @@ config rngd
 	option enabled '0'
 	option device '/dev/urandom'
 
+config led
+	option name 'Admin'
+	option sysfs 'ten64:admin'
+	option trigger 'netdev'
+	option dev 'wwan0'
+	list mode 'link'
+	list mode 'tx'
+	list mode 'rx'
+
