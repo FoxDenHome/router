@@ -24,7 +24,7 @@ redact 'option private_key' /etc/config/network
 redact 'option password' /etc/config/ddns
 
 git add -A
-git commit -a -m "$MSG"
+git commit -a -m "$MSG" || true
 
 if [ ! -z "$DST" ]
 then
