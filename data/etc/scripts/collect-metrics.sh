@@ -24,11 +24,11 @@ pingtest() {
 		LOSS=100
 	fi
 
-	echo "ping_response_code{interface=\"$RAW_IFACE\",name=\"$NAME\",target=\"$TEST_IP\"} $CODE"
-	echo "ping_percent_packet_loss{interface=\"$RAW_IFACE\",name=\"$NAME\",target=\"$TEST_IP\"} $LOSS"
+	echo "ping_response_code{device=\"$RAW_IFACE\",name=\"$NAME\",target=\"$TEST_IP\"} $CODE"
+	echo "ping_percent_packet_loss{device=\"$RAW_IFACE\",name=\"$NAME\",target=\"$TEST_IP\"} $LOSS"
 	if [ ! -z "$AVG" ]
 	then
-		echo "ping_average_response_ms{interface=\"$RAW_IFACE\",name=\"$NAME\",target=\"$TEST_IP\"} $AVG"
+		echo "ping_average_response_ms{device=\"$RAW_IFACE\",name=\"$NAME\",target=\"$TEST_IP\"} $AVG"
 	fi
 }
 
@@ -39,19 +39,22 @@ pingtest() {
 
 kvextract() {
 	KEY="$1"
-	echo -n "$2" | grep "^$KEY " | cut -d: -f2 | tr -d ' \r\n\t'
+	echo -n "$2" | grep "^$KEY" | cut -d: -f2 | tr -d ' \r\t'
 }
 
 ltetest() {
 	IFACE="$1"
 	NAME="$2"
 
+	RES_MAIN="$(mmcli -m "$IFACE" -K)"
 	RES="$(mmcli -m "$IFACE" --signal-get -K)"
 
-	echo "modem_signal_lte_rssi{interface=\"$IFACE\",name=\"$NAME\"} $(kvextract 'modem.signal.lte.rssi' "$RES")"
-	echo "modem_signal_lte_rsrq{interface=\"$IFACE\",name=\"$NAME\"} $(kvextract 'modem.signal.lte.rsrq' "$RES")"
-	echo "modem_signal_lte_rsrp{interface=\"$IFACE\",name=\"$NAME\"} $(kvextract 'modem.signal.lte.rsrp' "$RES")"
-	echo "modem_signal_lte_snr{interface=\"$IFACE\",name=\"$NAME\"} $(kvextract 'modem.signal.lte.snr' "$RES")"
+	IFACE_NAME="$(kvextract 'modem.generic.ports.value' "$RES_MAIN" | grep '(net)$' | head -1 | cut '-d(' -f1)"
+
+	echo "modem_signal_lte_rssi{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem.signal.lte.rssi ' "$RES")"
+	echo "modem_signal_lte_rsrq{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem.signal.lte.rsrq ' "$RES")"
+	echo "modem_signal_lte_rsrp{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem.signal.lte.rsrp ' "$RES")"
+	echo "modem_signal_lte_snr{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem.signal.lte.snr ' "$RES")"
 }
 
 echo_gauge() {

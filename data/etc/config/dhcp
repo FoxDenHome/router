@@ -143,12 +143,6 @@ config host
 
 config host
 	option dns '1'
-	option mac '00:25:90:9C:16:AE'
-	option ip '10.6.10.1'
-	option name 'bengalfox'
-
-config host
-	option dns '1'
 	option mac '00:25:90:6D:05:12'
 	option ip '10.1.12.1'
 	option name 'bengalfox-ipmi'
@@ -276,7 +270,7 @@ config host
 config host
 	option dns '1'
 	option mac '02:42:C0:A8:04:20'
-	option ip '10.3.10.6'
+	option ip '10.2.11.8'
 	option name 'dldr'
 
 config host
@@ -287,7 +281,7 @@ config host
 
 config host
 	option dns '1'
-	option mac 'AC:0B:FB:D0:2A:63'
+	option mac 'AC:0B:FB:D0:34:B7'
 	option ip '10.2.13.7'
 	option name 'airgradient-bedroom'
 
@@ -458,12 +452,7 @@ config domain
 config host
 	option name 'custom-office-desk'
 	option ip '10.2.13.10'
-	option mac 'C4:5B:BE:90:68:78'
-
-config host
-	option name 'custom-wizzy-desk'
-	option ip '10.2.13.11'
-	option mac 'E8:9F:6D:87:4C:EA'
+	option mac '84:F7:03:73:A0:FC'
 
 config host
 	option name 'sonoff-s31-mister'
@@ -481,4 +470,14 @@ config host
 	option dns '1'
 	option mac '00:17:3E:CA:7E:06'
 	option ip '10.3.10.8'
+
+config host
+	option name 'uplift-wizzy-desk'
+	option ip '10.2.13.11'
+	option mac '40:91:51:52:11:F7'
+
+config host
+	option name 'islandfox-ipmi'
+	option ip '10.6.12.1'
+	option mac '04:7B:CB:44:C0:DD'
 

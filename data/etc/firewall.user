@@ -8,6 +8,3 @@
 
 # Set TTL on LTE traffic
 iptables -t mangle -I POSTROUTING -o wwan0 -j TTL --ttl-set 64
-
-# Allow VRRP
-#iptables -I INPUT -p vrrp -j ACCEPT

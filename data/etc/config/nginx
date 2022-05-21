@@ -19,11 +19,11 @@ config server '_redirect2ssl'
 	list listen '80 default_server'
 	list listen '[::]:80 default_server'
 	option server_name 'router.foxden.network'
-	option return '302 https://$host$request_uri'
-	#list location '/.well-known {
-	#	root /www;
-	#} #'
-	#list location '/ {
-	#	return 302 "https://$host$request_uri";
-	#} #'
+	#option return '302 https://$host$request_uri'
+	list location '/.well-known {
+		root /www;
+	} #'
+	list location '/ {
+		return 302 "https://$host$request_uri";
+	} #'
 

@@ -44,4 +44,6 @@ uci commit
 /etc/init.d/ipsec disable
 /etc/init.d/ipsec stop
 
+mkdir -p /www/.well-known/acme-challenge
+
 rm -f /etc/*/*-opkg

@@ -307,14 +307,13 @@ config rule
 	option target 'ACCEPT'
 
 config rule
-	option name 'Prometheus -> HA NodeExporter'
-	list proto 'tcp'
-	option src 'Hypervisor'
-	list src_ip '10.6.11.1'
-	list dest_ip '10.2.12.2'
-	option dest_port '9100'
+	option name 'NAS -> SNMP'
+	list proto 'udp'
+	option src 'LAN'
+	option src_ip '10.2.11.1'
+	option dest 'MGMT'
+	option dest_port '161'
 	option target 'ACCEPT'
-	option dest 'LAN'
 
 config rule
 	option name 'Prometheus -> Local NodeExporter'
@@ -323,6 +322,15 @@ config rule
 	list src_ip '10.6.11.1'
 	option dest_port '9100'
 	option target 'ACCEPT'
+
+config rule
+	option name 'Prometheus -> LAN NodeExporter'
+	list proto 'tcp'
+	option src 'Hypervisor'
+	list src_ip '10.6.11.1'
+	option dest_port '9100'
+	option target 'ACCEPT'
+	option dest 'LAN'
 
 config rule
 	list proto 'tcp'
@@ -386,7 +394,7 @@ config rule
 	option dest_port '80'
 	option target 'ACCEPT'
 	option name '* -> Grafana HTTP'
-
+	
 config redirect
 	option target 'DNAT'
 	option name 'Plex'
@@ -440,3 +448,21 @@ config rule
 	option src '*'
 	option target 'ACCEPT'
 
+
+config rule
+	list proto 'udp'
+	option src '*'
+	option dest 'LAN'
+	list dest_ip '10.2.10.2'
+	option dest_port '34197'
+	option target 'ACCEPT'
+	option name 'Factorio ACCEPT'
+
+config redirect
+	option target 'DNAT'
+	option name 'Factorio'
+	list proto 'udp'
+	option src 'WAN'
+	option src_dport '34197'
+	option dest_ip '10.3.10.7'
+	option dest 'DMZ'
