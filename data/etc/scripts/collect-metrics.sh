@@ -49,12 +49,18 @@ ltetest() {
 	RES_MAIN="$(mmcli -m "$IFACE" -K)"
 	RES="$(mmcli -m "$IFACE" --signal-get -K)"
 
-	IFACE_NAME="$(kvextract 'modem.generic.ports.value' "$RES_MAIN" | grep '(net)$' | head -1 | cut '-d(' -f1)"
+	IFACE_NAME="$(kvextract 'modem\.generic\.ports\.value' "$RES_MAIN" | grep '(net)$' | head -1 | cut '-d(' -f1)"
 
-	echo "modem_signal_lte_rssi{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem.signal.lte.rssi ' "$RES")"
-	echo "modem_signal_lte_rsrq{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem.signal.lte.rsrq ' "$RES")"
-	echo "modem_signal_lte_rsrp{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem.signal.lte.rsrp ' "$RES")"
-	echo "modem_signal_lte_snr{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem.signal.lte.snr ' "$RES")"
+	echo "modem_signal_lte_rssi{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem\.signal\.lte\.rssi ' "$RES")"
+	echo "modem_signal_lte_rsrq{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem\.signal\.lte\.rsrq ' "$RES")"
+	echo "modem_signal_lte_rsrp{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem\.signal\.lte\.rsrp ' "$RES")"
+	echo "modem_signal_lte_snr{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem\.signal\.lte\.snr ' "$RES")"
+}
+
+first_modem() {
+	RES="$(mmcli --list-modems -K)"
+	MODEM_PATH="$(kvextract 'modem-list\.value\[1\]' "$RES" | head -1)"
+	echo "$MODEM_PATH"
 }
 
 echo_gauge() {
@@ -63,6 +69,8 @@ echo_gauge() {
 	echo "# HELP $NAME $HELP"
 	echo "# TYPE $NAME gauge"
 }
+
+MODEM_PATH="$(first_modem)"
 
 (
 	echo_gauge 'ping_response_code' 'Response code of ping command'
@@ -79,7 +87,7 @@ echo_gauge() {
 	do
 		pingtest $(echo -n "$IFACE" | sed 's/:/ /g') &
 	done
-	ltetest '0' 'lte' &
+	ltetest "$MODEM_PATH" 'lte' &
 
 	wait
 ) > /var/prometheus/custommetrics.tmp

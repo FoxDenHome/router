@@ -21,6 +21,8 @@ config service 'he_ipv4'
 	option ip_network 'WAN'
 	option interface 'WAN'
 	option dns_server 'ns1.he.net'
+	option use_https '1'
+	option cacert '/etc/ssl/certs'
 
 config service 'local_ipv4'
 	option use_ipv6 '0'

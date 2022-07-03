@@ -394,7 +394,7 @@ config rule
 	option dest_port '80'
 	option target 'ACCEPT'
 	option name '* -> Grafana HTTP'
-	
+
 config redirect
 	option target 'DNAT'
 	option name 'Plex'
@@ -448,7 +448,6 @@ config rule
 	option src '*'
 	option target 'ACCEPT'
 
-
 config rule
 	list proto 'udp'
 	option src '*'
@@ -466,3 +465,4 @@ config redirect
 	option src_dport '34197'
 	option dest_ip '10.3.10.7'
 	option dest 'DMZ'
+
