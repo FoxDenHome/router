@@ -22,5 +22,6 @@ Do-Redact-Option 'option password' /etc/config/ddns
 git add -A
 git commit -a -m "$CommitMessage"
 
+$BackupFile = "$BackupDestination/$DumpFileName"
 Remove-Item -Path "$BackupFile" -Force
 Copy-Item -Path $DumpFileName -Destination "$BackupFile"
