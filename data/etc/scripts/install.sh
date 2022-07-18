@@ -28,9 +28,9 @@ install_remote "prometheus-node-exporter-lua-netstat_2022.06.12-1_all.ipk"
 install_remote "prometheus-node-exporter-lua-textfile_2022.06.12-1_all.ipk"
 install_remote "prometheus-node-exporter-lua-openwrt_2022.06.12-1_all.ipk"
 
-#opkg install --force-reinstall /etc/scripts/dropbear_2020.81-2_aarch64_generic.ipk
-#rm -f /etc/dropbear/*-opkg /etc/config/dropbear-opkg
-#/etc/init.d/dropbear restart
+opkg install --force-reinstall /etc/scripts/dropbear_2022.82-2_aarch64_generic.ipk
+rm -f /etc/dropbear/*-opkg /etc/config/dropbear-opkg
+/etc/init.d/dropbear restart
 
 /etc/init.d/prometheus-node-exporter-lua enable
 /etc/init.d/prometheus-node-exporter-lua restart
