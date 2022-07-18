@@ -131,7 +131,7 @@ config interface 'VPN'
 
 config interface 'LTE'
 	option proto 'modemmanager'
-	option device '/sys/devices/platform/soc/3110000.usb/xhci-hcd.1.auto/usb4/4-1/4-1.2'
+	option device '/sys/devices/platform/soc/3110000.usb3/xhci-hcd.1.auto/usb4/4-1/4-1.2'
 	option apn 'Wholesale'
 	option auth 'none'
 	option peerdns '0'

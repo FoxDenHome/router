@@ -7,8 +7,9 @@ config cert 'router'
        option enabled 1
        option use_staging 0
        option keylength 2048
-       option update_uhttpd 0
-       option update_nginx 1
+       option update_uhttpd 1
+       option update_nginx 0
        option update_haproxy 0
        option webroot "/www/.well-known/acme-challenge"
        list domains router.foxden.network
+

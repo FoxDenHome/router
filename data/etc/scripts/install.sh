@@ -18,10 +18,10 @@ install_remote() {
 install_remote "getdns_1.7.0-1_aarch64_generic.ipk"
 install_remote "stubby_0.4.0-3_aarch64_generic.ipk"
 install_remote "luasocket_2019-04-21-733af884-1_aarch64_generic.ipk"
-install_remote "prometheus-node-exporter-lua_2021.02.15-1_all.ipk"
-install_remote "prometheus-node-exporter-lua-netstat_2021.02.15-1_all.ipk"
-install_remote "prometheus-node-exporter-lua-textfile_2021.02.15-1_all.ipk"
-install_remote "prometheus-node-exporter-lua-openwrt_2021.02.15-1_all.ipk"
+install_remote "prometheus-node-exporter-lua_2022.04.18-1_all.ipk"
+install_remote "prometheus-node-exporter-lua-netstat_2022.04.18-1_all.ipk"
+install_remote "prometheus-node-exporter-lua-textfile_2022.04.18-1_all.ipk"
+install_remote "prometheus-node-exporter-lua-openwrt_2022.04.18-1_all.ipk"
 
 /etc/init.d/prometheus-node-exporter-lua enable
 /etc/init.d/prometheus-node-exporter-lua restart

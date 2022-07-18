@@ -4,7 +4,7 @@ set -e
 MSG="$1"
 DST="$2"
 
-ssh root@router.foxden.network 'sysupgrade -b -' > router.tar.gz
+ssh -i ~/.ssh/id_rsa root@router.foxden.network 'sysupgrade -b -' > router.tar.gz
 rm -rf data
 mkdir -p data
 tar -xzf router.tar.gz -C data
