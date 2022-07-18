@@ -5,7 +5,7 @@ config system
 	option urandom_seed '0'
 	option log_proto 'udp'
 	option conloglevel '8'
-	option cronloglevel '5'
+	option cronloglevel '9'
 	option hostname 'router.foxden.network'
 	option zonename 'America/Los Angeles'
 	option timezone 'PST8PDT,M3.2.0,M11.1.0'
