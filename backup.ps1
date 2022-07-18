@@ -5,7 +5,11 @@ $BackupDestination = $args[1]
 
 $DumpFileName = "router.tar.gz"
 
-Start-Process -NoNewWindow -RedirectStandardOutput $DumpFileName -Wait -FilePath ssh -ArgumentList @('root@router.foxden.network', 'sysupgrade -b -')
+$process = Start-Process -PassThru -NoNewWindow -RedirectStandardOutput $DumpFileName -Wait -FilePath ssh -ArgumentList @('root@router.foxden.network', 'sysupgrade -b -')
+if ($process.ExitCode -ne 0) {
+    throw ("Error obtaining router backup")
+}
+
 Remove-Item -Path ".\data" -Recurse -Force
 New-Item -Path ".\data" -ItemType Directory
 
