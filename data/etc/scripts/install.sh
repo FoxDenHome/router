@@ -9,23 +9,28 @@ uci commit
 opkg update
 opkg install mwan3 luci-app-mwan3 keepalived uacme luci-app-ddns ddns-scripts dtc htop nano luci-proto-modemmanager
 
-install_remote() {
-	wget "https://downloads.openwrt.org/releases/21.02.1/packages/aarch64_generic/packages/$1" -O "/tmp/$1"
+install_remote_ext() {
+	wget "https://downloads.openwrt.org/releases/packages-22.03/aarch64_generic/$2/$1" -O "/tmp/$1"
 	opkg install "/tmp/$1"
 	rm -f "/tmp/$1"
 }
 
-install_remote "getdns_1.7.0-1_aarch64_generic.ipk"
-install_remote "stubby_0.4.0-3_aarch64_generic.ipk"
-install_remote "luasocket_2019-04-21-733af884-1_aarch64_generic.ipk"
-install_remote "prometheus-node-exporter-lua_2022.04.18-1_all.ipk"
-install_remote "prometheus-node-exporter-lua-netstat_2022.04.18-1_all.ipk"
-install_remote "prometheus-node-exporter-lua-textfile_2022.04.18-1_all.ipk"
-install_remote "prometheus-node-exporter-lua-openwrt_2022.04.18-1_all.ipk"
+install_remote() {
+	install_remote_ext "$1" "packages"
+}
 
-opkg install --force-reinstall /etc/scripts/dropbear_2020.81-2_aarch64_generic.ipk
-rm -f /etc/dropbear/*-opkg /etc/config/dropbear-opkg
-/etc/init.d/dropbear restart
+install_remote "getdns_1.7.0-2_aarch64_generic.ipk"
+install_remote "stubby_0.4.0-6_aarch64_generic.ipk"
+install_remote "luasocket_2019-04-21-733af884-1_aarch64_generic.ipk"
+install_remote_ext "uhttpd-mod-lua_2022-02-07-2f8b1360-1_aarch64_generic.ipk" "base"
+install_remote "prometheus-node-exporter-lua_2022.06.12-1_all.ipk"
+install_remote "prometheus-node-exporter-lua-netstat_2022.06.12-1_all.ipk"
+install_remote "prometheus-node-exporter-lua-textfile_2022.06.12-1_all.ipk"
+install_remote "prometheus-node-exporter-lua-openwrt_2022.06.12-1_all.ipk"
+
+#opkg install --force-reinstall /etc/scripts/dropbear_2020.81-2_aarch64_generic.ipk
+#rm -f /etc/dropbear/*-opkg /etc/config/dropbear-opkg
+#/etc/init.d/dropbear restart
 
 /etc/init.d/prometheus-node-exporter-lua enable
 /etc/init.d/prometheus-node-exporter-lua restart
