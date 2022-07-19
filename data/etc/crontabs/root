@@ -1,2 +1,3 @@
 0 0 * * * /etc/init.d/acme start
 * * * * * /etc/scripts/collect-metrics.sh
+* * * * * /etc/scripts/wan-check.sh

@@ -7,7 +7,8 @@ uci commit
 /etc/init.d/dnsmasq restart
 
 opkg update
-opkg install mwan3 luci-app-mwan3 keepalived uacme luci-app-ddns ddns-scripts dtc htop nano luci-proto-modemmanager
+opkg install keepalived uacme luci-app-ddns ddns-scripts dtc htop nano luci-proto-modemmanager
+opkg remove --force-depends tc-mod-iptables kmod-ipt-raw kmod-ipt-core kmod-ipt-ipopt kmod-ip6tables kmod-ipt-conntrack-extra kmod-ipt-raw kmod-ipt-conntrack  iptables-mod-conntrack-extra ip6tables-nft iptables-mod-ipopt kmod-ipt-ipset
 
 install_remote_ext() {
 	wget "https://downloads.openwrt.org/releases/packages-22.03/aarch64_generic/$2/$1" -O "/tmp/$1"
@@ -29,14 +30,13 @@ install_remote "prometheus-node-exporter-lua-textfile_2022.06.12-1_all.ipk"
 install_remote "prometheus-node-exporter-lua-openwrt_2022.06.12-1_all.ipk"
 
 opkg install --force-reinstall /etc/scripts/dropbear_2022.82-2_aarch64_generic.ipk
-rm -f /etc/dropbear/*-opkg /etc/config/dropbear-opkg
 /etc/init.d/dropbear restart
 
 /etc/init.d/prometheus-node-exporter-lua enable
 /etc/init.d/prometheus-node-exporter-lua restart
 
-/etc/init.d/mwan3 enable
-/etc/init.d/mwan3 start
+#/etc/init.d/mwan3 enable
+#/etc/init.d/mwan3 start
 
 /etc/init.d/keepalived enable
 /etc/init.d/keepalived start

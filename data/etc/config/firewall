@@ -465,3 +465,11 @@ config redirect
 	option dest_ip '10.3.10.7'
 	option dest 'DMZ'
 
+config rule
+	option name 'Forbid DLDR LTE'
+	option src 'LAN'
+	list src_ip '10.2.11.8'
+	option dest 'LTE'
+	option target 'REJECT'
+	list proto 'all'
+
