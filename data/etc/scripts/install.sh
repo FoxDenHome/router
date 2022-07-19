@@ -8,7 +8,7 @@ uci commit
 
 opkg update
 opkg install keepalived uacme luci-app-ddns ddns-scripts dtc htop nano luci-proto-modemmanager
-opkg remove --force-depends tc-mod-iptables kmod-ipt-raw kmod-ipt-core kmod-ipt-ipopt kmod-ip6tables kmod-ipt-conntrack-extra kmod-ipt-raw kmod-ipt-conntrack  iptables-mod-conntrack-extra ip6tables-nft iptables-mod-ipopt kmod-ipt-ipset
+opkg remove --force-depends tc-mod-iptables kmod-ipt-raw kmod-ipt-core kmod-ipt-ipopt kmod-ip6tables kmod-ipt-conntrack-extra kmod-ipt-raw kmod-ipt-conntrack  iptables-mod-conntrack-extra ip6tables-nft iptables-mod-ipopt kmod-ipt-ipset luci-app-sqm sqm-scripts
 
 install_remote_ext() {
 	wget "https://downloads.openwrt.org/releases/packages-22.03/aarch64_generic/$2/$1" -O "/tmp/$1"
