@@ -82,15 +82,11 @@ config member 'MLTE'
 	option weight '1'
 
 config policy 'failover'
-	option last_resort 'unreachable'
 	list use_member 'MWAN'
 	list use_member 'MLTE'
+	option last_resort 'default'
 
 config policy 'wired'
-	option last_resort 'unreachable'
 	list use_member 'MWAN'
-
-config policy 'lte'
-	list use_member 'MLTE'
-	option last_resort 'unreachable'
+	option last_resort 'default'
 

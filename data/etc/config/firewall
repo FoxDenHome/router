@@ -102,9 +102,6 @@ config rule
 	option dest_port '80'
 	option target 'ACCEPT'
 
-config include
-	option path '/etc/firewall.user'
-
 config zone
 	option name 'DMZ'
 	option output 'ACCEPT'
