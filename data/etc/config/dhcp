@@ -125,7 +125,7 @@ config host
 
 config host
 	option dns '1'
-	option mac '00:02:C9:23:3C:E0'
+	option mac '00:02:c9:23:3c:e0'
 	option ip '10.2.10.1'
 	option name 'fennec'
 
