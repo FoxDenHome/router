@@ -109,13 +109,7 @@ config host
 	option dns '1'
 	option mac 'F0:2F:4B:14:84:F4'
 	option ip '10.2.10.3'
-	option name 'capefox-wireless'
-
-config host
-	option dns '1'
-	option mac '00:30:93:12:12:38'
-	option ip '10.2.10.4'
-	option name 'capefox-wired'
+	option name 'capefox'
 
 config host
 	option dns '1'
