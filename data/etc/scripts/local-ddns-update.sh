@@ -1,5 +1,11 @@
 #!/bin/sh
 
+if [ -z "$__IP" ]
+then
+	echo "Missing __IP env"
+	exit 1
+fi
+
 i=0
 while :
 do
@@ -12,8 +18,10 @@ do
 	if echo "$RES" | grep -qF ".name='vpn'"
 	then
 		uci set "dhcp.@domain[$i].ip=$__IP"
-		uci commit
 	fi
 
 	i=$((i+1))
 done
+
+uci commit
+/etc/init.d/dnsmasq restart
