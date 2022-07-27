@@ -199,3 +199,12 @@ config route
 	option target '172.16.0.0/12'
 	option type 'unreachable'
 
+config wireguard_S2S
+	option description 'IceFox'
+	option public_key 't4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs='
+	list allowed_ips '10.99.10.2/32'
+	option route_allowed_ips '1'
+	option persistent_keepalive '25'
+	option endpoint_port '13232'
+	option endpoint_host '95.217.115.106'
+

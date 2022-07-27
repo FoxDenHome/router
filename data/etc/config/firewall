@@ -473,3 +473,7 @@ config rule
 	option target 'REJECT'
 	list proto 'all'
 
+config forwarding
+	option src 'Hypervisor'
+	option dest 'S2S'
+

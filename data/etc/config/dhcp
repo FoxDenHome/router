@@ -436,10 +436,6 @@ config host
 	option name 'ut2004'
 
 config domain
-	option name 'vpn'
-	option ip '162.246.94.124'
-
-config domain
 	option name 'ntp'
 	option ip '10.2.0.123'
 
@@ -474,4 +470,8 @@ config host
 	option name 'islandfox-ipmi'
 	option ip '10.6.12.1'
 	option mac '04:7B:CB:44:C0:DD'
+
+config domain
+	option name 'nas-ro'
+	option ip '95.217.115.106'
 
