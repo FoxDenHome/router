@@ -473,7 +473,7 @@ config host
 
 config domain
 	option name 'nas-ro'
-	option ip '95.217.115.106'
+	option ip '10.99.10.2'
 
 config domain
 	option name 'vpn'

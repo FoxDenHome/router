@@ -138,8 +138,8 @@ config interface 'LTE'
 	option metric '100'
 	option signalrate '60'
 	option delegate '0'
-	option iptype 'ipv4v6'
 	option ip6weight '1'
+	option iptype 'ipv4'
 
 config wireguard_VPN
 	option description 'Fennec'
