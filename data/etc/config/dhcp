@@ -139,7 +139,7 @@ config host
 	option dns '1'
 	option mac '00:25:90:6D:05:12'
 	option ip '10.1.12.1'
-	option name 'bengalfox-ipmi'
+	option name 'nas-ipmi'
 
 config host
 	option dns '1'
@@ -425,12 +425,6 @@ config host
 
 config host
 	option dns '1'
-	option mac '00:16:3E:CA:7E:01'
-	option ip '10.3.10.2'
-	option name 'minecraft'
-
-config host
-	option dns '1'
 	option mac '00:16:3E:CA:7E:02'
 	option ip '10.3.10.3'
 	option name 'ut2004'
@@ -454,12 +448,6 @@ config host
 	option dns '1'
 	option mac '00:16:3E:CA:7E:06'
 	option ip '10.3.10.7'
-
-config host
-	option name 'tasks'
-	option dns '1'
-	option mac '00:17:3E:CA:7E:06'
-	option ip '10.3.10.8'
 
 config host
 	option name 'uplift-wizzy-desk'
