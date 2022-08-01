@@ -13,8 +13,8 @@ pingtest() {
 		IFACE="-I$IFACE"
 	fi
 
-	ping "$IFACE" -c 1 "$TEST_IP" >/dev/null
-	RES="$(ping "$IFACE" -c 3 "$TEST_IP")"
+	ping $IFACE -c 1 "$TEST_IP" >/dev/null
+	RES="$(ping $IFACE -c 3 "$TEST_IP")"
 	CODE="$?"
 
 	LOSS="$(echo -n "$RES" | grep -F 'packet loss'  | tail -1 | cut -d, -f3 | cut -d% -f1 | tr -d ' ')"
