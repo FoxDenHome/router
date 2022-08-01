@@ -2,11 +2,24 @@
 mkdir -p /var/prometheus
 
 TEST_IP="8.8.8.8"
-INTERFACES="eth5:wired wwan0:lte"
+INTERFACES="eth5:wired:1 wwan0:lte:2"
+
+ROUTE="$(ip route get "$TEST_IP" | head -1 | grep -o "dev \\w*")"
+ROUTE_ECHOED="$(mktemp -u)"
+
+echoroute() {
+	IDX="$1"
+	if [ ! -e "$ROUTE_ECHOED" ]
+	then
+		echo "active_route_index{target=\"$TEST_IP\"} $IDX"
+		touch "$ROUTE_ECHOED"
+	fi
+}
 
 pingtest() {
 	RAW_IFACE="$1"
 	NAME="$2"
+	IDX="$3"
 	IFACE="$RAW_IFACE"
 	if [ ! -z "$IFACE" ]
 	then
@@ -30,6 +43,11 @@ pingtest() {
 	if [ ! -z "$AVG" ]
 	then
 		echo "ping_average_response_ms{device=\"$RAW_IFACE\",name=\"$NAME\",target=\"$TEST_IP\"} $AVG"
+
+		if [ "$ROUTE" == "dev $RAW_IFACE" ]
+		then
+			echoroute "$IDX"
+		fi
 	fi
 }
 
@@ -91,7 +109,16 @@ MODEM_PATH="$(first_modem)"
 	ltetest "$MODEM_PATH" 'lte' &
 
 	wait
+
+	if [ ! -z "$ROUTE" ]
+	then
+		echoroute 9999
+	else
+		echoroute 0
+	fi
 ) > /var/prometheus/custommetrics.tmp
+
+rm -f "$ROUTE_ECHOED"
 
 rm -f /var/prometheus/custommetrics.prom
 mv /var/prometheus/custommetrics.tmp /var/prometheus/custommetrics.prom
