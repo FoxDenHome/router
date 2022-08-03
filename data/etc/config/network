@@ -206,5 +206,5 @@ config wireguard_S2S
 	option route_allowed_ips '1'
 	option persistent_keepalive '25'
 	option endpoint_port '13232'
-	option endpoint_host '95.217.115.106'
+	option endpoint_host '116.202.171.116'
 
