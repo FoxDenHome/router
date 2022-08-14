@@ -22,6 +22,7 @@ redact() {
 
 redact 'option private_key' /etc/config/network
 redact 'option password' /etc/config/ddns
+redact 'option password' /etc/config/network
 
 git add -A
 git commit -a -m "$MSG" || true
