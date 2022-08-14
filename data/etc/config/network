@@ -20,17 +20,6 @@ config interface 'WAN'
 	option peerdns '0'
 	option metric '50'
 
-config interface 'WAN6'
-	option device 'eth5'
-	option proto 'dhcpv6'
-	option reqaddress 'try'
-	option reqprefix 'auto'
-	option peerdns '0'
-	option ip6assign '64'
-	option ip6hint 'f'
-	option ip6ifaceid '::1'
-	option ip6weight '10'
-
 config device
 	option name 'eth4'
 	option mtu '9000'
@@ -207,4 +196,23 @@ config wireguard_S2S
 	option persistent_keepalive '25'
 	option endpoint_port '13232'
 	option endpoint_host '116.202.171.116'
+
+config interface 'henet'
+	option proto '6in4'
+	option peeraddr '216.218.226.238'
+	option ip6addr '2001:470:a:39::2/64'
+	option tunnelid '772305'
+	option username 'doridian'
+	option password '1TQvG1DxzfUCkiYw'
+	option mtu '1420'
+	option peerdns '0'
+	list ip6prefix '2001:470:e820::/48'
+	option ip6ifaceid '::1'
+	option defaultroute '0'
+	option ip6assign '64'
+	option ip6hint 'ffff'
+
+config route6
+	option interface 'henet'
+	option target '::/0'
 
