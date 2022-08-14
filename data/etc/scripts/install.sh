@@ -20,6 +20,7 @@ install_remote() {
 	install_remote_ext "$1" "packages"
 }
 
+install_remote_ext "6in4_28_all.ipk" "base"
 install_remote "getdns_1.7.0-2_aarch64_generic.ipk"
 install_remote "stubby_0.4.0-6_aarch64_generic.ipk"
 install_remote "luasocket_2019-04-21-733af884-1_aarch64_generic.ipk"
