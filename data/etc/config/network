@@ -211,6 +211,7 @@ config interface 'henet'
 	option defaultroute '0'
 	option ip6assign '64'
 	option ip6hint 'ffff'
+	option tunlink 'WAN'
 
 config route6
 	option interface 'henet'
