@@ -21,8 +21,9 @@ function Do-Redact-Option($OptionKey, $RelativeFile) {
 }
 
 Do-Redact-Option 'option private_key' /etc/config/network
-Do-Redact-Option 'option password' /etc/config/ddns
 Do-Redact-Option 'option password' /etc/config/network
+Do-Redact-Option 'option updatekey' /etc/config/network
+Do-Redact-Option 'option password' /etc/config/ddns
 
 git add -A
 git commit -a -m "$CommitMessage"
