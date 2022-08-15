@@ -4,6 +4,8 @@ config defaults
 	option output 'ACCEPT'
 	option forward 'REJECT'
 	option synflood_protect '1'
+	option flow_offloading '1'
+	option flow_offloading_hw '1'
 
 config zone
 	option name 'LTE'
@@ -23,14 +25,6 @@ config zone
 	option input 'REJECT'
 	list network 'WAN'
 	list network 'henet'
-
-config zone
-	option name 'HENET'
-	option input 'REJECT'
-	option output 'ACCEPT'
-	option forward 'REJECT'
-	option mtu_fix '1'
-	option log '1'
 
 config zone
 	option name 'MGMT'
@@ -288,14 +282,6 @@ config rule
 	option target 'ACCEPT'
 
 config rule
-	option name 'Allow 6in4'
-	option src 'WAN'
-	option target 'ACCEPT'
-	list proto 'all'
-	list src_ip '216.218.226.238'
-	option enabled '0'
-
-config rule
 	option name 'UniFi -> Security'
 	option src 'MGMT'
 	list src_ip '10.1.10.1'
@@ -494,44 +480,4 @@ config forwarding
 config forwarding
 	option src 'LAN'
 	option dest 'S2S'
-
-config forwarding
-	option src 'HENET'
-	option dest 'DMZ'
-
-config forwarding
-	option src 'HENET'
-	option dest 'WAN'
-
-config forwarding
-	option src 'WAN'
-	option dest 'HENET'
-
-config forwarding
-	option src 'DMZ'
-	option dest 'HENET'
-
-config forwarding
-	option src 'Hypervisor'
-	option dest 'HENET'
-
-config forwarding
-	option src 'LAN'
-	option dest 'HENET'
-
-config forwarding
-	option src 'LabNet'
-	option dest 'HENET'
-
-config forwarding
-	option src 'MGMT'
-	option dest 'HENET'
-
-config forwarding
-	option src 'Security'
-	option dest 'HENET'
-
-config forwarding
-	option src 'VPN'
-	option dest 'HENET'
 
