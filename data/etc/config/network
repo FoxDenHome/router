@@ -208,12 +208,7 @@ config interface 'henet'
 	option peerdns '0'
 	list ip6prefix '2001:470:e820::/48'
 	option ip6ifaceid '::1'
-	option defaultroute '0'
 	option ip6assign '64'
 	option ip6hint 'ffff'
 	option tunlink 'WAN'
-
-config route6
-	option interface 'henet'
-	option target '::/0'
 
