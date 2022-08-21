@@ -65,13 +65,17 @@ set_metric() {
 	
 	if [ $CURRENT_METRIC -ne $METRIC ]
 	then
-		echo uci set "$CONFIG_KEY=$METRIC"
-		echo uci commit
-		echo /etc/init.d/network reload
+		uci set "$CONFIG_KEY=$METRIC"
+		uci commit
+		/etc/init.d/network reload
 	fi
 }
 
-PERCENT_OK="$(multi_ping "$DEFAULT_DEVICE")"
+PERCENT_OK="$(multi_ping "$DEFAULT_DEVICE" || true)"
+if [ -z "$PERCENT_OK" ]
+then
+	PERCENT_OK="0"
+fi
 
 if [ $PERCENT_OK -ge $SWITCH_TO_DEFAULT_PERCENT ]
 then
