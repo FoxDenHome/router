@@ -481,3 +481,7 @@ config forwarding
 	option src 'LAN'
 	option dest 'S2S'
 
+config forwarding
+	option src 'Hypervisor'
+	option dest 'LTE'
+
