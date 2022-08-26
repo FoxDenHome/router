@@ -171,7 +171,7 @@ config wireguard_S2S
 	option persistent_keepalive '25'
 	list allowed_ips '10.99.10.1'
 	list allowed_ips '::/0'
-	option endpoint_host '66.42.78.232'
+	option endpoint_host '45.151.132.166'
 
 config route
 	option interface 'MGMT'

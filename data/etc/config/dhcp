@@ -467,3 +467,9 @@ config domain
 	option name 'vpn'
 	option ip '162.246.94.124'
 
+config host
+	option dns '1'
+	option mac '00:30:93:12:12:38'
+	option ip '10.2.10.4'
+	option name 'capefox-wired'
+	option match_tag 'capefox'
