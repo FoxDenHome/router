@@ -25,6 +25,7 @@ config zone
 	option input 'REJECT'
 	list network 'WAN'
 	list network 'henet'
+	list network 'redfoxv6'
 
 config zone
 	option name 'MGMT'
