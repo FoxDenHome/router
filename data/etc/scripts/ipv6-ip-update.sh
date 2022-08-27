@@ -7,4 +7,4 @@ set -e
 network_get_ipaddr ipaddr WAN
 
 echo "WAN IP = $ipaddr"
-wget -O- "http://10.99.10.1:9999/update-ip?ip=$ipaddr"
+wget -qO- "http://10.99.10.1:9999/update-ip?ip=$ipaddr"
