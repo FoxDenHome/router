@@ -473,3 +473,4 @@ config host
 	option ip '10.2.10.4'
 	option name 'capefox-wired'
 	option match_tag 'capefox'
+
