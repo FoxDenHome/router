@@ -486,3 +486,7 @@ config forwarding
 	option src 'Hypervisor'
 	option dest 'LTE'
 
+config forwarding
+	option src 'VPN'
+	option dest 'S2S'
+
