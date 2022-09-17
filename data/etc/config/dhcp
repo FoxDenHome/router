@@ -15,7 +15,7 @@ config dnsmasq
 	option domain 'foxden.network'
 	list rebind_domain 'plex.direct'
 	list server '127.0.0.1#5453'
-        list server '/home.arpa/'
+	list server '/home.arpa/'
 
 config dhcp 'WAN'
 	option interface 'WAN'
