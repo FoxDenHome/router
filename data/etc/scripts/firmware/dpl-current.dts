@@ -1,13 +1,3 @@
-/*
-# ls-listni
-dprc.1/dpni.5 (interface: eth0, end point: dpmac.7)
-dprc.1/dpni.4 (interface: eth1, end point: dpmac.8)
-dprc.1/dpni.3 (interface: eth2, end point: dpmac.9)
-dprc.1/dpni.2 (interface: eth3, end point: dpmac.10)
-dprc.1/dpni.1 (interface: eth4, end point: dpmac.2) # LAN
-dprc.1/dpni.0 (interface: eth5, end point: dpmac.1) # WAN
-*/
-
 /dts-v1/;
 / {
 	dpl-version = <10>;
@@ -706,12 +696,12 @@ dprc.1/dpni.0 (interface: eth5, end point: dpmac.1) # WAN
 			compatible = "fsl,dpni";
 			type = "DPNI_TYPE_NIC";
 			num_queues = <8>;
-			num_tcs = <16>;
-			num_cgs = <64>;
+			num_tcs = <1>;
+			num_cgs = <1>;
 			mac_filter_entries = <16>;
 			vlan_filter_entries = <0>;
 			fs_entries = <64>;
-			qos_entries = <64>;
+			qos_entries = <0>;
 			dist_key_size = <56>;
 		};
 
@@ -719,12 +709,12 @@ dprc.1/dpni.0 (interface: eth5, end point: dpmac.1) # WAN
 			compatible = "fsl,dpni";
 			type = "DPNI_TYPE_NIC";
 			num_queues = <8>;
-			num_tcs = <16>;
-			num_cgs = <64>;
-			mac_filter_entries = <64>;
+			num_tcs = <1>;
+			num_cgs = <1>;
+			mac_filter_entries = <16>;
 			vlan_filter_entries = <0>;
 			fs_entries = <64>;
-			qos_entries = <64>;
+			qos_entries = <0>;
 			dist_key_size = <56>;
 		};
 

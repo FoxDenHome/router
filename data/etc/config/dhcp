@@ -312,7 +312,7 @@ config host
 
 config host
 	option dns '1'
-	option mac '12:8c:60:16:4f:ba'
+	option mac '3A:AF:A8:F3:A6:F5'
 	option ip '10.2.14.1'
 	option name 'dori-phone'
 
@@ -478,4 +478,9 @@ config host
 config domain
 	option ip '10.3.10.1'
 	option name 'fcv'
+
+config host
+	option name 'Office-HomePod'
+	option ip '10.2.12.11'
+	option mac '04:99:B9:66:DE:D0'
 
