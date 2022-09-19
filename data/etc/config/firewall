@@ -21,11 +21,12 @@ config zone
 	option output 'ACCEPT'
 	option masq '1'
 	option mtu_fix '1'
+	option input 'DROP'
+	option forward 'DROP'
 	list network 'WAN'
 	list network 'henet'
 	list network 'redfoxv6'
-	option input 'DROP'
-	option forward 'DROP'
+	list network 'WAN2'
 
 config zone
 	option name 'MGMT'
