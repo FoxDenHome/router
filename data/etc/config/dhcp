@@ -10,6 +10,7 @@ config dnsmasq
 	option leasefile '/tmp/dhcp.leases'
 	option resolvfile '/tmp/resolv.conf.d/resolv.conf.auto'
 	option localservice '1'
+	option nonwildcard '1'
 	option ednspacket_max '1232'
 	option local '/foxden.network/'
 	option domain 'foxden.network'
@@ -429,10 +430,6 @@ config host
 	option mac '00:16:3E:CA:7E:02'
 	option ip '10.3.10.3'
 	option name 'ut2004'
-
-config domain
-	option name 'ntp'
-	option ip '10.2.0.123'
 
 config host
 	option name 'custom-office-desk'
