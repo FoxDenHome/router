@@ -497,4 +497,5 @@ config rule
 	list dest_ip '10.1.12.1'
 	option target 'ACCEPT'
 	option dest 'MGMT'
+	option enabled '0'
 
