@@ -491,3 +491,10 @@ config forwarding
 	option src 'VPN'
 	option dest 'S2S'
 
+config rule
+	option name 'TEMP BMC'
+	option src 'S2S'
+	list dest_ip '10.1.12.1'
+	option target 'ACCEPT'
+	option dest 'MGMT'
+

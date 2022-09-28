@@ -23,6 +23,7 @@ config service 'he_ipv4'
 	option dns_server 'ns1.he.net'
 	option use_https '1'
 	option cacert '/etc/ssl/certs'
+	option force_interval '0'
 
 config service 'local_ipv4'
 	option use_ipv6 '0'
@@ -40,4 +41,5 @@ config service 'local_ipv4'
 	option username 'vpn.foxden.network'
 	option password 'REMOVED'
 	option ip_source 'network'
+	option force_interval '0'
 
