@@ -12,16 +12,16 @@ config device
 	option name 'br-lan'
 	option type 'bridge'
 	option mtu '9000'
-	list ports 'eth0'
 	list ports 'eth1'
 	list ports 'eth2'
+	list ports 'eth3'
 	list ports 'eth4'
 
 config interface 'WAN'
-	option device 'eth5'
 	option proto 'dhcp'
 	option peerdns '0'
 	option metric '50'
+	option device 'eth0'
 
 config device
 	option name 'eth4'
@@ -30,43 +30,38 @@ config device
 config bridge-vlan
 	option device 'br-lan'
 	option vlan '1'
-	list ports 'eth0:u*'
 	list ports 'eth1:u*'
 	list ports 'eth4:u*'
 
 config bridge-vlan
 	option device 'br-lan'
 	option vlan '2'
-	list ports 'eth0:t'
 	list ports 'eth1:t'
 	list ports 'eth2:u*'
+	list ports 'eth3:u*'
 	list ports 'eth4:t'
 
 config bridge-vlan
 	option device 'br-lan'
 	option vlan '3'
-	list ports 'eth0:t'
 	list ports 'eth1:t'
 	list ports 'eth4:t'
 
 config bridge-vlan
 	option device 'br-lan'
 	option vlan '4'
-	list ports 'eth0:t'
 	list ports 'eth1:t'
 	list ports 'eth4:t'
 
 config bridge-vlan
 	option device 'br-lan'
 	option vlan '5'
-	list ports 'eth0:t'
 	list ports 'eth1:t'
 	list ports 'eth4:t'
 
 config bridge-vlan
 	option device 'br-lan'
 	option vlan '6'
-	list ports 'eth0:t'
 	list ports 'eth1:t'
 	list ports 'eth4:t'
 
@@ -228,15 +223,8 @@ config interface 'henet'
 	option tunlink 'WAN'
 	option mtu '1480'
 
-config interface 'WAN2'
-	option proto 'dhcp'
-	option peerdns '0'
-	option delegate '0'
-	option device 'eth3'
-
 config device
 	option name 'eth0'
-	option mtu '9000'
 
 config device
 	option name 'eth1'
@@ -258,4 +246,8 @@ config interface 'redfoxv6'
 	option mtu '1480'
 	list ip6prefix '2a0e:8f02:21ca::/48'
 	option auto '0'
+
+config device
+	option name 'eth3'
+	option mtu '9000'
 

@@ -12,9 +12,9 @@ config zone
 	option output 'ACCEPT'
 	option masq '1'
 	option mtu_fix '1'
-	list network 'LTE'
 	option input 'DROP'
 	option forward 'DROP'
+	list network 'LTE'
 
 config zone
 	option name 'WAN'
@@ -26,7 +26,6 @@ config zone
 	list network 'WAN'
 	list network 'henet'
 	list network 'redfoxv6'
-	list network 'WAN2'
 
 config zone
 	option name 'MGMT'

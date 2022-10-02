@@ -2,7 +2,7 @@
 mkdir -p /var/prometheus
 
 TEST_IP="8.8.8.8"
-INTERFACES="eth5:wired:1 wwan0:lte:2"
+INTERFACES="eth0:wired:1 wwan0:lte:2"
 
 ROUTE="$(ip route get "$TEST_IP" | head -1 | grep -o "dev \\w*")"
 ROUTE_ECHOED="$(mktemp -u)"
@@ -61,6 +61,13 @@ kvextract() {
 	echo -n "$2" | grep "^$KEY" | cut -d: -f2 | tr -d ' \r\t'
 }
 
+mecho() {
+	if [ "$2" != "--" ]
+	then
+		echo "$1 $2"
+	fi
+}
+
 ltetest() {
 	IFACE="$1"
 	NAME="$2"
@@ -70,10 +77,10 @@ ltetest() {
 
 	IFACE_NAME="$(kvextract 'modem\.generic\.ports\.value' "$RES_MAIN" | grep '(net)$' | head -1 | cut '-d(' -f1)"
 
-	echo "modem_signal_lte_rssi{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem\.signal\.lte\.rssi ' "$RES")"
-	echo "modem_signal_lte_rsrq{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem\.signal\.lte\.rsrq ' "$RES")"
-	echo "modem_signal_lte_rsrp{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem\.signal\.lte\.rsrp ' "$RES")"
-	echo "modem_signal_lte_snr{device=\"$IFACE_NAME\",name=\"$NAME\"} $(kvextract 'modem\.signal\.lte\.snr ' "$RES")"
+	mecho "modem_signal_lte_rssi{device=\"$IFACE_NAME\",name=\"$NAME\"}" "$(kvextract 'modem\.signal\.lte\.rssi ' "$RES")"
+	mecho "modem_signal_lte_rsrq{device=\"$IFACE_NAME\",name=\"$NAME\"}" "$(kvextract 'modem\.signal\.lte\.rsrq ' "$RES")"
+	mecho "modem_signal_lte_rsrp{device=\"$IFACE_NAME\",name=\"$NAME\"}" "$(kvextract 'modem\.signal\.lte\.rsrp ' "$RES")"
+	mecho "modem_signal_lte_snr{device=\"$IFACE_NAME\",name=\"$NAME\"}" "$(kvextract 'modem\.signal\.lte\.snr ' "$RES")"
 }
 
 first_modem() {
