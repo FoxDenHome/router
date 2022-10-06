@@ -10,7 +10,6 @@ config dnsmasq
 	option leasefile '/tmp/dhcp.leases'
 	option resolvfile '/tmp/resolv.conf.d/resolv.conf.auto'
 	option localservice '1'
-	option nonwildcard '1'
 	option ednspacket_max '1232'
 	option local '/foxden.network/'
 	option domain 'foxden.network'
@@ -206,7 +205,7 @@ config host
 	option dns '1'
 	option mac '00:0C:15:04:39:93'
 	option ip '10.1.11.3'
-	option name 'ups-office'
+	option name 'ups-dori-office'
 
 config host
 	option dns '1'
@@ -228,9 +227,9 @@ config host
 
 config host
 	option dns '1'
-	option mac 'E4:5F:01:62:2D:8E'
 	option ip '10.2.12.2'
 	option name 'homeassistant'
+	option mac '52:54:00:92:B1:80'
 
 config host
 	option dns '1'
@@ -290,7 +289,7 @@ config host
 	option dns '1'
 	option mac 'AC:0B:FB:CF:99:15'
 	option ip '10.2.13.5'
-	option name 'airgradient-office'
+	option name 'airgradient-dori-office'
 
 config host
 	option dns '1'
@@ -362,19 +361,13 @@ config host
 	option dns '1'
 	option mac 'C4:5B:BE:63:3A:2E'
 	option ip '10.2.12.8'
-	option name 'clock-nixie-office'
+	option name 'clock-nixie-dori'
 
 config host
 	option dns '1'
 	option mac 'EA:49:8F:A3:91:E5'
 	option ip '10.2.14.2'
 	option name 'dori-watch'
-
-config host
-	option dns '1'
-	option mac '58:BF:25:33:1F:68'
-	option ip '10.2.13.9'
-	option name 'custom-office-switcher'
 
 config host
 	option dns '1'
@@ -416,7 +409,7 @@ config host
 	option dns '1'
 	option mac '8C:AA:B5:66:12:00'
 	option ip '10.2.13.2'
-	option name 'sonoff-s31-office-fan'
+	option name 'sonoff-s31-dori-office-fan'
 
 config host
 	option dns '1'
@@ -431,7 +424,7 @@ config host
 	option name 'ut2004'
 
 config host
-	option name 'custom-office-desk'
+	option name 'custom-dori-office-desk'
 	option ip '10.2.13.10'
 	option mac '84:F7:03:73:A0:FC'
 
@@ -473,10 +466,40 @@ config host
 
 config domain
 	option ip '10.3.10.1'
-	option name 'fcv'
+	option name 'foxcaves'
 
 config host
-	option name 'Office-HomePod'
+	option name 'homepod-dori'
 	option ip '10.2.12.11'
 	option mac '04:99:B9:66:DE:D0'
+
+config host
+	option name 'august-connect'
+	option ip '10.2.12.12'
+	option mac 'D8:61:62:12:6A:08'
+
+config host
+	option name 'homepod-den'
+	option ip '10.2.12.13'
+	option mac '04:99:B9:9E:9B:95'
+
+config host
+	option name 'camera-front-door'
+	option ip '10.5.10.2'
+	option mac 'D0:21:F9:94:97:13'
+
+config host
+	option name 'switch-dori-office'
+	option ip '10.1.10.9'
+	option mac 'F4:92:BF:A3:E8:E8'
+
+config host
+	option name 'homepod-wizzy'
+	option ip '10.2.12.14'
+	option mac '04:99:B9:79:EE:C9'
+
+config host
+	option name 'tesla-model-3'
+	option ip '10.2.12.15'
+	option mac 'CC:88:26:27:41:29'
 
