@@ -415,7 +415,7 @@ config host
 	option dns '1'
 	option mac '8C:AA:B5:66:10:70'
 	option ip '10.2.13.1'
-	option name 'sonoff-s31-simon-pc'
+	option name 'sonoff-s31-wizzy-pc'
 
 config host
 	option dns '1'
