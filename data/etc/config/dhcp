@@ -456,7 +456,7 @@ config domain
 
 config domain
 	option name 'vpn'
-	option ip '50.35.84.195'
+	option ip '50.35.80.57'
 
 config host
 	option dns '1'
