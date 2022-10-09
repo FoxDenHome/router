@@ -237,15 +237,15 @@ config device
 
 config interface 'redfoxv6'
 	option proto '6in4'
-	option ip6addr '2a0e:8f02:21c0:a::2/64'
 	option peerdns '0'
 	option ip6ifaceid '::1'
 	option ip6assign '64'
 	option ip6hint 'ffff'
 	option tunlink 'WAN'
 	option mtu '1480'
-	list ip6prefix '2a0e:8f02:21ca::/48'
 	option peeraddr '66.42.76.73'
+	option ip6addr '2a0e:8f02:21c0:a::2/64'
+	list ip6prefix '2a0e:8f02:21ca::/48'
 
 config device
 	option name 'eth3'
