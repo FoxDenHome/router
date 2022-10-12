@@ -180,15 +180,33 @@ config host
 
 config host
 	option dns '1'
+	option mac '60:22:32:1d:48:15'
+	option ip '10.1.10.7'
+	option name 'ap-living-room'
+
+config host
+	option dns '1'
 	option mac '68:D7:9A:1F:57:E2'
 	option ip '10.1.10.6'
-	option name 'ap-living-room'
+	option name 'ap-server-room'
 
 config host
 	option dns '1'
 	option mac '74:83:C2:FF:87:16'
 	option ip '10.1.10.5'
 	option name 'switch-workbench'
+
+config host
+	option dns '1'
+	option mac '60:22:32:39:77:9c'
+	option ip '10.1.10.10'
+	option name 'switch-dori-office'
+
+config host
+	option dns '1'
+	option mac '18:FD:74:7B:0C:B9'
+	option ip '10.1.10.8'
+	option name 'switch-dori-office-10g'
 
 config host
 	option dns '1'
