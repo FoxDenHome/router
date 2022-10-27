@@ -129,18 +129,6 @@ config interface 'VPN'
 	option delegate '0'
 	option nohostroute '1'
 
-config interface 'LTE'
-	option proto 'modemmanager'
-	option device '/sys/devices/platform/soc/3110000.usb3/xhci-hcd.1.auto/usb4/4-1/4-1.2'
-	option apn 'Wholesale'
-	option auth 'none'
-	option peerdns '0'
-	option signalrate '60'
-	option delegate '0'
-	option ip6weight '1'
-	option iptype 'ipv4'
-	option metric '100'
-
 config wireguard_VPN
 	option description 'Fennec'
 	option public_key '+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY='

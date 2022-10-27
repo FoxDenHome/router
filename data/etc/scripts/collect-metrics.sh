@@ -2,7 +2,8 @@
 mkdir -p /var/prometheus
 
 TEST_IP="8.8.8.8"
-INTERFACES="eth0:wired:1 wwan0:lte:2"
+#INTERFACES="eth0:wired:1 wwan0:lte:2"
+INTERFACES="eth0:wired:1"
 
 ROUTE="$(ip route get "$TEST_IP" | head -1 | grep -o "dev \\w*")"
 ROUTE_ECHOED="$(mktemp -u)"
@@ -103,17 +104,17 @@ MODEM_PATH="$(first_modem)"
 	echo_gauge 'ping_percent_packet_loss' 'Packet loss in percent (0-100)'
 	echo_gauge 'ping_average_response_ms' 'Round trip time in fractional milliseconds'
 
-	echo_gauge 'modem_signal_lte_rssi' 'LTE signal RSSI'
-	echo_gauge 'modem_signal_lte_rsrq' 'LTE signal RSRQ'
-	echo_gauge 'modem_signal_lte_rsrp' 'LTE signal RSRP'
-	echo_gauge 'modem_signal_lte_snr' 'LTE signal SNR'
+	#echo_gauge 'modem_signal_lte_rssi' 'LTE signal RSSI'
+	#echo_gauge 'modem_signal_lte_rsrq' 'LTE signal RSRQ'
+	#echo_gauge 'modem_signal_lte_rsrp' 'LTE signal RSRP'
+	#echo_gauge 'modem_signal_lte_snr' 'LTE signal SNR'
 
 	pingtest '' 'internet' &
 	for IFACE in $INTERFACES
 	do
 		pingtest $(echo -n "$IFACE" | sed 's/:/ /g') &
 	done
-	ltetest "$MODEM_PATH" 'lte' &
+	#ltetest "$MODEM_PATH" 'lte' &
 
 	wait
 

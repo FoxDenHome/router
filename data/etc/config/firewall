@@ -14,7 +14,6 @@ config zone
 	option mtu_fix '1'
 	option input 'DROP'
 	option forward 'DROP'
-	list network 'LTE'
 
 config zone
 	option name 'WAN'
@@ -101,6 +100,13 @@ config rule
 	list proto 'tcp'
 	option src '*'
 	option dest_port '80'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Allow HTTPS in (ACME)'
+	list proto 'tcp'
+	option src '*'
+	option dest_port '443'
 	option target 'ACCEPT'
 
 config zone
@@ -404,15 +410,6 @@ config redirect
 	option dest 'LAN'
 	option dest_ip '10.2.11.3'
 
-config redirect
-	option target 'DNAT'
-	option name 'Minecraft'
-	list proto 'tcp'
-	option src 'WAN'
-	option src_dport '25565'
-	option dest 'DMZ'
-	option dest_ip '10.3.10.2'
-
 config zone
 	option name 'S2S'
 	option output 'ACCEPT'
@@ -491,10 +488,10 @@ config forwarding
 	option dest 'S2S'
 
 config rule
-	option name 'TEMP BMC'
+	option name 'S2S breakglass HV'
+	list proto 'tcp'
 	option src 'S2S'
-	list dest_ip '10.1.12.1'
+	option dest 'Hypervisor'
+	option dest_port '22'
 	option target 'ACCEPT'
-	option dest 'MGMT'
-	option enabled '0'
 

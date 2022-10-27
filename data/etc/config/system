@@ -76,9 +76,5 @@ config rngd
 config led
 	option name 'Admin'
 	option sysfs 'ten64:admin'
-	option trigger 'netdev'
-	option dev 'wwan0'
-	list mode 'link'
-	list mode 'tx'
-	list mode 'rx'
+	option trigger 'heartbeat'
 

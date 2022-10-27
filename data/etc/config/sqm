@@ -1,16 +1,5 @@
 
 config queue
-	option interface 'wwan0'
-	option debug_logging '0'
-	option verbosity '5'
-	option qdisc 'cake'
-	option script 'piece_of_cake.qos'
-	option linklayer 'none'
-	option download '10000'
-	option upload '5000'
-	option enabled '1'
-
-config queue
 	option interface 'eth0'
 	option download '1000000'
 	option upload '1000000'
