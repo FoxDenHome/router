@@ -291,18 +291,18 @@ config rule
 config rule
 	option name 'UniFi -> Security'
 	option src 'MGMT'
-	list src_ip '10.1.10.1'
 	option dest 'Security'
 	option target 'ACCEPT'
 	list proto 'all'
+	list src_ip '10.1.10.12'
 
 config rule
 	option name 'Security -> UniFi'
-	list proto 'all'
 	option src 'Security'
 	option dest 'MGMT'
-	list dest_ip '10.1.10.1'
 	option target 'ACCEPT'
+	list proto 'all'
+	list dest_ip '10.1.10.12'
 
 config rule
 	option name 'Hypervisor -> SNMP'
@@ -317,6 +317,15 @@ config rule
 	list proto 'udp'
 	option src 'LAN'
 	option src_ip '10.2.11.1'
+	option dest 'MGMT'
+	option dest_port '161'
+	option target 'ACCEPT'
+
+config rule
+	option name 'HA -> SNMP'
+	list proto 'udp'
+	option src 'LAN'
+	option src_ip '10.2.12.2'
 	option dest 'MGMT'
 	option dest_port '161'
 	option target 'ACCEPT'

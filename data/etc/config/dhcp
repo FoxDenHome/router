@@ -484,46 +484,67 @@ config host
 	option match_tag 'capefox'
 
 config host
+	option dns '1'
 	option name 'homepod-dori'
 	option ip '10.2.12.11'
 	option mac '04:99:B9:66:DE:D0'
 
 config host
+	option dns '1'
 	option name 'august-connect'
 	option ip '10.2.12.12'
 	option mac 'D8:61:62:12:6A:08'
 
 config host
+	option dns '1'
 	option name 'homepod-den'
 	option ip '10.2.12.13'
 	option mac '04:99:B9:9E:9B:95'
 
 config host
+	option dns '1'
 	option name 'camera-front-door'
 	option ip '10.5.10.2'
 	option mac 'D0:21:F9:94:97:13'
 
 config host
+	option dns '1'
 	option name 'switch-dori-office'
 	option ip '10.1.10.9'
 	option mac 'F4:92:BF:A3:E8:E8'
 
 config host
+	option dns '1'
 	option name 'homepod-wizzy'
 	option ip '10.2.12.14'
 	option mac '04:99:B9:79:EE:C9'
 
 config host
+	option dns '1'
 	option name 'tesla-model-3'
 	option ip '10.2.12.15'
 	option mac 'CC:88:26:27:41:29'
 
 config host
+	option dns '1'
+	option name 'tesla-wall-charger'
+	option ip '10.2.12.16'
+	option mac '98:ED:5C:9B:79:CF'
+
+config host
+	option dns '1'
 	option name 'sonoff-s31-valve-index'
 	option ip '10.2.13.14'
 	option mac 'c4:5b:be:e4:9b:6b'
 
 config host
+	option dns '1'
 	option name 'sonoff-s31-lighthouse-fl'
 	option ip '10.2.13.13'
 	option mac 'c4:5b:be:e4:82:69'
+
+config host
+	option dns '1'
+	option name 'nvr'
+	option ip '10.1.10.12'
+	option mac '60:22:32:F1:BF:71'
