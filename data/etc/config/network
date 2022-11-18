@@ -11,11 +11,11 @@ config globals 'globals'
 config device
 	option name 'br-lan'
 	option type 'bridge'
-	option mtu '9000'
 	list ports 'eth1'
 	list ports 'eth2'
 	list ports 'eth3'
 	list ports 'eth4'
+	option mtu '9000'
 
 config interface 'WAN'
 	option proto 'dhcp'

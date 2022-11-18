@@ -253,8 +253,8 @@ config host
 config host
 	option dns '1'
 	option mac '68:D7:9A:CF:30:09'
-	option ip '10.5.10.1'
 	option name 'camera-living-room'
+	option ip '10.5.11.2'
 
 config host
 	option dns '1'
@@ -504,8 +504,8 @@ config host
 config host
 	option dns '1'
 	option name 'camera-front-door'
-	option ip '10.5.10.2'
 	option mac 'D0:21:F9:94:97:13'
+	option ip '10.5.11.1'
 
 config host
 	option dns '1'
@@ -547,5 +547,5 @@ config host
 	option dns '1'
 	option name 'nvr'
 	option mac '60:22:32:F1:BF:71'
-	option ip '10.5.11.1'
+	option ip '10.5.10.1'
 
