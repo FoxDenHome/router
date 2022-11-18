@@ -546,5 +546,6 @@ config host
 config host
 	option dns '1'
 	option name 'nvr'
-	option ip '10.1.10.12'
 	option mac '60:22:32:F1:BF:71'
+	option ip '10.5.11.1'
+
