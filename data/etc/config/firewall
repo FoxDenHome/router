@@ -289,22 +289,6 @@ config rule
 	option target 'ACCEPT'
 
 config rule
-	option name 'UniFi -> Security'
-	option src 'MGMT'
-	option dest 'Security'
-	option target 'ACCEPT'
-	list proto 'all'
-	list src_ip '10.1.10.12'
-
-config rule
-	option name 'Security -> UniFi'
-	option src 'Security'
-	option dest 'MGMT'
-	option target 'ACCEPT'
-	list proto 'all'
-	list dest_ip '10.1.10.12'
-
-config rule
 	option name 'Hypervisor -> SNMP'
 	list proto 'udp'
 	option src 'Hypervisor'
