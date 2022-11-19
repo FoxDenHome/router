@@ -228,12 +228,6 @@ config host
 
 config host
 	option dns '1'
-	option mac 'B8:27:EB:ED:0F:4B'
-	option ip '10.4.10.1'
-	option name 'cr6se'
-
-config host
-	option dns '1'
 	option mac 'E8:D8:D1:79:F5:98'
 	option ip '10.2.12.3'
 	option name 'printer'
@@ -416,7 +410,7 @@ config host
 	option dns '1'
 	option mac 'E8:DB:84:9F:4F:08'
 	option ip '10.2.13.3'
-	option name 'sonoff-s31-cr6se'
+	option name 'sonoff-s31-bambu-x1'
 
 config host
 	option dns '1'
