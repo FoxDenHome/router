@@ -13,10 +13,9 @@ config dnsmasq
 	option local '/foxden.network/'
 	option domain 'foxden.network'
 	list rebind_domain 'plex.direct'
-	list server '127.0.0.1#5453'
-	list server '/home.arpa/'
 	option noresolv '1'
 	option nohosts '1'
+	list server '127.0.0.1#5453'
 
 config dhcp 'WAN'
 	option interface 'WAN'
@@ -542,4 +541,10 @@ config host
 	option name 'nvr'
 	option mac '60:22:32:F1:BF:71'
 	option ip '10.5.10.1'
+
+config host
+	option mac '08:FB:EA:02:64:96'
+	option name 'bambu-x1'
+	option dns '1'
+	option ip '10.4.10.1'
 

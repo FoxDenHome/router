@@ -488,3 +488,13 @@ config rule
 	option dest_port '22'
 	option target 'ACCEPT'
 
+config rule
+	option name 'HA -> Bambu X1 MQTT'
+	list proto 'tcp'
+	option src 'LAN'
+	list src_ip '10.2.12.2'
+	option dest 'LabNet'
+	list dest_ip '10.4.10.1'
+	option dest_port '1883'
+	option target 'ACCEPT'
+
