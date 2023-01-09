@@ -22,7 +22,6 @@ mtik_backup() {
     sed -i '' 's~local key \\".*\\"~local key \\"REMOVED\\"~g' "${RHOST}.rsc"
     sed -i '' 's~^# software id = .*$~# software id = REMOVED~g' "${RHOST}.rsc"
     sed -i '' 's~^# serial number = .*$~# serial number = REMOVED~g' "${RHOST}.rsc"
-    git commit -a -m "${COMMIT_MSG}"
 
     sleep 1
 
@@ -34,3 +33,5 @@ mtik_backup() {
 mtik_backup router
 mtik_backup switch-dori-office-10g
 
+
+git commit -a -m "${COMMIT_MSG}"
