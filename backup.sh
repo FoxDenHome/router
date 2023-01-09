@@ -1,25 +1,36 @@
 #!/bin/sh
 set -e
 
-ssh router '/system/backup/save dont-encrypt=yes name=router-secret.backup'
-ssh router '/export file=router-secret.rsc show-sensitive'
-ssh router '/export file=router.rsc'
+COMMIT_MSG="$1"
+BACKUP_MIRROR="$2"
 
-sleep 1
+mtik_backup() {
+    RHOST="$1"
 
-scp router:/router-secret.backup router:/router-secret.rsc router:/router.rsc ./
-if [ ! -z "$2" ]
-then
-    cp router-secret.backup router-secret.rsc router.rsc "$2"
-fi
+    ssh "${RHOST}" "/system/backup/save dont-encrypt=yes name=${RHOST}-secret.backup"
+    ssh "${RHOST}" "/export file=${RHOST}-secret.rsc show-sensitive"
+    ssh "${RHOST}" "/export file=${RHOST}.rsc"
 
-sed -i '' 's~local key \\".*\\"~local key \\"REMOVED\\"~g' router.rsc
-sed -i '' 's~^# software id = .*$~# software id = REMOVED~g' router.rsc
-sed -i '' 's~^# serial number = .*$~# serial number = REMOVED~g' router.rsc
-git commit -a -m "$1"
+    sleep 1
 
-sleep 1
+    scp "${RHOST}:/${RHOST}-secret.backup" "${RHOST}:/${RHOST}-secret.rsc" "${RHOST}:/${RHOST}.rsc" ./
+    if [ ! -z "${BACKUP_MIRROR}" ]
+    then
+        cp "${RHOST}-secret.backup" "${RHOST}-secret.rsc" "${RHOST}.rsc" "${BACKUP_MIRROR}"
+    fi
 
-ssh router '/file/remove router-secret.backup'
-ssh router '/file/remove router-secret.rsc'
-ssh router '/file/remove router.rsc'
+    sed -i '' 's~local key \\".*\\"~local key \\"REMOVED\\"~g' "${RHOST}.rsc"
+    sed -i '' 's~^# software id = .*$~# software id = REMOVED~g' "${RHOST}.rsc"
+    sed -i '' 's~^# serial number = .*$~# serial number = REMOVED~g' "${RHOST}.rsc"
+    git commit -a -m "${COMMIT_MSG}"
+
+    sleep 1
+
+    ssh "${RHOST}" "/file/remove ${RHOST}-secret.backup"
+    ssh "${RHOST}" "/file/remove ${RHOST}-secret.rsc"
+    ssh "${RHOST}" "/file/remove ${RHOST}.rsc"
+}
+
+mtik_backup router
+mtik_backup switch-dori-office-10g
+
