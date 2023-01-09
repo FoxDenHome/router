@@ -14,7 +14,9 @@ then
 fi
 
 sed -i '' 's~local key \\".*\\"~local key \\"REMOVED\\"~g' router.rsc
-git commit -a -m "$1" && git push
+sed -i '' 's~^# software id = .*$~# software id = REMOVED~g' router.rsc
+sed -i '' 's~^# serial number = .*$~# serial number = REMOVED~g' router.rsc
+git commit -a -m "$1"
 
 sleep 1
 
