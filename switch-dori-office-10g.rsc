@@ -1,4 +1,4 @@
-# jan/10/2023 00:47:17 by RouterOS 7.6
+# jan/10/2023 00:56:53 by RouterOS 7.6
 # software id = REMOVED
 #
 # model = CRS305-1G-4S+
@@ -26,7 +26,8 @@ set 0 name=serial0
 /routing id
 add disabled=no id=10.1.10.8 name=main-id select-dynamic-id=""
 /snmp community
-set [ find default=yes ] name=monitor_REMOVED
+set [ find default=yes ] disabled=yes
+add addresses=::/0 name=monitor_REMOVED
 /interface bridge port
 add bridge=bridge ingress-filtering=no interface=eth1-switch-dori-office \
     multicast-router=disabled
