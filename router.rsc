@@ -1,4 +1,4 @@
-# jan/08/2023 22:16:31 by RouterOS 7.6
+# jan/10/2023 00:47:12 by RouterOS 7.6
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -123,7 +123,7 @@ add disabled=yes max-limit=950M/950M name=queue-wan queue=\
     cake-internet/cake-internet target=sfp1-wan
 /snmp community
 set [ find default=yes ] disabled=yes
-add addresses=::/0 name=monitor_TqmX0b
+add addresses=::/0 name=monitor_REMOVED
 /ip settings
 set rp-filter=loose tcp-syncookies=yes
 /ipv6 settings
@@ -548,8 +548,6 @@ add action=accept chain=forward comment="related, established" \
     connection-state=established,related
 add action=accept chain=forward comment="dstnat'd" connection-nat-state=\
     dstnat
-add action=accept chain=forward comment="TEMP IPERF" dst-port=5201,5001 \
-    protocol=tcp
 add action=accept chain=forward out-interface-list=zone-wan
 add action=accept chain=forward in-interface=wg-vpn
 add action=accept chain=forward in-interface=eth1-oob
@@ -632,6 +630,9 @@ add address=2a0e:7d44:f069:3::1 interface=vlan-dmz
 add address=2a0e:7d44:f069:4::1 interface=vlan-labnet
 add address=2a0e:7d44:f069:5::1 interface=vlan-security
 add address=2a0e:7d44:f069:6::1 interface=vlan-hypervisor
+/ipv6 dhcp-client
+add disabled=yes interface=sfp1-wan pool-name=pool-wan request=prefix \
+    use-peer-dns=no
 /ipv6 firewall filter
 add action=accept chain=forward connection-state=established,related
 add action=accept chain=forward protocol=icmpv6

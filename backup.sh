@@ -22,6 +22,7 @@ mtik_backup() {
     sed -i '' 's~local key \\".*\\"~local key \\"REMOVED\\"~g' "${RHOST}.rsc"
     sed -i '' 's~^# software id = .*$~# software id = REMOVED~g' "${RHOST}.rsc"
     sed -i '' 's~^# serial number = .*$~# serial number = REMOVED~g' "${RHOST}.rsc"
+    sed -i '' 's~name=monitor_.*~name=monitor_REMOVED~g' "${RHOST}.rsc"
 
     sleep 1
 
