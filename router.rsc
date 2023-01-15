@@ -1,4 +1,4 @@
-# jan/14/2023 22:39:18 by RouterOS 7.7
+# jan/14/2023 22:43:49 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -958,6 +958,8 @@ add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=\
     \n:local arpent;\r\
     \n:local hostip;\r\
     \nlocal dhcpcomment;\r\
+    \n\r\
+    \n/ip/dhcp-server/lease set [/ip/dhcp-server/lease find] lease-time=1d\r\
     \n\r\
     \n:foreach i in=[/ip/dhcp-server/lease/find] do={\r\
     \n    :set hostip [/ip/dhcp-server/lease/get \$i address]\r\
