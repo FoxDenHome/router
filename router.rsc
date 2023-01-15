@@ -1,4 +1,4 @@
-# jan/14/2023 22:43:49 by RouterOS 7.7
+# jan/14/2023 22:50:06 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -327,8 +327,8 @@ add address=10.2.13.11 comment=uplift-wizzy-desk lease-time=1d mac-address=\
     40:91:51:52:11:F7 server=dhcp-lan
 add address=10.6.12.1 comment=islandfox-ipmi lease-time=1d mac-address=\
     04:7B:CB:44:C0:DD server=dhcp-hypervisor
-add address=10.2.10.4 comment=capefox-wired lease-time=1d mac-address=\
-    00:30:93:12:12:38 server=dhcp-lan
+add address=10.2.10.4 client-id=capefox comment=capefox-wired lease-time=1d \
+    mac-address=00:30:93:12:12:38 server=dhcp-lan
 add address=10.2.12.11 comment=homepod-dori lease-time=1d mac-address=\
     04:99:B9:66:DE:D0 server=dhcp-lan
 add address=10.2.12.12 comment=august-connect-front-door lease-time=1d \
@@ -389,6 +389,8 @@ add address=10.1.10.11 comment=ap-living-room lease-time=1d mac-address=\
     60:22:32:83:6D:9E server=dhcp-mgmt
 add address=10.2.14.6 comment=dori-remarkable lease-time=1d mac-address=\
     C0:84:7D:20:57:C0 server=dhcp-lan
+add address=10.2.10.8 comment=thunderbolt-10g lease-time=1d mac-address=\
+    00:30:93:12:12:38 server=dhcp-lan
 /ip dhcp-server network
 add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=\
     10.1.0.1 netmask=16 ntp-server=10.1.0.123
