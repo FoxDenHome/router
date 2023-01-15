@@ -1,4 +1,4 @@
-# jan/15/2023 02:57:15 by RouterOS 7.7
+# jan/15/2023 12:51:30 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CRS305-1G-4S+
@@ -70,7 +70,7 @@ add gateway=10.1.0.1
 set contact=mikrotik@foxden.network enabled=yes location="Dori Office" \
     trap-generators=""
 /system clock
-set time-zone-name=America/Los_Angeles
+set time-zone-autodetect=no time-zone-name=America/Los_Angeles
 /system identity
 set name=switch-dori-office-10g
 /system leds settings

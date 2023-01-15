@@ -1,4 +1,4 @@
-# jan/15/2023 02:57:10 by RouterOS 7.7
+# jan/15/2023 12:51:23 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -389,6 +389,12 @@ add address=10.2.14.6 comment=dori-remarkable lease-time=1d mac-address=\
     C0:84:7D:20:57:C0 server=dhcp-lan
 add address=10.2.10.8 comment=thunderbolt-10g lease-time=1d mac-address=\
     00:30:93:12:12:38 server=dhcp-lan
+add address=10.2.13.9 comment=custom-filament-dryer lease-time=1d \
+    mac-address=0C:B8:15:D5:C0:88 server=dhcp-lan
+add address=10.2.12.21 comment=laundry-washer lease-time=1d mac-address=\
+    88:57:1D:85:70:9A server=dhcp-lan
+add address=10.2.12.22 comment=laundry-dryer lease-time=1d mac-address=\
+    88:57:1D:85:70:A1 server=dhcp-lan
 /ip dhcp-server network
 add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=\
     10.1.0.1 netmask=16 ntp-server=10.1.0.123
@@ -755,6 +761,18 @@ add address=10.2.10.8 comment=static-dns-for-dhcp name=\
     thunderbolt-10g.foxden.network
 add address=::ffff:10.2.10.8 comment=static-dns-for-dhcp name=\
     thunderbolt-10g.foxden.network type=AAAA
+add address=10.2.13.9 comment=static-dns-for-dhcp name=\
+    custom-filament-dryer.foxden.network
+add address=::ffff:10.2.13.9 comment=static-dns-for-dhcp name=\
+    custom-filament-dryer.foxden.network type=AAAA
+add address=10.2.12.21 comment=static-dns-for-dhcp name=\
+    laundry-washer.foxden.network
+add address=::ffff:10.2.12.21 comment=static-dns-for-dhcp name=\
+    laundry-washer.foxden.network type=AAAA
+add address=10.2.12.22 comment=static-dns-for-dhcp name=\
+    laundry-dryer.foxden.network
+add address=::ffff:10.2.12.22 comment=static-dns-for-dhcp name=\
+    laundry-dryer.foxden.network type=AAAA
 /ip firewall filter
 add action=fasttrack-connection chain=forward comment="related, established" \
     connection-state=established,related hw-offload=yes
@@ -893,18 +911,24 @@ add disabled=yes interval=30s name=pingcheck on-event=\
 add interval=5m name=redfoxv6-up on-event="/system script run redfoxv6-up" \
     policy=read,test start-date=aug/09/2020 start-time=09:45:00
 /system script
-add dont-require-permissions=no name=static-dns-for-dhcp owner=admin policy=\
-    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
-    local topdomain\r\
+add dont-require-permissions=no name=dhcp-propagate-changes owner=admin \
+    policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
+    source=":local topdomain\r\
     \n:local hostname\r\
     \n:local dhcpent\r\
     \n\r\
     \n:set topdomain \"foxden.network\"\r\
     \n\r\
+    \n:put \"Adjusting lease times\"\r\
+    \n/ip/dhcp-server/lease set [/ip/dhcp-server/lease find dynamic=no] lease-\
+    time=1d\r\
+    \n\r\
+    \n:put \"Removing old DNS records\"\r\
     \n/ip/dns/static/remove [/ip/dns/static/find comment=\"static-dns-for-dhcp\
     \"]\r\
     \n\r\
-    \n:foreach i in=[/ip/dhcp-server/lease/find comment] do={\r\
+    \n:put \"Adding new DNS records\"\r\
+    \n:foreach i in=[/ip/dhcp-server/lease/find comment dynamic=no] do={\r\
     \n    :set dhcpent [/ip/dhcp-server/lease/get \$i]\r\
     \n    :set hostname ((\$dhcpent->\"comment\") . \".\" . \$topdomain)\r\
     \n\r\
@@ -952,9 +976,8 @@ add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=\
     \n:local arpmac\r\
     \n:local arpfind\r\
     \n\r\
-    \n/ip/dhcp-server/lease set [/ip/dhcp-server/lease find] lease-time=1d\r\
-    \n\r\
-    \n:foreach i in=[/ip/dhcp-server/lease/find status!=bound] do={\r\
+    \n:foreach i in=[/ip/dhcp-server/lease/find status!=bound dynamic=no] do={\
+    \r\
     \n    :set dhcpent [/ip/dhcp-server/lease/get \$i]\r\
     \n\r\
     \n    {\r\
