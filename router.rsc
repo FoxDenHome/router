@@ -1,4 +1,4 @@
-# jan/14/2023 21:12:44 by RouterOS 7.7
+# jan/14/2023 21:19:39 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -222,7 +222,7 @@ add address=10.1.12.1 comment=nas-ipmi lease-time=1d mac-address=\
 add address=10.1.10.4 comment=switch-living-room lease-time=1d mac-address=\
     80:2A:A8:DE:F0:AE server=dhcp-mgmt
 add address=10.1.11.1 comment=pdu-rack lease-time=1d mac-address=\
-    00:06:67:41:F2:78 server=dhcp-mgmt
+    70:A7:41:F8:13:09 server=dhcp-mgmt
 add address=10.1.10.2 comment=switch-rack lease-time=1d mac-address=\
     24:5A:4C:A6:6B:9A server=dhcp-mgmt
 add address=10.1.10.3 comment=switch-rack-agg lease-time=1d mac-address=\
@@ -383,7 +383,7 @@ add address=10.2.12.20 comment=nanoleaf-shapes-dori mac-address=\
 add address=10.2.14.5 comment=dori-ipad mac-address=6E:42:DD:F2:32:D8 server=\
     dhcp-lan
 add address=10.1.10.11 comment=ap-living-room lease-time=1d mac-address=\
-    60:22:32:39:77:9D server=dhcp-mgmt
+    60:22:32:83:6D:9E server=dhcp-mgmt
 add address=10.2.14.6 comment=dori-remarkable mac-address=C0:84:7D:20:57:C0 \
     server=dhcp-lan
 /ip dhcp-server network
