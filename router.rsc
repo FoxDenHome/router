@@ -1,4 +1,4 @@
-# jan/14/2023 22:32:53 by RouterOS 7.7
+# jan/14/2023 22:34:52 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -304,7 +304,7 @@ add address=10.3.10.5 comment=spaceage-web lease-time=1d mac-address=\
 add address=10.3.10.4 comment=spaceage-gmod lease-time=1d mac-address=\
     5E:47:05:FC:F8:90 server=dhcp-dmz
 add address=10.3.10.1 comment=foxcaves lease-time=1d mac-address=\
-    02:42:0A:03:0A:01 server=dhcp-dmz
+    A6:92:B3:48:21:9D server=dhcp-dmz
 add address=10.2.13.4 comment=sonoff-s31-lighthouse-bl lease-time=1d \
     mac-address=8C:AA:B5:66:3B:BE server=dhcp-lan
 add address=10.2.13.3 comment=sonoff-s31-bambu-x1 lease-time=1d mac-address=\
