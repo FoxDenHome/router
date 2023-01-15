@@ -1,4 +1,4 @@
-# jan/15/2023 12:52:40 by RouterOS 7.7
+# jan/15/2023 12:53:35 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -206,6 +206,8 @@ set update-time=no
 /ip dhcp-client
 add default-route-distance=5 interface=sfp1-wan use-peer-dns=no use-peer-ntp=\
     no
+/ip dhcp-server config
+set store-leases-disk=never
 /ip dhcp-server lease
 add address=10.2.10.3 comment=capefox lease-time=1d mac-address=\
     F0:2F:4B:14:84:F4 server=dhcp-lan
