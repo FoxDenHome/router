@@ -1,4 +1,4 @@
-# jan/14/2023 23:51:56 by RouterOS 7.7
+# jan/15/2023 00:32:34 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -894,31 +894,26 @@ add interval=5m name=redfoxv6-up on-event="/system script run redfoxv6-up" \
     policy=read,test start-date=aug/09/2020 start-time=09:45:00
 /system script
 add dont-require-permissions=no name=static-dns-for-dhcp owner=admin policy=\
-    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="#\
-    \_DNS record for DHCP lease\r\
-    \n# Prepare variables in use\r\
-    \n:local topdomain;\r\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
+    local topdomain;\r\
     \n:local hostname;\r\
-    \n:local hostip;\r\
+    \n:local dhcpent;\r\
     \n\r\
-    \n# Configure your domain\r\
     \n:set topdomain \"foxden.network\";\r\
     \n\r\
-    \n/ip dns static remove [find comment=\"static-dns-for-dhcp\"]\r\
+    \n/ip/dns/static/remove [/ip/dns/static/find comment=\"static-dns-for-dhcp\
+    \"]\r\
     \n\r\
-    \n/ip dhcp-server lease;\r\
-    \n:foreach i in=[find] do={\r\
-    \n  /ip dhcp-server lease;\r\
-    \n  :if ([:len [get \$i comment]] > 0) do={\r\
-    \n    :set hostname ([get \$i comment] . \".\" . \$topdomain);\r\
-    \n    :set hostip [get \$i address];\r\
-    \n    # Add DNS entry\r\
-    \n    :put (\"Adding: \" . \$hostname . \" : \" . \$hostip);\r\
-    \n    /ip dns static add type=A name=\$hostname address=\$hostip comment=\
-    \"static-dns-for-dhcp\";\r\
-    \n    /ip dns static add type=AAAA name=\$hostname address=\"::ffff:\$host\
-    ip\" comment=\"static-dns-for-dhcp\";\r\
-    \n  }\r\
+    \n:foreach i in=[/ip/dhcp-server/lease/find comment] do={\r\
+    \n    :set dhcpent [/ip/dhcp-server/lease/get \$i]\r\
+    \n    :set hostname ((\$dhcpent->\"comment\") . \".\" . \$topdomain)\r\
+    \n\r\
+    \n    :put (\"Adding: \" . \$hostname . \" : \" . (\$dhcpent->\"address\")\
+    )\r\
+    \n    /ip/dns/static/add type=A name=\$hostname address=(\$dhcpent->\"addr\
+    ess\") comment=\"static-dns-for-dhcp\"\r\
+    \n    /ip/dns/static/add type=AAAA name=\$hostname address=(\"::ffff:\" . \
+    (\$dhcpent->\"address\")) comment=\"static-dns-for-dhcp\"\r\
     \n}\r\
     \n"
 add dont-require-permissions=yes name=dyndns-update owner=admin policy=\
@@ -926,7 +921,7 @@ add dont-require-permissions=yes name=dyndns-update owner=admin policy=\
     \n:local key \"REMOVED\"\r\
     \n:local updatehost \"dyn.dns.he.net\"\r\
     \n\r\
-    \n:local result [/tool fetch mode=https url=\"https://\$updatehost/nic/upd\
+    \n:local result [/tool/fetch mode=https url=\"https://\$updatehost/nic/upd\
     ate\?hostname=\$ddnshost\" user=\"\$ddnshost\" password=\"\$key\" as-value\
     \_output=user]\r\
     \n:log debug (\$result->\"data\")\r\
@@ -938,7 +933,7 @@ add dont-require-permissions=yes name=ipv6tun-update owner=admin policy=\
     \n:local key \"REMOVED\"\r\
     \n:local updatehost \"ipv4.tunnelbroker.net\"\r\
     \n\r\
-    \n:local result [/tool fetch mode=https url=\"https://\$updatehost/nic/upd\
+    \n:local result [/tool/fetch mode=https url=\"https://\$updatehost/nic/upd\
     ate\?hostname=\$ddnshost\" user=\"\$user\" password=\"\$key\" as-value out\
     put=user]\r\
     \n:log debug (\$result->\"data\")\r\
@@ -953,48 +948,51 @@ add dont-require-permissions=yes name=redfoxv6-update owner=admin policy=\
     \n"
 add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=\
     ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
-    local dhcpmac;\r\
+    local dhcpent;\r\
     \n:local arpmac;\r\
-    \n:local arpent;\r\
-    \n:local hostip;\r\
-    \n:local dhcpcomment;\r\
+    \n:local arpfind;\r\
     \n\r\
     \n/ip/dhcp-server/lease set [/ip/dhcp-server/lease find] lease-time=1d\r\
     \n\r\
     \n:foreach i in=[/ip/dhcp-server/lease/find status!=bound] do={\r\
-    \n    :set hostip [/ip/dhcp-server/lease/get \$i address]\r\
-    \n    :set dhcpmac [/ip/dhcp-server/lease/get \$i mac-address]\r\
-    \n    :set dhcpcomment  [/ip/dhcp-server/lease/get \$i comment]\r\
+    \n    :set dhcpent [/ip/dhcp-server/lease/get \$i]\r\
     \n\r\
     \n    {\r\
-    \n        :local jobID [:execute {:ping count=5 address=\$hostip}]\r\
+    \n        :local jobID [:execute {:ping count=5 address=(\$dhcpent->\"addr\
+    ess\")}]\r\
     \n        :while ([:len [/system/script/job/find .id=\$jobID]] > 0) do={\r\
-    \n            :set arpent [/ip/arp/find address=\$hostip mac-address!=\"\"\
-    ]\r\
-    \n            if ([:len \$arpent] > 0) do={\r\
+    \n            :set arpfind [/ip/arp/find address=(\$dhcpent->\"address\") \
+    mac-address!=\"\"]\r\
+    \n            if ([:len \$arpfind] > 0) do={\r\
     \n                /system/script/job/remove [ /system/script/job/find .id=\
     \$jobID ]\r\
     \n            } else={\r\
     \n                :delay 1s\r\
     \n            }\r\
     \n        }\r\
+    \n\r\
+    \n        if ([:len \$arpfind] = 0) do={\r\
+    \n            :set arpfind [/ip/arp/find address=(\$dhcpent->\"address\") \
+    mac-address!=\"\"]\r\
+    \n        }\r\
     \n    }\r\
     \n\r\
     \n    :set arpmac \"N/A\"\r\
-    \n    :if ([:len \$arpent] > 0) do={\r\
-    \n        :set arpmac [/ip/arp/get (\$arpent->0) mac-address]\r\
+    \n    :if ([:len \$arpfind] > 0) do={\r\
+    \n        :set arpmac [/ip/arp/get (\$arpfind->0) mac-address]\r\
     \n    }\r\
     \n\r\
     \n    :if ([:typeof \$arpmac] = \"nil\" || \$arpmac = \"\") do={\r\
     \n        :set arpmac \"N/A\"\r\
     \n    }\r\
     \n\r\
-    \n    :if (\$arpmac != \$dhcpmac) do={\r\
-    \n        :put (\"# IP: \" . \$hostip . \" | DHCP MAC: \" . \$dhcpmac . \"\
-    \_| ARP MAC: \" . \$arpmac . \" | Comment: \" . \$dhcpcomment)\r\
+    \n    :if (\$arpmac != (\$dhcpent->\"mac-address\")) do={\r\
+    \n        :put (\"# IP: \" . (\$dhcpent->\"address\") . \" | DHCP MAC: \" \
+    . (\$dhcpent->\"mac-address\") . \" | ARP MAC: \" . \$arpmac . \" | Commen\
+    t: \" . (\$dhcpent->\"comment\"))\r\
     \n        :if (\$arpmac != \"N/A\") do={\r\
     \n            :put (\"/ip/dhcp-server/lease set [/ip/dhcp-server/lease fin\
-    d address=\" . \$hostip . \"] mac-address=\" . \$arpmac)\r\
+    d address=\" . (\$dhcpent->\"address\") . \"] mac-address=\" . \$arpmac)\r\
     \n        }\r\
     \n    }\r\
     \n}\r\
