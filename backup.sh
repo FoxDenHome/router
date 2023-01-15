@@ -4,16 +4,18 @@ set -e
 COMMIT_MSG="$1"
 BACKUP_MIRROR="$2"
 
+RDIR="tmpfs-scratch/"
+
 mtik_backup() {
     RHOST="$1"
 
-    ssh "${RHOST}" "/system/backup/save dont-encrypt=yes name=${RHOST}-secret.backup"
-    ssh "${RHOST}" "/export file=${RHOST}-secret.rsc show-sensitive"
-    ssh "${RHOST}" "/export file=${RHOST}.rsc"
+    ssh "${RHOST}" "/system/backup/save dont-encrypt=yes name=${RDIR}${RHOST}-secret.backup"
+    ssh "${RHOST}" "/export file=${RDIR}${RHOST}-secret.rsc show-sensitive"
+    ssh "${RHOST}" "/export file=${RDIR}${RHOST}.rsc"
 
     sleep 1
 
-    scp "${RHOST}:/${RHOST}-secret.backup" "${RHOST}:/${RHOST}-secret.rsc" "${RHOST}:/${RHOST}.rsc" ./
+    scp "${RHOST}:/${RDIR}${RHOST}-secret.backup" "${RHOST}:/${RDIR}${RHOST}-secret.rsc" "${RHOST}:/${RDIR}${RHOST}.rsc" ./
     if [ ! -z "${BACKUP_MIRROR}" ]
     then
         cp "${RHOST}-secret.backup" "${RHOST}-secret.rsc" "${RHOST}.rsc" "${BACKUP_MIRROR}"
@@ -26,9 +28,9 @@ mtik_backup() {
 
     sleep 1
 
-    ssh "${RHOST}" "/file/remove ${RHOST}-secret.backup"
-    ssh "${RHOST}" "/file/remove ${RHOST}-secret.rsc"
-    ssh "${RHOST}" "/file/remove ${RHOST}.rsc"
+    ssh "${RHOST}" "/file/remove ${RDIR}${RHOST}-secret.backup"
+    ssh "${RHOST}" "/file/remove ${RDIR}${RHOST}-secret.rsc"
+    ssh "${RHOST}" "/file/remove ${RDIR}${RHOST}.rsc"
 }
 
 mtik_backup router

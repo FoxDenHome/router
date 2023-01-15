@@ -1,4 +1,4 @@
-# jan/15/2023 12:53:39 by RouterOS 7.7
+# jan/15/2023 12:58:42 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CRS305-1G-4S+
@@ -17,6 +17,8 @@ set [ find default-name=sfp-sfpplus3 ] advertise=1000M-full,10000M-full \
     l2mtu=9092 mtu=9000 name=sfp3 speed=10Gbps
 set [ find default-name=sfp-sfpplus4 ] advertise=1000M-full,10000M-full \
     l2mtu=9092 mtu=9000 name=sfp4-switch-rack-agg speed=10Gbps
+/disk
+add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface lte apn
 set [ find default=yes ] ip-type=ipv4 use-network-apn=no
 /interface wireless security-profiles

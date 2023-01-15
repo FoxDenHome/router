@@ -1,4 +1,4 @@
-# jan/15/2023 12:53:35 by RouterOS 7.7
+# jan/15/2023 12:58:38 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -71,6 +71,8 @@ add interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=50 \
     version=2
 add interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=50 \
     version=2 vrid=123
+/disk
+add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface list
 add name=iface-mgmt
 add name=iface-lan
