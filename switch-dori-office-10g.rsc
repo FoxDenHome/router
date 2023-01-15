@@ -1,4 +1,4 @@
-# jan/15/2023 12:58:42 by RouterOS 7.7
+# jan/15/2023 12:59:24 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CRS305-1G-4S+
@@ -64,6 +64,8 @@ add bridge=bridge tagged=bridge,sfp4-switch-rack-agg,eth1-switch-dori-office \
 set auth=sha1,md5
 /ip address
 add address=10.1.10.8/16 interface=bridge network=10.1.0.0
+/ip dhcp-server config
+set store-leases-disk=never
 /ip dns
 set servers=10.1.0.53
 /ip route
