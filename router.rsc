@@ -1,4 +1,4 @@
-# jan/14/2023 22:34:52 by RouterOS 7.7
+# jan/14/2023 22:39:18 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -353,39 +353,42 @@ add address=10.5.10.1 comment=nvr lease-time=1d mac-address=60:22:32:F1:BF:71 \
     server=dhcp-security
 add address=10.4.10.1 comment=bambu-x1 lease-time=1d mac-address=\
     08:FB:EA:02:64:96 server=dhcp-labnet
-add address=10.2.12.18 comment=hue-sync-box mac-address=C4:29:96:0B:9C:82 \
-    server=dhcp-lan
-add address=10.2.13.19 comment=sonoff-s31-microwave mac-address=\
-    C4:5B:BE:E4:B7:03 server=dhcp-lan
-add address=10.2.13.20 comment=custom-garage-door mac-address=\
+add address=10.2.12.18 comment=hue-sync-box lease-time=1d mac-address=\
+    C4:29:96:0B:9C:82 server=dhcp-lan
+add address=10.2.13.19 comment=sonoff-s31-microwave lease-time=1d \
+    mac-address=C4:5B:BE:E4:B7:03 server=dhcp-lan
+add address=10.2.13.20 comment=custom-garage-door lease-time=1d mac-address=\
     4C:EB:D6:0B:80:73 server=dhcp-lan
-add address=10.2.13.16 comment=airgradient-den mac-address=0C:B8:15:C4:B3:74 \
-    server=dhcp-lan
-add address=10.2.13.15 comment=custom-current-clamp-main mac-address=\
-    40:91:51:51:D0:A6 server=dhcp-lan
-add address=10.5.11.4 mac-address=D0:21:F9:99:60:DA server=dhcp-security
-add address=10.5.11.3 mac-address=70:A7:41:5F:DB:54 server=dhcp-security
-add address=10.5.11.5 mac-address=70:A7:41:0B:11:36 server=dhcp-security
-add address=10.2.13.17 comment=airgradient-wizzy-office mac-address=\
-    0C:B8:15:C4:B8:D0 server=dhcp-lan
-add address=10.2.10.7 comment=mbp-mark-dietzer mac-address=BC:D0:74:45:61:FB \
-    server=dhcp-lan
-add address=10.2.12.17 comment=august-connect-back-door-upper mac-address=\
-    2C:9F:FB:16:5F:B7 server=dhcp-lan
-add address=10.2.13.18 comment=uplift-dori-desk mac-address=40:91:51:51:E8:B6 \
-    server=dhcp-lan
-add address=10.2.12.50 comment=amp-living-room-wifi mac-address=\
-    EC:F4:51:D0:8C:B0 server=dhcp-lan
-add address=10.2.12.19 comment=nanoleaf-lines-wizzy mac-address=\
-    80:8A:F7:03:55:58 server=dhcp-lan
-add address=10.2.12.20 comment=nanoleaf-shapes-dori mac-address=\
-    80:8A:F7:03:EA:58 server=dhcp-lan
-add address=10.2.14.5 comment=dori-ipad mac-address=6E:42:DD:F2:32:D8 server=\
-    dhcp-lan
+add address=10.2.13.16 comment=airgradient-den lease-time=1d mac-address=\
+    0C:B8:15:C4:B3:74 server=dhcp-lan
+add address=10.2.13.15 comment=custom-current-clamp-main lease-time=1d \
+    mac-address=40:91:51:51:D0:A6 server=dhcp-lan
+add address=10.5.11.4 lease-time=1d mac-address=D0:21:F9:99:60:DA server=\
+    dhcp-security
+add address=10.5.11.3 lease-time=1d mac-address=70:A7:41:5F:DB:54 server=\
+    dhcp-security
+add address=10.5.11.5 lease-time=1d mac-address=70:A7:41:0B:11:36 server=\
+    dhcp-security
+add address=10.2.13.17 comment=airgradient-wizzy-office lease-time=1d \
+    mac-address=0C:B8:15:C4:B8:D0 server=dhcp-lan
+add address=10.2.10.7 comment=mbp-mark-dietzer lease-time=1d mac-address=\
+    BC:D0:74:45:61:FB server=dhcp-lan
+add address=10.2.12.17 comment=august-connect-back-door-upper lease-time=1d \
+    mac-address=2C:9F:FB:16:5F:B7 server=dhcp-lan
+add address=10.2.13.18 comment=uplift-dori-desk lease-time=1d mac-address=\
+    40:91:51:51:E8:B6 server=dhcp-lan
+add address=10.2.12.50 comment=amp-living-room-wifi lease-time=1d \
+    mac-address=EC:F4:51:D0:8C:B0 server=dhcp-lan
+add address=10.2.12.19 comment=nanoleaf-lines-wizzy lease-time=1d \
+    mac-address=80:8A:F7:03:55:58 server=dhcp-lan
+add address=10.2.12.20 comment=nanoleaf-shapes-dori lease-time=1d \
+    mac-address=80:8A:F7:03:EA:58 server=dhcp-lan
+add address=10.2.14.5 comment=dori-ipad lease-time=1d mac-address=\
+    6E:42:DD:F2:32:D8 server=dhcp-lan
 add address=10.1.10.11 comment=ap-living-room lease-time=1d mac-address=\
     60:22:32:83:6D:9E server=dhcp-mgmt
-add address=10.2.14.6 comment=dori-remarkable mac-address=C0:84:7D:20:57:C0 \
-    server=dhcp-lan
+add address=10.2.14.6 comment=dori-remarkable lease-time=1d mac-address=\
+    C0:84:7D:20:57:C0 server=dhcp-lan
 /ip dhcp-server network
 add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=\
     10.1.0.1 netmask=16 ntp-server=10.1.0.123
