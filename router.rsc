@@ -1,4 +1,4 @@
-# jan/15/2023 12:51:23 by RouterOS 7.7
+# jan/15/2023 12:52:40 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -100,17 +100,17 @@ add name=pool-hypervisor ranges=10.6.100.0-10.6.200.255
 add name=pool-oob ranges=192.168.88.100-192.168.88.200
 /ip dhcp-server
 add address-pool=pool-labnet dhcp-option-set=default-classless interface=\
-    vlan-labnet lease-time=1h name=dhcp-labnet
+    vrrp-labnet-gateway lease-time=1h name=dhcp-labnet
 add address-pool=pool-lan dhcp-option-set=default-classless interface=\
-    vlan-lan lease-time=1h name=dhcp-lan
+    vrrp-lan-gateway lease-time=1h name=dhcp-lan
 add address-pool=pool-dmz dhcp-option-set=default-classless interface=\
-    vlan-dmz lease-time=1h name=dhcp-dmz
+    vrrp-dmz-gateway lease-time=1h name=dhcp-dmz
 add address-pool=pool-mgmt dhcp-option-set=default-classless interface=\
-    sfpx2-rackswitch-agg lease-time=1h name=dhcp-mgmt
+    vrrp-mgmt-gateway lease-time=1h name=dhcp-mgmt
 add address-pool=pool-security dhcp-option-set=default-classless interface=\
-    vlan-security lease-time=1h name=dhcp-security
+    vrrp-security-gateway lease-time=1h name=dhcp-security
 add address-pool=pool-hypervisor dhcp-option-set=default-classless interface=\
-    vlan-hypervisor lease-time=1h name=dhcp-hypervisor
+    vrrp-hypervisor-gateway lease-time=1h name=dhcp-hypervisor
 add address-pool=pool-oob bootp-support=none interface=eth1-oob lease-time=1h \
     name=dhcp-oob
 /port
