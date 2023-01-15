@@ -1,4 +1,4 @@
-# jan/14/2023 22:58:57 by RouterOS 7.7
+# jan/14/2023 23:51:41 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -317,8 +317,6 @@ add address=10.2.13.1 comment=sonoff-s31-wizzy-pc lease-time=1d mac-address=\
     8C:AA:B5:66:10:70 server=dhcp-lan
 add address=10.3.10.3 comment=ut2004 lease-time=1d mac-address=\
     02:43:39:4D:B6:AA server=dhcp-dmz
-add address=10.2.13.10 comment=custom-dori-office-desk lease-time=1d \
-    mac-address=84:F7:03:73:A0:FC server=dhcp-lan
 add address=10.2.13.12 comment=sonoff-s31-lighthouse-br lease-time=1d \
     mac-address=C4:5B:BE:E4:9B:00 server=dhcp-lan
 add address=10.3.10.7 comment=factorio lease-time=1d mac-address=\
@@ -963,31 +961,45 @@ add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=\
     \n:local arpmac;\r\
     \n:local arpent;\r\
     \n:local hostip;\r\
-    \nlocal dhcpcomment;\r\
+    \n:local dhcpcomment;\r\
     \n\r\
     \n/ip/dhcp-server/lease set [/ip/dhcp-server/lease find] lease-time=1d\r\
     \n\r\
-    \n:foreach i in=[/ip/dhcp-server/lease/find] do={\r\
+    \n:foreach i in=[/ip/dhcp-server/lease/find status!=bound] do={\r\
     \n    :set hostip [/ip/dhcp-server/lease/get \$i address]\r\
     \n    :set dhcpmac [/ip/dhcp-server/lease/get \$i mac-address]\r\
     \n    :set dhcpcomment  [/ip/dhcp-server/lease/get \$i comment]\r\
     \n\r\
     \n    {\r\
-    \n        :local jobID [:execute {:ping count=1 address=\$hostip}]\r\
-    \n        :while ([:len [/system script job find where .id=\$jobID]] > 0) \
-    do={\r\
-    \n            :delay 1s\r\
+    \n        :local jobID [:execute {:ping count=5 address=\$hostip}]\r\
+    \n        :while ([:len [/system/script/job/find .id=\$jobID]] > 0) do={\r\
+    \n            :set arpent [/ip/arp/find address=\$hostip mac-address!=\"\"\
+    ]\r\
+    \n            if ([:len \$arpent] > 0) do={\r\
+    \n                /system/script/job/remove [ /system/script/job/find .id=\
+    \$jobID ]\r\
+    \n            } else={\r\
+    \n                :delay 1s\r\
+    \n            }\r\
     \n        }\r\
     \n    }\r\
     \n\r\
-    \n    :set arpent [/ip/arp/find address=\$hostip]\r\
-    \n    :set arpmac [/ip/arp/get (\$arpent->0) mac-address]\r\
+    \n    :set arpmac \"N/A\"\r\
+    \n    :if ([:len \$arpent] > 0) do={\r\
+    \n        :set arpmac [/ip/arp/get (\$arpent->0) mac-address]\r\
+    \n    }\r\
     \n\r\
-    \n    :if ([:typeof \$arpmac] != \"nil\" && \$arpmac != \$dhcpmac) do={\r\
+    \n    :if ([:typeof \$arpmac] = \"nil\" || \$arpmac = \"\") do={\r\
+    \n        :set arpmac \"N/A\"\r\
+    \n    }\r\
+    \n\r\
+    \n    :if (\$arpmac != \$dhcpmac) do={\r\
     \n        :put (\"# IP: \" . \$hostip . \" | DHCP MAC: \" . \$dhcpmac . \"\
     \_| ARP MAC: \" . \$arpmac . \" | Comment: \" . \$dhcpcomment)\r\
-    \n        :put (\"/ip/dhcp-server/lease set [/ip/dhcp-server/lease find ad\
-    dress=\" . \$hostip . \"] mac-address=\" . \$arpmac)\r\
+    \n        :if (\$arpmac != \"N/A\") do={\r\
+    \n            :put (\"/ip/dhcp-server/lease set [/ip/dhcp-server/lease fin\
+    d address=\" . \$hostip . \"] mac-address=\" . \$arpmac)\r\
+    \n        }\r\
     \n    }\r\
     \n}\r\
     \n"
