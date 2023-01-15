@@ -1,4 +1,4 @@
-# jan/14/2023 19:58:56 by RouterOS 7.7
+# jan/14/2023 20:40:39 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -231,10 +231,10 @@ add address=10.1.11.2 comment=ups-rack lease-time=1d mac-address=\
     00:C0:B7:E8:B2:A0 server=dhcp-mgmt
 add address=10.1.10.1 comment=unifi lease-time=1d mac-address=\
     24:5A:4C:8A:23:3F server=dhcp-mgmt
-add address=10.1.10.7 comment=ap-living-room lease-time=1d mac-address=\
-    60:22:32:1D:48:15 server=dhcp-mgmt
 add address=10.1.10.6 comment=ap-server-room lease-time=1d mac-address=\
     68:D7:9A:1F:57:E2 server=dhcp-mgmt
+add address=10.1.10.7 comment=ap-corridor-upper lease-time=1d mac-address=\
+    60:22:32:1D:48:15 server=dhcp-mgmt
 add address=10.1.10.5 comment=switch-workbench lease-time=1d mac-address=\
     74:83:C2:FF:87:16 server=dhcp-mgmt
 add address=10.1.10.10 comment=switch-dori-office lease-time=1d mac-address=\
@@ -298,7 +298,7 @@ add address=10.2.12.10 comment=amp-living-room lease-time=1d mac-address=\
 add address=10.2.12.8 comment=clock-nixie-dori lease-time=1d mac-address=\
     C4:5B:BE:63:3A:2E server=dhcp-lan
 add address=10.2.14.2 comment=dori-watch lease-time=1d mac-address=\
-    EA:49:8F:A3:91:E5 server=dhcp-lan
+    E2:47:0B:F9:D1:F1 server=dhcp-lan
 add address=10.3.10.5 comment=spaceage-web lease-time=1d mac-address=\
     00:16:3E:CA:7E:30 server=dhcp-dmz
 add address=10.3.10.4 comment=spaceage-gmod lease-time=1d mac-address=\
@@ -337,7 +337,7 @@ add address=10.2.12.13 comment=homepod-den lease-time=1d mac-address=\
     04:99:B9:9E:9B:95 server=dhcp-lan
 add address=10.5.11.1 comment=camera-front-door lease-time=1d mac-address=\
     D0:21:F9:94:97:13 server=dhcp-security
-add address=10.1.10.9 comment=switch-dori-office lease-time=1d mac-address=\
+add address=10.1.10.9 comment=switch-dori-tv lease-time=1d mac-address=\
     F4:92:BF:A3:E8:E8 server=dhcp-mgmt
 add address=10.2.12.14 comment=homepod-wizzy lease-time=1d mac-address=\
     04:99:B9:79:EE:C9 server=dhcp-lan
@@ -373,6 +373,18 @@ add address=10.2.10.7 comment=mbp-mark-dietzer mac-address=BC:D0:74:45:61:FB \
 add address=10.2.12.17 comment=august-connect-back-door-upper mac-address=\
     2C:9F:FB:16:5F:B7 server=dhcp-lan
 add address=10.2.13.18 comment=uplift-dori-desk mac-address=40:91:51:51:E8:B6 \
+    server=dhcp-lan
+add address=10.2.12.50 comment=amp-living-room-wifi mac-address=\
+    EC:F4:51:D0:8C:B0 server=dhcp-lan
+add address=10.2.12.19 comment=nanoleaf-lines-wizzy mac-address=\
+    80:8A:F7:03:55:58 server=dhcp-lan
+add address=10.2.12.20 comment=nanoleaf-shapes-dori mac-address=\
+    80:8A:F7:03:EA:58 server=dhcp-lan
+add address=10.2.14.5 comment=dori-ipad mac-address=6E:42:DD:F2:32:D8 server=\
+    dhcp-lan
+add address=10.1.10.11 comment=ap-living-room lease-time=1d mac-address=\
+    60:22:32:39:77:9D server=dhcp-mgmt
+add address=10.2.14.6 comment=dori-remarkable mac-address=C0:84:7D:20:57:C0 \
     server=dhcp-lan
 /ip dhcp-server network
 add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=\
@@ -444,14 +456,14 @@ add address=::ffff:10.1.11.2 comment=static-dns-for-dhcp name=\
 add address=10.1.10.1 comment=static-dns-for-dhcp name=unifi.foxden.network
 add address=::ffff:10.1.10.1 comment=static-dns-for-dhcp name=\
     unifi.foxden.network type=AAAA
-add address=10.1.10.7 comment=static-dns-for-dhcp name=\
-    ap-living-room.foxden.network
-add address=::ffff:10.1.10.7 comment=static-dns-for-dhcp name=\
-    ap-living-room.foxden.network type=AAAA
 add address=10.1.10.6 comment=static-dns-for-dhcp name=\
     ap-server-room.foxden.network
 add address=::ffff:10.1.10.6 comment=static-dns-for-dhcp name=\
     ap-server-room.foxden.network type=AAAA
+add address=10.1.10.7 comment=static-dns-for-dhcp name=\
+    ap-corridor-upper.foxden.network
+add address=::ffff:10.1.10.7 comment=static-dns-for-dhcp name=\
+    ap-corridor-upper.foxden.network type=AAAA
 add address=10.1.10.5 comment=static-dns-for-dhcp name=\
     switch-workbench.foxden.network
 add address=::ffff:10.1.10.5 comment=static-dns-for-dhcp name=\
@@ -650,9 +662,9 @@ add address=10.5.11.1 comment=static-dns-for-dhcp name=\
 add address=::ffff:10.5.11.1 comment=static-dns-for-dhcp name=\
     camera-front-door.foxden.network type=AAAA
 add address=10.1.10.9 comment=static-dns-for-dhcp name=\
-    switch-dori-office.foxden.network
+    switch-dori-tv.foxden.network
 add address=::ffff:10.1.10.9 comment=static-dns-for-dhcp name=\
-    switch-dori-office.foxden.network type=AAAA
+    switch-dori-tv.foxden.network type=AAAA
 add address=10.2.12.14 comment=static-dns-for-dhcp name=\
     homepod-wizzy.foxden.network
 add address=::ffff:10.2.12.14 comment=static-dns-for-dhcp name=\
@@ -704,6 +716,10 @@ add address=10.2.13.17 comment=static-dns-for-dhcp name=\
     airgradient-wizzy-office.foxden.network
 add address=::ffff:10.2.13.17 comment=static-dns-for-dhcp name=\
     airgradient-wizzy-office.foxden.network type=AAAA
+add address=10.2.10.7 comment=static-dns-for-dhcp name=\
+    mbp-mark-dietzer.foxden.network
+add address=::ffff:10.2.10.7 comment=static-dns-for-dhcp name=\
+    mbp-mark-dietzer.foxden.network type=AAAA
 add address=10.2.12.17 comment=static-dns-for-dhcp name=\
     august-connect-back-door-upper.foxden.network
 add address=::ffff:10.2.12.17 comment=static-dns-for-dhcp name=\
@@ -712,6 +728,30 @@ add address=10.2.13.18 comment=static-dns-for-dhcp name=\
     uplift-dori-desk.foxden.network
 add address=::ffff:10.2.13.18 comment=static-dns-for-dhcp name=\
     uplift-dori-desk.foxden.network type=AAAA
+add address=10.2.12.50 comment=static-dns-for-dhcp name=\
+    amp-living-room-wifi.foxden.network
+add address=::ffff:10.2.12.50 comment=static-dns-for-dhcp name=\
+    amp-living-room-wifi.foxden.network type=AAAA
+add address=10.2.12.19 comment=static-dns-for-dhcp name=\
+    nanoleaf-lines-wizzy.foxden.network
+add address=::ffff:10.2.12.19 comment=static-dns-for-dhcp name=\
+    nanoleaf-lines-wizzy.foxden.network type=AAAA
+add address=10.2.12.20 comment=static-dns-for-dhcp name=\
+    nanoleaf-shapes-dori.foxden.network
+add address=::ffff:10.2.12.20 comment=static-dns-for-dhcp name=\
+    nanoleaf-shapes-dori.foxden.network type=AAAA
+add address=10.2.14.5 comment=static-dns-for-dhcp name=\
+    dori-ipad.foxden.network
+add address=::ffff:10.2.14.5 comment=static-dns-for-dhcp name=\
+    dori-ipad.foxden.network type=AAAA
+add address=10.1.10.11 comment=static-dns-for-dhcp name=\
+    ap-living-room.foxden.network
+add address=::ffff:10.1.10.11 comment=static-dns-for-dhcp name=\
+    ap-living-room.foxden.network type=AAAA
+add address=10.2.14.6 comment=static-dns-for-dhcp name=\
+    dori-remarkable.foxden.network
+add address=::ffff:10.2.14.6 comment=static-dns-for-dhcp name=\
+    dori-remarkable.foxden.network type=AAAA
 /ip firewall filter
 add action=fasttrack-connection chain=forward comment="related, established" \
     connection-state=established,related hw-offload=yes
