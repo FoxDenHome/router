@@ -1,4 +1,4 @@
-# jan/15/2023 00:32:34 by RouterOS 7.7
+# jan/15/2023 00:36:27 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -895,11 +895,11 @@ add interval=5m name=redfoxv6-up on-event="/system script run redfoxv6-up" \
 /system script
 add dont-require-permissions=no name=static-dns-for-dhcp owner=admin policy=\
     ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
-    local topdomain;\r\
-    \n:local hostname;\r\
-    \n:local dhcpent;\r\
+    local topdomain\r\
+    \n:local hostname\r\
+    \n:local dhcpent\r\
     \n\r\
-    \n:set topdomain \"foxden.network\";\r\
+    \n:set topdomain \"foxden.network\"\r\
     \n\r\
     \n/ip/dns/static/remove [/ip/dns/static/find comment=\"static-dns-for-dhcp\
     \"]\r\
@@ -948,9 +948,9 @@ add dont-require-permissions=yes name=redfoxv6-update owner=admin policy=\
     \n"
 add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=\
     ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
-    local dhcpent;\r\
-    \n:local arpmac;\r\
-    \n:local arpfind;\r\
+    local dhcpent\r\
+    \n:local arpmac\r\
+    \n:local arpfind\r\
     \n\r\
     \n/ip/dhcp-server/lease set [/ip/dhcp-server/lease find] lease-time=1d\r\
     \n\r\
