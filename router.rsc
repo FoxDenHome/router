@@ -1,4 +1,4 @@
-# jan/14/2023 23:51:41 by RouterOS 7.7
+# jan/14/2023 23:51:56 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -624,10 +624,6 @@ add address=::ffff:10.2.13.1 comment=static-dns-for-dhcp name=\
 add address=10.3.10.3 comment=static-dns-for-dhcp name=ut2004.foxden.network
 add address=::ffff:10.3.10.3 comment=static-dns-for-dhcp name=\
     ut2004.foxden.network type=AAAA
-add address=10.2.13.10 comment=static-dns-for-dhcp name=\
-    custom-dori-office-desk.foxden.network
-add address=::ffff:10.2.13.10 comment=static-dns-for-dhcp name=\
-    custom-dori-office-desk.foxden.network type=AAAA
 add address=10.2.13.12 comment=static-dns-for-dhcp name=\
     sonoff-s31-lighthouse-br.foxden.network
 add address=::ffff:10.2.13.12 comment=static-dns-for-dhcp name=\
