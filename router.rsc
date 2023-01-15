@@ -1,4 +1,4 @@
-# jan/14/2023 22:50:06 by RouterOS 7.7
+# jan/14/2023 22:50:33 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -757,6 +757,10 @@ add address=10.2.14.6 comment=static-dns-for-dhcp name=\
     dori-remarkable.foxden.network
 add address=::ffff:10.2.14.6 comment=static-dns-for-dhcp name=\
     dori-remarkable.foxden.network type=AAAA
+add address=10.2.10.8 comment=static-dns-for-dhcp name=\
+    thunderbolt-10g.foxden.network
+add address=::ffff:10.2.10.8 comment=static-dns-for-dhcp name=\
+    thunderbolt-10g.foxden.network type=AAAA
 /ip firewall filter
 add action=fasttrack-connection chain=forward comment="related, established" \
     connection-state=established,related hw-offload=yes
