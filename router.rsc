@@ -1,4 +1,4 @@
-# jan/15/2023 00:37:11 by RouterOS 7.7
+# jan/15/2023 02:57:10 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -870,7 +870,7 @@ set [ find default=yes ] advertise-dns=no mtu=9000
 set contact=admin@foxden.network enabled=yes location="Server room" \
     trap-generators=""
 /system clock
-set time-zone-name=America/Los_Angeles
+set time-zone-autodetect=no time-zone-name=America/Los_Angeles
 /system identity
 set name=router
 /system ntp client
