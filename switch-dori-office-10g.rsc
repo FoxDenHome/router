@@ -1,4 +1,4 @@
-# jan/14/2023 21:19:43 by RouterOS 7.7
+# jan/14/2023 22:32:58 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CRS305-1G-4S+

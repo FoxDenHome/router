@@ -1,4 +1,4 @@
-# jan/14/2023 21:19:39 by RouterOS 7.7
+# jan/14/2023 22:32:53 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -210,10 +210,10 @@ add default-route-distance=5 interface=sfp1-wan use-peer-dns=no use-peer-ntp=\
 add address=10.2.10.3 comment=capefox lease-time=1d mac-address=\
     F0:2F:4B:14:84:F4 server=dhcp-lan
 add address=10.6.10.2 comment=islandfox lease-time=1d mac-address=\
-    B8:AE:ED:7C:1E:71 server=dhcp-hypervisor
+    0A:98:86:2C:85:87 server=dhcp-hypervisor
 add address=10.2.10.1 comment=fennec lease-time=1d mac-address=\
     00:02:C9:23:3C:E0 server=dhcp-lan
-add address=10.2.11.1 comment=nas lease-time=1d mac-address=00:0C:29:C6:9A:DC \
+add address=10.2.11.1 comment=nas lease-time=1d mac-address=50:6B:4B:4B:90:5E \
     server=dhcp-lan
 add address=10.2.10.2 comment=wizzy-desktop lease-time=1d mac-address=\
     EC:0D:9A:21:DF:70 server=dhcp-lan
@@ -242,9 +242,9 @@ add address=10.1.10.10 comment=switch-dori-office lease-time=1d mac-address=\
 add address=10.1.10.8 comment=switch-dori-office-10g lease-time=1d \
     mac-address=18:FD:74:7B:0C:B9 server=dhcp-mgmt
 add address=10.6.11.2 comment=telegraf lease-time=1d mac-address=\
-    00:50:56:2E:16:A0 server=dhcp-hypervisor
+    42:FE:0C:C8:E0:F5 server=dhcp-hypervisor
 add address=10.2.11.2 comment=syncthing lease-time=1d mac-address=\
-    02:42:C0:A8:04:15 server=dhcp-lan
+    AE:FC:DD:8B:33:76 server=dhcp-lan
 add address=10.1.11.3 comment=ups-dori-office lease-time=1d mac-address=\
     00:0C:15:04:39:93 server=dhcp-mgmt
 add address=10.2.12.3 comment=printer lease-time=1d mac-address=\
@@ -256,15 +256,15 @@ add address=10.2.12.2 comment=homeassistant lease-time=1d mac-address=\
 add address=10.5.11.2 comment=camera-living-room lease-time=1d mac-address=\
     68:D7:9A:CF:30:09 server=dhcp-security
 add address=10.2.11.3 comment=plex lease-time=1d mac-address=\
-    02:42:C0:A8:04:16 server=dhcp-lan
+    00:16:3E:CA:7E:03 server=dhcp-lan
 add address=10.6.11.1 comment=prometheus lease-time=1d mac-address=\
-    02:42:C0:A8:04:17 server=dhcp-hypervisor
+    4A:97:18:7B:69:10 server=dhcp-hypervisor
 add address=10.2.11.5 comment=grafana lease-time=1d mac-address=\
-    02:42:C0:A8:04:18 server=dhcp-lan
+    7E:18:E9:41:A9:6C server=dhcp-lan
 add address=10.2.11.6 comment=kiwix lease-time=1d mac-address=\
-    02:42:C0:A8:04:19 server=dhcp-lan
+    00:16:3E:CA:7E:01 server=dhcp-lan
 add address=10.2.11.8 comment=dldr lease-time=1d mac-address=\
-    02:42:C0:A8:04:20 server=dhcp-lan
+    CA:1B:F1:2C:6C:B3 server=dhcp-lan
 add address=10.2.12.7 comment=clock-nixie-zen lease-time=1d mac-address=\
     E0:4F:43:C2:BA:C2 server=dhcp-lan
 add address=10.2.13.7 comment=airgradient-bedroom lease-time=1d mac-address=\
@@ -300,11 +300,11 @@ add address=10.2.12.8 comment=clock-nixie-dori lease-time=1d mac-address=\
 add address=10.2.14.2 comment=dori-watch lease-time=1d mac-address=\
     E2:47:0B:F9:D1:F1 server=dhcp-lan
 add address=10.3.10.5 comment=spaceage-web lease-time=1d mac-address=\
-    00:16:3E:CA:7E:30 server=dhcp-dmz
+    62:BF:FB:E4:89:5D server=dhcp-dmz
 add address=10.3.10.4 comment=spaceage-gmod lease-time=1d mac-address=\
-    00:16:3E:CA:7E:31 server=dhcp-dmz
+    5E:47:05:FC:F8:90 server=dhcp-dmz
 add address=10.3.10.1 comment=foxcaves lease-time=1d mac-address=\
-    00:16:3E:CA:7E:00 server=dhcp-dmz
+    02:42:0A:03:0A:01 server=dhcp-dmz
 add address=10.2.13.4 comment=sonoff-s31-lighthouse-bl lease-time=1d \
     mac-address=8C:AA:B5:66:3B:BE server=dhcp-lan
 add address=10.2.13.3 comment=sonoff-s31-bambu-x1 lease-time=1d mac-address=\
@@ -316,13 +316,13 @@ add address=10.2.13.2 comment=sonoff-s31-dori-office-fan lease-time=1d \
 add address=10.2.13.1 comment=sonoff-s31-wizzy-pc lease-time=1d mac-address=\
     8C:AA:B5:66:10:70 server=dhcp-lan
 add address=10.3.10.3 comment=ut2004 lease-time=1d mac-address=\
-    00:16:3E:CA:7E:02 server=dhcp-dmz
+    02:43:39:4D:B6:AA server=dhcp-dmz
 add address=10.2.13.10 comment=custom-dori-office-desk lease-time=1d \
     mac-address=84:F7:03:73:A0:FC server=dhcp-lan
 add address=10.2.13.12 comment=sonoff-s31-lighthouse-br lease-time=1d \
     mac-address=C4:5B:BE:E4:9B:00 server=dhcp-lan
 add address=10.3.10.7 comment=factorio lease-time=1d mac-address=\
-    00:16:3E:CA:7E:06 server=dhcp-dmz
+    36:16:0C:C9:E8:0B server=dhcp-dmz
 add address=10.2.13.11 comment=uplift-wizzy-desk lease-time=1d mac-address=\
     40:91:51:52:11:F7 server=dhcp-lan
 add address=10.6.12.1 comment=islandfox-ipmi lease-time=1d mac-address=\
@@ -947,4 +947,36 @@ add dont-require-permissions=yes name=redfoxv6-update owner=admin policy=\
     \n:local result [/tool fetch mode=https url=\"http://10.99.10.1:9999/updat\
     e-ip\?ip=\$ipaddr\" as-value output=user]\r\
     \n:log debug (\$result->\"data\")\r\
+    \n"
+add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
+    local dhcpmac;\r\
+    \n:local arpmac;\r\
+    \n:local arpent;\r\
+    \n:local hostip;\r\
+    \nlocal dhcpcomment;\r\
+    \n\r\
+    \n:foreach i in=[/ip/dhcp-server/lease/find] do={\r\
+    \n    :set hostip [/ip/dhcp-server/lease/get \$i address]\r\
+    \n    :set dhcpmac [/ip/dhcp-server/lease/get \$i mac-address]\r\
+    \n    :set dhcpcomment  [/ip/dhcp-server/lease/get \$i comment]\r\
+    \n\r\
+    \n    {\r\
+    \n        :local jobID [:execute {:ping count=1 address=\$hostip}]\r\
+    \n        :while ([:len [/system script job find where .id=\$jobID]] > 0) \
+    do={\r\
+    \n            :delay 1s\r\
+    \n        }\r\
+    \n    }\r\
+    \n\r\
+    \n    :set arpent [/ip/arp/find address=\$hostip]\r\
+    \n    :set arpmac [/ip/arp/get (\$arpent->0) mac-address]\r\
+    \n\r\
+    \n    :if ([:typeof \$arpmac] != \"nil\" && \$arpmac != \$dhcpmac) do={\r\
+    \n        :put (\"# IP: \" . \$hostip . \" | DHCP MAC: \" . \$dhcpmac . \"\
+    \_| ARP MAC: \" . \$arpmac . \" | Comment: \" . \$dhcpcomment)\r\
+    \n        :put (\"/ip/dhcp-server/lease set [/ip/dhcp-server/lease find ad\
+    dress=\" . \$hostip . \"] mac-address=\" . \$arpmac)\r\
+    \n    }\r\
+    \n}\r\
     \n"
