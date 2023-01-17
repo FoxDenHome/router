@@ -1,4 +1,4 @@
-# jan/15/2023 12:59:20 by RouterOS 7.7
+# jan/16/2023 23:01:04 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -6,7 +6,7 @@
 /interface ethernet
 set [ find default-name=ether1 ] name=eth1-oob
 set [ find default-name=sfp-sfpplus1 ] advertise=\
-    1000M-full,10000M-full,2500M-full,5000M-full name=sfp1-wan \
+    1000M-full,10000M-full,2500M-full,5000M-full disabled=yes name=sfp1 \
     rx-flow-control=on speed=10Gbps tx-flow-control=on
 set [ find default-name=sfp-sfpplus2 ] auto-negotiation=no disabled=yes \
     l2mtu=9088 mtu=9000 name=sfp2 speed=10Gbps
@@ -19,9 +19,11 @@ set [ find default-name=sfp-sfpplus8 ] disabled=yes name=sfp8
 set [ find default-name=sfp-sfpplus9 ] disabled=yes name=sfp9
 set [ find default-name=sfp-sfpplus10 ] disabled=yes name=sfp10
 set [ find default-name=sfp-sfpplus11 ] disabled=yes name=sfp11
-set [ find default-name=sfp-sfpplus12 ] disabled=yes name=sfp12
+set [ find default-name=sfp-sfpplus12 ] advertise=\
+    1000M-full,10000M-full,2500M-full,5000M-full name=sfp12-wan \
+    rx-flow-control=on tx-flow-control=on
 set [ find default-name=sfp28-1 ] advertise=10M-half auto-negotiation=no \
-    disabled=yes fec-mode=fec74 l2mtu=9092 mtu=9000 name=sfpx1 speed=25Gbps
+    fec-mode=fec74 l2mtu=9092 mtu=9000 name=sfpx1-rackswitch-agg speed=25Gbps
 set [ find default-name=sfp28-2 ] auto-negotiation=no fec-mode=fec74 l2mtu=\
     9092 mtu=9000 name=sfpx2-rackswitch-agg speed=25Gbps
 /interface 6to4
@@ -40,7 +42,7 @@ add listen-port=13231 mtu=1420 name=wg-vpn
 add interface=sfpx2-rackswitch-agg mtu=9000 name=vlan-dmz vlan-id=3
 add interface=sfpx2-rackswitch-agg mtu=9000 name=vlan-hypervisor vlan-id=6
 add interface=sfpx2-rackswitch-agg mtu=9000 name=vlan-labnet vlan-id=4
-add interface=sfpx2-rackswitch-agg mtu=9000 name=vlan-lan vlan-id=2
+add interface=sfpx1-rackswitch-agg mtu=9000 name=vlan-lan vlan-id=2
 add interface=sfpx2-rackswitch-agg mtu=9000 name=vlan-security vlan-id=5
 /interface vrrp
 add interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=50 version=2 vrid=\
@@ -72,6 +74,7 @@ add interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=50 \
 add interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=50 \
     version=2 vrid=123
 /disk
+add slot=docker tmpfs-max-size=128000000 type=tmpfs
 add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface list
 add name=iface-mgmt
@@ -122,7 +125,7 @@ set 1 name=serial1
 add cake-nat=yes cake-rtt-scheme=internet kind=cake name=cake-internet
 /queue simple
 add disabled=yes max-limit=950M/950M name=queue-wan queue=\
-    cake-internet/cake-internet target=sfp1-wan
+    cake-internet/cake-internet target=sfp1
 /snmp community
 set [ find default=yes ] disabled=yes
 add addresses=::/0 name=monitor_REMOVED
@@ -156,7 +159,7 @@ add interface=vrrp-hypervisor-gateway list=iface-hypervisor
 add interface=vrrp-hypervisor-dns list=iface-hypervisor
 add interface=vrrp-hypervisor-ntp list=iface-hypervisor
 add interface=6to4-redfox list=zone-wan
-add interface=sfp1-wan list=zone-wan
+add interface=sfp12-wan list=zone-wan
 add interface=wg-s2s list=zone-local
 add interface=wg-vpn list=zone-local
 /interface wireguard peers
@@ -206,8 +209,8 @@ add address=10.99.0.1/16 interface=wg-s2s network=10.99.0.0
 /ip cloud
 set update-time=no
 /ip dhcp-client
-add default-route-distance=5 interface=sfp1-wan use-peer-dns=no use-peer-ntp=\
-    no
+add default-route-distance=5 interface=sfp12-wan use-peer-dns=no \
+    use-peer-ntp=no
 /ip dhcp-server config
 set store-leases-disk=never
 /ip dhcp-server lease
@@ -412,6 +415,7 @@ add address=10.5.0.0/16 dns-server=10.5.0.53 domain=foxden.network gateway=\
     10.5.0.1 netmask=16 ntp-server=10.5.0.123
 add address=10.6.0.0/16 dns-server=10.6.0.53 domain=foxden.network gateway=\
     10.6.0.1 netmask=16 ntp-server=10.6.0.123
+add address=192.168.88.0/24 dns-none=yes
 /ip dns
 set allow-remote-requests=yes cache-size=20480KiB servers=8.8.8.8,8.8.4.4 \
     use-doh-server=https://dns.google/dns-query verify-doh-cert=yes
@@ -827,7 +831,7 @@ add action=accept chain=input in-interface=eth1-oob
 add action=accept chain=input in-interface-list=zone-local
 add action=drop chain=input
 /ip firewall nat
-add action=masquerade chain=srcnat out-interface=sfp1-wan
+add action=masquerade chain=srcnat out-interface=sfp12-wan
 add action=dst-nat chain=dstnat comment=Plex dst-port=32400 protocol=tcp \
     to-addresses=10.2.11.3
 add action=dst-nat chain=dstnat comment="SpaceAge GMod" dst-port=27015 \
@@ -846,15 +850,15 @@ add blackhole disabled=no distance=1 dst-address=172.16.0.0/12 gateway="" \
 add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:a::1 routing-table=\
     main
 /ip service
-set telnet address=10.0.0.0/8 disabled=yes
-set ftp address=10.0.0.0/8 disabled=yes
-set www address=10.0.0.0/8 disabled=yes
-set ssh address=10.0.0.0/8
-set www-ssl address=10.0.0.0/8 certificate=\
+set telnet address=10.0.0.0/8,192.168.88.0/24 disabled=yes
+set ftp address=10.0.0.0/8,192.168.88.0/24 disabled=yes
+set www address=10.0.0.0/8,192.168.88.0/24 disabled=yes
+set ssh address=10.0.0.0/8,192.168.88.0/24
+set www-ssl address=10.0.0.0/8,192.168.88.0/24 certificate=\
     letsencrypt-autogen_2023-01-06T20:19:20Z disabled=no tls-version=only-1.2
-set api address=10.0.0.0/8 disabled=yes
-set winbox address=10.0.0.0/8
-set api-ssl address=10.0.0.0/8 certificate=\
+set api address=10.0.0.0/8,192.168.88.0/24 disabled=yes
+set winbox address=10.0.0.0/8,192.168.88.0/24
+set api-ssl address=10.0.0.0/8,192.168.88.0/24 certificate=\
     letsencrypt-autogen_2023-01-06T20:19:20Z tls-version=only-1.2
 /ip ssh
 set always-allow-password-login=yes strong-crypto=yes
@@ -867,7 +871,7 @@ add address=2a0e:7d44:f069:4::1 interface=vlan-labnet
 add address=2a0e:7d44:f069:5::1 interface=vlan-security
 add address=2a0e:7d44:f069:6::1 interface=vlan-hypervisor
 /ipv6 dhcp-client
-add disabled=yes interface=sfp1-wan pool-name=pool-wan request=prefix \
+add disabled=yes interface=sfp1 pool-name=pool-wan request=prefix \
     use-peer-dns=no
 /ipv6 firewall filter
 add action=accept chain=forward connection-state=established,related
