@@ -1,4 +1,4 @@
-# jan/16/2023 23:01:04 by RouterOS 7.7
+# jan/16/2023 23:03:25 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -125,7 +125,7 @@ set 1 name=serial1
 add cake-nat=yes cake-rtt-scheme=internet kind=cake name=cake-internet
 /queue simple
 add disabled=yes max-limit=950M/950M name=queue-wan queue=\
-    cake-internet/cake-internet target=sfp1
+    cake-internet/cake-internet target=sfp12-wan
 /snmp community
 set [ find default=yes ] disabled=yes
 add addresses=::/0 name=monitor_REMOVED
@@ -972,7 +972,7 @@ add dont-require-permissions=yes name=ipv6tun-update owner=admin policy=\
     \n"
 add dont-require-permissions=yes name=redfoxv6-update owner=admin policy=\
     read,test source=":local ipaddr [/ip/address/get [ /ip/address/find  inter\
-    face=sfp1-wan ] address]\r\
+    face=sfp12-wan ] address]\r\
     \n\r\
     \n:local result [/tool fetch mode=https url=\"http://10.99.10.1:9999/updat\
     e-ip\?ip=\$ipaddr\" as-value output=user]\r\
