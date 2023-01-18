@@ -1,4 +1,4 @@
-# jan/17/2023 20:14:08 by RouterOS 7.7
+# jan/17/2023 20:18:54 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -1040,9 +1040,8 @@ add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=\
     \n    }\r\
     \n}\r\
     \n"
-add dont-require-permissions=no name=vrrp-priority-adjust owner=admin policy=\
-    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
-    global VRRPPriorityOffline\r\
+add dont-require-permissions=yes name=vrrp-priority-adjust owner=admin \
+    policy=read,write,test source=":global VRRPPriorityOffline\r\
     \n:global VRRPPriorityOnline\r\
     \n:local VRRPPriorityCurrent \$VRRPPriorityOffline\r\
     \n\r\
@@ -1059,8 +1058,8 @@ add dont-require-permissions=no name=vrrp-priority-adjust owner=admin policy=\
     \n}\r\
     \n\r\
     \n:put \"Set VRRP priority \$VRRPPriorityCurrent\"\r\
-    \n/interface/vrrp set [ find /interface/vrrp ] priority=\$VRRPPriorityCurr\
-    ent\r\
+    \n/interface/vrrp set [ /interface/vrrp/find priority!=\$VRRPPriorityCurre\
+    nt ] priority=\$VRRPPriorityCurrent\r\
     \n"
 /tool netwatch
 add comment=monitor-default disabled=no down-script=\
