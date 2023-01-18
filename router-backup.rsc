@@ -1,4 +1,4 @@
-# jan/17/2023 20:18:58 by RouterOS 7.7
+# jan/17/2023 20:21:37 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -13,14 +13,14 @@ set [ find default-name=ether7 ] disabled=yes name=eth7
 set [ find default-name=ether8 ] comment=eth8 name=oob
 set [ find default-name=sfp-sfpplus1 ] advertise=1000M-full,10000M-full \
     comment=sfp1 l2mtu=9092 mtu=9000 name=vlan-mgmt
-set [ find default-name=ether1 ] comment=eth1 name=wan rx-flow-control=on \
-    tx-flow-control=on
+set [ find default-name=ether1 ] advertise=1000M-full,2500M-full comment=eth1 \
+    name=wan rx-flow-control=on tx-flow-control=on
 /interface 6to4
 add !keepalive name=6to4-redfox remote-address=66.42.71.230
 /interface vrrp
-add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=25 vrid=53
-add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=25
-add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=25 version=2 \
+add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=5 vrid=53
+add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=5
+add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=5 version=2 \
     vrid=123
 /interface wireguard
 add listen-port=13232 mtu=1420 name=wg-s2s
@@ -32,28 +32,28 @@ add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
 add interface=vlan-mgmt mtu=9000 name=vlan-lan vlan-id=2
 add interface=vlan-mgmt mtu=9000 name=vlan-security vlan-id=5
 /interface vrrp
-add interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=25 vrid=53
-add interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=25
-add interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=25 version=2 vrid=\
+add interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=5 vrid=53
+add interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=5
+add interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=5 version=2 vrid=\
     123
-add interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-dns priority=25 \
+add interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-dns priority=5 \
     vrid=53
 add interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway priority=\
-    25
-add interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-ntp priority=25 \
+    5
+add interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-ntp priority=5 \
     version=2 vrid=123
-add interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=25 vrid=53
-add interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=25
-add interface=vlan-labnet mtu=9000 name=vrrp-labnet-ntp priority=25 version=2 \
+add interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=5 vrid=53
+add interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=5
+add interface=vlan-labnet mtu=9000 name=vrrp-labnet-ntp priority=5 version=2 \
     vrid=123
-add interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=25 vrid=53
-add interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=25
-add interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=25 version=2 vrid=\
+add interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=5 vrid=53
+add interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=5
+add interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=5 version=2 vrid=\
     123
-add interface=vlan-security mtu=9000 name=vrrp-security-dns priority=25 vrid=\
+add interface=vlan-security mtu=9000 name=vrrp-security-dns priority=5 vrid=\
     53
-add interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=25
-add interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=25 \
+add interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=5
+add interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=5 \
     version=2 vrid=123
 /disk
 add slot=docker tmpfs-max-size=128000000 type=tmpfs
