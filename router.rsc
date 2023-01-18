@@ -1,4 +1,4 @@
-# jan/17/2023 20:12:11 by RouterOS 7.7
+# jan/17/2023 20:14:08 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -1063,6 +1063,8 @@ add dont-require-permissions=no name=vrrp-priority-adjust owner=admin policy=\
     ent\r\
     \n"
 /tool netwatch
-add comment=monitor-default disabled=no down-script="" host=8.8.8.8 \
-    http-codes="" interval=30s test-script="" timeout=1s type=icmp up-script=\
-    ""
+add comment=monitor-default disabled=no down-script=\
+    "/system/script/run vrrp-priority-adjust\r\
+    \n" host=8.8.8.8 http-codes="" interval=30s test-script="" timeout=1s \
+    type=icmp up-script="/system/script/run vrrp-priority-adjust\r\
+    \n"
