@@ -1,16 +1,12 @@
 #!/bin/sh
 set -e
 
-
-
 transfer_section() {
     SECTION="$1"
 
-    DATA="$(ssh router "$SECTION/export show-sensitive" | dos2unix)"
-
     echo "$SECTION" > "$F"
     echo "remove [find]" >> "$F" 
-    echo "$DATA" >> "$F"
+    ssh router "$SECTION/export show-sensitive" | dos2unix >> "$F"
 }
 
 F="$(mktemp)"

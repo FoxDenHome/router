@@ -1,4 +1,4 @@
-# jan/17/2023 18:07:03 by RouterOS 7.7
+# jan/17/2023 18:09:10 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -15,6 +15,8 @@ set [ find default-name=sfp-sfpplus1 ] advertise=1000M-full,10000M-full \
     comment=sfp1 l2mtu=9092 mtu=9000 name=vlan-mgmt
 set [ find default-name=ether1 ] comment=eth1 name=wan rx-flow-control=on \
     tx-flow-control=on
+/interface 6to4
+add !keepalive name=6to4-redfox remote-address=66.42.71.230
 /interface vrrp
 add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=25 vrid=53
 add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=25
