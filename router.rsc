@@ -1,10 +1,10 @@
-# jan/16/2023 23:03:25 by RouterOS 7.7
+# jan/17/2023 18:06:59 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
 # serial number = REMOVED
 /interface ethernet
-set [ find default-name=ether1 ] name=eth1-oob
+set [ find default-name=ether1 ] comment=eth1 name=oob
 set [ find default-name=sfp-sfpplus1 ] advertise=\
     1000M-full,10000M-full,2500M-full,5000M-full disabled=yes name=sfp1 \
     rx-flow-control=on speed=10Gbps tx-flow-control=on
@@ -19,58 +19,52 @@ set [ find default-name=sfp-sfpplus8 ] disabled=yes name=sfp8
 set [ find default-name=sfp-sfpplus9 ] disabled=yes name=sfp9
 set [ find default-name=sfp-sfpplus10 ] disabled=yes name=sfp10
 set [ find default-name=sfp-sfpplus11 ] disabled=yes name=sfp11
-set [ find default-name=sfp-sfpplus12 ] advertise=\
-    1000M-full,10000M-full,2500M-full,5000M-full name=sfp12-wan \
-    rx-flow-control=on tx-flow-control=on
 set [ find default-name=sfp28-1 ] advertise=10M-half auto-negotiation=no \
     fec-mode=fec74 l2mtu=9092 mtu=9000 name=sfpx1-rackswitch-agg speed=25Gbps
-set [ find default-name=sfp28-2 ] auto-negotiation=no fec-mode=fec74 l2mtu=\
-    9092 mtu=9000 name=sfpx2-rackswitch-agg speed=25Gbps
+set [ find default-name=sfp28-2 ] auto-negotiation=no comment=\
+    sfpx2-rackswitch-agg fec-mode=fec74 l2mtu=9092 mtu=9000 name=vlan-mgmt \
+    speed=25Gbps
+set [ find default-name=sfp-sfpplus12 ] advertise=\
+    1000M-full,10000M-full,2500M-full,5000M-full comment=sfp1 name=wan \
+    rx-flow-control=on tx-flow-control=on
 /interface 6to4
 add !keepalive name=6to4-redfox remote-address=66.42.71.230
 /interface vrrp
-add interface=sfpx2-rackswitch-agg mtu=9000 name=vrrp-mgmt-dns priority=50 \
-    version=2 vrid=53
-add interface=sfpx2-rackswitch-agg mtu=9000 name=vrrp-mgmt-gateway priority=\
-    50 version=2
-add interface=sfpx2-rackswitch-agg mtu=9000 name=vrrp-mgmt-ntp priority=50 \
-    version=2 vrid=123
+add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 vrid=53
+add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=50
+add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=50 version=2 \
+    vrid=123
 /interface wireguard
 add listen-port=13232 mtu=1420 name=wg-s2s
 add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vlan
-add interface=sfpx2-rackswitch-agg mtu=9000 name=vlan-dmz vlan-id=3
-add interface=sfpx2-rackswitch-agg mtu=9000 name=vlan-hypervisor vlan-id=6
-add interface=sfpx2-rackswitch-agg mtu=9000 name=vlan-labnet vlan-id=4
+add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
+add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
+add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
 add interface=sfpx1-rackswitch-agg mtu=9000 name=vlan-lan vlan-id=2
-add interface=sfpx2-rackswitch-agg mtu=9000 name=vlan-security vlan-id=5
+add interface=vlan-mgmt mtu=9000 name=vlan-security vlan-id=5
 /interface vrrp
-add interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=50 version=2 vrid=\
-    53
-add interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=50 version=2
+add interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=50 vrid=53
+add interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=50
 add interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=50 version=2 vrid=\
     123
 add interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-dns priority=50 \
-    version=2 vrid=53
+    vrid=53
 add interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway priority=\
-    50 version=2
+    50
 add interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-ntp priority=50 \
     version=2 vrid=123
-add interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=50 version=2 \
-    vrid=53
-add interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=50 \
-    version=2
+add interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=50 vrid=53
+add interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=50
 add interface=vlan-labnet mtu=9000 name=vrrp-labnet-ntp priority=50 version=2 \
     vrid=123
-add interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=50 version=2 vrid=\
-    53
-add interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=50 version=2
+add interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=50 vrid=53
+add interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=50
 add interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=50 version=2 vrid=\
     123
-add interface=vlan-security mtu=9000 name=vrrp-security-dns priority=50 \
-    version=2 vrid=53
-add interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=50 \
-    version=2
+add interface=vlan-security mtu=9000 name=vrrp-security-dns priority=50 vrid=\
+    53
+add interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=50
 add interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=50 \
     version=2 vrid=123
 /disk
@@ -116,7 +110,7 @@ add address-pool=pool-security dhcp-option-set=default-classless interface=\
     vrrp-security-gateway lease-time=1h name=dhcp-security
 add address-pool=pool-hypervisor dhcp-option-set=default-classless interface=\
     vrrp-hypervisor-gateway lease-time=1h name=dhcp-hypervisor
-add address-pool=pool-oob bootp-support=none interface=eth1-oob lease-time=1h \
+add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h \
     name=dhcp-oob
 /port
 set 0 name=serial0
@@ -125,7 +119,7 @@ set 1 name=serial1
 add cake-nat=yes cake-rtt-scheme=internet kind=cake name=cake-internet
 /queue simple
 add disabled=yes max-limit=950M/950M name=queue-wan queue=\
-    cake-internet/cake-internet target=sfp12-wan
+    cake-internet/cake-internet target=wan
 /snmp community
 set [ find default=yes ] disabled=yes
 add addresses=::/0 name=monitor_REMOVED
@@ -134,7 +128,7 @@ set rp-filter=loose tcp-syncookies=yes
 /ipv6 settings
 set accept-redirects=no accept-router-advertisements=no
 /interface list member
-add interface=sfpx2-rackswitch-agg list=iface-mgmt
+add interface=vlan-mgmt list=iface-mgmt
 add interface=vrrp-mgmt-gateway list=iface-mgmt
 add interface=vrrp-mgmt-dns list=iface-mgmt
 add interface=vrrp-mgmt-ntp list=iface-mgmt
@@ -159,7 +153,7 @@ add interface=vrrp-hypervisor-gateway list=iface-hypervisor
 add interface=vrrp-hypervisor-dns list=iface-hypervisor
 add interface=vrrp-hypervisor-ntp list=iface-hypervisor
 add interface=6to4-redfox list=zone-wan
-add interface=sfp12-wan list=zone-wan
+add interface=wan list=zone-wan
 add interface=wg-s2s list=zone-local
 add interface=wg-vpn list=zone-local
 /interface wireguard peers
@@ -179,13 +173,13 @@ add allowed-address=10.99.10.2/32 comment=IceFox endpoint-address=\
     persistent-keepalive=25s public-key=\
     "t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
 /ip address
-add address=10.1.1.1/16 interface=sfpx2-rackswitch-agg network=10.1.0.0
+add address=10.1.1.1/16 interface=vlan-mgmt network=10.1.0.0
 add address=10.2.1.1/16 interface=vlan-lan network=10.2.0.0
 add address=10.3.1.1/16 interface=vlan-dmz network=10.3.0.0
 add address=10.4.1.1/16 interface=vlan-labnet network=10.4.0.0
 add address=10.5.1.1/16 interface=vlan-security network=10.5.0.0
 add address=10.6.1.1/16 interface=vlan-hypervisor network=10.6.0.0
-add address=192.168.88.1/24 interface=eth1-oob network=192.168.88.0
+add address=192.168.88.1/24 interface=oob network=192.168.88.0
 add address=10.1.0.1 interface=vrrp-mgmt-gateway network=10.1.0.1
 add address=10.1.0.123 interface=vrrp-mgmt-ntp network=10.1.0.123
 add address=10.1.0.53 interface=vrrp-mgmt-dns network=10.1.0.53
@@ -209,8 +203,7 @@ add address=10.99.0.1/16 interface=wg-s2s network=10.99.0.0
 /ip cloud
 set update-time=no
 /ip dhcp-client
-add default-route-distance=5 interface=sfp12-wan use-peer-dns=no \
-    use-peer-ntp=no
+add default-route-distance=5 interface=wan use-peer-dns=no use-peer-ntp=no
 /ip dhcp-server config
 set store-leases-disk=never
 /ip dhcp-server lease
@@ -420,8 +413,10 @@ add address=192.168.88.0/24 dns-none=yes
 set allow-remote-requests=yes cache-size=20480KiB servers=8.8.8.8,8.8.4.4 \
     use-doh-server=https://dns.google/dns-query verify-doh-cert=yes
 /ip dns static
-add address=10.2.0.1 name=router.foxden.network
-add address=::ffff:10.2.0.1 name=router.foxden.network type=AAAA
+add address=10.2.1.1 name=router.foxden.network
+add address=10.2.1.3 name=router-backup.foxden.network
+add address=::ffff:10.2.1.1 name=router.foxden.network type=AAAA
+add address=::ffff:10.2.1.3 name=router-backup.foxden.network type=AAAA
 add address=10.2.1.1 name=vpn.foxden.network
 add address=::ffff:10.2.1.1 name=vpn.foxden.network type=AAAA
 add match-subdomain=yes name=dyn.foxden.network type=NXDOMAIN
@@ -790,7 +785,7 @@ add action=accept chain=forward comment="dstnat'd" connection-nat-state=\
     dstnat
 add action=accept chain=forward out-interface-list=zone-wan
 add action=accept chain=forward in-interface=wg-vpn
-add action=accept chain=forward in-interface=eth1-oob
+add action=accept chain=forward in-interface=oob
 add action=accept chain=forward in-interface-list=iface-mgmt
 add action=accept chain=forward comment="Prometheus -> NodeExporter" \
     dst-port=9100 in-interface-list=iface-hypervisor protocol=tcp \
@@ -802,7 +797,7 @@ add action=jump chain=forward comment="MGMT whitelist" jump-target=\
 add action=jump chain=forward comment="LabNet whitelist" jump-target=\
     labnet-out-forward out-interface-list=iface-labnet
 add action=accept chain=forward out-interface-list=iface-dmz
-add action=drop chain=forward log=yes
+add action=reject chain=forward log=yes reject-with=icmp-admin-prohibited
 add action=accept chain=mgmt-out-forward comment="Hypervisor -> SNMP" \
     dst-port=161 in-interface-list=iface-hypervisor protocol=udp
 add action=accept chain=mgmt-out-forward comment="HomeAssistant -> SNMP" \
@@ -820,18 +815,16 @@ add action=accept chain=lan-out-forward comment=Plex dst-address=10.2.11.3 \
     dst-port=32400 protocol=tcp
 add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" \
     dst-address=10.4.10.1 dst-port=1883 protocol=tcp
-add action=fasttrack-connection chain=input connection-state=\
-    established,related hw-offload=yes
 add action=accept chain=input connection-state=established,related
 add action=accept chain=input protocol=icmp
 add action=accept chain=input comment="HTTP(S)" dst-port=80,443 protocol=tcp
 add action=accept chain=input comment=WireGuard dst-port=13231-13232 \
     protocol=udp
-add action=accept chain=input in-interface=eth1-oob
+add action=accept chain=input in-interface=oob
 add action=accept chain=input in-interface-list=zone-local
-add action=drop chain=input
+add action=reject chain=input reject-with=icmp-admin-prohibited
 /ip firewall nat
-add action=masquerade chain=srcnat out-interface=sfp12-wan
+add action=masquerade chain=srcnat out-interface=wan
 add action=dst-nat chain=dstnat comment=Plex dst-port=32400 protocol=tcp \
     to-addresses=10.2.11.3
 add action=dst-nat chain=dstnat comment="SpaceAge GMod" dst-port=27015 \
@@ -846,6 +839,8 @@ add blackhole disabled=no dst-address=192.168.0.0/16 gateway="" \
 add blackhole disabled=no distance=1 dst-address=172.16.0.0/12 gateway="" \
     pref-src="" routing-table=main scope=30 suppress-hw-offload=no \
     target-scope=10
+add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src=\
+    "" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ipv6 route
 add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:a::1 routing-table=\
     main
@@ -864,7 +859,7 @@ set api-ssl address=10.0.0.0/8,192.168.88.0/24 certificate=\
 set always-allow-password-login=yes strong-crypto=yes
 /ipv6 address
 add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
-add address=2a0e:7d44:f069:1::1 interface=sfpx2-rackswitch-agg
+add address=2a0e:7d44:f069:1::1 interface=vlan-mgmt
 add address=2a0e:7d44:f069:2::1 interface=vlan-lan
 add address=2a0e:7d44:f069:3::1 interface=vlan-dmz
 add address=2a0e:7d44:f069:4::1 interface=vlan-labnet
@@ -877,21 +872,21 @@ add disabled=yes interface=sfp1 pool-name=pool-wan request=prefix \
 add action=accept chain=forward connection-state=established,related
 add action=accept chain=forward protocol=icmpv6
 add action=accept chain=forward in-interface=wg-vpn
-add action=accept chain=forward in-interface=eth1-oob
+add action=accept chain=forward in-interface=oob
 add action=accept chain=forward in-interface-list=iface-mgmt
 add action=accept chain=forward out-interface-list=zone-wan
 add action=accept chain=forward out-interface-list=iface-dmz
-add action=drop chain=forward
+add action=reject chain=forward reject-with=icmp-admin-prohibited
 add action=accept chain=input connection-state=established,related
 add action=accept chain=input protocol=icmpv6
 add action=accept chain=input comment="HTTP(S)" dst-port=80,443 protocol=tcp
 add action=accept chain=input comment=WireGuard dst-port=13231-13232 \
     protocol=udp
-add action=accept chain=input in-interface=eth1-oob
+add action=accept chain=input in-interface=oob
 add action=accept chain=input in-interface-list=zone-local
-add action=drop chain=input
+add action=reject chain=input reject-with=icmp-admin-prohibited
 /ipv6 nd
-set [ find default=yes ] advertise-dns=no mtu=9000
+set [ find default=yes ] advertise-dns=no mtu=9000 ra-preference=high
 /snmp
 set contact=admin@foxden.network enabled=yes location="Server room" \
     trap-generators=""
@@ -972,7 +967,7 @@ add dont-require-permissions=yes name=ipv6tun-update owner=admin policy=\
     \n"
 add dont-require-permissions=yes name=redfoxv6-update owner=admin policy=\
     read,test source=":local ipaddr [/ip/address/get [ /ip/address/find  inter\
-    face=sfp12-wan ] address]\r\
+    face=wan ] address]\r\
     \n\r\
     \n:local result [/tool fetch mode=https url=\"http://10.99.10.1:9999/updat\
     e-ip\?ip=\$ipaddr\" as-value output=user]\r\
