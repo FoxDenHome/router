@@ -1,4 +1,4 @@
-# jan/17/2023 18:09:07 by RouterOS 7.7
+# jan/17/2023 20:12:11 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -203,7 +203,9 @@ add address=10.99.0.1/16 interface=wg-s2s network=10.99.0.0
 /ip cloud
 set update-time=no
 /ip dhcp-client
-add default-route-distance=5 interface=wan use-peer-dns=no use-peer-ntp=no
+add default-route-distance=5 interface=wan script=\
+    "/system/script/run vrrp-priority-adjust\r\
+    \n" use-peer-dns=no use-peer-ntp=no
 /ip dhcp-server config
 set store-leases-disk=never
 /ip dhcp-server lease
@@ -899,7 +901,11 @@ set enabled=yes
 /system ntp server
 set enabled=yes
 /system ntp client servers
-add address=10.1.0.123
+add address=10.1.1.2
+add address=0.pool.ntp.org
+add address=1.pool.ntp.org
+add address=2.pool.ntp.org
+add address=3.pool.ntp.org
 /system scheduler
 add interval=5m name=dyndns-update on-event=\
     "/system script run dyndns-update" policy=read,test start-date=\
@@ -913,6 +919,17 @@ add disabled=yes interval=30s name=pingcheck on-event=\
     start-date=dec/03/2020 start-time=00:00:00
 add interval=5m name=redfoxv6-up on-event="/system script run redfoxv6-up" \
     policy=read,test start-date=aug/09/2020 start-time=09:45:00
+add name=init-onboot on-event=\
+    ":global VRRPPriorityOnline 50\r\
+    \n:global VRRPPriorityOffline 10\r\
+    \n" policy=\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
+    start-time=startup
+add interval=1m name=vrrp-priority-adjust on-event=\
+    "/system/script/run vrrp-priority-adjust\r\
+    \n" policy=\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
+    start-date=jan/17/2023 start-time=19:51:50
 /system script
 add dont-require-permissions=no name=dhcp-propagate-changes owner=admin \
     policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
@@ -1023,3 +1040,29 @@ add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=\
     \n    }\r\
     \n}\r\
     \n"
+add dont-require-permissions=no name=vrrp-priority-adjust owner=admin policy=\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
+    global VRRPPriorityOffline\r\
+    \n:global VRRPPriorityOnline\r\
+    \n:local VRRPPriorityCurrent \$VRRPPriorityOffline\r\
+    \n\r\
+    \n:local defgwidx [ /ip/route/find dynamic active dst-address=0.0.0.0/0 ]\
+    \r\
+    \n\r\
+    \nif ([:len \$defgwidx] > 0) do={\r\
+    \n    :local defgw [ /ip/route/get (\$defgwidx->0) gateway ]\r\
+    \n    :local status [ /tool/netwatch/get [ /tool/netwatch/find comment=\"m\
+    onitor-default\" ] status ]\r\
+    \n    if (\$status = \"up\") do={\r\
+    \n        :set VRRPPriorityCurrent \$VRRPPriorityOnline\r\
+    \n    }\r\
+    \n}\r\
+    \n\r\
+    \n:put \"Set VRRP priority \$VRRPPriorityCurrent\"\r\
+    \n/interface/vrrp set [ find /interface/vrrp ] priority=\$VRRPPriorityCurr\
+    ent\r\
+    \n"
+/tool netwatch
+add comment=monitor-default disabled=no down-script="" host=8.8.8.8 \
+    http-codes="" interval=30s test-script="" timeout=1s type=icmp up-script=\
+    ""

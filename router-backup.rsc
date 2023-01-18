@@ -1,4 +1,4 @@
-# jan/17/2023 18:09:10 by RouterOS 7.7
+# jan/17/2023 20:12:15 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -58,6 +58,8 @@ add interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=25 \
 /disk
 add slot=docker tmpfs-max-size=128000000 type=tmpfs
 add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
+set usb1-part1 parent=usb1 partition-offset=512 partition-size=\
+    "32 017 047 040"
 /interface list
 add name=iface-mgmt
 add name=iface-lan
@@ -99,7 +101,13 @@ add address-pool=pool-hypervisor dhcp-option-set=default-classless interface=\
 add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h \
     name=dhcp-oob
 /port
-set 0 baud-rate=115200
+set 0 baud-rate=115200 data-bits=8 flow-control=none name=usb1 parity=none \
+    stop-bits=1
+/snmp community
+set [ find default=yes ] disabled=yes
+add addresses=::/0 name=monitor_REMOVED
+/dude
+set data-directory=usb1-part1/dude enabled=yes
 /ip settings
 set rp-filter=loose tcp-syncookies=yes
 /ipv6 settings
@@ -179,7 +187,9 @@ add address=10.100.0.1/16 interface=wg-vpn network=10.100.0.0
 /ip cloud
 set update-time=no
 /ip dhcp-client
-add default-route-distance=5 interface=wan use-peer-dns=no use-peer-ntp=no
+add default-route-distance=5 interface=wan script=\
+    "/system/script/run vrrp-priority-adjust\r\
+    \n" use-peer-dns=no use-peer-ntp=no
 /ip dhcp-server config
 set store-leases-disk=never
 /ip dhcp-server lease
@@ -818,6 +828,29 @@ add action=dst-nat chain=dstnat comment=Factorio dst-port=34197 protocol=udp \
 /ip route
 add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src=\
     "" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
+/ip service
+set telnet address=10.0.0.0/8,192.168.88.0/24 disabled=yes
+set ftp address=10.0.0.0/8,192.168.88.0/24 disabled=yes
+set www address=10.0.0.0/8,192.168.88.0/24 disabled=yes
+set ssh address=10.0.0.0/8,192.168.88.0/24,127.0.0.0/8
+set www-ssl address=10.0.0.0/8,192.168.88.0/24
+set api address=10.0.0.0/8,192.168.88.0/24,127.0.0.0/8 disabled=yes
+set winbox address=10.0.0.0/8,192.168.88.0/24,127.0.0.0/8
+set api-ssl address=10.0.0.0/8,192.168.88.0/24 disabled=yes
+/ipv6 address
+add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
+# duplicate address detected
+add address=2a0e:7d44:f069:1::1 interface=vlan-mgmt
+# duplicate address detected
+add address=2a0e:7d44:f069:2::1 interface=vlan-lan
+# duplicate address detected
+add address=2a0e:7d44:f069:3::1 interface=vlan-dmz
+# duplicate address detected
+add address=2a0e:7d44:f069:4::1 interface=vlan-labnet
+# duplicate address detected
+add address=2a0e:7d44:f069:5::1 interface=vlan-security
+# duplicate address detected
+add address=2a0e:7d44:f069:6::1 interface=vlan-hypervisor
 /ipv6 firewall filter
 add action=accept chain=forward connection-state=established,related
 add action=accept chain=forward protocol=icmpv6
@@ -837,6 +870,9 @@ add action=accept chain=input in-interface-list=zone-local
 add action=reject chain=input reject-with=icmp-admin-prohibited
 /ipv6 nd
 set [ find default=yes ] advertise-dns=no mtu=9000
+/snmp
+set contact=admin@foxden.network enabled=yes location="Server room" \
+    trap-generators=""
 /system clock
 set time-zone-autodetect=no time-zone-name=America/Los_Angeles
 /system identity
@@ -846,7 +882,11 @@ set enabled=yes
 /system ntp server
 set enabled=yes
 /system ntp client servers
-add address=10.1.0.123
+add address=10.1.1.2
+add address=0.pool.ntp.org
+add address=1.pool.ntp.org
+add address=2.pool.ntp.org
+add address=3.pool.ntp.org
 /system scheduler
 add interval=5m name=dyndns-update on-event=\
     "/system script run dyndns-update" policy=read,test start-date=\
@@ -860,6 +900,17 @@ add disabled=yes interval=30s name=pingcheck on-event=\
     start-date=dec/03/2020 start-time=00:00:00
 add interval=5m name=redfoxv6-up on-event="/system script run redfoxv6-up" \
     policy=read,test start-date=aug/09/2020 start-time=09:47:30
+add name=init-onboot on-event=\
+    ":global VRRPPriorityOnline 25\r\
+    \n:global VRRPPriorityOffline 5\r\
+    \n" policy=\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
+    start-time=startup
+add interval=1m name=vrrp-priority-adjust on-event=\
+    "/system/script/run vrrp-priority-adjust\r\
+    \n" policy=\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
+    start-date=jan/17/2023 start-time=19:52:12
 /system script
 add dont-require-permissions=no name=dhcp-propagate-changes owner=admin \
     policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
@@ -970,3 +1021,29 @@ add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=\
     \n    }\r\
     \n}\r\
     \n"
+add dont-require-permissions=no name=vrrp-priority-adjust owner=admin policy=\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
+    global VRRPPriorityOffline\r\
+    \n:global VRRPPriorityOnline\r\
+    \n:local VRRPPriorityCurrent \$VRRPPriorityOffline\r\
+    \n\r\
+    \n:local defgwidx [ /ip/route/find dynamic active dst-address=0.0.0.0/0 ]\
+    \r\
+    \n\r\
+    \nif ([:len \$defgwidx] > 0) do={\r\
+    \n    :local defgw [ /ip/route/get (\$defgwidx->0) gateway ]\r\
+    \n    :local status [ /tool/netwatch/get [ /tool/netwatch/find comment=\"m\
+    onitor-default\" ] status ]\r\
+    \n    if (\$status = \"up\") do={\r\
+    \n        :set VRRPPriorityCurrent \$VRRPPriorityOnline\r\
+    \n    }\r\
+    \n}\r\
+    \n\r\
+    \n:put \"Set VRRP priority \$VRRPPriorityCurrent\"\r\
+    \n/interface/vrrp set [ find /interface/vrrp ] priority=\$VRRPPriorityCurr\
+    ent\r\
+    \n"
+/tool netwatch
+add comment=monitor-default disabled=no down-script="" host=8.8.8.8 \
+    http-codes="" interval=30s test-script="" timeout=1s type=icmp up-script=\
+    ""
