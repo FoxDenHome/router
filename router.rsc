@@ -1,4 +1,4 @@
-# jan/18/2023 23:48:23 by RouterOS 7.7
+# jan/19/2023 13:25:44 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -591,10 +591,10 @@
     \n}\r\
     \n\r\
     \nif (\$isprimary) do={\r\
-    \n    \$dyndnsUpdate host=\"redfoxv6\" key=\"REMOVED\" updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
     \n    \$dyndnsUpdate host=\"wan.dyn.foxden.network\" key=\"REMOVED\" updatehost=\"dyn.dns.he.net\" dns=\"ns1.he.net\" ipaddr=\$ipaddr mode=https\r\
     \n    #\$dyndnsUpdate host=\"772305\" key=\"REMOVED\" updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https\r\
     \n}\r\
+    \n\$dyndnsUpdate host=\"redfoxv6\" key=\"REMOVED\" updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
     \n\$dyndnsUpdate host=\$DynDNSHost key=\$DynDNSKey updatehost=\"dyn.dns.he.net\" dns=\"ns1.he.net\" ipaddr=\$ipaddr mode=https\r\
     \n"
 /system script add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local dhcpent\r\

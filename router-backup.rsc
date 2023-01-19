@@ -1,4 +1,4 @@
-# jan/18/2023 23:48:27 by RouterOS 7.7
+# jan/19/2023 13:25:49 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -462,6 +462,7 @@
 /ip firewall nat add action=dst-nat chain=dstnat comment="SpaceAge GMod" dst-port=27015 protocol=udp to-addresses=10.3.10.4
 /ip firewall nat add action=dst-nat chain=dstnat comment=Factorio dst-port=34197 protocol=udp to-addresses=10.3.10.7
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
+/ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
 /ip service set telnet address=10.0.0.0/8,192.168.88.0/24 disabled=yes
 /ip service set ftp address=10.0.0.0/8,192.168.88.0/24 disabled=yes
 /ip service set www address=10.0.0.0/8,192.168.88.0/24 disabled=yes
@@ -470,13 +471,13 @@
 /ip service set api address=10.0.0.0/8,192.168.88.0/24,127.0.0.0/8 disabled=yes
 /ip service set winbox address=10.0.0.0/8,192.168.88.0/24,127.0.0.0/8
 /ip service set api-ssl address=10.0.0.0/8,192.168.88.0/24 disabled=yes
-/ipv6 address add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
-/ipv6 address add address=2a0e:7d44:f069:1::1 interface=vlan-mgmt
-/ipv6 address add address=2a0e:7d44:f069:2::1 interface=vlan-lan
-/ipv6 address add address=2a0e:7d44:f069:3::1 interface=vlan-dmz
-/ipv6 address add address=2a0e:7d44:f069:4::1 interface=vlan-labnet
-/ipv6 address add address=2a0e:7d44:f069:5::1 interface=vlan-security
-/ipv6 address add address=2a0e:7d44:f069:6::1 interface=vlan-hypervisor
+/ipv6 address add address=2a0e:7d44:f000:b::2 advertise=no interface=6to4-redfox
+/ipv6 address add address=2a0e:7d44:f00b:1::1 interface=vlan-mgmt
+/ipv6 address add address=2a0e:7d44:f00b:2::1 interface=vlan-lan
+/ipv6 address add address=2a0e:7d44:f00b:3::1 interface=vlan-dmz
+/ipv6 address add address=2a0e:7d44:f00b:4::1 interface=vlan-labnet
+/ipv6 address add address=2a0e:7d44:f00b:5::1 interface=vlan-security
+/ipv6 address add address=2a0e:7d44:f00b:6::1 interface=vlan-hypervisor
 /ipv6 firewall filter add action=accept chain=forward connection-state=established,related
 /ipv6 firewall filter add action=accept chain=forward protocol=icmpv6
 /ipv6 firewall filter add action=accept chain=forward in-interface=wg-vpn
@@ -578,10 +579,10 @@
     \n}\r\
     \n\r\
     \nif (\$isprimary) do={\r\
-    \n    \$dyndnsUpdate host=\"redfoxv6\" key=\"REMOVED\" updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
     \n    \$dyndnsUpdate host=\"wan.dyn.foxden.network\" key=\"REMOVED\" updatehost=\"dyn.dns.he.net\" dns=\"ns1.he.net\" ipaddr=\$ipaddr mode=https\r\
     \n    #\$dyndnsUpdate host=\"772305\" key=\"REMOVED\" updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https\r\
     \n}\r\
+    \n\$dyndnsUpdate host=\"redfoxv6\" key=\"REMOVED\" updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
     \n\$dyndnsUpdate host=\$DynDNSHost key=\$DynDNSKey updatehost=\"dyn.dns.he.net\" dns=\"ns1.he.net\" ipaddr=\$ipaddr mode=https\r\
     \n"
 /system script add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local dhcpent\r\
