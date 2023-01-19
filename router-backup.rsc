@@ -1,4 +1,4 @@
-# jan/18/2023 20:31:27 by RouterOS 7.7
+# jan/18/2023 20:32:18 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -570,18 +570,19 @@
     \n    }\r\
     \n    :delay 60s\r\
     \n    :do {\r\
-    \n        :local result [/tool/fetch mode=https url=\"https://\$updatehost/nic/update\?hostname=\$host&myip=\$ipaddr\" user=\$host password=\$key as-value output=user]\r\
-    \n        \$logputinfo (\"[DynDNS] Result of update for \". \$host . \": \" . (\$result->\"data\"))\r\
+    \n        :local result [/tool/fetch mode=\$mode url=\"\$mode://\$updatehost/nic/update\?hostname=\$host&myip=\$ipaddr\" user=\$host password=\$key as-value output=user]\r\
+    \n        \$logputdebug (\"[DynDNS] Result of update for \". \$host . \": \" . (\$result->\"data\"))\r\
     \n    } on-error={\r\
     \n        \$logputerror (\"[DynDNS] Unable to update \" . \$host)\r\
     \n    }\r\
     \n}\r\
     \n\r\
     \nif (\$isprimary) do={\r\
-    \n    \$dyndnsUpdate host=\"wan.dyn.foxden.network\" key=\"REMOVED\" updatehost=\"dyn.dns.he.net\" dns=\"ns1.he.net\" ipaddr=\$ipaddr\r\
-    \n    \$dyndnsUpdate host=\"772305\" key=\"REMOVED\" updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr\r\
+    \n    \$dyndnsUpdate host=\"redfoxv6\" key=\"REMOVED\" updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
+    \n    \$dyndnsUpdate host=\"wan.dyn.foxden.network\" key=\"REMOVED\" updatehost=\"dyn.dns.he.net\" dns=\"ns1.he.net\" ipaddr=\$ipaddr mode=https\r\
+    \n    \$dyndnsUpdate host=\"772305\" key=\"REMOVED\" updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https\r\
     \n}\r\
-    \n\$dyndnsUpdate host=\$DynDNSHost key=\$DynDNSKey updatehost=\"dyn.dns.he.net\" dns=\"ns1.he.net\" ipaddr=\$ipaddr\r\
+    \n\$dyndnsUpdate host=\$DynDNSHost key=\$DynDNSKey updatehost=\"dyn.dns.he.net\" dns=\"ns1.he.net\" ipaddr=\$ipaddr mode=https\r\
     \n"
 /system script add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local dhcpent\r\
     \n:local arpmac\r\
