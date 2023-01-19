@@ -1,4 +1,4 @@
-# jan/18/2023 17:03:09 by RouterOS 7.7
+# jan/18/2023 17:14:20 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS

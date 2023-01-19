@@ -1,4 +1,4 @@
-# jan/18/2023 17:03:13 by RouterOS 7.7
+# jan/18/2023 17:14:25 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -31,8 +31,6 @@ add interface=vlan-mgmt mtu=9000 name=vlan-security vlan-id=5
 /disk
 add slot=docker tmpfs-max-size=128000000 type=tmpfs
 add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
-set usb1-part1 parent=usb1 partition-offset=512 partition-size=\
-    "32 017 047 040"
 /interface list
 add name=iface-mgmt
 add name=iface-lan
