@@ -1,4 +1,4 @@
-# jan/17/2023 20:21:40 by RouterOS 7.7
+# jan/18/2023 17:03:18 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CRS305-1G-4S+
@@ -8,15 +8,20 @@ add admin-mac=18:FD:74:7B:0C:B9 auto-mac=no name=bridge priority=0xA000 \
     vlan-filtering=yes
 /interface ethernet
 set [ find default-name=ether1 ] advertise=100M-full,1000M-full l2mtu=9092 \
-    mtu=9000 name=eth1-switch-dori-office
+    mtu=9000 name=eth1-switch-dori-office rx-flow-control=on tx-flow-control=\
+    on
 set [ find default-name=sfp-sfpplus1 ] advertise=1000M-full,10000M-full \
-    l2mtu=9092 mtu=9000 name=sfp1-capefox speed=10Gbps
+    l2mtu=9092 mtu=9000 name=sfp1-capefox rx-flow-control=on speed=10Gbps \
+    tx-flow-control=on
 set [ find default-name=sfp-sfpplus2 ] advertise=1000M-full,10000M-full \
-    l2mtu=9092 mtu=9000 name=sfp2 speed=10Gbps
+    l2mtu=9092 mtu=9000 name=sfp2 rx-flow-control=on speed=10Gbps \
+    tx-flow-control=on
 set [ find default-name=sfp-sfpplus3 ] advertise=1000M-full,10000M-full \
-    l2mtu=9092 mtu=9000 name=sfp3 speed=10Gbps
+    l2mtu=9092 mtu=9000 name=sfp3 rx-flow-control=on speed=10Gbps \
+    tx-flow-control=on
 set [ find default-name=sfp-sfpplus4 ] advertise=1000M-full,10000M-full \
-    l2mtu=9092 mtu=9000 name=sfp4-switch-rack-agg speed=10Gbps
+    l2mtu=9092 mtu=9000 name=sfp4-switch-rack-agg rx-flow-control=on speed=\
+    10Gbps tx-flow-control=on
 /disk
 add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface lte apn

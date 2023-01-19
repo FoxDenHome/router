@@ -1,10 +1,11 @@
-# jan/17/2023 20:21:33 by RouterOS 7.7
+# jan/18/2023 17:03:09 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
 # serial number = REMOVED
 /interface ethernet
-set [ find default-name=ether1 ] comment=eth1 name=oob
+set [ find default-name=ether1 ] comment=eth1 name=oob rx-flow-control=on \
+    tx-flow-control=on
 set [ find default-name=sfp-sfpplus1 ] advertise=\
     1000M-full,10000M-full,2500M-full,5000M-full disabled=yes name=sfp1 \
     rx-flow-control=on speed=10Gbps tx-flow-control=on
@@ -20,20 +21,16 @@ set [ find default-name=sfp-sfpplus9 ] disabled=yes name=sfp9
 set [ find default-name=sfp-sfpplus10 ] disabled=yes name=sfp10
 set [ find default-name=sfp-sfpplus11 ] disabled=yes name=sfp11
 set [ find default-name=sfp28-1 ] advertise=10M-half auto-negotiation=no \
-    fec-mode=fec74 l2mtu=9092 mtu=9000 name=sfpx1-rackswitch-agg speed=25Gbps
+    fec-mode=fec74 l2mtu=9092 mtu=9000 name=sfpx1-rackswitch-agg \
+    rx-flow-control=on speed=25Gbps tx-flow-control=on
 set [ find default-name=sfp28-2 ] auto-negotiation=no comment=\
     sfpx2-rackswitch-agg fec-mode=fec74 l2mtu=9092 mtu=9000 name=vlan-mgmt \
-    speed=25Gbps
+    rx-flow-control=on speed=25Gbps tx-flow-control=on
 set [ find default-name=sfp-sfpplus12 ] advertise=\
     1000M-full,10000M-full,2500M-full,5000M-full comment=sfp1 name=wan \
     rx-flow-control=on tx-flow-control=on
 /interface 6to4
 add !keepalive name=6to4-redfox remote-address=66.42.71.230
-/interface vrrp
-add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 vrid=53
-add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=50
-add interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=50 version=2 \
-    vrid=123
 /interface wireguard
 add listen-port=13232 mtu=1420 name=wg-s2s
 add listen-port=13231 mtu=1420 name=wg-vpn
@@ -43,30 +40,6 @@ add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
 add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
 add interface=sfpx1-rackswitch-agg mtu=9000 name=vlan-lan vlan-id=2
 add interface=vlan-mgmt mtu=9000 name=vlan-security vlan-id=5
-/interface vrrp
-add interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=50 vrid=53
-add interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=50
-add interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=50 version=2 vrid=\
-    123
-add interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-dns priority=50 \
-    vrid=53
-add interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway priority=\
-    50
-add interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-ntp priority=50 \
-    version=2 vrid=123
-add interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=50 vrid=53
-add interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=50
-add interface=vlan-labnet mtu=9000 name=vrrp-labnet-ntp priority=50 version=2 \
-    vrid=123
-add interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=50 vrid=53
-add interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=50
-add interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=50 version=2 vrid=\
-    123
-add interface=vlan-security mtu=9000 name=vrrp-security-dns priority=50 vrid=\
-    53
-add interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=50
-add interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=50 \
-    version=2 vrid=123
 /disk
 add slot=docker tmpfs-max-size=128000000 type=tmpfs
 add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
@@ -98,18 +71,6 @@ add name=pool-security ranges=10.5.100.0-10.5.200.255
 add name=pool-hypervisor ranges=10.6.100.0-10.6.200.255
 add name=pool-oob ranges=192.168.88.100-192.168.88.200
 /ip dhcp-server
-add address-pool=pool-labnet dhcp-option-set=default-classless interface=\
-    vrrp-labnet-gateway lease-time=1h name=dhcp-labnet
-add address-pool=pool-lan dhcp-option-set=default-classless interface=\
-    vrrp-lan-gateway lease-time=1h name=dhcp-lan
-add address-pool=pool-dmz dhcp-option-set=default-classless interface=\
-    vrrp-dmz-gateway lease-time=1h name=dhcp-dmz
-add address-pool=pool-mgmt dhcp-option-set=default-classless interface=\
-    vrrp-mgmt-gateway lease-time=1h name=dhcp-mgmt
-add address-pool=pool-security dhcp-option-set=default-classless interface=\
-    vrrp-security-gateway lease-time=1h name=dhcp-security
-add address-pool=pool-hypervisor dhcp-option-set=default-classless interface=\
-    vrrp-hypervisor-gateway lease-time=1h name=dhcp-hypervisor
 add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h \
     name=dhcp-oob
 /port
@@ -123,6 +84,44 @@ add disabled=yes max-limit=950M/950M name=queue-wan queue=\
 /snmp community
 set [ find default=yes ] disabled=yes
 add addresses=::/0 name=monitor_REMOVED
+/interface vrrp
+add group-master=vrrp-mgmt-dns interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns \
+    priority=50 vrid=53
+add group-master=vrrp-mgmt-gateway interface=vlan-dmz mtu=9000 name=\
+    vrrp-dmz-gateway priority=50
+add group-master=vrrp-mgmt-ntp interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp \
+    priority=50 version=2 vrid=123
+add group-master=vrrp-mgmt-dns interface=vlan-hypervisor mtu=9000 name=\
+    vrrp-hypervisor-dns priority=50 vrid=53
+add group-master=vrrp-mgmt-gateway interface=vlan-hypervisor mtu=9000 name=\
+    vrrp-hypervisor-gateway priority=50
+add group-master=vrrp-mgmt-ntp interface=vlan-hypervisor mtu=9000 name=\
+    vrrp-hypervisor-ntp priority=50 version=2 vrid=123
+add group-master=vrrp-mgmt-dns interface=vlan-labnet mtu=9000 name=\
+    vrrp-labnet-dns priority=50 vrid=53
+add group-master=vrrp-mgmt-gateway interface=vlan-labnet mtu=9000 name=\
+    vrrp-labnet-gateway priority=50
+add group-master=vrrp-mgmt-ntp interface=vlan-labnet mtu=9000 name=\
+    vrrp-labnet-ntp priority=50 version=2 vrid=123
+add group-master=vrrp-mgmt-dns interface=vlan-lan mtu=9000 name=vrrp-lan-dns \
+    priority=50 vrid=53
+add group-master=vrrp-mgmt-gateway interface=vlan-lan mtu=9000 name=\
+    vrrp-lan-gateway priority=50
+add group-master=vrrp-mgmt-ntp interface=vlan-lan mtu=9000 name=vrrp-lan-ntp \
+    priority=50 version=2 vrid=123
+add group-master=vrrp-mgmt-dns interface=vlan-mgmt mtu=9000 name=\
+    vrrp-mgmt-dns priority=50 vrid=53
+add group-master=vrrp-mgmt-gateway interface=vlan-mgmt mtu=9000 name=\
+    vrrp-mgmt-gateway on-backup="/system/script/run vrrp-state-check" \
+    on-master="/system/script/run vrrp-state-check" priority=50
+add group-master=vrrp-mgmt-ntp interface=vlan-mgmt mtu=9000 name=\
+    vrrp-mgmt-ntp priority=50 version=2 vrid=123
+add group-master=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=\
+    vrrp-security-dns priority=50 vrid=53
+add group-master=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=\
+    vrrp-security-gateway priority=50
+add group-master=vrrp-mgmt-ntp interface=vlan-security mtu=9000 name=\
+    vrrp-security-ntp priority=50 version=2 vrid=123
 /ip settings
 set rp-filter=loose tcp-syncookies=yes
 /ipv6 settings
@@ -206,6 +205,19 @@ set update-time=no
 add default-route-distance=5 interface=wan script=\
     "/system/script/run vrrp-priority-adjust\r\
     \n" use-peer-dns=no use-peer-ntp=no
+/ip dhcp-server
+add address-pool=pool-labnet dhcp-option-set=default-classless interface=\
+    vrrp-labnet-gateway lease-time=1h name=dhcp-labnet
+add address-pool=pool-lan dhcp-option-set=default-classless interface=\
+    vrrp-lan-gateway lease-time=1h name=dhcp-lan
+add address-pool=pool-dmz dhcp-option-set=default-classless interface=\
+    vrrp-dmz-gateway lease-time=1h name=dhcp-dmz
+add address-pool=pool-mgmt dhcp-option-set=default-classless interface=\
+    vrrp-mgmt-gateway lease-time=1h name=dhcp-mgmt
+add address-pool=pool-security dhcp-option-set=default-classless interface=\
+    vrrp-security-gateway lease-time=1h name=dhcp-security
+add address-pool=pool-hypervisor dhcp-option-set=default-classless interface=\
+    vrrp-hypervisor-gateway lease-time=1h name=dhcp-hypervisor
 /ip dhcp-server config
 set store-leases-disk=never
 /ip dhcp-server lease
@@ -861,12 +873,12 @@ set api-ssl address=10.0.0.0/8,192.168.88.0/24 certificate=\
 set always-allow-password-login=yes strong-crypto=yes
 /ipv6 address
 add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
-add address=2a0e:7d44:f069:1::1 interface=vlan-mgmt
-add address=2a0e:7d44:f069:2::1 interface=vlan-lan
-add address=2a0e:7d44:f069:3::1 interface=vlan-dmz
-add address=2a0e:7d44:f069:4::1 interface=vlan-labnet
-add address=2a0e:7d44:f069:5::1 interface=vlan-security
-add address=2a0e:7d44:f069:6::1 interface=vlan-hypervisor
+add address=2a0e:7d44:f069:1::3 interface=vlan-mgmt
+add address=2a0e:7d44:f069:2::3 interface=vlan-lan
+add address=2a0e:7d44:f069:3::3 interface=vlan-dmz
+add address=2a0e:7d44:f069:4::3 interface=vlan-labnet
+add address=2a0e:7d44:f069:5::3 interface=vlan-security
+add address=2a0e:7d44:f069:6::3 interface=vlan-hypervisor
 /ipv6 dhcp-client
 add disabled=yes interface=sfp1 pool-name=pool-wan request=prefix \
     use-peer-dns=no
@@ -907,18 +919,19 @@ add address=1.pool.ntp.org
 add address=2.pool.ntp.org
 add address=3.pool.ntp.org
 /system scheduler
-add interval=5m name=dyndns-update on-event=\
-    "/system script run dyndns-update" policy=read,test start-date=\
+add interval=5m name=dyndns-router-update on-event=\
+    "/system script run dyndns-router-update" policy=read,test start-date=\
     aug/09/2020 start-time=09:41:00
-add interval=5m name=ipv6tun-update on-event=\
-    "/system script run ipv6tun-update" policy=read,test start-date=\
+add interval=5m name=dyndns-ipv6tun-update on-event=\
+    "/system script run dyndns-ipv6tun-update" policy=read,test start-date=\
     aug/09/2020 start-time=09:43:00
 add disabled=yes interval=30s name=pingcheck on-event=\
     "/system script run pingcheck" policy=\
     ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
     start-date=dec/03/2020 start-time=00:00:00
-add interval=5m name=redfoxv6-up on-event="/system script run redfoxv6-up" \
-    policy=read,test start-date=aug/09/2020 start-time=09:45:00
+add interval=5m name=dyndns-redfoxv6-up on-event=\
+    "/system script run dyndns-redfoxv6-up" policy=read,test start-date=\
+    aug/09/2020 start-time=09:45:00
 add name=init-onboot on-event=\
     ":global VRRPPriorityOnline 50\r\
     \n:global VRRPPriorityOffline 10\r\
@@ -927,9 +940,10 @@ add name=init-onboot on-event=\
     start-time=startup
 add interval=1m name=vrrp-priority-adjust on-event=\
     "/system/script/run vrrp-priority-adjust\r\
-    \n" policy=\
-    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
-    start-date=jan/17/2023 start-time=19:51:50
+    \n" policy=read,write,test start-date=jan/17/2023 start-time=19:51:50
+add interval=1m name=vrrp-state-check on-event=\
+    "/system/script/run vrrp-state-check\r\
+    \n" policy=read,write,test start-date=jan/18/2023 start-time=16:33:52
 /system script
 add dont-require-permissions=no name=dhcp-propagate-changes owner=admin \
     policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
@@ -960,8 +974,8 @@ add dont-require-permissions=no name=dhcp-propagate-changes owner=admin \
     (\$dhcpent->\"address\")) comment=\"static-dns-for-dhcp\"\r\
     \n}\r\
     \n"
-add dont-require-permissions=yes name=dyndns-update owner=admin policy=\
-    read,test source=":local ddnshost \"router.dyn.foxden.network\"\r\
+add dont-require-permissions=yes name=dyndns-router-update owner=admin \
+    policy=read,test source=":local ddnshost \"router.dyn.foxden.network\"\r\
     \n:local key \"REMOVED\"\r\
     \n:local updatehost \"dyn.dns.he.net\"\r\
     \n\r\
@@ -971,8 +985,8 @@ add dont-require-permissions=yes name=dyndns-update owner=admin policy=\
     \n:log debug (\$result->\"data\")\r\
     \n\r\
     \n"
-add dont-require-permissions=yes name=ipv6tun-update owner=admin policy=\
-    read,test source=":local ddnshost \"772305\"\r\
+add dont-require-permissions=yes name=dyndns-ipv6tun-update owner=admin \
+    policy=read,test source=":local ddnshost \"772305\"\r\
     \n:local user \"doridian\"\r\
     \n:local key \"REMOVED\"\r\
     \n:local updatehost \"ipv4.tunnelbroker.net\"\r\
@@ -982,9 +996,9 @@ add dont-require-permissions=yes name=ipv6tun-update owner=admin policy=\
     put=user]\r\
     \n:log debug (\$result->\"data\")\r\
     \n"
-add dont-require-permissions=yes name=redfoxv6-update owner=admin policy=\
-    read,test source=":local ipaddr [/ip/address/get [ /ip/address/find  inter\
-    face=wan ] address]\r\
+add dont-require-permissions=yes name=dyndns-redfoxv6-update owner=admin \
+    policy=read,test source=":local ipaddr [/ip/address/get [ /ip/address/find\
+    \_ interface=wan ] address]\r\
     \n\r\
     \n:local result [/tool fetch mode=https url=\"http://10.99.10.1:9999/updat\
     e-ip\?ip=\$ipaddr\" as-value output=user]\r\
@@ -1060,6 +1074,14 @@ add dont-require-permissions=yes name=vrrp-priority-adjust owner=admin \
     \n:put \"Set VRRP priority \$VRRPPriorityCurrent\"\r\
     \n/interface/vrrp set [ /interface/vrrp/find priority!=\$VRRPPriorityCurre\
     nt ] priority=\$VRRPPriorityCurrent\r\
+    \n"
+add dont-require-permissions=yes name=vrrp-state-check owner=admin policy=\
+    read,write,test source=":local isprimary [ /interface/vrrp/get vrrp-mgmt-d\
+    ns master ]\r\
+    \n:local enableschedule (!\$isprimary)\r\
+    \n\r\
+    \n/system/scheduler/set [ /system/scheduler/find name~\"^dyndns-\" disable\
+    d!=\$enableschedule ] disabled=\$enableschedule\r\
     \n"
 /tool netwatch
 add comment=monitor-default disabled=no down-script=\
