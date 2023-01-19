@@ -10,8 +10,8 @@ mtik_backup() {
     RHOST="$1"
 
     ssh "${RHOST}" "/system/backup/save dont-encrypt=yes name=${RDIR}${RHOST}-secret.backup"
-    ssh "${RHOST}" "/export file=${RDIR}${RHOST}-secret.rsc show-sensitive"
-    ssh "${RHOST}" "/export file=${RDIR}${RHOST}.rsc"
+    ssh "${RHOST}" "/export file=${RDIR}${RHOST}-secret.rsc show-sensitive terse"
+    ssh "${RHOST}" "/export file=${RDIR}${RHOST}.rsc terse"
 
     sleep 1
 
@@ -21,7 +21,7 @@ mtik_backup() {
         cp "${RHOST}-secret.backup" "${RHOST}-secret.rsc" "${RHOST}.rsc" "${BACKUP_MIRROR}"
     fi
 
-    sed -i '' 's~local key \\".*\\"~local key \\"REMOVED\\"~g' "${RHOST}.rsc"
+    sed -i '' 's~key=\\"[^"]*\\"~key=\\"REMOVED\\"~g' "${RHOST}.rsc"
     sed -i '' 's~global DynDNSKey \\".*\\"~global DynDNSKey \\"REMOVED\\"~g' "${RHOST}.rsc"
     sed -i '' 's~^# software id = .*$~# software id = REMOVED~g' "${RHOST}.rsc"
     sed -i '' 's~^# serial number = .*$~# serial number = REMOVED~g' "${RHOST}.rsc"
