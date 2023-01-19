@@ -1,4 +1,4 @@
-# jan/18/2023 17:14:20 by RouterOS 7.7
+# jan/18/2023 17:28:06 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -9,17 +9,26 @@ set [ find default-name=ether1 ] comment=eth1 name=oob rx-flow-control=on \
 set [ find default-name=sfp-sfpplus1 ] advertise=\
     1000M-full,10000M-full,2500M-full,5000M-full disabled=yes name=sfp1 \
     rx-flow-control=on speed=10Gbps tx-flow-control=on
-set [ find default-name=sfp-sfpplus2 ] auto-negotiation=no disabled=yes \
-    l2mtu=9088 mtu=9000 name=sfp2 speed=10Gbps
-set [ find default-name=sfp-sfpplus3 ] disabled=yes name=sfp3
-set [ find default-name=sfp-sfpplus4 ] disabled=yes name=sfp4
-set [ find default-name=sfp-sfpplus5 ] disabled=yes name=sfp5
-set [ find default-name=sfp-sfpplus6 ] disabled=yes name=sfp6
-set [ find default-name=sfp-sfpplus7 ] disabled=yes name=sfp7
-set [ find default-name=sfp-sfpplus8 ] disabled=yes name=sfp8
-set [ find default-name=sfp-sfpplus9 ] disabled=yes name=sfp9
-set [ find default-name=sfp-sfpplus10 ] disabled=yes name=sfp10
-set [ find default-name=sfp-sfpplus11 ] disabled=yes name=sfp11
+set [ find default-name=sfp-sfpplus2 ] auto-negotiation=no disabled=yes name=\
+    sfp2 rx-flow-control=on speed=10Gbps tx-flow-control=on
+set [ find default-name=sfp-sfpplus3 ] disabled=yes name=sfp3 \
+    rx-flow-control=on tx-flow-control=on
+set [ find default-name=sfp-sfpplus4 ] disabled=yes name=sfp4 \
+    rx-flow-control=on tx-flow-control=on
+set [ find default-name=sfp-sfpplus5 ] disabled=yes name=sfp5 \
+    rx-flow-control=on tx-flow-control=on
+set [ find default-name=sfp-sfpplus6 ] disabled=yes name=sfp6 \
+    rx-flow-control=on tx-flow-control=on
+set [ find default-name=sfp-sfpplus7 ] disabled=yes name=sfp7 \
+    rx-flow-control=on tx-flow-control=on
+set [ find default-name=sfp-sfpplus8 ] disabled=yes name=sfp8 \
+    rx-flow-control=on tx-flow-control=on
+set [ find default-name=sfp-sfpplus9 ] disabled=yes name=sfp9 \
+    rx-flow-control=on tx-flow-control=on
+set [ find default-name=sfp-sfpplus10 ] disabled=yes name=sfp10 \
+    rx-flow-control=on tx-flow-control=on
+set [ find default-name=sfp-sfpplus11 ] disabled=yes name=sfp11 \
+    rx-flow-control=on tx-flow-control=on
 set [ find default-name=sfp28-1 ] advertise=10M-half auto-negotiation=no \
     fec-mode=fec74 l2mtu=9092 mtu=9000 name=sfpx1-rackswitch-agg \
     rx-flow-control=on speed=25Gbps tx-flow-control=on

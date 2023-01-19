@@ -1,15 +1,21 @@
-# jan/18/2023 17:14:25 by RouterOS 7.7
+# jan/18/2023 17:28:11 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = RB5009UG+S+
 # serial number = REMOVED
 /interface ethernet
-set [ find default-name=ether2 ] disabled=yes name=eth2
-set [ find default-name=ether3 ] disabled=yes name=eth3
-set [ find default-name=ether4 ] disabled=yes name=eth4
-set [ find default-name=ether5 ] disabled=yes name=eth5
-set [ find default-name=ether6 ] disabled=yes name=eth6
-set [ find default-name=ether7 ] disabled=yes name=eth7
+set [ find default-name=ether2 ] disabled=yes name=eth2 rx-flow-control=on \
+    tx-flow-control=on
+set [ find default-name=ether3 ] disabled=yes name=eth3 rx-flow-control=on \
+    tx-flow-control=on
+set [ find default-name=ether4 ] disabled=yes name=eth4 rx-flow-control=on \
+    tx-flow-control=on
+set [ find default-name=ether5 ] disabled=yes name=eth5 rx-flow-control=on \
+    tx-flow-control=on
+set [ find default-name=ether6 ] disabled=yes name=eth6 rx-flow-control=on \
+    tx-flow-control=on
+set [ find default-name=ether7 ] disabled=yes name=eth7 rx-flow-control=on \
+    tx-flow-control=on
 set [ find default-name=ether8 ] comment=eth8 name=oob rx-flow-control=on \
     tx-flow-control=on
 set [ find default-name=sfp-sfpplus1 ] advertise=1000M-full,10000M-full \
