@@ -1,4 +1,4 @@
-# jan/18/2023 17:28:06 by RouterOS 7.7
+# jan/18/2023 18:11:38 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -928,8 +928,8 @@ add address=1.pool.ntp.org
 add address=2.pool.ntp.org
 add address=3.pool.ntp.org
 /system scheduler
-add interval=5m name=dyndns-router-update on-event=\
-    "/system script run dyndns-router-update" policy=read,test start-date=\
+add interval=5m name=dyndns-wan-update on-event=\
+    "/system script run dyndns-wan-update" policy=read,test start-date=\
     aug/09/2020 start-time=09:41:00
 add interval=5m name=dyndns-ipv6tun-update on-event=\
     "/system script run dyndns-ipv6tun-update" policy=read,test start-date=\
@@ -941,9 +941,11 @@ add disabled=yes interval=30s name=pingcheck on-event=\
 add interval=5m name=dyndns-redfoxv6-up on-event=\
     "/system script run dyndns-redfoxv6-up" policy=read,test start-date=\
     aug/09/2020 start-time=09:45:00
-add name=init-onboot on-event=\
-    ":global VRRPPriorityOnline 50\r\
+add name=init-onboot on-event=":global VRRPPriorityOnline 50\r\
     \n:global VRRPPriorityOffline 10\r\
+    \n\r\
+    \n:global DynDNSHost \"router.dyn.foxden.network\"\r\
+    \n:global DynDNSKey \"REMOVED\"\r\
     \n" policy=\
     ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
     start-time=startup
@@ -953,6 +955,9 @@ add interval=1m name=vrrp-priority-adjust on-event=\
 add interval=1m name=vrrp-state-check on-event=\
     "/system/script/run vrrp-state-check\r\
     \n" policy=read,write,test start-date=jan/18/2023 start-time=16:33:52
+add interval=5m name=local-dyndns-update on-event=\
+    "/system script run local-dyndns-update" policy=read,test start-date=\
+    aug/09/2020 start-time=09:42:30
 /system script
 add dont-require-permissions=no name=dhcp-propagate-changes owner=admin \
     policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
@@ -983,14 +988,16 @@ add dont-require-permissions=no name=dhcp-propagate-changes owner=admin \
     (\$dhcpent->\"address\")) comment=\"static-dns-for-dhcp\"\r\
     \n}\r\
     \n"
-add dont-require-permissions=yes name=dyndns-router-update owner=admin \
-    policy=read,test source=":local ddnshost \"router.dyn.foxden.network\"\r\
+add dont-require-permissions=yes name=dyndns-wan-update owner=admin policy=\
+    read,test source=":local ipaddr [/ip/address/get [ /ip/address/find  inter\
+    face=wan ] address]\r\
+    \n:local ddnshost \"wan.dyn.foxden.network\"\r\
     \n:local key \"REMOVED\"\r\
     \n:local updatehost \"dyn.dns.he.net\"\r\
     \n\r\
     \n:local result [/tool/fetch mode=https url=\"https://\$updatehost/nic/upd\
-    ate\?hostname=\$ddnshost\" user=\"\$ddnshost\" password=\"\$key\" as-value\
-    \_output=user]\r\
+    ate\?hostname=\$ddnshostmyip=\$ipaddr\" user=\"\$ddnshost\" password=\"\$k\
+    ey\" as-value output=user]\r\
     \n:log debug (\$result->\"data\")\r\
     \n\r\
     \n"
@@ -1091,6 +1098,19 @@ add dont-require-permissions=yes name=vrrp-state-check owner=admin policy=\
     \n\r\
     \n/system/scheduler/set [ /system/scheduler/find name~\"^dyndns-\" disable\
     d!=\$enableschedule ] disabled=\$enableschedule\r\
+    \n"
+add dont-require-permissions=yes name=local-dyndns-update owner=admin policy=\
+    read,test source=":local ipaddr [/ip/address/get [ /ip/address/find  inter\
+    face=wan ] address]\r\
+    \n\r\
+    \n:global DynDNSHost\r\
+    \n:global DynDNSKey\r\
+    \n:local updatehost \"dyn.dns.he.net\"\r\
+    \n\r\
+    \n:local result [/tool/fetch mode=https url=\"https://\$updatehost/nic/upd\
+    ate\?hostname=\$DynDNSHost=\$ipaddr\" user=\"\$DynDNSHost\" password=\"\$D\
+    ynDNSKey\" as-value output=user]\r\
+    \n:log debug (\$result->\"data\")\r\
     \n"
 /tool netwatch
 add comment=monitor-default disabled=no down-script=\
