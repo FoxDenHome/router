@@ -18,7 +18,7 @@ transfer_section() {
 }
 
 transfer_section_localclause() {
-    transfer_section "$1" '(!(name~"^local-"))' 's~add .* name=local-~find name=~'
+    transfer_section "$1" '(!(name~"^local-"))' 's~add .* name=local-~find name=local-~'
 }
 
 transfer_section_notdynamic() {
