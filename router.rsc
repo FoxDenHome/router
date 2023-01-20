@@ -1,9 +1,9 @@
-# jan/19/2023 21:44:21 by RouterOS 7.7
+# jan/20/2023 11:56:35 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
 # serial number = REMOVED
-/interface ethernet set [ find default-name=ether1 ] comment=eth1 name=oob rx-flow-control=on tx-flow-control=on
+/interface ethernet set [ find default-name=ether1 ] comment=eth1 l2mtu=1514 name=oob rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus1 ] advertise=1000M-full,10000M-full,2500M-full,5000M-full disabled=yes name=sfp1 rx-flow-control=on speed=10Gbps tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus2 ] auto-negotiation=no disabled=yes name=sfp2 rx-flow-control=on speed=10Gbps tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus3 ] disabled=yes name=sfp3 rx-flow-control=on tx-flow-control=on
