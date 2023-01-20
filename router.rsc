@@ -1,4 +1,4 @@
-# jan/19/2023 19:17:00 by RouterOS 7.7
+# jan/19/2023 21:33:52 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -68,7 +68,7 @@
 /interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=50
 /interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=50 version=2 vrid=123
 /interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway on-backup="/system/script/run vrrp-state-check" on-master="/system/script/run vrrp-state-check" priority=50
+/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway on-backup="/system/script/run wan-online-adjust" on-master="/system/script/run wan-online-adjust" priority=50
 /interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=50 version=2 vrid=123
 /interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=50 vrid=53
 /interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=50
@@ -137,7 +137,7 @@
 /ip address add address=10.100.0.1/16 interface=wg-vpn network=10.100.0.0
 /ip address add address=10.99.0.1/16 interface=wg-s2s network=10.99.0.0
 /ip cloud set update-time=no
-/ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run vrrp-priority-adjust\r\
+/ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run wan-online-adjust\r\
     \n" use-peer-dns=no use-peer-ntp=no
 /ip dhcp-server add address-pool=pool-labnet dhcp-option-set=default-classless interface=vrrp-labnet-gateway lease-time=1h name=dhcp-labnet
 /ip dhcp-server add address-pool=pool-lan dhcp-option-set=default-classless interface=vrrp-lan-gateway lease-time=1h name=dhcp-lan
@@ -507,7 +507,13 @@
 /ipv6 firewall filter add action=accept chain=input in-interface=oob
 /ipv6 firewall filter add action=accept chain=input in-interface-list=zone-local
 /ipv6 firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
-/ipv6 nd set [ find default=yes ] advertise-dns=no mtu=9000 ra-preference=high
+/ipv6 nd set [ find default=yes ] advertise-dns=no disabled=yes mtu=9000 ra-preference=high
+/ipv6 nd add advertise-dns=no interface=vlan-dmz mtu=9000 ra-preference=high
+/ipv6 nd add advertise-dns=no interface=vlan-hypervisor mtu=9000 ra-preference=high
+/ipv6 nd add advertise-dns=no interface=vlan-labnet mtu=9000 ra-preference=high
+/ipv6 nd add advertise-dns=no interface=vlan-lan mtu=9000 ra-preference=high
+/ipv6 nd add advertise-dns=no interface=vlan-mgmt mtu=9000 ra-preference=high
+/ipv6 nd add advertise-dns=no interface=vlan-security mtu=9000 ra-preference=high
 /snmp set contact=admin@foxden.network enabled=yes location="Server room" trap-generators=""
 /system clock set time-zone-autodetect=no time-zone-name=America/Los_Angeles
 /system identity set name=router
@@ -523,7 +529,7 @@
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
     \n" policy=read,write start-time=startup
-/system scheduler add interval=1m name=vrrp-priority-adjust on-event="/system/script/run vrrp-priority-adjust\r\
+/system scheduler add interval=1m name=wan-online-adjust on-event="/system/script/run wan-online-adjust\r\
     \n" policy=read,write,test start-date=jan/17/2023 start-time=19:51:50
 /system script add dont-require-permissions=no name=dhcp-propagate-changes owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local topdomain\r\
     \n:local hostname\r\
@@ -634,9 +640,13 @@
     \n    }\r\
     \n}\r\
     \n"
-/system script add dont-require-permissions=yes name=vrrp-priority-adjust owner=admin policy=read,write,test source=":global VRRPPriorityOffline\r\
+/system script add dont-require-permissions=yes name=wan-online-adjust owner=admin policy=read,write,test source=":global VRRPPriorityOffline\r\
     \n:global VRRPPriorityOnline\r\
     \n:local VRRPPriorityCurrent \$VRRPPriorityOffline\r\
+    \n\r\
+    \n:global RAPriorityOffline\r\
+    \n:global RAPriorityOnline\r\
+    \n:local RAPriorityCurrent \$RAPriorityOffline\r\
     \n\r\
     \n:local defgwidx [ /ip/route/find dynamic active dst-address=0.0.0.0/0 ]\r\
     \n\r\
@@ -645,17 +655,24 @@
     \n    :local status [ /tool/netwatch/get [ /tool/netwatch/find comment=\"monitor-default\" ] status ]\r\
     \n    if (\$status = \"up\") do={\r\
     \n        :set VRRPPriorityCurrent \$VRRPPriorityOnline\r\
+    \n        :set RAPriorityCurrent \$RAPriorityOnline\r\
     \n    }\r\
     \n}\r\
     \n\r\
     \n:put \"Set VRRP priority \$VRRPPriorityCurrent\"\r\
-    \n/interface/vrrp set [ /interface/vrrp/find priority!=\$VRRPPriorityCurrent ] priority=\$VRRPPriorityCurrent\r\
+    \n/interface/vrrp/set [ /interface/vrrp/find priority!=\$VRRPPriorityCurrent ] priority=\$VRRPPriorityCurrent\r\
+    \n\r\
+    \n:put \"Set RA priority \$RAPriorityCurrent\"\r\
+    \n/ipv6/nd/set [ /ipv6/nd/find ra-preference!=\$RAPriorityCurrent ] ra-preference=\$RAPriorityCurrent\r\
     \n"
 /system script add dont-require-permissions=yes name=local-init-onboot owner=admin policy=read,write source=":global VRRPPriorityOnline 50\r\
     \n:global VRRPPriorityOffline 10\r\
     \n\r\
     \n:global DynDNSHost \"router.dyn.foxden.network\"\r\
     \n:global DynDNSKey \"REMOVED\"\r\
+    \n\r\
+    \n:global RAPriorityOnline \"high\"\r\
+    \n:global RAPriorityOffline \"low\"\r\
     \n"
 /system script add dont-require-permissions=yes name=global-init-onboot owner=admin policy=read,write source=":global logputdebug do={\r\
     \n    :log debug \$1\r\
