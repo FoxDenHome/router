@@ -1,4 +1,4 @@
-# jan/19/2023 19:10:29 by RouterOS 7.7
+# jan/19/2023 19:16:07 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -468,6 +468,7 @@
 /ip service set www-ssl certificate=letsencrypt-autogen_2023-01-20T03:04:26Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
 /ip service set api-ssl certificate=letsencrypt-autogen_2023-01-20T03:04:26Z tls-version=only-1.2
+/ip ssh set forwarding-enabled=local strong-crypto=yes
 /ipv6 address add address=2a0e:7d44:f000:b::2 advertise=no interface=6to4-redfox
 /ipv6 address add address=2a0e:7d44:f00b:1::1 interface=vlan-mgmt
 /ipv6 address add address=2a0e:7d44:f00b:2::1 interface=vlan-lan

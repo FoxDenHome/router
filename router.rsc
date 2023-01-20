@@ -1,4 +1,4 @@
-# jan/19/2023 19:10:25 by RouterOS 7.7
+# jan/19/2023 19:16:03 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -483,7 +483,7 @@
 /ip service set www-ssl certificate=letsencrypt-autogen_2023-01-20T02:58:02Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
 /ip service set api-ssl certificate=letsencrypt-autogen_2023-01-20T02:58:02Z tls-version=only-1.2
-/ip ssh set always-allow-password-login=yes strong-crypto=yes
+/ip ssh set always-allow-password-login=yes forwarding-enabled=local strong-crypto=yes
 /ipv6 address add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
 /ipv6 address add address=2a0e:7d44:f069:1::3 interface=vlan-mgmt
 /ipv6 address add address=2a0e:7d44:f069:2::3 interface=vlan-lan
