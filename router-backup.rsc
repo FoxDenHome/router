@@ -1,4 +1,4 @@
-# jan/20/2023 12:27:39 by RouterOS 7.7
+# ---/--/---- --:--:-- by RouterOS 7.7
 # software id = REMOVED
 #
 # model = RB5009UG+S+

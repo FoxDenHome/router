@@ -21,6 +21,7 @@ mtik_backup() {
         cp "${RHOST}-secret.backup" "${RHOST}-secret.rsc" "${RHOST}.rsc" "${BACKUP_MIRROR}"
     fi
 
+    sed -i '' 's~^# .../../.... ..:..:.. by RouterOS~# ---/--/---- --:--:-- by RouterOS~' "${RHOST}.rsc"
     sed -i '' 's~key=\\"[^"]*\\"~key=\\"REMOVED\\"~g' "${RHOST}.rsc"
     sed -i '' 's~global DynDNSKey \\".*\\"~global DynDNSKey \\"REMOVED\\"~g' "${RHOST}.rsc"
     sed -i '' 's~^# software id = .*$~# software id = REMOVED~g' "${RHOST}.rsc"
