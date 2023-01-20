@@ -1,4 +1,4 @@
-# jan/19/2023 13:25:49 by RouterOS 7.7
+# jan/19/2023 19:07:49 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -465,12 +465,11 @@
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
 /ip service set telnet address=10.0.0.0/8,192.168.88.0/24 disabled=yes
 /ip service set ftp address=10.0.0.0/8,192.168.88.0/24 disabled=yes
-/ip service set www address=10.0.0.0/8,192.168.88.0/24 disabled=yes
-/ip service set ssh address=10.0.0.0/8,192.168.88.0/24,127.0.0.0/8
-/ip service set www-ssl address=10.0.0.0/8,192.168.88.0/24
-/ip service set api address=10.0.0.0/8,192.168.88.0/24,127.0.0.0/8 disabled=yes
-/ip service set winbox address=10.0.0.0/8,192.168.88.0/24,127.0.0.0/8
-/ip service set api-ssl address=10.0.0.0/8,192.168.88.0/24 disabled=yes
+/ip service set ssh address=10.0.0.0/8,192.168.88.0/24
+/ip service set www-ssl certificate=letsencrypt-autogen_2023-01-20T03:04:26Z disabled=no tls-version=only-1.2
+/ip service set api address=10.0.0.0/8,192.168.88.0/24 disabled=yes
+/ip service set winbox address=10.0.0.0/8,192.168.88.0/24
+/ip service set api-ssl address=10.0.0.0/8,192.168.88.0/24 certificate=letsencrypt-autogen_2023-01-20T03:04:26Z tls-version=only-1.2
 /ipv6 address add address=2a0e:7d44:f000:b::2 advertise=no interface=6to4-redfox
 /ipv6 address add address=2a0e:7d44:f00b:1::1 interface=vlan-mgmt
 /ipv6 address add address=2a0e:7d44:f00b:2::1 interface=vlan-lan

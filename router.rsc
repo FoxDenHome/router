@@ -1,4 +1,4 @@
-# jan/19/2023 13:25:44 by RouterOS 7.7
+# jan/19/2023 19:07:44 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -480,12 +480,11 @@
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:a::1 routing-table=main
 /ip service set telnet address=10.0.0.0/8,192.168.88.0/24 disabled=yes
 /ip service set ftp address=10.0.0.0/8,192.168.88.0/24 disabled=yes
-/ip service set www address=10.0.0.0/8,192.168.88.0/24 disabled=yes
 /ip service set ssh address=10.0.0.0/8,192.168.88.0/24
-/ip service set www-ssl address=10.0.0.0/8,192.168.88.0/24 certificate=letsencrypt-autogen_2023-01-06T20:19:20Z disabled=no tls-version=only-1.2
+/ip service set www-ssl certificate=letsencrypt-autogen_2023-01-20T02:58:02Z disabled=no tls-version=only-1.2
 /ip service set api address=10.0.0.0/8,192.168.88.0/24 disabled=yes
 /ip service set winbox address=10.0.0.0/8,192.168.88.0/24
-/ip service set api-ssl address=10.0.0.0/8,192.168.88.0/24 certificate=letsencrypt-autogen_2023-01-06T20:19:20Z tls-version=only-1.2
+/ip service set api-ssl address=10.0.0.0/8,192.168.88.0/24 certificate=letsencrypt-autogen_2023-01-20T02:58:02Z tls-version=only-1.2
 /ip ssh set always-allow-password-login=yes strong-crypto=yes
 /ipv6 address add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
 /ipv6 address add address=2a0e:7d44:f069:1::3 interface=vlan-mgmt
