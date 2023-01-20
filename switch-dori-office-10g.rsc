@@ -1,4 +1,4 @@
-# jan/20/2023 12:00:24 by RouterOS 7.7
+# jan/20/2023 12:01:08 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CRS305-1G-4S+
@@ -13,9 +13,6 @@
 /interface lte apn set [ find default=yes ] ip-type=ipv4 use-network-apn=no
 /interface wireless security-profiles set [ find default=yes ] supplicant-identity=MikroTik
 /ip pool add name=pool-oob ranges=192.168.88.100-192.168.88.200
-/ip dhcp-server
-# DHCP server can not run on slave interface!
-add address-pool=pool-oob interface=eth1-ups-dori-office name=dhcp-oob
 /port set 0 name=serial0
 /routing id add disabled=no id=10.1.10.8 name=main-id select-dynamic-id=""
 /snmp community set [ find default=yes ] disabled=yes
@@ -36,9 +33,7 @@ add address-pool=pool-oob interface=eth1-ups-dori-office name=dhcp-oob
 /interface bridge vlan add bridge=bridge tagged=bridge,sfp3-switch-dori-tv,sfp4-switch-rack-agg vlan-ids=6
 /interface ovpn-server server set auth=sha1,md5
 /ip address add address=10.1.10.8/16 interface=bridge network=10.1.0.0
-/ip address add address=192.168.88.1/24 interface=eth1-ups-dori-office network=192.168.88.0
 /ip dhcp-server config set store-leases-disk=never
-/ip dhcp-server network add address=192.168.88.0/24 dns-none=yes
 /ip dns set servers=10.1.0.53
 /ip route add gateway=10.1.0.1
 /snmp set contact=mikrotik@foxden.network enabled=yes location="Dori Office" trap-generators=""
