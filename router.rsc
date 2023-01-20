@@ -1,4 +1,4 @@
-# jan/19/2023 21:43:10 by RouterOS 7.7
+# jan/19/2023 21:44:21 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -68,7 +68,7 @@
 /interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=50
 /interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=50 version=2 vrid=123
 /interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway on-backup="/system/script/run wan-online-adjust" on-master="/system/script/run wan-online-adjust" priority=50
+/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=50
 /interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=50 version=2 vrid=123
 /interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=50 vrid=53
 /interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=50
