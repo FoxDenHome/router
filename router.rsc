@@ -1,4 +1,4 @@
-# jan/19/2023 21:33:52 by RouterOS 7.7
+# jan/19/2023 21:43:10 by RouterOS 7.7
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -525,12 +525,12 @@
 /system ntp client servers add address=1.pool.ntp.org
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
-/system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,test start-date=aug/09/2020 start-time=09:41:00
+/system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,policy,test start-date=aug/09/2020 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
-    \n" policy=read,write start-time=startup
+    \n" policy=read,write,policy,test start-time=startup
 /system scheduler add interval=1m name=wan-online-adjust on-event="/system/script/run wan-online-adjust\r\
-    \n" policy=read,write,test start-date=jan/17/2023 start-time=19:51:50
+    \n" policy=read,write,policy,test start-date=jan/17/2023 start-time=19:51:50
 /system script add dont-require-permissions=no name=dhcp-propagate-changes owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local topdomain\r\
     \n:local hostname\r\
     \n:local dhcpent\r\
@@ -553,7 +553,7 @@
     \n    /ip/dns/static/add type=AAAA name=\$hostname address=(\"::ffff:\" . (\$dhcpent->\"address\")) comment=\"static-dns-for-dhcp\"\r\
     \n}\r\
     \n"
-/system script add dont-require-permissions=yes name=dyndns-update owner=admin policy=read,write,test source=":local ipaddrfind [ /ip/address/find interface=wan ]\r\
+/system script add dont-require-permissions=yes name=dyndns-update owner=admin policy=read,write,policy,test source=":local ipaddrfind [ /ip/address/find interface=wan ]\r\
     \n:if ([:len \$ipaddrfind] < 1) do={\r\
     \n    :log warning \"No WAN IP address found\"\r\
     \n    :exit\r\
@@ -640,7 +640,7 @@
     \n    }\r\
     \n}\r\
     \n"
-/system script add dont-require-permissions=yes name=wan-online-adjust owner=admin policy=read,write,test source=":global VRRPPriorityOffline\r\
+/system script add dont-require-permissions=yes name=wan-online-adjust owner=admin policy=read,write,policy,test source=":global VRRPPriorityOffline\r\
     \n:global VRRPPriorityOnline\r\
     \n:local VRRPPriorityCurrent \$VRRPPriorityOffline\r\
     \n\r\
@@ -665,7 +665,7 @@
     \n:put \"Set RA priority \$RAPriorityCurrent\"\r\
     \n/ipv6/nd/set [ /ipv6/nd/find ra-preference!=\$RAPriorityCurrent ] ra-preference=\$RAPriorityCurrent\r\
     \n"
-/system script add dont-require-permissions=yes name=local-init-onboot owner=admin policy=read,write source=":global VRRPPriorityOnline 50\r\
+/system script add dont-require-permissions=yes name=local-init-onboot owner=admin policy=read,write,policy,test source=":global VRRPPriorityOnline 50\r\
     \n:global VRRPPriorityOffline 10\r\
     \n\r\
     \n:global DynDNSHost \"router.dyn.foxden.network\"\r\
@@ -674,7 +674,7 @@
     \n:global RAPriorityOnline \"high\"\r\
     \n:global RAPriorityOffline \"low\"\r\
     \n"
-/system script add dont-require-permissions=yes name=global-init-onboot owner=admin policy=read,write source=":global logputdebug do={\r\
+/system script add dont-require-permissions=yes name=global-init-onboot owner=admin policy=read,write,policy,test source=":global logputdebug do={\r\
     \n    :log debug \$1\r\
     \n    :put \$1\r\
     \n}\r\
