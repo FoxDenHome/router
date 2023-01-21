@@ -19,7 +19,7 @@
 /interface ethernet set [ find default-name=sfp28-2 ] auto-negotiation=no comment=sfpx2-rackswitch-agg fec-mode=fec74 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on speed=25Gbps tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus12 ] advertise=1000M-full,10000M-full,2500M-full,5000M-full comment=sfp1 name=wan rx-flow-control=on tx-flow-control=on
 /interface 6to4 add !keepalive name=6to4-redfox remote-address=66.42.71.230
-/interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
+/interface wireguard add disabled=yes listen-port=13232 mtu=1420 name=wg-s2s
 /interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
@@ -115,8 +115,8 @@
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 comment="Dori Phone" interface=wg-vpn public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
 /interface wireguard peers add allowed-address=10.100.10.4/32 comment="Wizzy Laptop" interface=wg-vpn public-key="5QUN5FumE8LM1Ak9tv8gwaF8K4wTXlCw2BSDfBIEL3g="
-/interface wireguard peers add allowed-address=10.99.10.1/32 comment=RedFox endpoint-address=66.42.71.230 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="yY6nKPCqcj+0O6Sm7qcBlG7O5tyQlarlZFIKjp+ivGM="
-/interface wireguard peers add allowed-address=10.99.10.2/32 comment=IceFox endpoint-address=116.202.171.116 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
+/interface wireguard peers add allowed-address=10.99.10.1/32 comment=RedFox disabled=yes endpoint-address=66.42.71.230 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="yY6nKPCqcj+0O6Sm7qcBlG7O5tyQlarlZFIKjp+ivGM="
+/interface wireguard peers add allowed-address=10.99.10.2/32 comment=IceFox disabled=yes endpoint-address=116.202.171.116 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
 /ip address add address=10.1.1.1/16 interface=vlan-mgmt network=10.1.0.0
 /ip address add address=10.2.1.1/16 interface=vlan-lan network=10.2.0.0
 /ip address add address=10.3.1.1/16 interface=vlan-dmz network=10.3.0.0
@@ -598,7 +598,7 @@
     \n            :return \"\"\r\
     \n        }\r\
     \n    }\r\
-    \n    :delay 60s\r\
+    \n    :delay 5s\r\
     \n    :do {\r\
     \n        :local result [/tool/fetch mode=\$mode url=\"\$mode://\$updatehost/nic/update\?hostname=\$host&myip=\$ipaddr\" user=\$host password=\$key as-value output=user]\r\
     \n        \$logputdebug (\"[DynDNS] Result of update for \". \$host . \": \" . (\$result->\"data\"))\r\
@@ -611,7 +611,7 @@
     \n    \$dyndnsUpdate host=\"wan.dyn.foxden.network\" key=\"REMOVED\" updatehost=\"dyn.dns.he.net\" dns=\"ns1.he.net\" ipaddr=\$ipaddr mode=https\r\
     \n    #\$dyndnsUpdate host=\"772305\" key=\"REMOVED\" updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https\r\
     \n}\r\
-    \n\$dyndnsUpdate host=\"redfoxv6\" key=\"REMOVED\" updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
+    \n\$dyndnsUpdate host=\"redfoxv6\" key=\"REMOVED\" updatehost=\"10.111.11.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
     \n\$dyndnsUpdate host=\$DynDNSHost key=\$DynDNSKey updatehost=\"dyn.dns.he.net\" dns=\"ns1.he.net\" ipaddr=\$ipaddr mode=https\r\
     \n"
 /system script add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local dhcpent\r\
