@@ -461,9 +461,9 @@
 /ip firewall filter add action=accept chain=forward in-interface=oob
 /ip firewall filter add action=accept chain=forward in-interface-list=iface-mgmt
 /ip firewall filter add action=accept chain=forward comment="Prometheus -> NodeExporter" dst-port=9100 in-interface-list=iface-hypervisor protocol=tcp src-address=10.6.11.1
-/ip firewall filter add action=jump chain=forward comment="LAN whitelist" jump-target=lan-out-forward out-interface-list=iface-lan
-/ip firewall filter add action=jump chain=forward comment="MGMT whitelist" jump-target=mgmt-out-forward out-interface-list=iface-mgmt
-/ip firewall filter add action=jump chain=forward comment="LabNet whitelist" jump-target=labnet-out-forward out-interface-list=iface-labnet
+/ip firewall filter add action=jump chain=forward comment="LAN allowlist" jump-target=lan-out-forward out-interface-list=iface-lan
+/ip firewall filter add action=jump chain=forward comment="MGMT allowlist" jump-target=mgmt-out-forward out-interface-list=iface-mgmt
+/ip firewall filter add action=jump chain=forward comment="LabNet allowlist" jump-target=labnet-out-forward out-interface-list=iface-labnet
 /ip firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ip firewall filter add action=reject chain=forward log=yes reject-with=icmp-admin-prohibited
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="Hypervisor -> SNMP" dst-port=161 in-interface-list=iface-hypervisor protocol=udp
