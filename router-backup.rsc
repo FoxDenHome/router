@@ -490,7 +490,7 @@
 /ipv6 firewall filter add action=accept chain=input comment=WireGuard dst-port=13231-13232 protocol=udp
 /ipv6 firewall filter add action=accept chain=input in-interface=oob
 /ipv6 firewall filter add action=accept chain=input in-interface-list=zone-local
-/ipv6 firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
+/ipv6 firewall filter add action=reject chain=input log=yes reject-with=icmp-admin-prohibited
 /ipv6 nd set [ find default=yes ] advertise-dns=no disabled=yes mtu=9000 ra-interval=1m-3m
 /ipv6 nd add advertise-dns=no interface=vlan-dmz mtu=9000 ra-interval=1m-3m
 /ipv6 nd add advertise-dns=no interface=vlan-hypervisor mtu=9000 ra-interval=1m-3m
@@ -569,7 +569,7 @@
     \n        :do {\r\
     \n            :local dnsip [:resolve \$host server=\$dns]\r\
     \n            if (\$dnsip=\$ipaddr) do={\r\
-    \n                \$logputinfo (\"[DynDNS] No change in IP address for \" . \$host)\r\
+    \n                \$logputdebug (\"[DynDNS] No change in IP address for \" . \$host)\r\
     \n                :return \"\"\r\
     \n            }\r\
     \n        } on-error={\r\
