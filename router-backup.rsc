@@ -99,6 +99,7 @@
 /interface list member add interface=zt-foxden list=iface-zerotier
 /interface list member add interface=vrrp-zt-dns list=iface-zerotier
 /interface list member add interface=vrrp-zt-gateway list=iface-zerotier
+/interface list member add interface=6to4-redfox list=zone-wan
 /interface wireguard peers add allowed-address=10.100.10.1/32 comment=Fennec interface=wg-vpn public-key="+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY="
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 comment="Dori Phone" interface=wg-vpn public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
