@@ -31,7 +31,7 @@
 /interface list add include=iface-dmz,iface-hypervisor,iface-labnet,iface-lan,iface-mgmt,iface-security name=zone-local
 /interface list add name=zone-wan
 /interface wireless security-profiles set [ find default=yes ] supplicant-identity=REMOVED
-/ip dhcp-server option add code=121 name=classless value="'8''10'\$(NETWORK_GATEWAY)'0'\$(NETWORK_GATEWAY)"
+/ip dhcp-server option add code=121 name=classless value="'16''10''3'\$(NETWORK_GATEWAY)'0'\$(NETWORK_GATEWAY)"
 /ip dhcp-server option sets add name=default-classless options=classless
 /ip pool add name=pool-mgmt ranges=10.1.100.0-10.1.200.255
 /ip pool add name=pool-lan ranges=10.2.100.0-10.2.200.255
