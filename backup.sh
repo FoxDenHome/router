@@ -26,7 +26,9 @@ mtik_backup() {
     sed -i '' 's~global DynDNSKey \\".*\\"~global DynDNSKey \\"REMOVED\\"~g' "${RHOST}.rsc"
     sed -i '' 's~^# software id = .*$~# software id = REMOVED~g' "${RHOST}.rsc"
     sed -i '' 's~^# serial number = .*$~# serial number = REMOVED~g' "${RHOST}.rsc"
-    sed -i '' 's~name=monitor_.*~name=monitor_REMOVED~g' "${RHOST}.rsc"
+    sed -i '' 's~name=monitor_[^ ]*~name=monitor_REMOVED~g' "${RHOST}.rsc"
+    sed -i '' 's~identity=[^ ]*~identity=REMOVED~g' "${RHOST}.rsc"
+    sed -i '' 's~network=[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]~network=REMOVED~g' "${RHOST}.rsc"
 
     sleep 1
 

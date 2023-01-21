@@ -30,7 +30,7 @@
 /interface list add name=iface-hypervisor
 /interface list add include=iface-dmz,iface-hypervisor,iface-labnet,iface-lan,iface-mgmt,iface-security name=zone-local
 /interface list add name=zone-wan
-/interface wireless security-profiles set [ find default=yes ] supplicant-identity=MikroTik
+/interface wireless security-profiles set [ find default=yes ] supplicant-identity=REMOVED
 /ip dhcp-server option add code=121 name=classless value="'8''10'\$(NETWORK_GATEWAY)'0'\$(NETWORK_GATEWAY)"
 /ip dhcp-server option sets add name=default-classless options=classless
 /ip pool add name=pool-mgmt ranges=10.1.100.0-10.1.200.255
@@ -44,6 +44,8 @@
 /port set 0 baud-rate=115200
 /snmp community set [ find default=yes ] disabled=yes
 /snmp community add addresses=::/0 name=monitor_REMOVED
+/zerotier set zt1 comment="ZeroTier Central controller - https://my.zerotier.com/" identity=REMOVED name=zt1 port=9993
+/zerotier interface add allow-default=no allow-global=no allow-managed=no disabled=no instance=zt1 name=zt-foxden network=REMOVED
 /interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=25 vrid=53
 /interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=25
 /interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=25 version=2 vrid=123
@@ -434,6 +436,7 @@
 /ip firewall filter add action=accept chain=forward comment="dstnat'd" connection-nat-state=dstnat
 /ip firewall filter add action=accept chain=forward out-interface-list=zone-wan
 /ip firewall filter add action=accept chain=forward in-interface=wg-vpn
+/ip firewall filter add action=accept chain=forward in-interface=zt-foxden
 /ip firewall filter add action=accept chain=forward in-interface=oob
 /ip firewall filter add action=accept chain=forward in-interface-list=iface-mgmt
 /ip firewall filter add action=accept chain=forward comment="Prometheus -> NodeExporter" dst-port=9100 in-interface-list=iface-hypervisor protocol=tcp src-address=10.6.11.1

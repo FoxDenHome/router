@@ -11,7 +11,7 @@
 /interface ethernet set [ find default-name=sfp-sfpplus4 ] advertise=1000M-full,10000M-full l2mtu=9092 mtu=9000 name=sfp4-switch-rack-agg rx-flow-control=on speed=10Gbps tx-flow-control=on
 /disk add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface lte apn set [ find default=yes ] ip-type=ipv4 use-network-apn=no
-/interface wireless security-profiles set [ find default=yes ] supplicant-identity=MikroTik
+/interface wireless security-profiles set [ find default=yes ] supplicant-identity=REMOVED
 /ip pool add name=pool-oob ranges=192.168.88.100-192.168.88.200
 /port set 0 name=serial0
 /routing id add disabled=no id=10.1.10.8 name=main-id select-dynamic-id=""

@@ -36,8 +36,8 @@
 /interface list add name=iface-hypervisor
 /interface list add include=iface-dmz,iface-hypervisor,iface-labnet,iface-lan,iface-mgmt,iface-security name=zone-local
 /interface list add name=zone-wan
-/interface wireless security-profiles set [ find default=yes ] supplicant-identity=MikroTik
-/ip dhcp-server option add code=121 name=classless value="'8''10'\$(NETWORK_GATEWAY)'0'\$(NETWORK_GATEWAY)"
+/interface wireless security-profiles set [ find default=yes ] supplicant-identity=REMOVED
+/ip dhcp-server option add code=121 name=classless value="'16''10''3'\$(NETWORK_GATEWAY)'0'\$(NETWORK_GATEWAY)"
 /ip dhcp-server option sets add name=default-classless options=classless
 /ip dhcp-server option sets add name=nothing
 /ip dhcp-server option sets add name=default-noclassless
@@ -55,6 +55,8 @@
 /queue simple add disabled=yes max-limit=950M/950M name=queue-wan queue=cake-internet/cake-internet target=wan
 /snmp community set [ find default=yes ] disabled=yes
 /snmp community add addresses=::/0 name=monitor_REMOVED
+/zerotier set zt1 comment="ZeroTier Central controller - https://my.zerotier.com/" identity=REMOVED name=zt1 port=9993 route-distance=30
+/zerotier interface add allow-default=no allow-global=no allow-managed=no disabled=no instance=zt1 name=zt-foxden network=REMOVED
 /interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=50 vrid=53
 /interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=50
 /interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=50 version=2 vrid=123
@@ -103,6 +105,7 @@
 /interface list member add interface=wan list=zone-wan
 /interface list member add interface=wg-s2s list=zone-local
 /interface list member add interface=wg-vpn list=zone-local
+/interface list member add interface=zt-foxden list=zone-local
 /interface wireguard peers add allowed-address=10.100.10.1/32 comment=Fennec interface=wg-vpn public-key="+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY="
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 comment="Dori Phone" interface=wg-vpn public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
@@ -446,6 +449,7 @@
 /ip firewall filter add action=accept chain=forward comment="dstnat'd" connection-nat-state=dstnat
 /ip firewall filter add action=accept chain=forward out-interface-list=zone-wan
 /ip firewall filter add action=accept chain=forward in-interface=wg-vpn
+/ip firewall filter add action=accept chain=forward in-interface=zt-foxden
 /ip firewall filter add action=accept chain=forward in-interface=oob
 /ip firewall filter add action=accept chain=forward in-interface-list=iface-mgmt
 /ip firewall filter add action=accept chain=forward comment="Prometheus -> NodeExporter" dst-port=9100 in-interface-list=iface-hypervisor protocol=tcp src-address=10.6.11.1
