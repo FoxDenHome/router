@@ -28,8 +28,9 @@
 /interface list add name=iface-labnet
 /interface list add name=iface-security
 /interface list add name=iface-hypervisor
-/interface list add include=iface-dmz,iface-hypervisor,iface-labnet,iface-lan,iface-mgmt,iface-security name=zone-local
 /interface list add name=zone-wan
+/interface list add name=iface-zerotier
+/interface list add include=iface-dmz,iface-hypervisor,iface-labnet,iface-lan,iface-mgmt,iface-security,iface-zerotier name=zone-local
 /interface wireless security-profiles set [ find default=yes ] supplicant-identity=REMOVED
 /ip dhcp-server option add code=121 name=classless value="'16''10''3'\$(NETWORK_GATEWAY)'0'\$(NETWORK_GATEWAY)"
 /ip dhcp-server option sets add name=default-classless options=classless
@@ -64,6 +65,8 @@
 /interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=25 vrid=53
 /interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=25
 /interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=25 version=2 vrid=123
+/interface vrrp add group-master=vrrp-mgmt-dns interface=zt-foxden mtu=9000 name=vrrp-zt-dns priority=25 vrid=53
+/interface vrrp add group-master=vrrp-mgmt-gateway interface=zt-foxden mtu=9000 name=vrrp-zt-gateway priority=25
 /ip settings set rp-filter=loose tcp-syncookies=yes
 /ipv6 settings set accept-redirects=no accept-router-advertisements=no
 /interface list member add interface=vrrp-mgmt-gateway list=iface-mgmt
@@ -93,6 +96,9 @@
 /interface list member add interface=vlan-mgmt list=iface-mgmt
 /interface list member add interface=wg-s2s list=zone-local
 /interface list member add interface=wg-vpn list=zone-local
+/interface list member add interface=zt-foxden list=iface-zerotier
+/interface list member add interface=vrrp-zt-dns list=iface-zerotier
+/interface list member add interface=vrrp-zt-gateway list=iface-zerotier
 /interface wireguard peers add allowed-address=10.100.10.1/32 comment=Fennec interface=wg-vpn public-key="+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY="
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 comment="Dori Phone" interface=wg-vpn public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
@@ -126,6 +132,9 @@
 /ip address add address=10.6.0.53 interface=vrrp-hypervisor-dns network=10.6.0.53
 /ip address add address=10.99.0.3/16 interface=wg-s2s network=10.99.0.0
 /ip address add address=10.100.0.1/16 interface=wg-vpn network=10.100.0.0
+/ip address add address=10.111.0.1 interface=vrrp-zt-gateway network=10.111.0.1
+/ip address add address=10.111.0.53 interface=vrrp-zt-dns network=10.111.0.53
+/ip address add address=10.111.1.3/16 interface=zt-foxden network=10.111.0.0
 /ip cloud set update-time=no
 /ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run wan-online-adjust\r\
     \n" use-peer-dns=no use-peer-ntp=no
@@ -436,7 +445,7 @@
 /ip firewall filter add action=accept chain=forward comment="dstnat'd" connection-nat-state=dstnat
 /ip firewall filter add action=accept chain=forward out-interface-list=zone-wan
 /ip firewall filter add action=accept chain=forward in-interface=wg-vpn
-/ip firewall filter add action=accept chain=forward in-interface=zt-foxden
+/ip firewall filter add action=accept chain=forward in-interface-list=iface-zerotier
 /ip firewall filter add action=accept chain=forward in-interface=oob
 /ip firewall filter add action=accept chain=forward in-interface-list=iface-mgmt
 /ip firewall filter add action=accept chain=forward comment="Prometheus -> NodeExporter" dst-port=9100 in-interface-list=iface-hypervisor protocol=tcp src-address=10.6.11.1
@@ -457,6 +466,7 @@
 /ip firewall filter add action=accept chain=input protocol=icmp
 /ip firewall filter add action=accept chain=input comment="HTTP(S)" dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=input comment=WireGuard dst-port=13231-13232 protocol=udp
+/ip firewall filter add action=accept chain=input comment=ZeroTier dst-port=9993 protocol=udp
 /ip firewall filter add action=accept chain=input in-interface=oob
 /ip firewall filter add action=accept chain=input in-interface-list=zone-local
 /ip firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
@@ -481,7 +491,6 @@
 /ipv6 address add address=2a0e:7d44:f00b:6::1 interface=vlan-hypervisor
 /ipv6 firewall filter add action=accept chain=forward connection-state=established,related
 /ipv6 firewall filter add action=accept chain=forward protocol=icmpv6
-/ipv6 firewall filter add action=accept chain=forward in-interface=wg-vpn
 /ipv6 firewall filter add action=accept chain=forward in-interface=oob
 /ipv6 firewall filter add action=accept chain=forward in-interface-list=iface-mgmt
 /ipv6 firewall filter add action=accept chain=forward out-interface-list=zone-wan
@@ -491,6 +500,7 @@
 /ipv6 firewall filter add action=accept chain=input protocol=icmpv6
 /ipv6 firewall filter add action=accept chain=input comment="HTTP(S)" dst-port=80,443 protocol=tcp
 /ipv6 firewall filter add action=accept chain=input comment=WireGuard dst-port=13231-13232 protocol=udp
+/ipv6 firewall filter add action=accept chain=input comment=ZeroTier dst-port=9993 protocol=udp
 /ipv6 firewall filter add action=accept chain=input in-interface=oob
 /ipv6 firewall filter add action=accept chain=input in-interface-list=zone-local
 /ipv6 firewall filter add action=reject chain=input log=yes reject-with=icmp-admin-prohibited
