@@ -1,4 +1,4 @@
-# ---/--/---- --:--:-- by RouterOS 7.7
+# ---/--/---- --:--:-- by RouterOS 7.8beta2
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -454,7 +454,7 @@
 /ip firewall filter add action=jump chain=forward comment="MGMT allowlist" jump-target=mgmt-out-forward out-interface-list=iface-mgmt
 /ip firewall filter add action=jump chain=forward comment="LabNet allowlist" jump-target=labnet-out-forward out-interface-list=iface-labnet
 /ip firewall filter add action=accept chain=forward out-interface-list=iface-dmz
-/ip firewall filter add action=reject chain=forward log=yes reject-with=icmp-admin-prohibited
+/ip firewall filter add action=reject chain=forward reject-with=icmp-admin-prohibited
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="Hypervisor -> SNMP" dst-port=161 in-interface-list=iface-hypervisor protocol=udp
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="HomeAssistant -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.12.2
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="NAS -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.11.1
@@ -504,7 +504,7 @@
 /ipv6 firewall filter add action=accept chain=input comment=ZeroTier dst-port=9993 protocol=udp
 /ipv6 firewall filter add action=accept chain=input in-interface=oob
 /ipv6 firewall filter add action=accept chain=input in-interface-list=zone-local
-/ipv6 firewall filter add action=reject chain=input log=yes reject-with=icmp-admin-prohibited
+/ipv6 firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
 /ipv6 nd set [ find default=yes ] advertise-dns=no disabled=yes mtu=9000 ra-interval=1m-3m
 /ipv6 nd add advertise-dns=no interface=vlan-dmz mtu=9000 ra-interval=1m-3m
 /ipv6 nd add advertise-dns=no interface=vlan-hypervisor mtu=9000 ra-interval=1m-3m
@@ -523,6 +523,7 @@
 /system ntp client servers add address=1.pool.ntp.org
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
+/system package update set channel=testing
 /system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,policy,test start-date=aug/09/2020 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\

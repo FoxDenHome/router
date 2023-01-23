@@ -1,23 +1,23 @@
-# ---/--/---- --:--:-- by RouterOS 7.7
+# ---/--/---- --:--:-- by RouterOS 7.8beta2
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
 # serial number = REMOVED
 /interface ethernet set [ find default-name=ether1 ] comment=eth1 l2mtu=1514 name=oob rx-flow-control=on tx-flow-control=on
-/interface ethernet set [ find default-name=sfp-sfpplus1 ] advertise=1000M-full,10000M-full,2500M-full,5000M-full disabled=yes name=sfp1 rx-flow-control=on speed=10Gbps tx-flow-control=on
-/interface ethernet set [ find default-name=sfp-sfpplus2 ] auto-negotiation=no disabled=yes name=sfp2 rx-flow-control=on speed=10Gbps tx-flow-control=on
-/interface ethernet set [ find default-name=sfp-sfpplus3 ] disabled=yes name=sfp3 rx-flow-control=on tx-flow-control=on
-/interface ethernet set [ find default-name=sfp-sfpplus4 ] disabled=yes name=sfp4 rx-flow-control=on tx-flow-control=on
-/interface ethernet set [ find default-name=sfp-sfpplus5 ] disabled=yes name=sfp5 rx-flow-control=on tx-flow-control=on
-/interface ethernet set [ find default-name=sfp-sfpplus6 ] disabled=yes name=sfp6 rx-flow-control=on tx-flow-control=on
-/interface ethernet set [ find default-name=sfp-sfpplus7 ] disabled=yes name=sfp7 rx-flow-control=on tx-flow-control=on
-/interface ethernet set [ find default-name=sfp-sfpplus8 ] disabled=yes name=sfp8 rx-flow-control=on tx-flow-control=on
-/interface ethernet set [ find default-name=sfp-sfpplus9 ] disabled=yes name=sfp9 rx-flow-control=on tx-flow-control=on
-/interface ethernet set [ find default-name=sfp-sfpplus10 ] disabled=yes name=sfp10 rx-flow-control=on tx-flow-control=on
-/interface ethernet set [ find default-name=sfp-sfpplus11 ] disabled=yes name=sfp11 rx-flow-control=on tx-flow-control=on
-/interface ethernet set [ find default-name=sfp28-1 ] advertise=10M-half auto-negotiation=no fec-mode=fec74 l2mtu=9092 mtu=9000 name=sfpx1-rackswitch-agg rx-flow-control=on speed=25Gbps tx-flow-control=on
-/interface ethernet set [ find default-name=sfp28-2 ] auto-negotiation=no comment=sfpx2-rackswitch-agg fec-mode=fec74 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on speed=25Gbps tx-flow-control=on
-/interface ethernet set [ find default-name=sfp-sfpplus12 ] advertise=1000M-full,10000M-full,2500M-full,5000M-full comment=sfp1 name=wan rx-flow-control=on tx-flow-control=on
+/interface ethernet set [ find default-name=sfp-sfpplus1 ] advertise=1000M-full,10000M-full,2500M-full,5000M-full disabled=yes name=sfp1 rx-flow-control=on tx-flow-control=on
+/interface ethernet set [ find default-name=sfp-sfpplus2 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full auto-negotiation=no disabled=yes name=sfp2 rx-flow-control=on tx-flow-control=on
+/interface ethernet set [ find default-name=sfp-sfpplus3 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full disabled=yes name=sfp3 rx-flow-control=on speed=1Gbps tx-flow-control=on
+/interface ethernet set [ find default-name=sfp-sfpplus4 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full disabled=yes name=sfp4 rx-flow-control=on speed=1Gbps tx-flow-control=on
+/interface ethernet set [ find default-name=sfp-sfpplus5 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full disabled=yes name=sfp5 rx-flow-control=on speed=1Gbps tx-flow-control=on
+/interface ethernet set [ find default-name=sfp-sfpplus6 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full disabled=yes name=sfp6 rx-flow-control=on speed=1Gbps tx-flow-control=on
+/interface ethernet set [ find default-name=sfp-sfpplus7 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full disabled=yes name=sfp7 rx-flow-control=on speed=1Gbps tx-flow-control=on
+/interface ethernet set [ find default-name=sfp-sfpplus8 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full disabled=yes name=sfp8 rx-flow-control=on speed=1Gbps tx-flow-control=on
+/interface ethernet set [ find default-name=sfp-sfpplus9 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full disabled=yes name=sfp9 rx-flow-control=on speed=1Gbps tx-flow-control=on
+/interface ethernet set [ find default-name=sfp-sfpplus10 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full disabled=yes name=sfp10 rx-flow-control=on speed=1Gbps tx-flow-control=on
+/interface ethernet set [ find default-name=sfp-sfpplus11 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full disabled=yes name=sfp11 rx-flow-control=on speed=1Gbps tx-flow-control=on
+/interface ethernet set [ find default-name=sfp28-1 ] advertise=10M-half auto-negotiation=no fec-mode=fec74 l2mtu=9092 mtu=9000 name=sfpx1-rackswitch-agg rx-flow-control=on tx-flow-control=on
+/interface ethernet set [ find default-name=sfp28-2 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full auto-negotiation=no comment=sfpx2-rackswitch-agg fec-mode=fec74 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
+/interface ethernet set [ find default-name=sfp-sfpplus12 ] advertise=1000M-full,10000M-full,2500M-full,5000M-full comment=sfp1 name=wan rx-flow-control=on speed=1Gbps tx-flow-control=on
 /interface 6to4 add !keepalive name=6to4-redfox remote-address=66.42.71.230
 /interface wireguard add disabled=yes listen-port=13232 mtu=1420 name=wg-s2s
 /interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
@@ -465,7 +465,7 @@
 /ip firewall filter add action=jump chain=forward comment="MGMT allowlist" jump-target=mgmt-out-forward out-interface-list=iface-mgmt
 /ip firewall filter add action=jump chain=forward comment="LabNet allowlist" jump-target=labnet-out-forward out-interface-list=iface-labnet
 /ip firewall filter add action=accept chain=forward out-interface-list=iface-dmz
-/ip firewall filter add action=reject chain=forward log=yes reject-with=icmp-admin-prohibited
+/ip firewall filter add action=reject chain=forward reject-with=icmp-admin-prohibited
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="Hypervisor -> SNMP" dst-port=161 in-interface-list=iface-hypervisor protocol=udp
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="HomeAssistant -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.12.2
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="NAS -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.11.1
@@ -519,7 +519,7 @@
 /ipv6 firewall filter add action=accept chain=input comment=ZeroTier dst-port=9993 protocol=udp
 /ipv6 firewall filter add action=accept chain=input in-interface=oob
 /ipv6 firewall filter add action=accept chain=input in-interface-list=zone-local
-/ipv6 firewall filter add action=reject chain=input log=yes reject-with=icmp-admin-prohibited
+/ipv6 firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
 /ipv6 nd set [ find default=yes ] advertise-dns=no disabled=yes mtu=9000 ra-interval=1m-3m ra-preference=high
 /ipv6 nd add advertise-dns=no interface=vlan-dmz mtu=9000 ra-interval=1m-3m ra-preference=high
 /ipv6 nd add advertise-dns=no interface=vlan-hypervisor mtu=9000 ra-interval=1m-3m ra-preference=high
@@ -539,6 +539,7 @@
 /system ntp client servers add address=1.pool.ntp.org
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
+/system package update set channel=testing
 /system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,policy,test start-date=aug/09/2020 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
