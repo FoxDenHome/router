@@ -471,7 +471,6 @@
 /ip firewall filter add action=accept chain=input protocol=icmp
 /ip firewall filter add action=accept chain=input comment="HTTP(S)" dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=input comment=WireGuard dst-port=13231-13232 protocol=udp
-/ip firewall filter add action=accept chain=input comment=ZeroTier dst-port=9993 protocol=udp
 /ip firewall filter add action=accept chain=input in-interface=oob
 /ip firewall filter add action=accept chain=input in-interface-list=zone-local
 /ip firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
