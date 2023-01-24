@@ -441,6 +441,18 @@
 /ip dns static add address=::ffff:10.2.12.21 comment=static-dns-for-dhcp name=laundry-washer.foxden.network type=AAAA
 /ip dns static add address=10.2.12.22 comment=static-dns-for-dhcp name=laundry-dryer.foxden.network
 /ip dns static add address=::ffff:10.2.12.22 comment=static-dns-for-dhcp name=laundry-dryer.foxden.network type=AAAA
+/ip dns static add address=10.2.0.53 name=ns1.foxden.network
+/ip dns static add address=10.2.0.53 name=ns2.foxden.network
+/ip dns static add address=10.2.0.53 name=ns3.foxden.network
+/ip dns static add address=10.2.0.53 name=ns4.foxden.network
+/ip dns static add address=::ffff:10.2.0.53 name=ns4.foxden.network type=AAAA
+/ip dns static add address=::ffff:10.2.0.53 name=ns3.foxden.network type=AAAA
+/ip dns static add address=::ffff:10.2.0.53 name=ns2.foxden.network type=AAAA
+/ip dns static add address=::ffff:10.2.0.53 name=ns1.foxden.network type=AAAA
+/ip dns static add name=foxden.network ns=ns1.foxden.network type=NS
+/ip dns static add name=foxden.network ns=ns2.foxden.network type=NS
+/ip dns static add name=foxden.network ns=ns3.foxden.network type=NS
+/ip dns static add name=foxden.network ns=ns4.foxden.network type=NS
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
