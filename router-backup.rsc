@@ -91,9 +91,6 @@
 /interface list member add interface=vlan-mgmt list=iface-mgmt
 /interface list member add interface=wg-s2s list=zone-local
 /interface list member add interface=wg-vpn list=zone-local
-/interface list member add interface=*24 list=*2000018
-/interface list member add interface=*25 list=*2000018
-/interface list member add interface=*26 list=*2000018
 /interface list member add interface=6to4-redfox list=zone-wan
 /interface wireguard peers add allowed-address=10.100.10.1/32 comment=Fennec interface=wg-vpn public-key="+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY="
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
