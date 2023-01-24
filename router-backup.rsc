@@ -123,7 +123,7 @@
 /ip address add address=10.6.0.1 interface=vrrp-hypervisor-gateway network=10.6.0.1
 /ip address add address=10.6.0.123 interface=vrrp-hypervisor-ntp network=10.6.0.123
 /ip address add address=10.6.0.53 interface=vrrp-hypervisor-dns network=10.6.0.53
-/ip address add address=10.99.0.3/16 interface=wg-s2s network=10.99.0.0
+/ip address add address=10.99.1.3/16 interface=wg-s2s network=10.99.0.0
 /ip address add address=10.100.0.1/16 interface=wg-vpn network=10.100.0.0
 /ip cloud set update-time=no
 /ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run wan-online-adjust\r\
