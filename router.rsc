@@ -452,6 +452,7 @@
 /ip dns static add address=::ffff:10.2.12.21 comment=static-dns-for-dhcp name=laundry-washer.foxden.network type=AAAA
 /ip dns static add address=10.2.12.22 comment=static-dns-for-dhcp name=laundry-dryer.foxden.network
 /ip dns static add address=::ffff:10.2.12.22 comment=static-dns-for-dhcp name=laundry-dryer.foxden.network type=AAAA
+/ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
 /ip firewall filter add action=accept chain=forward comment="dstnat'd" connection-nat-state=dstnat
@@ -505,7 +506,8 @@
 /ipv6 address add address=2a0e:7d44:f069:5::3 interface=vlan-security
 /ipv6 address add address=2a0e:7d44:f069:6::3 interface=vlan-hypervisor
 /ipv6 dhcp-client add disabled=yes interface=sfp1 pool-name=pool-wan request=prefix use-peer-dns=no
-/ipv6 firewall filter add action=accept chain=forward connection-state=established,related
+/ipv6 firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
+/ipv6 firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
 /ipv6 firewall filter add action=accept chain=forward protocol=icmpv6
 /ipv6 firewall filter add action=accept chain=forward in-interface=oob
 /ipv6 firewall filter add action=accept chain=forward in-interface-list=iface-mgmt
