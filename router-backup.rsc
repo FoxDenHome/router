@@ -534,7 +534,7 @@
 /system script add dont-require-permissions=yes name=local-init-onboot owner=admin policy=read,write,policy,test source=":global VRRPPriorityOnline 25\r\
     \n:global VRRPPriorityOffline 5\r\
     \n\r\
-    \n:global DynDNSHost \"router-backup.dyn.foxden.network\"\r\
+    \n:global DynDNSHost \"router-backup.foxden.network\"\r\
     \n:global DynDNSKey \"REMOVED\"\r\
     \n\r\
     \n:global RAPriorityOnline \"medium\"\r\
@@ -595,7 +595,7 @@
     \n    }\r\
     \n    :delay 5s\r\
     \n    :do {\r\
-    \n        :local result [/tool/fetch mode=\$mode url=\"\$mode://\$updatehost/nic/update\?hostname=\$host&myip=\$ipaddr\" user=\$host password=\$key as-value output=user]\r\
+    \n        :local result [/tool/fetch mode=\$mode url=\"\$mode://\$updatehost/api/dynamicURL/\?q=\$key&ip=\$ipaddr&notify=1\" as-value output=user]\r\
     \n        \$logputdebug (\"[DynDNS] Result of update for \". \$host . \": \" . (\$result->\"data\"))\r\
     \n    } on-error={\r\
     \n        \$logputerror (\"[DynDNS] Unable to update \" . \$host)\r\
@@ -603,11 +603,11 @@
     \n}\r\
     \n\r\
     \nif (\$isprimary) do={\r\
-    \n    \$dyndnsUpdate host=\"wan.dyn.foxden.network\" key=\"REMOVED\" updatehost=\"dyn.dns.he.net\" dns=\"ns1.he.net\" ipaddr=\$ipaddr mode=https\r\
+    \n    \$dyndnsUpdate host=\"wan.foxden.network\" key=\"REMOVED\" updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
     \n    #\$dyndnsUpdate host=\"772305\" key=\"REMOVED\" updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https\r\
     \n}\r\
     \n\$dyndnsUpdate host=\"redfoxv6\" key=\"REMOVED\" updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
-    \n\$dyndnsUpdate host=\$DynDNSHost key=\$DynDNSKey updatehost=\"dyn.dns.he.net\" dns=\"ns1.he.net\" ipaddr=\$ipaddr mode=https\r\
+    \n\$dyndnsUpdate host=\$DynDNSHost key=\$DynDNSKey updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
     \n"
 /system script add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local dhcpent\r\
     \n:local arpmac\r\
