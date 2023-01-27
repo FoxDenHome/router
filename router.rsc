@@ -240,6 +240,7 @@
 /ip dhcp-server lease add address=10.2.13.9 comment=custom-filament-dryer lease-time=1d mac-address=0C:B8:15:D5:C0:88 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.21 comment=laundry-washer lease-time=1d mac-address=88:57:1D:85:70:9A server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.22 comment=laundry-dryer lease-time=1d mac-address=88:57:1D:85:70:A1 server=dhcp-lan
+/ip dhcp-server lease add address=10.6.11.3 comment=akvorado lease-time=1d mac-address=BA:11:EF:53:38:7A server=dhcp-hypervisor
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -259,6 +260,18 @@
 /ip dns static add address=::ffff:10.2.0.123 name=ntp.foxden.network type=AAAA
 /ip dns static add address=10.2.0.53 name=dns.foxden.network
 /ip dns static add address=::ffff:10.2.0.53 name=dns.foxden.network type=AAAA
+/ip dns static add address=10.2.0.53 name=ns1.foxden.network
+/ip dns static add address=10.2.0.53 name=ns2.foxden.network
+/ip dns static add address=10.2.0.53 name=ns3.foxden.network
+/ip dns static add address=10.2.0.53 name=ns4.foxden.network
+/ip dns static add address=::ffff:10.2.0.53 name=ns4.foxden.network type=AAAA
+/ip dns static add address=::ffff:10.2.0.53 name=ns3.foxden.network type=AAAA
+/ip dns static add address=::ffff:10.2.0.53 name=ns2.foxden.network type=AAAA
+/ip dns static add address=::ffff:10.2.0.53 name=ns1.foxden.network type=AAAA
+/ip dns static add name=foxden.network ns=ns1.foxden.network type=NS
+/ip dns static add name=foxden.network ns=ns2.foxden.network type=NS
+/ip dns static add name=foxden.network ns=ns3.foxden.network type=NS
+/ip dns static add name=foxden.network ns=ns4.foxden.network type=NS
 /ip dns static add address=10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network
 /ip dns static add address=::ffff:10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network type=AAAA
 /ip dns static add address=10.6.10.2 comment=static-dns-for-dhcp name=islandfox.foxden.network
@@ -441,18 +454,12 @@
 /ip dns static add address=::ffff:10.2.12.21 comment=static-dns-for-dhcp name=laundry-washer.foxden.network type=AAAA
 /ip dns static add address=10.2.12.22 comment=static-dns-for-dhcp name=laundry-dryer.foxden.network
 /ip dns static add address=::ffff:10.2.12.22 comment=static-dns-for-dhcp name=laundry-dryer.foxden.network type=AAAA
-/ip dns static add address=10.2.0.53 name=ns1.foxden.network
-/ip dns static add address=10.2.0.53 name=ns2.foxden.network
-/ip dns static add address=10.2.0.53 name=ns3.foxden.network
-/ip dns static add address=10.2.0.53 name=ns4.foxden.network
-/ip dns static add address=::ffff:10.2.0.53 name=ns4.foxden.network type=AAAA
-/ip dns static add address=::ffff:10.2.0.53 name=ns3.foxden.network type=AAAA
-/ip dns static add address=::ffff:10.2.0.53 name=ns2.foxden.network type=AAAA
-/ip dns static add address=::ffff:10.2.0.53 name=ns1.foxden.network type=AAAA
-/ip dns static add name=foxden.network ns=ns1.foxden.network type=NS
-/ip dns static add name=foxden.network ns=ns2.foxden.network type=NS
-/ip dns static add name=foxden.network ns=ns3.foxden.network type=NS
-/ip dns static add name=foxden.network ns=ns4.foxden.network type=NS
+/ip dns static add address=10.6.11.3 comment=static-dns-for-dhcp name=akvorado.foxden.network
+/ip dns static add address=::ffff:10.6.11.3 comment=static-dns-for-dhcp name=akvorado.foxden.network type=AAAA
+/ip dns static add name=wpad type=NXDOMAIN
+/ip dns static add name=wpad.foxden.network type=NXDOMAIN
+/ip dns static add address=10.3.10.5 name=api.spaceage.mp
+/ip dns static add address=::ffff:10.3.10.5 name=api.spaceage.mp type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -465,6 +472,7 @@
 /ip firewall filter add action=jump chain=forward comment="LAN allowlist" jump-target=lan-out-forward out-interface-list=iface-lan
 /ip firewall filter add action=jump chain=forward comment="MGMT allowlist" jump-target=mgmt-out-forward out-interface-list=iface-mgmt
 /ip firewall filter add action=jump chain=forward comment="LabNet allowlist" jump-target=labnet-out-forward out-interface-list=iface-labnet
+/ip firewall filter add action=jump chain=forward comment="Hypervisor allowlist" jump-target=hypervisor-out-forward out-interface-list=iface-hypervisor
 /ip firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ip firewall filter add action=reject chain=forward reject-with=icmp-admin-prohibited
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="Hypervisor -> SNMP" dst-port=161 in-interface-list=iface-hypervisor protocol=udp
@@ -475,6 +483,7 @@
 /ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Plex dst-address=10.2.11.3 dst-port=32400 protocol=tcp
 /ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=1883 protocol=tcp
+/ip firewall filter add action=accept chain=hypervisor-out-forward comment=akvorado dst-address=10.6.11.3 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=input connection-state=established,related
 /ip firewall filter add action=accept chain=input protocol=icmp
 /ip firewall filter add action=accept chain=input comment="HTTP(S)" dst-port=80,443 protocol=tcp
@@ -490,6 +499,7 @@
 /ip route add blackhole disabled=no dst-address=192.168.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ip route add blackhole disabled=no distance=1 dst-address=172.16.0.0/12 gateway="" pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
+/ip route add blackhole disabled=no distance=1 dst-address=10.69.69.69/32 gateway="" pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:a::1 routing-table=main
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
@@ -497,6 +507,8 @@
 /ip service set api disabled=yes
 /ip service set api-ssl certificate=letsencrypt-autogen_2023-01-20T02:58:02Z tls-version=only-1.2
 /ip ssh set forwarding-enabled=local strong-crypto=yes
+/ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
+/ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
 /ipv6 address add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
 /ipv6 address add address=2a0e:7d44:f069:1::3 interface=vlan-mgmt
 /ipv6 address add address=2a0e:7d44:f069:2::3 interface=vlan-lan
@@ -512,7 +524,7 @@
 /ipv6 firewall filter add action=accept chain=forward in-interface-list=iface-mgmt
 /ipv6 firewall filter add action=accept chain=forward out-interface-list=zone-wan
 /ipv6 firewall filter add action=accept chain=forward out-interface-list=iface-dmz
-/ipv6 firewall filter add action=reject chain=forward reject-with=icmp-admin-prohibited
+/ipv6 firewall filter add action=reject chain=forward log=yes reject-with=icmp-admin-prohibited
 /ipv6 firewall filter add action=accept chain=input connection-state=established,related
 /ipv6 firewall filter add action=accept chain=input protocol=icmpv6
 /ipv6 firewall filter add action=accept chain=input comment="HTTP(S)" dst-port=80,443 protocol=tcp
@@ -521,13 +533,13 @@
 /ipv6 firewall filter add action=accept chain=input in-interface=oob
 /ipv6 firewall filter add action=accept chain=input in-interface-list=zone-local
 /ipv6 firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
-/ipv6 nd set [ find default=yes ] advertise-dns=no disabled=yes mtu=9000 ra-interval=1m-3m ra-preference=high
-/ipv6 nd add advertise-dns=no interface=vlan-dmz mtu=9000 ra-interval=1m-3m ra-preference=high
-/ipv6 nd add advertise-dns=no interface=vlan-hypervisor mtu=9000 ra-interval=1m-3m ra-preference=high
-/ipv6 nd add advertise-dns=no interface=vlan-labnet mtu=9000 ra-interval=1m-3m ra-preference=high
-/ipv6 nd add advertise-dns=no interface=vlan-lan mtu=9000 ra-interval=1m-3m ra-preference=high
-/ipv6 nd add advertise-dns=no interface=vlan-mgmt mtu=9000 ra-interval=1m-3m ra-preference=high
-/ipv6 nd add advertise-dns=no interface=vlan-security mtu=9000 ra-interval=1m-3m ra-preference=high
+/ipv6 nd set [ find default=yes ] advertise-dns=no disabled=yes mtu=1480 ra-interval=1m-3m ra-preference=high
+/ipv6 nd add advertise-dns=no interface=vlan-dmz mtu=1480 ra-interval=1m-3m ra-preference=high
+/ipv6 nd add advertise-dns=no interface=vlan-hypervisor mtu=1480 ra-interval=1m-3m ra-preference=high
+/ipv6 nd add advertise-dns=no interface=vlan-labnet mtu=1480 ra-interval=1m-3m ra-preference=high
+/ipv6 nd add advertise-dns=no interface=vlan-lan mtu=1480 ra-interval=1m-3m ra-preference=high
+/ipv6 nd add advertise-dns=no interface=vlan-mgmt mtu=1480 ra-interval=1m-3m ra-preference=high
+/ipv6 nd add advertise-dns=no interface=vlan-security mtu=1480 ra-interval=1m-3m ra-preference=high
 /ipv6 nd prefix default set preferred-lifetime=15m valid-lifetime=1h
 /snmp set contact=admin@foxden.network enabled=yes location="Server room" trap-generators=""
 /system clock set time-zone-autodetect=no time-zone-name=America/Los_Angeles
