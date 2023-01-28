@@ -506,7 +506,6 @@
 /ip service set www-ssl certificate=letsencrypt-autogen_2023-01-20T02:58:02Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
 /ip service set api-ssl certificate=letsencrypt-autogen_2023-01-20T02:58:02Z tls-version=only-1.2
-/ip smb set enabled=yes
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
