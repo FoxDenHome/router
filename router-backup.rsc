@@ -40,6 +40,12 @@
 /ip pool add name=pool-security ranges=10.5.100.0-10.5.200.255
 /ip pool add name=pool-hypervisor ranges=10.6.100.0-10.6.200.255
 /ip pool add name=pool-oob ranges=192.168.88.100-192.168.88.200
+/ip dhcp-server add address-pool=pool-labnet authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-labnet lease-time=1h name=dhcp-labnet
+/ip dhcp-server add address-pool=pool-lan authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-lan lease-time=1h name=dhcp-lan
+/ip dhcp-server add address-pool=pool-dmz authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-dmz lease-time=1h name=dhcp-dmz
+/ip dhcp-server add address-pool=pool-mgmt authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-mgmt lease-time=1h name=dhcp-mgmt
+/ip dhcp-server add address-pool=pool-security authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-security lease-time=1h name=dhcp-security
+/ip dhcp-server add address-pool=pool-hypervisor authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-hypervisor lease-time=1h name=dhcp-hypervisor
 /ip dhcp-server add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dhcp-oob
 /port set 0 baud-rate=115200
 /snmp community set [ find default=yes ] disabled=yes
@@ -128,12 +134,6 @@
 /ip cloud set update-time=no
 /ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run wan-online-adjust\r\
     \n" use-peer-dns=no use-peer-ntp=no
-/ip dhcp-server add address-pool=pool-labnet dhcp-option-set=default-classless interface=vrrp-labnet-gateway lease-time=1h name=dhcp-labnet
-/ip dhcp-server add address-pool=pool-lan dhcp-option-set=default-classless interface=vrrp-lan-gateway lease-time=1h name=dhcp-lan
-/ip dhcp-server add address-pool=pool-dmz dhcp-option-set=default-classless interface=vrrp-dmz-gateway lease-time=1h name=dhcp-dmz
-/ip dhcp-server add address-pool=pool-mgmt dhcp-option-set=default-classless interface=vrrp-mgmt-gateway lease-time=1h name=dhcp-mgmt
-/ip dhcp-server add address-pool=pool-security dhcp-option-set=default-classless interface=vrrp-security-gateway lease-time=1h name=dhcp-security
-/ip dhcp-server add address-pool=pool-hypervisor dhcp-option-set=default-classless interface=vrrp-hypervisor-gateway lease-time=1h name=dhcp-hypervisor
 /ip dhcp-server config set store-leases-disk=never
 /ip dhcp-server lease add address=10.2.10.3 comment=capefox lease-time=1d mac-address=F0:2F:4B:14:84:F4 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.10.2 comment=islandfox lease-time=1d mac-address=0A:98:86:2C:85:87 server=dhcp-hypervisor
@@ -187,7 +187,6 @@
 /ip dhcp-server lease add address=10.2.13.4 comment=sonoff-s31-lighthouse-bl lease-time=1d mac-address=8C:AA:B5:66:3B:BE server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.3 comment=sonoff-s31-bambu-x1 lease-time=1d mac-address=E8:DB:84:9F:4F:08 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.8 comment=sonoff-s31-dori-pc lease-time=1d mac-address=8C:AA:B5:66:3D:81 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.2 comment=sonoff-s31-dori-office-fan lease-time=1d mac-address=8C:AA:B5:66:12:00 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.1 comment=sonoff-s31-wizzy-pc lease-time=1d mac-address=8C:AA:B5:66:10:70 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.10.3 comment=ut2004 lease-time=1d mac-address=02:43:39:4D:B6:AA server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.13.12 comment=sonoff-s31-lighthouse-br lease-time=1d mac-address=C4:5B:BE:E4:9B:00 server=dhcp-lan
@@ -229,9 +228,14 @@
 /ip dhcp-server lease add address=10.2.13.9 comment=custom-filament-dryer lease-time=1d mac-address=0C:B8:15:D5:C0:88 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.21 comment=laundry-washer lease-time=1d mac-address=88:57:1D:85:70:9A server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.22 comment=laundry-dryer lease-time=1d mac-address=88:57:1D:85:70:A1 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.24 comment=appletv-dori-office lease-time=1d mac-address=9C:3E:53:1C:20:C0 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.25 comment=thermostat-nest-corridor-upper lease-time=1d mac-address=64:16:66:9F:DE:CA server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.51 comment=appletv-living-room-wifi lease-time=1d mac-address=58:D3:49:D1:3E:F1 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.11.3 comment=akvorado lease-time=1d mac-address=BA:11:EF:53:38:7A server=dhcp-hypervisor
+/ip dhcp-server lease add address=10.2.13.10 comment=custom-led-microscope lease-time=1d mac-address=D4:F9:8D:70:82:F6 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.11.2 comment=crashdoom-mastodon-2 lease-time=1d mac-address=FA:3F:4C:4C:97:2C server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.11.1 comment=crashdoom-mastodon-1 lease-time=1d mac-address=CE:5A:B6:F7:F3:EB server=dhcp-dmz
+/ip dhcp-server lease add address=10.2.13.2 comment=custom-bench-psu lease-time=1d mac-address=E0:98:06:24:8D:06 server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -371,8 +375,6 @@
 /ip dns static add address=::ffff:10.2.13.3 comment=static-dns-for-dhcp name=sonoff-s31-bambu-x1.foxden.network type=AAAA
 /ip dns static add address=10.2.13.8 comment=static-dns-for-dhcp name=sonoff-s31-dori-pc.foxden.network
 /ip dns static add address=::ffff:10.2.13.8 comment=static-dns-for-dhcp name=sonoff-s31-dori-pc.foxden.network type=AAAA
-/ip dns static add address=10.2.13.2 comment=static-dns-for-dhcp name=sonoff-s31-dori-office-fan.foxden.network
-/ip dns static add address=::ffff:10.2.13.2 comment=static-dns-for-dhcp name=sonoff-s31-dori-office-fan.foxden.network type=AAAA
 /ip dns static add address=10.2.13.1 comment=static-dns-for-dhcp name=sonoff-s31-wizzy-pc.foxden.network
 /ip dns static add address=::ffff:10.2.13.1 comment=static-dns-for-dhcp name=sonoff-s31-wizzy-pc.foxden.network type=AAAA
 /ip dns static add address=10.3.10.3 comment=static-dns-for-dhcp name=ut2004.foxden.network
@@ -449,12 +451,22 @@
 /ip dns static add address=::ffff:10.2.12.21 comment=static-dns-for-dhcp name=laundry-washer.foxden.network type=AAAA
 /ip dns static add address=10.2.12.22 comment=static-dns-for-dhcp name=laundry-dryer.foxden.network
 /ip dns static add address=::ffff:10.2.12.22 comment=static-dns-for-dhcp name=laundry-dryer.foxden.network type=AAAA
+/ip dns static add address=10.2.12.24 comment=static-dns-for-dhcp name=appletv-dori-office.foxden.network
+/ip dns static add address=::ffff:10.2.12.24 comment=static-dns-for-dhcp name=appletv-dori-office.foxden.network type=AAAA
+/ip dns static add address=10.2.12.25 comment=static-dns-for-dhcp name=thermostat-nest-corridor-upper.foxden.network
+/ip dns static add address=::ffff:10.2.12.25 comment=static-dns-for-dhcp name=thermostat-nest-corridor-upper.foxden.network type=AAAA
+/ip dns static add address=10.2.12.51 comment=static-dns-for-dhcp name=appletv-living-room-wifi.foxden.network
+/ip dns static add address=::ffff:10.2.12.51 comment=static-dns-for-dhcp name=appletv-living-room-wifi.foxden.network type=AAAA
 /ip dns static add address=10.6.11.3 comment=static-dns-for-dhcp name=akvorado.foxden.network
 /ip dns static add address=::ffff:10.6.11.3 comment=static-dns-for-dhcp name=akvorado.foxden.network type=AAAA
+/ip dns static add address=10.2.13.10 comment=static-dns-for-dhcp name=custom-led-microscope.foxden.network
+/ip dns static add address=::ffff:10.2.13.10 comment=static-dns-for-dhcp name=custom-led-microscope.foxden.network type=AAAA
 /ip dns static add address=10.3.11.2 comment=static-dns-for-dhcp name=crashdoom-mastodon-2.foxden.network
 /ip dns static add address=::ffff:10.3.11.2 comment=static-dns-for-dhcp name=crashdoom-mastodon-2.foxden.network type=AAAA
 /ip dns static add address=10.3.11.1 comment=static-dns-for-dhcp name=crashdoom-mastodon-1.foxden.network
 /ip dns static add address=::ffff:10.3.11.1 comment=static-dns-for-dhcp name=crashdoom-mastodon-1.foxden.network type=AAAA
+/ip dns static add address=10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network
+/ip dns static add address=::ffff:10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
