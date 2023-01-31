@@ -482,6 +482,7 @@
 /ip firewall filter add action=accept chain=input in-interface=oob
 /ip firewall filter add action=accept chain=input in-interface-list=zone-local
 /ip firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
+/ip firewall mangle add action=change-mss chain=forward new-mss=clamp-to-pmtu passthrough=yes protocol=tcp tcp-flags=syn
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
 /ip firewall nat add action=dst-nat chain=dstnat comment=Plex dst-port=32400 protocol=tcp to-addresses=10.2.11.3
 /ip firewall nat add action=dst-nat chain=dstnat comment="SpaceAge GMod" dst-port=27015 protocol=udp to-addresses=10.3.10.4
