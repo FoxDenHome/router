@@ -241,8 +241,8 @@
 /ip dhcp-server lease add address=10.2.12.21 comment=laundry-washer lease-time=1d mac-address=88:57:1D:85:70:9A server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.22 comment=laundry-dryer lease-time=1d mac-address=88:57:1D:85:70:A1 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.11.3 comment=akvorado lease-time=1d mac-address=BA:11:EF:53:38:7A server=dhcp-hypervisor
-/ip dhcp-server lease add address=10.3.11.2 comment=crashdoom-mastodon-2 mac-address=FA:3F:4C:4C:97:2C server=dhcp-dmz
-/ip dhcp-server lease add address=10.3.11.1 comment=crashdoom-mastodon-1 mac-address=CE:5A:B6:F7:F3:EB server=dhcp-dmz
+/ip dhcp-server lease add address=10.3.11.2 comment=crashdoom-mastodon-2 lease-time=1d mac-address=FA:3F:4C:4C:97:2C server=dhcp-dmz
+/ip dhcp-server lease add address=10.3.11.1 comment=crashdoom-mastodon-1 lease-time=1d mac-address=CE:5A:B6:F7:F3:EB server=dhcp-dmz
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -274,6 +274,10 @@
 /ip dns static add name=foxden.network ns=ns2.foxden.network type=NS
 /ip dns static add name=foxden.network ns=ns3.foxden.network type=NS
 /ip dns static add name=foxden.network ns=ns4.foxden.network type=NS
+/ip dns static add name=wpad type=NXDOMAIN
+/ip dns static add name=wpad.foxden.network type=NXDOMAIN
+/ip dns static add address=10.3.10.5 name=api.spaceage.mp
+/ip dns static add address=::ffff:10.3.10.5 name=api.spaceage.mp type=AAAA
 /ip dns static add address=10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network
 /ip dns static add address=::ffff:10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network type=AAAA
 /ip dns static add address=10.6.10.2 comment=static-dns-for-dhcp name=islandfox.foxden.network
@@ -458,10 +462,10 @@
 /ip dns static add address=::ffff:10.2.12.22 comment=static-dns-for-dhcp name=laundry-dryer.foxden.network type=AAAA
 /ip dns static add address=10.6.11.3 comment=static-dns-for-dhcp name=akvorado.foxden.network
 /ip dns static add address=::ffff:10.6.11.3 comment=static-dns-for-dhcp name=akvorado.foxden.network type=AAAA
-/ip dns static add name=wpad type=NXDOMAIN
-/ip dns static add name=wpad.foxden.network type=NXDOMAIN
-/ip dns static add address=10.3.10.5 name=api.spaceage.mp
-/ip dns static add address=::ffff:10.3.10.5 name=api.spaceage.mp type=AAAA
+/ip dns static add address=10.3.11.2 comment=static-dns-for-dhcp name=crashdoom-mastodon-2.foxden.network
+/ip dns static add address=::ffff:10.3.11.2 comment=static-dns-for-dhcp name=crashdoom-mastodon-2.foxden.network type=AAAA
+/ip dns static add address=10.3.11.1 comment=static-dns-for-dhcp name=crashdoom-mastodon-1.foxden.network
+/ip dns static add address=::ffff:10.3.11.1 comment=static-dns-for-dhcp name=crashdoom-mastodon-1.foxden.network type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
