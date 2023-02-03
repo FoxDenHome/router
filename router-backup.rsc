@@ -481,7 +481,7 @@
 /ip firewall filter add action=jump chain=forward comment="LabNet allowlist" jump-target=labnet-out-forward out-interface-list=iface-labnet
 /ip firewall filter add action=jump chain=forward comment="Hypervisor allowlist" jump-target=hypervisor-out-forward out-interface-list=iface-hypervisor
 /ip firewall filter add action=accept chain=forward out-interface-list=iface-dmz
-/ip firewall filter add action=reject chain=forward reject-with=icmp-admin-prohibited
+/ip firewall filter add action=reject chain=forward log=yes reject-with=icmp-admin-prohibited
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="Hypervisor -> SNMP" dst-port=161 in-interface-list=iface-hypervisor protocol=udp
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="HomeAssistant -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.12.2
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="NAS -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.11.1
@@ -492,6 +492,7 @@
 /ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=1883 protocol=tcp
 /ip firewall filter add action=accept chain=hypervisor-out-forward comment=akvorado dst-address=10.6.11.3 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=input connection-state=established,related
+/ip firewall filter add action=accept chain=input protocol=ipv6-encap
 /ip firewall filter add action=accept chain=input protocol=icmp
 /ip firewall filter add action=accept chain=input comment="HTTP(S)" dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=input comment=WireGuard dst-port=13231-13232 protocol=udp
@@ -516,19 +517,19 @@
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
 /ipv6 address add address=2a0e:7d44:f000:b::2 advertise=no interface=6to4-redfox
-/ipv6 address add address=2a0e:7d44:f00b:1::1 interface=vlan-mgmt
-/ipv6 address add address=2a0e:7d44:f00b:2::1 interface=vlan-lan
-/ipv6 address add address=2a0e:7d44:f00b:3::1 interface=vlan-dmz
-/ipv6 address add address=2a0e:7d44:f00b:4::1 interface=vlan-labnet
-/ipv6 address add address=2a0e:7d44:f00b:5::1 interface=vlan-security
-/ipv6 address add address=2a0e:7d44:f00b:6::1 interface=vlan-hypervisor
+/ipv6 address add address=2a0e:7d44:f069:1::3 interface=vlan-mgmt
+/ipv6 address add address=2a0e:7d44:f069:2::3 interface=vlan-lan
+/ipv6 address add address=2a0e:7d44:f069:3::3 interface=vlan-dmz
+/ipv6 address add address=2a0e:7d44:f069:4::3 interface=vlan-labnet
+/ipv6 address add address=2a0e:7d44:f069:5::3 interface=vlan-security
+/ipv6 address add address=2a0e:7d44:f069:6::3 interface=vlan-hypervisor
+/ipv6 firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ipv6 firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ipv6 firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
 /ipv6 firewall filter add action=accept chain=forward protocol=icmpv6
 /ipv6 firewall filter add action=accept chain=forward in-interface=oob
 /ipv6 firewall filter add action=accept chain=forward in-interface-list=iface-mgmt
 /ipv6 firewall filter add action=accept chain=forward out-interface-list=zone-wan
-/ipv6 firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ipv6 firewall filter add action=reject chain=forward reject-with=icmp-admin-prohibited
 /ipv6 firewall filter add action=accept chain=input connection-state=established,related
 /ipv6 firewall filter add action=accept chain=input protocol=icmpv6
@@ -539,13 +540,13 @@
 /ipv6 firewall filter add action=accept chain=input in-interface-list=zone-local
 /ipv6 firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
 /ipv6 firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu passthrough=yes protocol=tcp tcp-flags=syn
-/ipv6 nd set [ find default=yes ] advertise-dns=no disabled=yes mtu=1480 ra-interval=1m-3m
-/ipv6 nd add advertise-dns=no interface=vlan-dmz mtu=1480 ra-interval=1m-3m
-/ipv6 nd add advertise-dns=no interface=vlan-hypervisor mtu=1480 ra-interval=1m-3m
-/ipv6 nd add advertise-dns=no interface=vlan-labnet mtu=1480 ra-interval=1m-3m
-/ipv6 nd add advertise-dns=no interface=vlan-lan mtu=1480 ra-interval=1m-3m
-/ipv6 nd add advertise-dns=no interface=vlan-mgmt mtu=1480 ra-interval=1m-3m
-/ipv6 nd add advertise-dns=no interface=vlan-security mtu=1480 ra-interval=1m-3m
+/ipv6 nd set [ find default=yes ] advertise-dns=no disabled=yes ra-interval=1m-3m
+/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-dmz ra-interval=1m-3m
+/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-hypervisor ra-interval=1m-3m
+/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-labnet ra-interval=1m-3m
+/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-lan ra-interval=1m-3m
+/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-mgmt ra-interval=1m-3m
+/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-security ra-interval=1m-3m
 /ipv6 nd prefix default set preferred-lifetime=15m valid-lifetime=1h
 /snmp set contact=admin@foxden.network enabled=yes location="Server room" trap-generators=""
 /system clock set time-zone-autodetect=no time-zone-name=America/Los_Angeles
@@ -639,7 +640,7 @@
     \n    \$dyndnsUpdate host=\"wan.foxden.network\" key=\"REMOVED\" updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
     \n    #\$dyndnsUpdate host=\"772305\" key=\"REMOVED\" updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https\r\
     \n}\r\
-    \n\$dyndnsUpdate host=\"redfoxv6\" key=\"REMOVED\" updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
+    \n\$dyndnsUpdate host=\"redfoxv6\" key=(\"anonymous&primary=\" . \$isprimary) updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
     \n\$dyndnsUpdate host=\$DynDNSHost key=\$DynDNSKey updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
     \n"
 /system script add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local dhcpent\r\
