@@ -1,4 +1,4 @@
-# ---/--/---- --:--:-- by RouterOS 7.8beta2
+# ---/--/---- --:--:-- by RouterOS 7.8beta3
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -183,7 +183,6 @@
 /ip dhcp-server lease add address=10.2.14.2 comment=dori-watch lease-time=1d mac-address=E2:47:0B:F9:D1:F1 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.10.5 comment=spaceage-web lease-time=1d mac-address=62:BF:FB:E4:89:5D server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.4 comment=spaceage-gmod lease-time=1d mac-address=5E:47:05:FC:F8:90 server=dhcp-dmz
-/ip dhcp-server lease add address=10.3.10.1 comment=foxcaves lease-time=1d mac-address=A6:92:B3:48:21:9D server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.13.4 comment=sonoff-s31-lighthouse-bl lease-time=1d mac-address=8C:AA:B5:66:3B:BE server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.3 comment=sonoff-s31-bambu-x1 lease-time=1d mac-address=E8:DB:84:9F:4F:08 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.8 comment=sonoff-s31-dori-pc lease-time=1d mac-address=8C:AA:B5:66:3D:81 server=dhcp-lan
@@ -236,6 +235,8 @@
 /ip dhcp-server lease add address=10.3.11.2 comment=crashdoom-mastodon-2 lease-time=1d mac-address=FA:3F:4C:4C:97:2C server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.11.1 comment=crashdoom-mastodon-1 lease-time=1d mac-address=CE:5A:B6:F7:F3:EB server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.13.2 comment=custom-bench-psu lease-time=1d mac-address=E0:98:06:24:8D:06 server=dhcp-lan
+/ip dhcp-server lease add address=10.3.12.2 lease-time=1d mac-address=02:41:60:BD:96:01 server=dhcp-dmz
+/ip dhcp-server lease add address=10.3.12.1 lease-time=1d mac-address=36:15:27:06:57:C8 server=dhcp-dmz
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -367,8 +368,6 @@
 /ip dns static add address=::ffff:10.3.10.5 comment=static-dns-for-dhcp name=spaceage-web.foxden.network type=AAAA
 /ip dns static add address=10.3.10.4 comment=static-dns-for-dhcp name=spaceage-gmod.foxden.network
 /ip dns static add address=::ffff:10.3.10.4 comment=static-dns-for-dhcp name=spaceage-gmod.foxden.network type=AAAA
-/ip dns static add address=10.3.10.1 comment=static-dns-for-dhcp name=foxcaves.foxden.network
-/ip dns static add address=::ffff:10.3.10.1 comment=static-dns-for-dhcp name=foxcaves.foxden.network type=AAAA
 /ip dns static add address=10.2.13.4 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-bl.foxden.network
 /ip dns static add address=::ffff:10.2.13.4 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-bl.foxden.network type=AAAA
 /ip dns static add address=10.2.13.3 comment=static-dns-for-dhcp name=sonoff-s31-bambu-x1.foxden.network
