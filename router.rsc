@@ -566,7 +566,7 @@
 /snmp set contact=admin@foxden.network enabled=yes location="Server room" trap-generators=""
 /system clock set time-zone-autodetect=no time-zone-name=America/Los_Angeles
 /system identity set name=router
-/system logging add topics=debug,script
+/system logging add disabled=yes topics=debug,script
 /system ntp client set enabled=yes
 /system ntp server set enabled=yes
 /system ntp client servers add address=10.1.1.2
