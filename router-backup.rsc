@@ -104,6 +104,7 @@
 /interface wireguard peers add allowed-address=10.100.10.4/32 comment="Wizzy Laptop" interface=wg-vpn public-key="5QUN5FumE8LM1Ak9tv8gwaF8K4wTXlCw2BSDfBIEL3g="
 /interface wireguard peers add allowed-address=10.99.10.1/32 comment=RedFox endpoint-address=66.42.71.230 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="yY6nKPCqcj+0O6Sm7qcBlG7O5tyQlarlZFIKjp+ivGM="
 /interface wireguard peers add allowed-address=10.99.10.2/32 comment=IceFox endpoint-address=116.202.171.116 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
+/interface wireguard peers add allowed-address=10.100.10.5/32 comment=Wizzy-Desktop interface=wg-vpn public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0="
 /ip address add address=10.1.1.3/16 interface=vlan-mgmt network=10.1.0.0
 /ip address add address=192.168.88.100/24 interface=oob network=192.168.88.0
 /ip address add address=10.2.1.3/16 interface=vlan-lan network=10.2.0.0
@@ -515,6 +516,7 @@
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
+/ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.3 version=ipfix
 /ipv6 address add address=2a0e:7d44:f000:b::2 advertise=no interface=6to4-redfox
 /ipv6 address add address=2a0e:7d44:f069:1::3 interface=vlan-mgmt
 /ipv6 address add address=2a0e:7d44:f069:2::3 interface=vlan-lan
