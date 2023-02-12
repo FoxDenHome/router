@@ -1,4 +1,4 @@
-# ---/--/---- --:--:-- by RouterOS 7.8beta3
+# ---/--/---- --:--:-- by RouterOS 7.8rc1
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -500,7 +500,7 @@
 /ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Plex dst-address=10.2.11.3 dst-port=32400 protocol=tcp
-/ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=1883 protocol=tcp
+/ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=8883 protocol=tcp
 /ip firewall filter add action=accept chain=hypervisor-out-forward comment=akvorado dst-address=10.6.11.3 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=input connection-state=established,related
 /ip firewall filter add action=accept chain=input protocol=ipv6-encap
