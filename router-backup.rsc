@@ -139,9 +139,9 @@
 /ip dhcp-server lease add address=10.2.10.3 comment=capefox lease-time=1d mac-address=F0:2F:4B:14:84:F4 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.10.2 comment=islandfox lease-time=1d mac-address=0A:98:86:2C:85:87 server=dhcp-hypervisor
 /ip dhcp-server lease add address=10.2.10.1 comment=fennec lease-time=1d mac-address=00:02:C9:23:3C:E0 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.11.1 comment=nas lease-time=1d mac-address=50:6B:4B:4B:90:5E server=dhcp-lan
+/ip dhcp-server lease add address=10.2.11.1 comment=bengalfox lease-time=1d mac-address=50:6B:4B:4B:90:5E server=dhcp-lan
 /ip dhcp-server lease add address=10.2.10.2 comment=wizzy-desktop lease-time=1d mac-address=EC:0D:9A:21:DF:70 server=dhcp-lan
-/ip dhcp-server lease add address=10.1.12.1 comment=nas-ipmi lease-time=1d mac-address=00:25:90:6D:05:12 server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.12.1 comment=bengalfox-ipmi lease-time=1d mac-address=00:25:90:6D:05:12 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.4 comment=switch-living-room lease-time=1d mac-address=80:2A:A8:DE:F0:AE server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.11.1 comment=pdu-rack lease-time=1d mac-address=70:A7:41:F8:13:09 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.2 comment=switch-rack lease-time=1d mac-address=24:5A:4C:A6:6B:9A server=dhcp-mgmt
@@ -246,227 +246,228 @@
 /ip dhcp-server network add address=10.6.0.0/16 dns-server=10.6.0.53 domain=foxden.network gateway=10.6.0.1 netmask=16 ntp-server=10.6.0.123
 /ip dhcp-server network add address=192.168.88.0/24 dns-none=yes
 /ip dns set allow-remote-requests=yes cache-max-ttl=1d cache-size=20480KiB servers=8.8.8.8,8.8.4.4 use-doh-server=https://dns.google/dns-query verify-doh-cert=yes
-/ip dns static add address=10.2.1.1 name=router.foxden.network
-/ip dns static add address=10.2.1.3 name=router-backup.foxden.network
-/ip dns static add address=::ffff:10.2.1.1 name=router.foxden.network type=AAAA
-/ip dns static add address=::ffff:10.2.1.3 name=router-backup.foxden.network type=AAAA
-/ip dns static add address=10.2.1.1 name=vpn.foxden.network
-/ip dns static add address=::ffff:10.2.1.1 name=vpn.foxden.network type=AAAA
-/ip dns static add match-subdomain=yes name=dyn.foxden.network type=NXDOMAIN
-/ip dns static add address=10.2.0.123 name=ntp.foxden.network
-/ip dns static add address=::ffff:10.2.0.123 name=ntp.foxden.network type=AAAA
-/ip dns static add address=10.2.0.53 name=dns.foxden.network
-/ip dns static add address=::ffff:10.2.0.53 name=dns.foxden.network type=AAAA
-/ip dns static add address=10.2.0.53 name=ns1.foxden.network
-/ip dns static add address=10.2.0.53 name=ns2.foxden.network
-/ip dns static add address=10.2.0.53 name=ns3.foxden.network
-/ip dns static add address=10.2.0.53 name=ns4.foxden.network
-/ip dns static add address=::ffff:10.2.0.53 name=ns4.foxden.network type=AAAA
-/ip dns static add address=::ffff:10.2.0.53 name=ns3.foxden.network type=AAAA
-/ip dns static add address=::ffff:10.2.0.53 name=ns2.foxden.network type=AAAA
-/ip dns static add address=::ffff:10.2.0.53 name=ns1.foxden.network type=AAAA
-/ip dns static add name=foxden.network ns=ns1.foxden.network type=NS
-/ip dns static add name=foxden.network ns=ns2.foxden.network type=NS
-/ip dns static add name=foxden.network ns=ns3.foxden.network type=NS
-/ip dns static add name=foxden.network ns=ns4.foxden.network type=NS
-/ip dns static add name=wpad type=NXDOMAIN
-/ip dns static add name=wpad.foxden.network type=NXDOMAIN
-/ip dns static add address=10.3.10.5 name=api.spaceage.mp
-/ip dns static add address=::ffff:10.3.10.5 name=api.spaceage.mp type=AAAA
-/ip dns static add address=10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network
-/ip dns static add address=::ffff:10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network type=AAAA
-/ip dns static add address=10.6.10.2 comment=static-dns-for-dhcp name=islandfox.foxden.network
-/ip dns static add address=::ffff:10.6.10.2 comment=static-dns-for-dhcp name=islandfox.foxden.network type=AAAA
-/ip dns static add address=10.2.10.1 comment=static-dns-for-dhcp name=fennec.foxden.network
-/ip dns static add address=::ffff:10.2.10.1 comment=static-dns-for-dhcp name=fennec.foxden.network type=AAAA
-/ip dns static add address=10.2.11.1 comment=static-dns-for-dhcp name=nas.foxden.network
-/ip dns static add address=::ffff:10.2.11.1 comment=static-dns-for-dhcp name=nas.foxden.network type=AAAA
-/ip dns static add address=10.2.10.2 comment=static-dns-for-dhcp name=wizzy-desktop.foxden.network
-/ip dns static add address=::ffff:10.2.10.2 comment=static-dns-for-dhcp name=wizzy-desktop.foxden.network type=AAAA
-/ip dns static add address=10.1.12.1 comment=static-dns-for-dhcp name=nas-ipmi.foxden.network
-/ip dns static add address=::ffff:10.1.12.1 comment=static-dns-for-dhcp name=nas-ipmi.foxden.network type=AAAA
-/ip dns static add address=10.1.10.4 comment=static-dns-for-dhcp name=switch-living-room.foxden.network
-/ip dns static add address=::ffff:10.1.10.4 comment=static-dns-for-dhcp name=switch-living-room.foxden.network type=AAAA
-/ip dns static add address=10.1.11.1 comment=static-dns-for-dhcp name=pdu-rack.foxden.network
-/ip dns static add address=::ffff:10.1.11.1 comment=static-dns-for-dhcp name=pdu-rack.foxden.network type=AAAA
-/ip dns static add address=10.1.10.2 comment=static-dns-for-dhcp name=switch-rack.foxden.network
-/ip dns static add address=::ffff:10.1.10.2 comment=static-dns-for-dhcp name=switch-rack.foxden.network type=AAAA
-/ip dns static add address=10.1.10.3 comment=static-dns-for-dhcp name=switch-rack-agg.foxden.network
-/ip dns static add address=::ffff:10.1.10.3 comment=static-dns-for-dhcp name=switch-rack-agg.foxden.network type=AAAA
-/ip dns static add address=10.1.11.2 comment=static-dns-for-dhcp name=ups-rack.foxden.network
-/ip dns static add address=::ffff:10.1.11.2 comment=static-dns-for-dhcp name=ups-rack.foxden.network type=AAAA
-/ip dns static add address=10.1.10.1 comment=static-dns-for-dhcp name=unifi.foxden.network
-/ip dns static add address=::ffff:10.1.10.1 comment=static-dns-for-dhcp name=unifi.foxden.network type=AAAA
-/ip dns static add address=10.1.10.6 comment=static-dns-for-dhcp name=ap-server-room.foxden.network
-/ip dns static add address=::ffff:10.1.10.6 comment=static-dns-for-dhcp name=ap-server-room.foxden.network type=AAAA
-/ip dns static add address=10.1.10.7 comment=static-dns-for-dhcp name=ap-corridor-upper.foxden.network
-/ip dns static add address=::ffff:10.1.10.7 comment=static-dns-for-dhcp name=ap-corridor-upper.foxden.network type=AAAA
-/ip dns static add address=10.1.10.5 comment=static-dns-for-dhcp name=switch-workbench.foxden.network
-/ip dns static add address=::ffff:10.1.10.5 comment=static-dns-for-dhcp name=switch-workbench.foxden.network type=AAAA
-/ip dns static add address=10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network
-/ip dns static add address=::ffff:10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network type=AAAA
-/ip dns static add address=10.1.10.8 comment=static-dns-for-dhcp name=switch-dori-office-10g.foxden.network
-/ip dns static add address=::ffff:10.1.10.8 comment=static-dns-for-dhcp name=switch-dori-office-10g.foxden.network type=AAAA
-/ip dns static add address=10.6.11.2 comment=static-dns-for-dhcp name=telegraf.foxden.network
-/ip dns static add address=::ffff:10.6.11.2 comment=static-dns-for-dhcp name=telegraf.foxden.network type=AAAA
-/ip dns static add address=10.2.11.2 comment=static-dns-for-dhcp name=syncthing.foxden.network
-/ip dns static add address=::ffff:10.2.11.2 comment=static-dns-for-dhcp name=syncthing.foxden.network type=AAAA
-/ip dns static add address=10.1.11.3 comment=static-dns-for-dhcp name=ups-dori-office.foxden.network
-/ip dns static add address=::ffff:10.1.11.3 comment=static-dns-for-dhcp name=ups-dori-office.foxden.network type=AAAA
-/ip dns static add address=10.2.12.3 comment=static-dns-for-dhcp name=printer.foxden.network
-/ip dns static add address=::ffff:10.2.12.3 comment=static-dns-for-dhcp name=printer.foxden.network type=AAAA
-/ip dns static add address=10.2.12.1 comment=static-dns-for-dhcp name=hue.foxden.network
-/ip dns static add address=::ffff:10.2.12.1 comment=static-dns-for-dhcp name=hue.foxden.network type=AAAA
-/ip dns static add address=10.2.12.2 comment=static-dns-for-dhcp name=homeassistant.foxden.network
-/ip dns static add address=::ffff:10.2.12.2 comment=static-dns-for-dhcp name=homeassistant.foxden.network type=AAAA
-/ip dns static add address=10.5.11.2 comment=static-dns-for-dhcp name=camera-living-room.foxden.network
-/ip dns static add address=::ffff:10.5.11.2 comment=static-dns-for-dhcp name=camera-living-room.foxden.network type=AAAA
-/ip dns static add address=10.2.11.3 comment=static-dns-for-dhcp name=plex.foxden.network
-/ip dns static add address=::ffff:10.2.11.3 comment=static-dns-for-dhcp name=plex.foxden.network type=AAAA
-/ip dns static add address=10.6.11.1 comment=static-dns-for-dhcp name=prometheus.foxden.network
-/ip dns static add address=::ffff:10.6.11.1 comment=static-dns-for-dhcp name=prometheus.foxden.network type=AAAA
-/ip dns static add address=10.2.11.5 comment=static-dns-for-dhcp name=grafana.foxden.network
-/ip dns static add address=::ffff:10.2.11.5 comment=static-dns-for-dhcp name=grafana.foxden.network type=AAAA
-/ip dns static add address=10.2.11.6 comment=static-dns-for-dhcp name=kiwix.foxden.network
-/ip dns static add address=::ffff:10.2.11.6 comment=static-dns-for-dhcp name=kiwix.foxden.network type=AAAA
-/ip dns static add address=10.2.11.8 comment=static-dns-for-dhcp name=dldr.foxden.network
-/ip dns static add address=::ffff:10.2.11.8 comment=static-dns-for-dhcp name=dldr.foxden.network type=AAAA
-/ip dns static add address=10.2.12.7 comment=static-dns-for-dhcp name=clock-nixie-zen.foxden.network
-/ip dns static add address=::ffff:10.2.12.7 comment=static-dns-for-dhcp name=clock-nixie-zen.foxden.network type=AAAA
-/ip dns static add address=10.2.13.7 comment=static-dns-for-dhcp name=airgradient-bedroom.foxden.network
-/ip dns static add address=::ffff:10.2.13.7 comment=static-dns-for-dhcp name=airgradient-bedroom.foxden.network type=AAAA
-/ip dns static add address=10.2.13.6 comment=static-dns-for-dhcp name=airgradient-living-room.foxden.network
-/ip dns static add address=::ffff:10.2.13.6 comment=static-dns-for-dhcp name=airgradient-living-room.foxden.network type=AAAA
-/ip dns static add address=10.2.13.5 comment=static-dns-for-dhcp name=airgradient-dori-office.foxden.network
-/ip dns static add address=::ffff:10.2.13.5 comment=static-dns-for-dhcp name=airgradient-dori-office.foxden.network type=AAAA
-/ip dns static add address=10.2.12.9 comment=static-dns-for-dhcp name=vacuum-neato.foxden.network
-/ip dns static add address=::ffff:10.2.12.9 comment=static-dns-for-dhcp name=vacuum-neato.foxden.network type=AAAA
-/ip dns static add address=10.2.12.4 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network
-/ip dns static add address=::ffff:10.2.12.4 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network type=AAAA
-/ip dns static add address=10.2.12.5 comment=static-dns-for-dhcp name=homepod-bedroom.foxden.network
-/ip dns static add address=::ffff:10.2.12.5 comment=static-dns-for-dhcp name=homepod-bedroom.foxden.network type=AAAA
-/ip dns static add address=10.2.14.1 comment=static-dns-for-dhcp name=dori-phone.foxden.network
-/ip dns static add address=::ffff:10.2.14.1 comment=static-dns-for-dhcp name=dori-phone.foxden.network type=AAAA
-/ip dns static add address=10.2.12.6 comment=static-dns-for-dhcp name=appletv-living-room.foxden.network
-/ip dns static add address=::ffff:10.2.12.6 comment=static-dns-for-dhcp name=appletv-living-room.foxden.network type=AAAA
-/ip dns static add address=10.2.15.1 comment=static-dns-for-dhcp name=nintendo-switch-wired.foxden.network
-/ip dns static add address=::ffff:10.2.15.1 comment=static-dns-for-dhcp name=nintendo-switch-wired.foxden.network type=AAAA
-/ip dns static add address=10.2.14.3 comment=static-dns-for-dhcp name=wizzy-phone.foxden.network
-/ip dns static add address=::ffff:10.2.14.3 comment=static-dns-for-dhcp name=wizzy-phone.foxden.network type=AAAA
-/ip dns static add address=10.2.14.4 comment=static-dns-for-dhcp name=wizzy-watch.foxden.network
-/ip dns static add address=::ffff:10.2.14.4 comment=static-dns-for-dhcp name=wizzy-watch.foxden.network type=AAAA
-/ip dns static add address=10.2.10.6 comment=static-dns-for-dhcp name=wizzy-laptop-2.foxden.network
-/ip dns static add address=::ffff:10.2.10.6 comment=static-dns-for-dhcp name=wizzy-laptop-2.foxden.network type=AAAA
-/ip dns static add address=10.2.10.5 comment=static-dns-for-dhcp name=wizzy-laptop.foxden.network
-/ip dns static add address=::ffff:10.2.10.5 comment=static-dns-for-dhcp name=wizzy-laptop.foxden.network type=AAAA
-/ip dns static add address=10.2.12.10 comment=static-dns-for-dhcp name=amp-living-room.foxden.network
-/ip dns static add address=::ffff:10.2.12.10 comment=static-dns-for-dhcp name=amp-living-room.foxden.network type=AAAA
-/ip dns static add address=10.2.12.8 comment=static-dns-for-dhcp name=clock-nixie-dori.foxden.network
-/ip dns static add address=::ffff:10.2.12.8 comment=static-dns-for-dhcp name=clock-nixie-dori.foxden.network type=AAAA
-/ip dns static add address=10.2.14.2 comment=static-dns-for-dhcp name=dori-watch.foxden.network
-/ip dns static add address=::ffff:10.2.14.2 comment=static-dns-for-dhcp name=dori-watch.foxden.network type=AAAA
-/ip dns static add address=10.3.10.5 comment=static-dns-for-dhcp name=spaceage-web.foxden.network
-/ip dns static add address=::ffff:10.3.10.5 comment=static-dns-for-dhcp name=spaceage-web.foxden.network type=AAAA
-/ip dns static add address=10.3.10.4 comment=static-dns-for-dhcp name=spaceage-gmod.foxden.network
-/ip dns static add address=::ffff:10.3.10.4 comment=static-dns-for-dhcp name=spaceage-gmod.foxden.network type=AAAA
-/ip dns static add address=10.2.13.4 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-bl.foxden.network
-/ip dns static add address=::ffff:10.2.13.4 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-bl.foxden.network type=AAAA
-/ip dns static add address=10.2.13.3 comment=static-dns-for-dhcp name=sonoff-s31-bambu-x1.foxden.network
-/ip dns static add address=::ffff:10.2.13.3 comment=static-dns-for-dhcp name=sonoff-s31-bambu-x1.foxden.network type=AAAA
-/ip dns static add address=10.2.13.8 comment=static-dns-for-dhcp name=sonoff-s31-dori-pc.foxden.network
-/ip dns static add address=::ffff:10.2.13.8 comment=static-dns-for-dhcp name=sonoff-s31-dori-pc.foxden.network type=AAAA
-/ip dns static add address=10.2.13.1 comment=static-dns-for-dhcp name=sonoff-s31-wizzy-pc.foxden.network
-/ip dns static add address=::ffff:10.2.13.1 comment=static-dns-for-dhcp name=sonoff-s31-wizzy-pc.foxden.network type=AAAA
-/ip dns static add address=10.3.10.3 comment=static-dns-for-dhcp name=ut2004.foxden.network
-/ip dns static add address=::ffff:10.3.10.3 comment=static-dns-for-dhcp name=ut2004.foxden.network type=AAAA
-/ip dns static add address=10.2.13.12 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-br.foxden.network
-/ip dns static add address=::ffff:10.2.13.12 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-br.foxden.network type=AAAA
-/ip dns static add address=10.3.10.7 comment=static-dns-for-dhcp name=factorio.foxden.network
-/ip dns static add address=::ffff:10.3.10.7 comment=static-dns-for-dhcp name=factorio.foxden.network type=AAAA
-/ip dns static add address=10.2.13.11 comment=static-dns-for-dhcp name=uplift-wizzy-desk.foxden.network
-/ip dns static add address=::ffff:10.2.13.11 comment=static-dns-for-dhcp name=uplift-wizzy-desk.foxden.network type=AAAA
-/ip dns static add address=10.6.12.1 comment=static-dns-for-dhcp name=islandfox-ipmi.foxden.network
-/ip dns static add address=::ffff:10.6.12.1 comment=static-dns-for-dhcp name=islandfox-ipmi.foxden.network type=AAAA
-/ip dns static add address=10.2.10.4 comment=static-dns-for-dhcp name=capefox-wired.foxden.network
-/ip dns static add address=::ffff:10.2.10.4 comment=static-dns-for-dhcp name=capefox-wired.foxden.network type=AAAA
-/ip dns static add address=10.2.12.11 comment=static-dns-for-dhcp name=homepod-dori.foxden.network
-/ip dns static add address=::ffff:10.2.12.11 comment=static-dns-for-dhcp name=homepod-dori.foxden.network type=AAAA
-/ip dns static add address=10.2.12.12 comment=static-dns-for-dhcp name=august-connect-front-door.foxden.network
-/ip dns static add address=::ffff:10.2.12.12 comment=static-dns-for-dhcp name=august-connect-front-door.foxden.network type=AAAA
-/ip dns static add address=10.2.12.13 comment=static-dns-for-dhcp name=homepod-den.foxden.network
-/ip dns static add address=::ffff:10.2.12.13 comment=static-dns-for-dhcp name=homepod-den.foxden.network type=AAAA
-/ip dns static add address=10.5.11.1 comment=static-dns-for-dhcp name=camera-front-door.foxden.network
-/ip dns static add address=::ffff:10.5.11.1 comment=static-dns-for-dhcp name=camera-front-door.foxden.network type=AAAA
-/ip dns static add address=10.1.10.9 comment=static-dns-for-dhcp name=switch-dori-tv.foxden.network
-/ip dns static add address=::ffff:10.1.10.9 comment=static-dns-for-dhcp name=switch-dori-tv.foxden.network type=AAAA
-/ip dns static add address=10.2.12.14 comment=static-dns-for-dhcp name=homepod-wizzy.foxden.network
-/ip dns static add address=::ffff:10.2.12.14 comment=static-dns-for-dhcp name=homepod-wizzy.foxden.network type=AAAA
-/ip dns static add address=10.2.12.15 comment=static-dns-for-dhcp name=tesla-model-3.foxden.network
-/ip dns static add address=::ffff:10.2.12.15 comment=static-dns-for-dhcp name=tesla-model-3.foxden.network type=AAAA
-/ip dns static add address=10.2.12.16 comment=static-dns-for-dhcp name=tesla-wall-charger.foxden.network
-/ip dns static add address=::ffff:10.2.12.16 comment=static-dns-for-dhcp name=tesla-wall-charger.foxden.network type=AAAA
-/ip dns static add address=10.2.13.14 comment=static-dns-for-dhcp name=sonoff-s31-valve-index.foxden.network
-/ip dns static add address=::ffff:10.2.13.14 comment=static-dns-for-dhcp name=sonoff-s31-valve-index.foxden.network type=AAAA
-/ip dns static add address=10.2.13.13 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-fl.foxden.network
-/ip dns static add address=::ffff:10.2.13.13 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-fl.foxden.network type=AAAA
-/ip dns static add address=10.5.10.1 comment=static-dns-for-dhcp name=nvr.foxden.network
-/ip dns static add address=::ffff:10.5.10.1 comment=static-dns-for-dhcp name=nvr.foxden.network type=AAAA
-/ip dns static add address=10.4.10.1 comment=static-dns-for-dhcp name=bambu-x1.foxden.network
-/ip dns static add address=::ffff:10.4.10.1 comment=static-dns-for-dhcp name=bambu-x1.foxden.network type=AAAA
-/ip dns static add address=10.2.12.18 comment=static-dns-for-dhcp name=hue-sync-box.foxden.network
-/ip dns static add address=::ffff:10.2.12.18 comment=static-dns-for-dhcp name=hue-sync-box.foxden.network type=AAAA
-/ip dns static add address=10.2.13.19 comment=static-dns-for-dhcp name=sonoff-s31-microwave.foxden.network
-/ip dns static add address=::ffff:10.2.13.19 comment=static-dns-for-dhcp name=sonoff-s31-microwave.foxden.network type=AAAA
-/ip dns static add address=10.2.13.20 comment=static-dns-for-dhcp name=custom-garage-door.foxden.network
-/ip dns static add address=::ffff:10.2.13.20 comment=static-dns-for-dhcp name=custom-garage-door.foxden.network type=AAAA
-/ip dns static add address=10.2.13.16 comment=static-dns-for-dhcp name=airgradient-den.foxden.network
-/ip dns static add address=::ffff:10.2.13.16 comment=static-dns-for-dhcp name=airgradient-den.foxden.network type=AAAA
-/ip dns static add address=10.2.13.15 comment=static-dns-for-dhcp name=custom-current-clamp-main.foxden.network
-/ip dns static add address=::ffff:10.2.13.15 comment=static-dns-for-dhcp name=custom-current-clamp-main.foxden.network type=AAAA
-/ip dns static add address=10.2.13.17 comment=static-dns-for-dhcp name=airgradient-wizzy-office.foxden.network
-/ip dns static add address=::ffff:10.2.13.17 comment=static-dns-for-dhcp name=airgradient-wizzy-office.foxden.network type=AAAA
-/ip dns static add address=10.2.10.7 comment=static-dns-for-dhcp name=mbp-mark-dietzer.foxden.network
-/ip dns static add address=::ffff:10.2.10.7 comment=static-dns-for-dhcp name=mbp-mark-dietzer.foxden.network type=AAAA
-/ip dns static add address=10.2.12.17 comment=static-dns-for-dhcp name=august-connect-back-door-upper.foxden.network
-/ip dns static add address=::ffff:10.2.12.17 comment=static-dns-for-dhcp name=august-connect-back-door-upper.foxden.network type=AAAA
-/ip dns static add address=10.2.13.18 comment=static-dns-for-dhcp name=uplift-dori-desk.foxden.network
-/ip dns static add address=::ffff:10.2.13.18 comment=static-dns-for-dhcp name=uplift-dori-desk.foxden.network type=AAAA
-/ip dns static add address=10.2.12.50 comment=static-dns-for-dhcp name=amp-living-room-wifi.foxden.network
-/ip dns static add address=::ffff:10.2.12.50 comment=static-dns-for-dhcp name=amp-living-room-wifi.foxden.network type=AAAA
-/ip dns static add address=10.2.12.19 comment=static-dns-for-dhcp name=nanoleaf-lines-wizzy.foxden.network
-/ip dns static add address=::ffff:10.2.12.19 comment=static-dns-for-dhcp name=nanoleaf-lines-wizzy.foxden.network type=AAAA
-/ip dns static add address=10.2.12.20 comment=static-dns-for-dhcp name=nanoleaf-shapes-dori.foxden.network
-/ip dns static add address=::ffff:10.2.12.20 comment=static-dns-for-dhcp name=nanoleaf-shapes-dori.foxden.network type=AAAA
-/ip dns static add address=10.2.14.5 comment=static-dns-for-dhcp name=dori-ipad.foxden.network
-/ip dns static add address=::ffff:10.2.14.5 comment=static-dns-for-dhcp name=dori-ipad.foxden.network type=AAAA
-/ip dns static add address=10.1.10.11 comment=static-dns-for-dhcp name=ap-living-room.foxden.network
-/ip dns static add address=::ffff:10.1.10.11 comment=static-dns-for-dhcp name=ap-living-room.foxden.network type=AAAA
-/ip dns static add address=10.2.14.6 comment=static-dns-for-dhcp name=dori-remarkable.foxden.network
-/ip dns static add address=::ffff:10.2.14.6 comment=static-dns-for-dhcp name=dori-remarkable.foxden.network type=AAAA
-/ip dns static add address=10.2.10.8 comment=static-dns-for-dhcp name=thunderbolt-10g.foxden.network
-/ip dns static add address=::ffff:10.2.10.8 comment=static-dns-for-dhcp name=thunderbolt-10g.foxden.network type=AAAA
-/ip dns static add address=10.2.13.9 comment=static-dns-for-dhcp name=custom-filament-dryer.foxden.network
-/ip dns static add address=::ffff:10.2.13.9 comment=static-dns-for-dhcp name=custom-filament-dryer.foxden.network type=AAAA
-/ip dns static add address=10.2.12.21 comment=static-dns-for-dhcp name=laundry-washer.foxden.network
-/ip dns static add address=::ffff:10.2.12.21 comment=static-dns-for-dhcp name=laundry-washer.foxden.network type=AAAA
-/ip dns static add address=10.2.12.22 comment=static-dns-for-dhcp name=laundry-dryer.foxden.network
-/ip dns static add address=::ffff:10.2.12.22 comment=static-dns-for-dhcp name=laundry-dryer.foxden.network type=AAAA
-/ip dns static add address=10.2.12.24 comment=static-dns-for-dhcp name=appletv-dori-office.foxden.network
-/ip dns static add address=::ffff:10.2.12.24 comment=static-dns-for-dhcp name=appletv-dori-office.foxden.network type=AAAA
-/ip dns static add address=10.2.12.25 comment=static-dns-for-dhcp name=thermostat-nest-corridor-upper.foxden.network
-/ip dns static add address=::ffff:10.2.12.25 comment=static-dns-for-dhcp name=thermostat-nest-corridor-upper.foxden.network type=AAAA
-/ip dns static add address=10.2.12.51 comment=static-dns-for-dhcp name=appletv-living-room-wifi.foxden.network
-/ip dns static add address=::ffff:10.2.12.51 comment=static-dns-for-dhcp name=appletv-living-room-wifi.foxden.network type=AAAA
-/ip dns static add address=10.6.11.3 comment=static-dns-for-dhcp name=akvorado.foxden.network
-/ip dns static add address=::ffff:10.6.11.3 comment=static-dns-for-dhcp name=akvorado.foxden.network type=AAAA
-/ip dns static add address=10.2.13.10 comment=static-dns-for-dhcp name=custom-led-microscope.foxden.network
-/ip dns static add address=::ffff:10.2.13.10 comment=static-dns-for-dhcp name=custom-led-microscope.foxden.network type=AAAA
-/ip dns static add address=10.3.11.2 comment=static-dns-for-dhcp name=crashdoom-mastodon-2.foxden.network
-/ip dns static add address=::ffff:10.3.11.2 comment=static-dns-for-dhcp name=crashdoom-mastodon-2.foxden.network type=AAAA
-/ip dns static add address=10.3.11.1 comment=static-dns-for-dhcp name=crashdoom-mastodon-1.foxden.network
-/ip dns static add address=::ffff:10.3.11.1 comment=static-dns-for-dhcp name=crashdoom-mastodon-1.foxden.network type=AAAA
-/ip dns static add address=10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network
-/ip dns static add address=::ffff:10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network type=AAAA
+/ip dns static add address=10.2.1.1 name=router.foxden.network ttl=5m
+/ip dns static add address=10.2.1.3 name=router-backup.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.1.1 name=router.foxden.network ttl=5m type=AAAA
+/ip dns static add address=::ffff:10.2.1.3 name=router-backup.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.1.1 name=vpn.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.1.1 name=vpn.foxden.network ttl=5m type=AAAA
+/ip dns static add match-subdomain=yes name=dyn.foxden.network ttl=5m type=NXDOMAIN
+/ip dns static add address=10.2.0.123 name=ntp.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.0.123 name=ntp.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.0.53 name=dns.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.0.53 name=dns.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.0.53 name=ns1.foxden.network ttl=5m
+/ip dns static add address=10.2.0.53 name=ns2.foxden.network ttl=5m
+/ip dns static add address=10.2.0.53 name=ns3.foxden.network ttl=5m
+/ip dns static add address=10.2.0.53 name=ns4.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.0.53 name=ns4.foxden.network ttl=5m type=AAAA
+/ip dns static add address=::ffff:10.2.0.53 name=ns3.foxden.network ttl=5m type=AAAA
+/ip dns static add address=::ffff:10.2.0.53 name=ns2.foxden.network ttl=5m type=AAAA
+/ip dns static add address=::ffff:10.2.0.53 name=ns1.foxden.network ttl=5m type=AAAA
+/ip dns static add name=foxden.network ns=ns1.foxden.network ttl=5m type=NS
+/ip dns static add name=foxden.network ns=ns2.foxden.network ttl=5m type=NS
+/ip dns static add name=foxden.network ns=ns3.foxden.network ttl=5m type=NS
+/ip dns static add name=foxden.network ns=ns4.foxden.network ttl=5m type=NS
+/ip dns static add name=wpad ttl=5m type=NXDOMAIN
+/ip dns static add name=wpad.foxden.network ttl=5m type=NXDOMAIN
+/ip dns static add address=10.3.10.5 name=api.spaceage.mp ttl=5m
+/ip dns static add address=::ffff:10.3.10.5 name=api.spaceage.mp ttl=5m type=AAAA
+/ip dns static add cname=bengalfox.foxden.network name=nas.foxden.network ttl=5m type=CNAME
+/ip dns static add address=10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.6.10.2 comment=static-dns-for-dhcp name=islandfox.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.6.10.2 comment=static-dns-for-dhcp name=islandfox.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.10.1 comment=static-dns-for-dhcp name=fennec.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.10.1 comment=static-dns-for-dhcp name=fennec.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.11.1 comment=static-dns-for-dhcp name=bengalfox.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.1 comment=static-dns-for-dhcp name=bengalfox.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.10.2 comment=static-dns-for-dhcp name=wizzy-desktop.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.10.2 comment=static-dns-for-dhcp name=wizzy-desktop.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.12.1 comment=static-dns-for-dhcp name=bengalfox-ipmi.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.12.1 comment=static-dns-for-dhcp name=bengalfox-ipmi.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.4 comment=static-dns-for-dhcp name=switch-living-room.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.4 comment=static-dns-for-dhcp name=switch-living-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.11.1 comment=static-dns-for-dhcp name=pdu-rack.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.11.1 comment=static-dns-for-dhcp name=pdu-rack.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.2 comment=static-dns-for-dhcp name=switch-rack.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.2 comment=static-dns-for-dhcp name=switch-rack.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.3 comment=static-dns-for-dhcp name=switch-rack-agg.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.3 comment=static-dns-for-dhcp name=switch-rack-agg.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.11.2 comment=static-dns-for-dhcp name=ups-rack.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.11.2 comment=static-dns-for-dhcp name=ups-rack.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.1 comment=static-dns-for-dhcp name=unifi.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.1 comment=static-dns-for-dhcp name=unifi.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.6 comment=static-dns-for-dhcp name=ap-server-room.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.6 comment=static-dns-for-dhcp name=ap-server-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.7 comment=static-dns-for-dhcp name=ap-corridor-upper.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.7 comment=static-dns-for-dhcp name=ap-corridor-upper.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.5 comment=static-dns-for-dhcp name=switch-workbench.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.5 comment=static-dns-for-dhcp name=switch-workbench.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.8 comment=static-dns-for-dhcp name=switch-dori-office-10g.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.8 comment=static-dns-for-dhcp name=switch-dori-office-10g.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.6.11.2 comment=static-dns-for-dhcp name=telegraf.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.6.11.2 comment=static-dns-for-dhcp name=telegraf.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.11.2 comment=static-dns-for-dhcp name=syncthing.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.2 comment=static-dns-for-dhcp name=syncthing.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.11.3 comment=static-dns-for-dhcp name=ups-dori-office.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.11.3 comment=static-dns-for-dhcp name=ups-dori-office.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.3 comment=static-dns-for-dhcp name=printer.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.3 comment=static-dns-for-dhcp name=printer.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.1 comment=static-dns-for-dhcp name=hue.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.1 comment=static-dns-for-dhcp name=hue.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.2 comment=static-dns-for-dhcp name=homeassistant.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.2 comment=static-dns-for-dhcp name=homeassistant.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.5.11.2 comment=static-dns-for-dhcp name=camera-living-room.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.5.11.2 comment=static-dns-for-dhcp name=camera-living-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.11.3 comment=static-dns-for-dhcp name=plex.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.3 comment=static-dns-for-dhcp name=plex.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.6.11.1 comment=static-dns-for-dhcp name=prometheus.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.6.11.1 comment=static-dns-for-dhcp name=prometheus.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.11.5 comment=static-dns-for-dhcp name=grafana.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.5 comment=static-dns-for-dhcp name=grafana.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.11.6 comment=static-dns-for-dhcp name=kiwix.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.6 comment=static-dns-for-dhcp name=kiwix.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.11.8 comment=static-dns-for-dhcp name=dldr.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.8 comment=static-dns-for-dhcp name=dldr.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.7 comment=static-dns-for-dhcp name=clock-nixie-zen.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.7 comment=static-dns-for-dhcp name=clock-nixie-zen.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.7 comment=static-dns-for-dhcp name=airgradient-bedroom.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.7 comment=static-dns-for-dhcp name=airgradient-bedroom.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.6 comment=static-dns-for-dhcp name=airgradient-living-room.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.6 comment=static-dns-for-dhcp name=airgradient-living-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.5 comment=static-dns-for-dhcp name=airgradient-dori-office.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.5 comment=static-dns-for-dhcp name=airgradient-dori-office.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.9 comment=static-dns-for-dhcp name=vacuum-neato.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.9 comment=static-dns-for-dhcp name=vacuum-neato.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.4 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.4 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.5 comment=static-dns-for-dhcp name=homepod-bedroom.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.5 comment=static-dns-for-dhcp name=homepod-bedroom.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.14.1 comment=static-dns-for-dhcp name=dori-phone.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.14.1 comment=static-dns-for-dhcp name=dori-phone.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.6 comment=static-dns-for-dhcp name=appletv-living-room.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.6 comment=static-dns-for-dhcp name=appletv-living-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.15.1 comment=static-dns-for-dhcp name=nintendo-switch-wired.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.15.1 comment=static-dns-for-dhcp name=nintendo-switch-wired.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.14.3 comment=static-dns-for-dhcp name=wizzy-phone.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.14.3 comment=static-dns-for-dhcp name=wizzy-phone.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.14.4 comment=static-dns-for-dhcp name=wizzy-watch.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.14.4 comment=static-dns-for-dhcp name=wizzy-watch.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.10.6 comment=static-dns-for-dhcp name=wizzy-laptop-2.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.10.6 comment=static-dns-for-dhcp name=wizzy-laptop-2.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.10.5 comment=static-dns-for-dhcp name=wizzy-laptop.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.10.5 comment=static-dns-for-dhcp name=wizzy-laptop.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.10 comment=static-dns-for-dhcp name=amp-living-room.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.10 comment=static-dns-for-dhcp name=amp-living-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.8 comment=static-dns-for-dhcp name=clock-nixie-dori.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.8 comment=static-dns-for-dhcp name=clock-nixie-dori.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.14.2 comment=static-dns-for-dhcp name=dori-watch.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.14.2 comment=static-dns-for-dhcp name=dori-watch.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.3.10.5 comment=static-dns-for-dhcp name=spaceage-web.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.3.10.5 comment=static-dns-for-dhcp name=spaceage-web.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.3.10.4 comment=static-dns-for-dhcp name=spaceage-gmod.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.3.10.4 comment=static-dns-for-dhcp name=spaceage-gmod.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.4 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-bl.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.4 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-bl.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.3 comment=static-dns-for-dhcp name=sonoff-s31-bambu-x1.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.3 comment=static-dns-for-dhcp name=sonoff-s31-bambu-x1.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.8 comment=static-dns-for-dhcp name=sonoff-s31-dori-pc.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.8 comment=static-dns-for-dhcp name=sonoff-s31-dori-pc.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.1 comment=static-dns-for-dhcp name=sonoff-s31-wizzy-pc.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.1 comment=static-dns-for-dhcp name=sonoff-s31-wizzy-pc.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.3.10.3 comment=static-dns-for-dhcp name=ut2004.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.3.10.3 comment=static-dns-for-dhcp name=ut2004.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.12 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-br.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.12 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-br.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.3.10.7 comment=static-dns-for-dhcp name=factorio.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.3.10.7 comment=static-dns-for-dhcp name=factorio.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.11 comment=static-dns-for-dhcp name=uplift-wizzy-desk.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.11 comment=static-dns-for-dhcp name=uplift-wizzy-desk.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.6.12.1 comment=static-dns-for-dhcp name=islandfox-ipmi.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.6.12.1 comment=static-dns-for-dhcp name=islandfox-ipmi.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.10.4 comment=static-dns-for-dhcp name=capefox-wired.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.10.4 comment=static-dns-for-dhcp name=capefox-wired.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.11 comment=static-dns-for-dhcp name=homepod-dori.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.11 comment=static-dns-for-dhcp name=homepod-dori.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.12 comment=static-dns-for-dhcp name=august-connect-front-door.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.12 comment=static-dns-for-dhcp name=august-connect-front-door.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.13 comment=static-dns-for-dhcp name=homepod-den.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.13 comment=static-dns-for-dhcp name=homepod-den.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.5.11.1 comment=static-dns-for-dhcp name=camera-front-door.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.5.11.1 comment=static-dns-for-dhcp name=camera-front-door.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.9 comment=static-dns-for-dhcp name=switch-dori-tv.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.9 comment=static-dns-for-dhcp name=switch-dori-tv.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.14 comment=static-dns-for-dhcp name=homepod-wizzy.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.14 comment=static-dns-for-dhcp name=homepod-wizzy.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.15 comment=static-dns-for-dhcp name=tesla-model-3.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.15 comment=static-dns-for-dhcp name=tesla-model-3.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.16 comment=static-dns-for-dhcp name=tesla-wall-charger.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.16 comment=static-dns-for-dhcp name=tesla-wall-charger.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.14 comment=static-dns-for-dhcp name=sonoff-s31-valve-index.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.14 comment=static-dns-for-dhcp name=sonoff-s31-valve-index.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.13 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-fl.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.13 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-fl.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.5.10.1 comment=static-dns-for-dhcp name=nvr.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.5.10.1 comment=static-dns-for-dhcp name=nvr.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.4.10.1 comment=static-dns-for-dhcp name=bambu-x1.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.4.10.1 comment=static-dns-for-dhcp name=bambu-x1.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.18 comment=static-dns-for-dhcp name=hue-sync-box.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.18 comment=static-dns-for-dhcp name=hue-sync-box.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.19 comment=static-dns-for-dhcp name=sonoff-s31-microwave.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.19 comment=static-dns-for-dhcp name=sonoff-s31-microwave.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.20 comment=static-dns-for-dhcp name=custom-garage-door.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.20 comment=static-dns-for-dhcp name=custom-garage-door.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.16 comment=static-dns-for-dhcp name=airgradient-den.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.16 comment=static-dns-for-dhcp name=airgradient-den.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.15 comment=static-dns-for-dhcp name=custom-current-clamp-main.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.15 comment=static-dns-for-dhcp name=custom-current-clamp-main.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.17 comment=static-dns-for-dhcp name=airgradient-wizzy-office.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.17 comment=static-dns-for-dhcp name=airgradient-wizzy-office.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.10.7 comment=static-dns-for-dhcp name=mbp-mark-dietzer.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.10.7 comment=static-dns-for-dhcp name=mbp-mark-dietzer.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.17 comment=static-dns-for-dhcp name=august-connect-back-door-upper.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.17 comment=static-dns-for-dhcp name=august-connect-back-door-upper.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.18 comment=static-dns-for-dhcp name=uplift-dori-desk.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.18 comment=static-dns-for-dhcp name=uplift-dori-desk.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.50 comment=static-dns-for-dhcp name=amp-living-room-wifi.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.50 comment=static-dns-for-dhcp name=amp-living-room-wifi.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.19 comment=static-dns-for-dhcp name=nanoleaf-lines-wizzy.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.19 comment=static-dns-for-dhcp name=nanoleaf-lines-wizzy.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.20 comment=static-dns-for-dhcp name=nanoleaf-shapes-dori.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.20 comment=static-dns-for-dhcp name=nanoleaf-shapes-dori.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.14.5 comment=static-dns-for-dhcp name=dori-ipad.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.14.5 comment=static-dns-for-dhcp name=dori-ipad.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.11 comment=static-dns-for-dhcp name=ap-living-room.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.11 comment=static-dns-for-dhcp name=ap-living-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.14.6 comment=static-dns-for-dhcp name=dori-remarkable.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.14.6 comment=static-dns-for-dhcp name=dori-remarkable.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.10.8 comment=static-dns-for-dhcp name=thunderbolt-10g.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.10.8 comment=static-dns-for-dhcp name=thunderbolt-10g.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.9 comment=static-dns-for-dhcp name=custom-filament-dryer.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.9 comment=static-dns-for-dhcp name=custom-filament-dryer.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.21 comment=static-dns-for-dhcp name=laundry-washer.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.21 comment=static-dns-for-dhcp name=laundry-washer.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.22 comment=static-dns-for-dhcp name=laundry-dryer.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.22 comment=static-dns-for-dhcp name=laundry-dryer.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.24 comment=static-dns-for-dhcp name=appletv-dori-office.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.24 comment=static-dns-for-dhcp name=appletv-dori-office.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.25 comment=static-dns-for-dhcp name=thermostat-nest-corridor-upper.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.25 comment=static-dns-for-dhcp name=thermostat-nest-corridor-upper.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.51 comment=static-dns-for-dhcp name=appletv-living-room-wifi.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.51 comment=static-dns-for-dhcp name=appletv-living-room-wifi.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.6.11.3 comment=static-dns-for-dhcp name=akvorado.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.6.11.3 comment=static-dns-for-dhcp name=akvorado.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.10 comment=static-dns-for-dhcp name=custom-led-microscope.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.10 comment=static-dns-for-dhcp name=custom-led-microscope.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.3.11.2 comment=static-dns-for-dhcp name=crashdoom-mastodon-2.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.3.11.2 comment=static-dns-for-dhcp name=crashdoom-mastodon-2.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.3.11.1 comment=static-dns-for-dhcp name=crashdoom-mastodon-1.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.3.11.1 comment=static-dns-for-dhcp name=crashdoom-mastodon-1.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -592,8 +593,8 @@
     \n    :set hostname ((\$dhcpent->\"comment\") . \".\" . \$topdomain)\r\
     \n\r\
     \n    :put (\"Adding: \" . \$hostname . \" : \" . (\$dhcpent->\"address\"))\r\
-    \n    /ip/dns/static/add type=A name=\$hostname address=(\$dhcpent->\"address\") comment=\"static-dns-for-dhcp\"\r\
-    \n    /ip/dns/static/add type=AAAA name=\$hostname address=(\"::ffff:\" . (\$dhcpent->\"address\")) comment=\"static-dns-for-dhcp\"\r\
+    \n    /ip/dns/static/add ttl=5m type=A name=\$hostname address=(\$dhcpent->\"address\") comment=\"static-dns-for-dhcp\"\r\
+    \n    /ip/dns/static/add ttl=5m type=AAAA name=\$hostname address=(\"::ffff:\" . (\$dhcpent->\"address\")) comment=\"static-dns-for-dhcp\"\r\
     \n}\r\
     \n"
 /system script add dont-require-permissions=yes name=dyndns-update owner=admin policy=read,write,policy,test source=":local ipaddrfind [ /ip/address/find interface=wan ]\r\
