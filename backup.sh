@@ -8,14 +8,15 @@ RDIR="tmpfs-scratch/"
 
 mtik_backup() {
     RHOST="$1"
+    RHOST_ABS="${RHOST}.foxden.network"
 
-    ssh "${RHOST}" "/system/backup/save dont-encrypt=yes name=${RDIR}${RHOST}-secret.backup"
-    ssh "${RHOST}" "/export file=${RDIR}${RHOST}-secret.rsc show-sensitive terse"
-    ssh "${RHOST}" "/export file=${RDIR}${RHOST}.rsc terse"
+    ssh "${RHOST_ABS}" "/system/backup/save dont-encrypt=yes name=${RDIR}${RHOST}-secret.backup"
+    ssh "${RHOST_ABS}" "/export file=${RDIR}${RHOST}-secret.rsc show-sensitive terse"
+    ssh "${RHOST_ABS}" "/export file=${RDIR}${RHOST}.rsc terse"
 
     sleep 1
 
-    scp "${RHOST}:/${RDIR}${RHOST}-secret.backup" "${RHOST}:/${RDIR}${RHOST}-secret.rsc" "${RHOST}:/${RDIR}${RHOST}.rsc" ./
+    scp "${RHOST_ABS}:/${RDIR}${RHOST}-secret.backup" "${RHOST_ABS}:/${RDIR}${RHOST}-secret.rsc" "${RHOST_ABS}:/${RDIR}${RHOST}.rsc" ./
     if [ ! -z "${BACKUP_MIRROR}" ]
     then
         cp "${RHOST}-secret.backup" "${RHOST}-secret.rsc" "${RHOST}.rsc" "${BACKUP_MIRROR}"
@@ -32,9 +33,9 @@ mtik_backup() {
 
     sleep 1
 
-    ssh "${RHOST}" "/file/remove ${RDIR}${RHOST}-secret.backup"
-    ssh "${RHOST}" "/file/remove ${RDIR}${RHOST}-secret.rsc"
-    ssh "${RHOST}" "/file/remove ${RDIR}${RHOST}.rsc"
+    ssh "${RHOST_ABS}" "/file/remove ${RDIR}${RHOST}-secret.backup"
+    ssh "${RHOST_ABS}" "/file/remove ${RDIR}${RHOST}-secret.rsc"
+    ssh "${RHOST_ABS}" "/file/remove ${RDIR}${RHOST}.rsc"
 }
 
 mtik_backup router

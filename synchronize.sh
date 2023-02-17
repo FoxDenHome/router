@@ -11,9 +11,9 @@ transfer_section() {
 
     if [ ! -z "$SEDCLAUSE" ]
     then
-        ssh router "$SECTION/export show-sensitive terse" | dos2unix | sed "$SEDCLAUSE" >> "$F"
+        ssh router.foxden.network "$SECTION/export show-sensitive terse" | dos2unix | sed "$SEDCLAUSE" >> "$F"
     else
-        ssh router "$SECTION/export show-sensitive terse" | dos2unix >> "$F"
+        ssh router.foxden.network "$SECTION/export show-sensitive terse" | dos2unix >> "$F"
     fi
 }
 
@@ -39,9 +39,9 @@ transfer_section_notdynamic '/ipv6/firewall/mangle'
 transfer_section_localclause '/system/script'
 transfer_section_localclause '/system/scheduler'
 
-scp "$F" router-backup:/tmpfs-scratch/transfer.rsc
-ssh router-backup "/import file-name=tmpfs-scratch/transfer.rsc"
+scp "$F" router-backup.foxden.network:/tmpfs-scratch/transfer.rsc
+ssh router-backup.foxden.network "/import file-name=tmpfs-scratch/transfer.rsc"
 sleep 1
-ssh router-backup "/file remove tmpfs-scratch/transfer.rsc"
+ssh router-backup.foxden.network "/file remove tmpfs-scratch/transfer.rsc"
 
 rm -f "$F"

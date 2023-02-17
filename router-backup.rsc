@@ -1,4 +1,4 @@
-# ---/--/---- --:--:-- by RouterOS 7.8rc1
+# ---/--/---- --:--:-- by RouterOS 7.8rc2
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -33,12 +33,12 @@
 /interface wireless security-profiles set [ find default=yes ] supplicant-identity=REMOVED
 /ip dhcp-server option add code=121 name=classless value="'16''10''3'\$(NETWORK_GATEWAY)'0'\$(NETWORK_GATEWAY)"
 /ip dhcp-server option sets add name=default-classless options=classless
-/ip pool add name=pool-mgmt ranges=10.1.100.0-10.1.200.255
-/ip pool add name=pool-lan ranges=10.2.100.0-10.2.200.255
-/ip pool add name=pool-dmz ranges=10.3.100.0-10.3.200.255
-/ip pool add name=pool-labnet ranges=10.4.100.0-10.4.200.255
-/ip pool add name=pool-security ranges=10.5.100.0-10.5.200.255
-/ip pool add name=pool-hypervisor ranges=10.6.100.0-10.6.200.255
+/ip pool add name=pool-mgmt ranges=10.1.150.0-10.1.199.255
+/ip pool add name=pool-lan ranges=10.2.150.0-10.2.199.255
+/ip pool add name=pool-dmz ranges=10.3.150.0-10.3.199.255
+/ip pool add name=pool-labnet ranges=10.4.150.0-10.4.199.255
+/ip pool add name=pool-security ranges=10.5.150.0-10.5.199.255
+/ip pool add name=pool-hypervisor ranges=10.6.150.0-10.6.199.255
 /ip pool add name=pool-oob ranges=192.168.88.100-192.168.88.200
 /ip dhcp-server add address-pool=pool-labnet authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-labnet lease-time=1h name=dhcp-labnet
 /ip dhcp-server add address-pool=pool-lan authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-lan lease-time=1h name=dhcp-lan
@@ -141,7 +141,7 @@
 /ip dhcp-server lease add address=10.2.10.1 comment=fennec lease-time=1d mac-address=00:02:C9:23:3C:E0 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.1 comment=bengalfox lease-time=1d mac-address=50:6B:4B:4B:90:5E server=dhcp-lan
 /ip dhcp-server lease add address=10.2.10.2 comment=wizzy-desktop lease-time=1d mac-address=EC:0D:9A:21:DF:70 server=dhcp-lan
-/ip dhcp-server lease add address=10.1.12.1 comment=bengalfox-ipmi lease-time=1d mac-address=00:25:90:6D:05:12 server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.12.1 comment=bengalfox-ipmi lease-time=1d mac-address=00:25:90:FF:CF:5B server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.4 comment=switch-living-room lease-time=1d mac-address=80:2A:A8:DE:F0:AE server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.11.1 comment=pdu-rack lease-time=1d mac-address=70:A7:41:F8:13:09 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.2 comment=switch-rack lease-time=1d mac-address=24:5A:4C:A6:6B:9A server=dhcp-mgmt
@@ -507,6 +507,8 @@
 /ip firewall nat add action=dst-nat chain=dstnat comment=Factorio dst-port=34197 protocol=udp to-addresses=10.3.10.7
 /ip firewall nat add action=dst-nat chain=dstnat dst-port=2201 protocol=tcp to-addresses=10.3.11.1 to-ports=22
 /ip firewall nat add action=dst-nat chain=dstnat dst-port=2202 protocol=tcp to-addresses=10.3.11.2 to-ports=22
+/ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
+/ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.3 src-address=10.100.0.0/16
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
 /ip service set telnet disabled=yes
@@ -726,6 +728,6 @@
     \n    :put \$1\r\
     \n}\r\
     \n"
-/tool netwatch add comment=monitor-default disabled=no down-script="/system/script/run vrrp-priority-adjust\r\
-    \n" host=8.8.8.8 http-codes="" interval=30s test-script="" timeout=1s type=icmp up-script="/system/script/run vrrp-priority-adjust\r\
+/tool netwatch add comment=monitor-default disabled=no down-script="/system/script/run wan-online-adjust\r\
+    \n" host=8.8.8.8 http-codes="" interval=30s test-script="" timeout=1s type=icmp up-script="/system/script/run wan-online-adjust\r\
     \n"
