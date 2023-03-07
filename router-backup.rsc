@@ -1,4 +1,4 @@
-# ---/--/---- --:--:-- by RouterOS 7.8rc2
+# ---/--/---- --:--:-- by RouterOS 7.8
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -170,7 +170,7 @@
 /ip dhcp-server lease add address=10.2.13.6 comment=airgradient-living-room lease-time=1d mac-address=AC:0B:FB:D0:7B:5B server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.5 comment=airgradient-dori-office lease-time=1d mac-address=94:B5:55:2D:78:08 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.9 comment=vacuum-neato lease-time=1d mac-address=40:BD:32:95:26:C0 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.12.4 comment=homepod-living-room lease-time=1d mac-address=F4:34:F0:4B:87:1A server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.4 comment=homepod-unknown-room lease-time=1d mac-address=F4:34:F0:4B:87:1A server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.5 comment=homepod-bedroom lease-time=1d mac-address=94:EA:32:84:DB:90 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.14.1 comment=dori-phone lease-time=1d mac-address=3A:AF:A8:F3:A6:F5 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.6 comment=appletv-living-room lease-time=1d mac-address=58:D3:49:E4:02:2D server=dhcp-lan
@@ -238,6 +238,7 @@
 /ip dhcp-server lease add address=10.2.13.2 comment=custom-bench-psu lease-time=1d mac-address=E0:98:06:24:8D:06 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.12.2 lease-time=1d mac-address=02:41:60:BD:96:01 server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.12.1 lease-time=1d mac-address=36:15:27:06:57:C8 server=dhcp-dmz
+/ip dhcp-server lease add address=10.2.12.26 comment=homepod-living-room lease-time=1d mac-address=AC:BC:B5:D0:56:AE server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -342,8 +343,8 @@
 /ip dns static add address=::ffff:10.2.13.5 comment=static-dns-for-dhcp name=airgradient-dori-office.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.9 comment=static-dns-for-dhcp name=vacuum-neato.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.9 comment=static-dns-for-dhcp name=vacuum-neato.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.12.4 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.12.4 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.4 comment=static-dns-for-dhcp name=homepod-unknown-room.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.4 comment=static-dns-for-dhcp name=homepod-unknown-room.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.5 comment=static-dns-for-dhcp name=homepod-bedroom.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.5 comment=static-dns-for-dhcp name=homepod-bedroom.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.14.1 comment=static-dns-for-dhcp name=dori-phone.foxden.network ttl=5m
@@ -468,6 +469,8 @@
 /ip dns static add address=::ffff:10.3.11.1 comment=static-dns-for-dhcp name=crashdoom-mastodon-1.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.26 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.26 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -561,7 +564,6 @@
 /system ntp client servers add address=1.pool.ntp.org
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
-/system package update set channel=testing
 /system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,policy,test start-date=aug/09/2020 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
