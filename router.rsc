@@ -482,6 +482,11 @@
 /ip dns static add address=::ffff:10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.26 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.26 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m type=AAAA
+/ip dns static add cname=bengalfox.foxden.network name=us.archive.ubuntu.com ttl=5m type=CNAME
+/ip dns static add cname=bengalfox.foxden.network name=apt.foxden.network ttl=5m type=CNAME
+/ip dns static add cname=bengalfox.foxden.network name=archive.ubuntu.com ttl=5m type=CNAME
+/ip dns static add cname=bengalfox.foxden.network name=ports.ubuntu.com ttl=5m type=CNAME
+/ip dns static add cname=bengalfox.foxden.network name=us.ports.ubuntu.com ttl=5m type=CNAME
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
