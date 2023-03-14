@@ -239,6 +239,7 @@
 /ip dhcp-server lease add address=10.3.12.2 lease-time=1d mac-address=02:41:60:BD:96:01 server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.12.1 lease-time=1d mac-address=36:15:27:06:57:C8 server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.12.26 comment=homepod-living-room lease-time=1d mac-address=AC:BC:B5:D0:56:AE server=dhcp-lan
+/ip dhcp-server lease add address=10.2.11.13 comment=apt-mirror lease-time=1d mac-address=02:40:12:6C:D7:1A server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -275,6 +276,13 @@
 /ip dns static add address=10.3.10.5 name=api.spaceage.mp ttl=5m
 /ip dns static add address=::ffff:10.3.10.5 name=api.spaceage.mp ttl=5m type=AAAA
 /ip dns static add cname=bengalfox.foxden.network name=nas.foxden.network ttl=5m type=CNAME
+/ip dns static add cname=apt-mirror.foxden.network name=us.archive.ubuntu.com ttl=5m type=CNAME
+/ip dns static add cname=apt-mirror.foxden.network name=apt.foxden.network ttl=5m type=CNAME
+/ip dns static add cname=apt-mirror.foxden.network name=archive.ubuntu.com ttl=5m type=CNAME
+/ip dns static add cname=apt-mirror.foxden.network name=ftp.debian.org ttl=5m type=CNAME
+/ip dns static add cname=apt-mirror.foxden.network name=deb.debian.org ttl=5m type=CNAME
+/ip dns static add cname=apt-mirror.foxden.network name=ports.ubuntu.com ttl=5m type=CNAME
+/ip dns static add cname=apt-mirror.foxden.network name=us.ports.ubuntu.com ttl=5m type=CNAME
 /ip dns static add address=10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.6.10.2 comment=static-dns-for-dhcp name=islandfox.foxden.network ttl=5m
@@ -471,11 +479,8 @@
 /ip dns static add address=::ffff:10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.26 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.26 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m type=AAAA
-/ip dns static add cname=bengalfox.foxden.network name=us.archive.ubuntu.com ttl=5m type=CNAME
-/ip dns static add cname=bengalfox.foxden.network name=apt.foxden.network ttl=5m type=CNAME
-/ip dns static add cname=bengalfox.foxden.network name=archive.ubuntu.com ttl=5m type=CNAME
-/ip dns static add cname=bengalfox.foxden.network name=ports.ubuntu.com ttl=5m type=CNAME
-/ip dns static add cname=bengalfox.foxden.network name=us.ports.ubuntu.com ttl=5m type=CNAME
+/ip dns static add address=10.2.11.13 comment=static-dns-for-dhcp name=apt-mirror.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.13 comment=static-dns-for-dhcp name=apt-mirror.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
