@@ -240,6 +240,7 @@
 /ip dhcp-server lease add address=10.3.12.1 lease-time=1d mac-address=36:15:27:06:57:C8 server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.12.26 comment=homepod-living-room lease-time=1d mac-address=AC:BC:B5:D0:56:AE server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.13 comment=apt-mirror lease-time=1d mac-address=02:40:12:6C:D7:1A server=dhcp-lan
+/ip dhcp-server lease add address=10.2.11.14 comment=jupyter lease-time=1d mac-address=DA:53:94:31:25:26 server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -481,6 +482,8 @@
 /ip dns static add address=::ffff:10.2.12.26 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.13 comment=static-dns-for-dhcp name=apt-mirror.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.11.13 comment=static-dns-for-dhcp name=apt-mirror.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.11.14 comment=static-dns-for-dhcp name=jupyter.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.14 comment=static-dns-for-dhcp name=jupyter.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -499,12 +502,13 @@
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="Hypervisor -> SNMP" dst-port=161 in-interface-list=iface-hypervisor protocol=udp
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="HomeAssistant -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.12.2
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="NAS -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.11.1
-/ip firewall filter add action=accept chain=lan-out-forward comment=HomeAssistant dst-address=10.2.12.2 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=HomeAssistant dst-address=10.2.12.2 dst-port=80,443,8080,8443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=APT dst-address=10.2.11.13 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Plex dst-address=10.2.11.3 dst-port=32400 protocol=tcp
 /ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=8883 protocol=tcp
-/ip firewall filter add action=accept chain=hypervisor-out-forward comment=akvorado dst-address=10.6.11.3 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=hypervisor-out-forward comment=akvorado disabled=yes dst-address=10.6.11.3 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=input connection-state=established,related
 /ip firewall filter add action=accept chain=input protocol=ipv6-encap
 /ip firewall filter add action=accept chain=input protocol=icmp
