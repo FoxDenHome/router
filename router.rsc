@@ -508,17 +508,20 @@
 /ip firewall filter add action=jump chain=forward comment="MGMT allowlist" jump-target=mgmt-out-forward out-interface-list=iface-mgmt
 /ip firewall filter add action=jump chain=forward comment="LabNet allowlist" jump-target=labnet-out-forward out-interface-list=iface-labnet
 /ip firewall filter add action=jump chain=forward comment="Hypervisor allowlist" jump-target=hypervisor-out-forward out-interface-list=iface-hypervisor
+/ip firewall filter add action=jump chain=forward comment="Security allowlist" jump-target=security-out-forward out-interface-list=iface-security
 /ip firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ip firewall filter add action=reject chain=forward reject-with=icmp-admin-prohibited
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="Hypervisor -> SNMP" dst-port=161 in-interface-list=iface-hypervisor protocol=udp
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="HomeAssistant -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.12.2
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="NAS -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.11.1
+/ip firewall filter add action=accept chain=mgmt-out-forward comment="LAN -> UniFi" dst-address=10.1.10.1 in-interface-list=iface-lan
 /ip firewall filter add action=accept chain=lan-out-forward comment=HomeAssistant dst-address=10.2.12.2 dst-port=80,443,8080,8443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=APT dst-address=10.2.11.13 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Plex dst-address=10.2.11.3 dst-port=32400 protocol=tcp
 /ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=8883 protocol=tcp
+/ip firewall filter add action=accept chain=security-out-forward comment="LAN -> NVR" dst-address=10.5.10.1 in-interface-list=iface-lan
 /ip firewall filter add action=accept chain=hypervisor-out-forward comment=akvorado disabled=yes dst-address=10.6.11.3 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=input connection-state=established,related
 /ip firewall filter add action=accept chain=input protocol=ipv6-encap
