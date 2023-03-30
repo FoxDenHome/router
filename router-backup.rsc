@@ -233,8 +233,8 @@
 /ip dhcp-server lease add address=10.2.12.51 comment=appletv-living-room-wifi lease-time=1d mac-address=58:D3:49:D1:3E:F1 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.11.3 comment=akvorado lease-time=1d mac-address=BA:11:EF:53:38:7A server=dhcp-hypervisor
 /ip dhcp-server lease add address=10.2.13.10 comment=custom-led-microscope lease-time=1d mac-address=D4:F9:8D:70:82:F6 server=dhcp-lan
-/ip dhcp-server lease add address=10.3.11.2 comment=crashdoom-mastodon-2 lease-time=1d mac-address=FA:3F:4C:4C:97:2C server=dhcp-dmz
-/ip dhcp-server lease add address=10.3.11.1 comment=crashdoom-mastodon-1 lease-time=1d mac-address=CE:5A:B6:F7:F3:EB server=dhcp-dmz
+/ip dhcp-server lease add address=10.3.11.2 comment=pawbfun-2 lease-time=1d mac-address=FA:3F:4C:4C:97:2C server=dhcp-dmz
+/ip dhcp-server lease add address=10.3.11.1 comment=pawbfun-1 lease-time=1d mac-address=CE:5A:B6:F7:F3:EB server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.13.2 comment=custom-bench-psu lease-time=1d mac-address=E0:98:06:24:8D:06 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.12.2 lease-time=1d mac-address=02:41:60:BD:96:01 server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.12.1 lease-time=1d mac-address=36:15:27:06:57:C8 server=dhcp-dmz
@@ -284,6 +284,8 @@
 /ip dns static add cname=apt-mirror.foxden.network name=deb.debian.org ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=ports.ubuntu.com ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=us.ports.ubuntu.com ttl=5m type=CNAME
+/ip dns static add cname=apt-mirror.foxden.network name=security.ubuntu.com type=CNAME
+/ip dns static add cname=apt-mirror.foxden.network name=us.security.ubuntu.com type=CNAME
 /ip dns static add address=10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.6.10.2 comment=static-dns-for-dhcp name=islandfox.foxden.network ttl=5m
@@ -472,10 +474,10 @@
 /ip dns static add address=::ffff:10.6.11.3 comment=static-dns-for-dhcp name=akvorado.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.10 comment=static-dns-for-dhcp name=custom-led-microscope.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.10 comment=static-dns-for-dhcp name=custom-led-microscope.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.3.11.2 comment=static-dns-for-dhcp name=crashdoom-mastodon-2.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.3.11.2 comment=static-dns-for-dhcp name=crashdoom-mastodon-2.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.3.11.1 comment=static-dns-for-dhcp name=crashdoom-mastodon-1.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.3.11.1 comment=static-dns-for-dhcp name=crashdoom-mastodon-1.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.3.11.2 comment=static-dns-for-dhcp name=pawbfun-2.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.3.11.2 comment=static-dns-for-dhcp name=pawbfun-2.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.3.11.1 comment=static-dns-for-dhcp name=pawbfun-1.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.3.11.1 comment=static-dns-for-dhcp name=pawbfun-1.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.26 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m
