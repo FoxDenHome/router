@@ -241,6 +241,7 @@
 /ip dhcp-server lease add address=10.2.12.26 comment=homepod-living-room lease-time=1d mac-address=AC:BC:B5:D0:56:AE server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.13 comment=apt-mirror lease-time=1d mac-address=02:40:12:6C:D7:1A server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.14 comment=jupyter lease-time=1d mac-address=DA:53:94:31:25:26 server=dhcp-lan
+/ip dhcp-server lease add address=10.3.11.3 comment=blfcmasto lease-time=1d mac-address=DE:E4:0A:E4:BB:D2 server=dhcp-dmz
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -486,6 +487,8 @@
 /ip dns static add address=::ffff:10.2.11.13 comment=static-dns-for-dhcp name=apt-mirror.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.14 comment=static-dns-for-dhcp name=jupyter.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.11.14 comment=static-dns-for-dhcp name=jupyter.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.3.11.3 comment=static-dns-for-dhcp name=blfcmasto.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.3.11.3 comment=static-dns-for-dhcp name=blfcmasto.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -531,6 +534,7 @@
 /ip firewall nat add action=dst-nat chain=dstnat dst-port=2202 protocol=tcp to-addresses=10.3.11.2 to-ports=22
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.3 src-address=10.100.0.0/16
+/ip firewall nat add action=dst-nat chain=dstnat dst-port=2203 protocol=tcp to-addresses=10.3.11.3 to-ports=22
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
 /ip service set telnet disabled=yes
