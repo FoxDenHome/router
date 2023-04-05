@@ -61,23 +61,23 @@
 /queue simple add disabled=yes max-limit=950M/950M name=queue-wan queue=cake-internet/cake-internet target=wan
 /snmp community set [ find default=yes ] disabled=yes
 /snmp community add addresses=::/0 name=monitor_REMOVED
-/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=50 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=50
+/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=50 version=2 vrid=53
+/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=50 version=2
 /interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=50 version=2 vrid=123
-/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-dns priority=50 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway priority=50
+/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-dns priority=50 version=2 vrid=53
+/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway priority=50 version=2
 /interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-ntp priority=50 version=2 vrid=123
-/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=50 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=50
+/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=50 version=2 vrid=53
+/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=50 version=2
 /interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-labnet mtu=9000 name=vrrp-labnet-ntp priority=50 version=2 vrid=123
-/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=50 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=50
+/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=50 version=2 vrid=53
+/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=50 version=2
 /interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=50 version=2 vrid=123
-/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=50
+/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 version=2 vrid=53
+/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=50 version=2
 /interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=50 version=2 vrid=123
-/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=50 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=50
+/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=50 version=2 vrid=53
+/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=50 version=2
 /interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=50 version=2 vrid=123
 /ip settings set rp-filter=loose tcp-syncookies=yes
 /ipv6 settings set accept-redirects=no accept-router-advertisements=no
@@ -554,9 +554,9 @@
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:a::1 routing-table=main
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
-/ip service set www-ssl certificate=letsencrypt-autogen_2023-01-20T02:58:02Z disabled=no tls-version=only-1.2
+/ip service set www-ssl certificate=letsencrypt-autogen_2023-04-02T01:58:32Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
-/ip service set api-ssl certificate=letsencrypt-autogen_2023-01-20T02:58:02Z tls-version=only-1.2
+/ip service set api-ssl certificate=letsencrypt-autogen_2023-04-02T01:58:32Z tls-version=only-1.2
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix

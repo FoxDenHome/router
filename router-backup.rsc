@@ -1,4 +1,4 @@
-# ---/--/---- --:--:-- by RouterOS 7.8
+# ---/--/---- --:--:-- by RouterOS 7.9rc1
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -13,6 +13,9 @@
 /interface ethernet set [ find default-name=sfp-sfpplus1 ] advertise=1000M-full,10000M-full comment=sfp1 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether1 ] advertise=1000M-full,2500M-full comment=eth1 name=wan rx-flow-control=on tx-flow-control=on
 /interface 6to4 add !keepalive name=6to4-redfox remote-address=66.42.71.230
+/interface vrrp add disabled=yes group-master=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=25 version=2 vrid=53
+/interface vrrp add disabled=yes group-master=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=25 version=2
+/interface vrrp add disabled=yes group-master=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=25 version=2 vrid=123
 /interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
 /interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
@@ -20,6 +23,21 @@
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-lan vlan-id=2
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-security vlan-id=5
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-dns interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=25 version=2 vrid=53
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-gateway interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=25 version=2
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-ntp interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=25 version=2 vrid=123
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-dns interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-dns priority=25 version=2 vrid=53
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-gateway interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway priority=25 version=2
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-ntp interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-ntp priority=25 version=2 vrid=123
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-dns interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=25 version=2 vrid=53
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-gateway interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=25 version=2
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-ntp interface=vlan-labnet mtu=9000 name=vrrp-labnet-ntp priority=25 version=2 vrid=123
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-dns interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=25 version=2 vrid=53
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-gateway interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=25 version=2
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-ntp interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=25 version=2 vrid=123
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=25 version=2 vrid=53
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=25 version=2
+/interface vrrp add disabled=yes group-master=vrrp-mgmt-ntp interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=25 version=2 vrid=123
 /disk add slot=docker tmpfs-max-size=128000000 type=tmpfs
 /disk add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface list add name=iface-mgmt
@@ -50,54 +68,36 @@
 /port set 0 baud-rate=115200
 /snmp community set [ find default=yes ] disabled=yes
 /snmp community add addresses=::/0 name=monitor_REMOVED
-/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=25 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=25
-/interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=25 version=2 vrid=123
-/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-dns priority=25 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway priority=25
-/interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-ntp priority=25 version=2 vrid=123
-/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=25 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=25
-/interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-labnet mtu=9000 name=vrrp-labnet-ntp priority=25 version=2 vrid=123
-/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=25 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=25
-/interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=25 version=2 vrid=123
-/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=25 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=25
-/interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=25 version=2 vrid=123
-/interface vrrp add group-master=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=25 vrid=53
-/interface vrrp add group-master=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=25
-/interface vrrp add group-master=vrrp-mgmt-ntp interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=25 version=2 vrid=123
 /ip settings set rp-filter=loose tcp-syncookies=yes
 /ipv6 settings set accept-redirects=no accept-router-advertisements=no
-/interface list member add interface=vrrp-mgmt-gateway list=iface-mgmt
-/interface list member add interface=vrrp-mgmt-dns list=iface-mgmt
-/interface list member add interface=vrrp-mgmt-ntp list=iface-mgmt
 /interface list member add interface=vlan-lan list=iface-lan
-/interface list member add interface=vrrp-lan-gateway list=iface-lan
-/interface list member add interface=vrrp-lan-dns list=iface-lan
-/interface list member add interface=vrrp-lan-ntp list=iface-lan
 /interface list member add interface=vlan-dmz list=iface-dmz
-/interface list member add interface=vrrp-dmz-gateway list=iface-dmz
-/interface list member add interface=vrrp-dmz-dns list=iface-dmz
-/interface list member add interface=vrrp-dmz-ntp list=iface-dmz
 /interface list member add interface=vlan-labnet list=iface-labnet
-/interface list member add interface=vrrp-labnet-gateway list=iface-labnet
-/interface list member add interface=vrrp-labnet-dns list=iface-labnet
-/interface list member add interface=vrrp-labnet-ntp list=iface-labnet
 /interface list member add interface=vlan-security list=iface-security
-/interface list member add interface=vrrp-security-gateway list=iface-security
-/interface list member add interface=vrrp-security-dns list=iface-security
-/interface list member add interface=vrrp-security-ntp list=iface-security
 /interface list member add interface=vlan-hypervisor list=iface-hypervisor
-/interface list member add interface=vrrp-hypervisor-gateway list=iface-hypervisor
-/interface list member add interface=vrrp-hypervisor-dns list=iface-hypervisor
-/interface list member add interface=vrrp-hypervisor-ntp list=iface-hypervisor
 /interface list member add interface=wan list=zone-wan
 /interface list member add interface=vlan-mgmt list=iface-mgmt
 /interface list member add interface=wg-s2s list=zone-local
 /interface list member add interface=wg-vpn list=zone-local
 /interface list member add interface=6to4-redfox list=zone-wan
+/interface list member add interface=vrrp-mgmt-gateway list=iface-mgmt
+/interface list member add interface=vrrp-mgmt-dns list=iface-mgmt
+/interface list member add interface=vrrp-mgmt-ntp list=iface-mgmt
+/interface list member add interface=vrrp-lan-gateway list=iface-lan
+/interface list member add interface=vrrp-lan-dns list=iface-lan
+/interface list member add interface=vrrp-lan-ntp list=iface-lan
+/interface list member add interface=vrrp-dmz-gateway list=iface-dmz
+/interface list member add interface=vrrp-dmz-dns list=iface-dmz
+/interface list member add interface=vrrp-dmz-ntp list=iface-dmz
+/interface list member add interface=vrrp-labnet-gateway list=iface-labnet
+/interface list member add interface=vrrp-labnet-dns list=iface-labnet
+/interface list member add interface=vrrp-labnet-ntp list=iface-labnet
+/interface list member add interface=vrrp-security-gateway list=iface-security
+/interface list member add interface=vrrp-security-dns list=iface-security
+/interface list member add interface=vrrp-security-ntp list=iface-security
+/interface list member add interface=vrrp-hypervisor-gateway list=iface-hypervisor
+/interface list member add interface=vrrp-hypervisor-dns list=iface-hypervisor
+/interface list member add interface=vrrp-hypervisor-ntp list=iface-hypervisor
 /interface wireguard peers add allowed-address=10.100.10.1/32 comment=Fennec interface=wg-vpn public-key="+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY="
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 comment="Dori Phone" interface=wg-vpn public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
@@ -112,6 +112,8 @@
 /ip address add address=10.4.1.3/16 interface=vlan-labnet network=10.4.0.0
 /ip address add address=10.5.1.3/16 interface=vlan-security network=10.5.0.0
 /ip address add address=10.6.1.3/16 interface=vlan-hypervisor network=10.6.0.0
+/ip address add address=10.99.1.3/16 interface=wg-s2s network=10.99.0.0
+/ip address add address=10.100.0.1/16 interface=wg-vpn network=10.100.0.0
 /ip address add address=10.1.0.1 interface=vrrp-mgmt-gateway network=10.1.0.1
 /ip address add address=10.1.0.123 interface=vrrp-mgmt-ntp network=10.1.0.123
 /ip address add address=10.1.0.53 interface=vrrp-mgmt-dns network=10.1.0.53
@@ -130,8 +132,6 @@
 /ip address add address=10.6.0.1 interface=vrrp-hypervisor-gateway network=10.6.0.1
 /ip address add address=10.6.0.123 interface=vrrp-hypervisor-ntp network=10.6.0.123
 /ip address add address=10.6.0.53 interface=vrrp-hypervisor-dns network=10.6.0.53
-/ip address add address=10.99.1.3/16 interface=wg-s2s network=10.99.0.0
-/ip address add address=10.100.0.1/16 interface=wg-vpn network=10.100.0.0
 /ip cloud set update-time=no
 /ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run wan-online-adjust\r\
     \n" use-peer-dns=no use-peer-ntp=no
@@ -539,9 +539,9 @@
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
-/ip service set www-ssl certificate=letsencrypt-autogen_2023-01-20T03:04:26Z disabled=no tls-version=only-1.2
+/ip service set www-ssl certificate=letsencrypt-autogen_2023-04-02T02:05:37Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
-/ip service set api-ssl certificate=letsencrypt-autogen_2023-01-20T03:04:26Z tls-version=only-1.2
+/ip service set api-ssl certificate=letsencrypt-autogen_2023-04-02T02:05:37Z tls-version=only-1.2
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
@@ -580,6 +580,7 @@
 /snmp set contact=admin@foxden.network enabled=yes location="Server room" trap-generators=""
 /system clock set time-zone-autodetect=no time-zone-name=America/Los_Angeles
 /system identity set name=router-backup
+/system note set show-at-login=no
 /system ntp client set enabled=yes
 /system ntp server set enabled=yes
 /system ntp client servers add address=10.1.1.2
@@ -587,6 +588,7 @@
 /system ntp client servers add address=1.pool.ntp.org
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
+/system package update set channel=testing
 /system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,policy,test start-date=aug/09/2020 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
