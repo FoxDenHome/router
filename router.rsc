@@ -253,6 +253,7 @@
 /ip dhcp-server lease add address=10.2.11.13 comment=apt-mirror lease-time=1d mac-address=02:40:12:6C:D7:1A server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.14 comment=jupyter lease-time=1d mac-address=DA:53:94:31:25:26 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.11.3 comment=blfcmasto lease-time=1d mac-address=DE:E4:0A:E4:BB:D2 server=dhcp-dmz
+/ip dhcp-server lease add address=10.3.10.1 comment=foxcaves lease-time=1d mac-address=A6:92:B3:48:21:9D server=dhcp-dmz
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -298,6 +299,10 @@
 /ip dns static add cname=apt-mirror.foxden.network name=us.ports.ubuntu.com ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=security.ubuntu.com type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=us.security.ubuntu.com type=CNAME
+/ip dns static add cname=foxcaves.foxden.network name=foxcav.es type=CNAME
+/ip dns static add cname=foxcaves.foxden.network name=www.foxcav.es type=CNAME
+/ip dns static add cname=foxcaves.foxden.network name=www.f0x.es type=CNAME
+/ip dns static add cname=foxcaves.foxden.network name=f0x.es type=CNAME
 /ip dns static add address=10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.6.10.2 comment=static-dns-for-dhcp name=islandfox.foxden.network ttl=5m
@@ -500,6 +505,8 @@
 /ip dns static add address=::ffff:10.2.11.14 comment=static-dns-for-dhcp name=jupyter.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.3.11.3 comment=static-dns-for-dhcp name=blfcmasto.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.3.11.3 comment=static-dns-for-dhcp name=blfcmasto.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.3.10.1 comment=static-dns-for-dhcp name=foxcaves.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.3.10.1 comment=static-dns-for-dhcp name=foxcaves.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
