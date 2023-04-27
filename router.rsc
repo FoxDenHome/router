@@ -162,8 +162,7 @@
 /ip dhcp-server lease add address=10.1.10.6 comment=ap-server-room lease-time=1d mac-address=68:D7:9A:1F:57:E2 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.7 comment=ap-corridor-upper lease-time=1d mac-address=60:22:32:1D:48:15 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.5 comment=switch-workbench lease-time=1d mac-address=74:83:C2:FF:87:16 server=dhcp-mgmt
-/ip dhcp-server lease add address=10.1.10.10 comment=switch-dori-office lease-time=1d mac-address=60:22:32:39:77:9C server=dhcp-mgmt
-/ip dhcp-server lease add address=10.1.10.8 comment=switch-dori-office-10g lease-time=1d mac-address=18:FD:74:7B:0C:B9 server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.10 comment=switch-dori-office lease-time=1d mac-address=AC:8B:A9:A6:E7:EE server=dhcp-mgmt
 /ip dhcp-server lease add address=10.6.11.2 comment=telegraf lease-time=1d mac-address=42:FE:0C:C8:E0:F5 server=dhcp-hypervisor
 /ip dhcp-server lease add address=10.2.11.2 comment=syncthing lease-time=1d mac-address=AE:FC:DD:8B:33:76 server=dhcp-lan
 /ip dhcp-server lease add address=10.1.11.3 comment=ups-dori-office lease-time=1d mac-address=00:0C:15:04:39:93 server=dhcp-mgmt
@@ -209,7 +208,7 @@
 /ip dhcp-server lease add address=10.2.12.12 comment=august-connect-front-door lease-time=1d mac-address=D8:61:62:12:6A:08 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.13 comment=homepod-den lease-time=1d mac-address=04:99:B9:9E:9B:95 server=dhcp-lan
 /ip dhcp-server lease add address=10.5.11.1 comment=camera-front-door lease-time=1d mac-address=D0:21:F9:94:97:13 server=dhcp-security
-/ip dhcp-server lease add address=10.1.10.9 comment=switch-dori-tv lease-time=1d mac-address=F4:92:BF:A3:E8:E8 server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.9 comment=switch-dori-office-tv lease-time=1d mac-address=F4:92:BF:A3:E8:E8 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.2.12.14 comment=homepod-wizzy lease-time=1d mac-address=04:99:B9:79:EE:C9 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.15 comment=tesla-model-3 lease-time=1d mac-address=CC:88:26:27:41:29 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.16 comment=tesla-wall-charger lease-time=1d mac-address=98:ED:5C:9B:79:CF server=dhcp-lan
