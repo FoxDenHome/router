@@ -40,6 +40,6 @@ mtik_backup() {
 
 mtik_backup router
 mtik_backup router-backup
-mtik_backup switch-dori-office-10g
+#mtik_backup switch-dori-office-10g
 
 git commit -a -m "${COMMIT_MSG}"
