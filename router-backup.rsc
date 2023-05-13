@@ -1,4 +1,4 @@
-# ---/--/---- --:--:-- by RouterOS 7.9rc5
+# 2023-05-13 00:10:22 by RouterOS 7.10beta5
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -156,7 +156,7 @@
 /ip dhcp-server lease add address=10.2.11.2 comment=syncthing lease-time=1d mac-address=AE:FC:DD:8B:33:76 server=dhcp-lan
 /ip dhcp-server lease add address=10.1.11.3 comment=ups-dori-office lease-time=1d mac-address=00:0C:15:04:39:93 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.2.12.3 comment=printer lease-time=1d mac-address=E8:D8:D1:79:F5:98 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.12.1 comment=hue lease-time=1d mac-address=00:17:88:AC:31:4B server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.1 comment=hue-downstairs lease-time=1d mac-address=00:17:88:AC:31:4B server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.2 comment=homeassistant lease-time=1d mac-address=52:54:00:92:B1:80 server=dhcp-lan
 /ip dhcp-server lease add address=10.5.11.2 comment=camera-living-room lease-time=1d mac-address=68:D7:9A:CF:30:09 server=dhcp-security
 /ip dhcp-server lease add address=10.2.11.3 comment=plex lease-time=1d mac-address=00:16:3E:CA:7E:03 server=dhcp-lan
@@ -211,7 +211,7 @@
 /ip dhcp-server lease add address=10.2.13.16 comment=airgradient-den lease-time=1d mac-address=0C:B8:15:C4:B3:74 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.15 comment=custom-current-clamp-main lease-time=1d mac-address=40:91:51:51:D0:A6 server=dhcp-lan
 /ip dhcp-server lease add address=10.5.11.4 lease-time=1d mac-address=D0:21:F9:99:60:DA server=dhcp-security
-/ip dhcp-server lease add address=10.5.11.3 lease-time=1d mac-address=70:A7:41:5F:DB:54 server=dhcp-security
+/ip dhcp-server lease add address=10.5.11.3 comment=camera-front-right lease-time=1d mac-address=70:A7:41:5F:DB:54 server=dhcp-security
 /ip dhcp-server lease add address=10.5.11.5 lease-time=1d mac-address=70:A7:41:0B:11:36 server=dhcp-security
 /ip dhcp-server lease add address=10.2.13.17 comment=airgradient-wizzy-office lease-time=1d mac-address=0C:B8:15:C4:B8:D0 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.10.7 comment=mbp-mark-dietzer lease-time=1d mac-address=BC:D0:74:45:61:FB server=dhcp-lan
@@ -235,13 +235,15 @@
 /ip dhcp-server lease add address=10.3.11.2 comment=pawbfun-2 lease-time=1d mac-address=FA:3F:4C:4C:97:2C server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.11.1 comment=pawbfun-1 lease-time=1d mac-address=CE:5A:B6:F7:F3:EB server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.13.2 comment=custom-bench-psu lease-time=1d mac-address=E0:98:06:24:8D:06 server=dhcp-lan
-/ip dhcp-server lease add address=10.3.12.2 lease-time=1d mac-address=02:41:60:BD:96:01 server=dhcp-dmz
-/ip dhcp-server lease add address=10.3.12.1 lease-time=1d mac-address=36:15:27:06:57:C8 server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.12.26 comment=homepod-living-room lease-time=1d mac-address=AC:BC:B5:D0:56:AE server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.13 comment=apt-mirror lease-time=1d mac-address=02:40:12:6C:D7:1A server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.14 comment=jupyter lease-time=1d mac-address=DA:53:94:31:25:26 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.11.3 comment=blfcmasto lease-time=1d mac-address=DE:E4:0A:E4:BB:D2 server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.1 comment=foxcaves lease-time=1d mac-address=A6:92:B3:48:21:9D server=dhcp-dmz
+/ip dhcp-server lease add address=10.4.10.2 comment=carvera-tablet lease-time=1d mac-address=78:24:AF:DF:C3:BA server=dhcp-labnet
+/ip dhcp-server lease add address=10.2.13.22 comment=sonoff-s31-dori-desktop lease-time=1d mac-address=8C:AA:B5:66:12:00 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.27 comment=hue-upstairs lease-time=1d mac-address=00:17:88:61:02:4E server=dhcp-lan
+/ip dhcp-server lease add address=10.2.13.21 comment=led-strip-dori-office-ceiling lease-time=1d mac-address=C4:DE:E2:B2:D2:C7 server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -291,6 +293,8 @@
 /ip dns static add cname=foxcaves.foxden.network name=www.foxcav.es type=CNAME
 /ip dns static add cname=foxcaves.foxden.network name=www.f0x.es type=CNAME
 /ip dns static add cname=foxcaves.foxden.network name=f0x.es type=CNAME
+/ip dns static add cname=apt-mirror.foxden.network name=ftp.us.debian.org ttl=5m type=CNAME
+/ip dns static add cname=apt-mirror.foxden.network name=deb.us.debian.org ttl=5m type=CNAME
 /ip dns static add address=10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.6.10.2 comment=static-dns-for-dhcp name=islandfox.foxden.network ttl=5m
@@ -323,8 +327,6 @@
 /ip dns static add address=::ffff:10.1.10.5 comment=static-dns-for-dhcp name=switch-workbench.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.1.10.8 comment=static-dns-for-dhcp name=switch-dori-office-10g.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.1.10.8 comment=static-dns-for-dhcp name=switch-dori-office-10g.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.6.11.2 comment=static-dns-for-dhcp name=telegraf.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.6.11.2 comment=static-dns-for-dhcp name=telegraf.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.2 comment=static-dns-for-dhcp name=syncthing.foxden.network ttl=5m
@@ -333,8 +335,8 @@
 /ip dns static add address=::ffff:10.1.11.3 comment=static-dns-for-dhcp name=ups-dori-office.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.3 comment=static-dns-for-dhcp name=printer.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.3 comment=static-dns-for-dhcp name=printer.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.12.1 comment=static-dns-for-dhcp name=hue.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.12.1 comment=static-dns-for-dhcp name=hue.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.1 comment=static-dns-for-dhcp name=hue-downstairs.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.1 comment=static-dns-for-dhcp name=hue-downstairs.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.2 comment=static-dns-for-dhcp name=homeassistant.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.2 comment=static-dns-for-dhcp name=homeassistant.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.5.11.2 comment=static-dns-for-dhcp name=camera-living-room.foxden.network ttl=5m
@@ -415,8 +417,8 @@
 /ip dns static add address=::ffff:10.2.12.13 comment=static-dns-for-dhcp name=homepod-den.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.5.11.1 comment=static-dns-for-dhcp name=camera-front-door.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.5.11.1 comment=static-dns-for-dhcp name=camera-front-door.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.1.10.9 comment=static-dns-for-dhcp name=switch-dori-tv.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.1.10.9 comment=static-dns-for-dhcp name=switch-dori-tv.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.9 comment=static-dns-for-dhcp name=switch-dori-office-tv.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.9 comment=static-dns-for-dhcp name=switch-dori-office-tv.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.14 comment=static-dns-for-dhcp name=homepod-wizzy.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.14 comment=static-dns-for-dhcp name=homepod-wizzy.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.15 comment=static-dns-for-dhcp name=tesla-model-3.foxden.network ttl=5m
@@ -441,6 +443,8 @@
 /ip dns static add address=::ffff:10.2.13.16 comment=static-dns-for-dhcp name=airgradient-den.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.15 comment=static-dns-for-dhcp name=custom-current-clamp-main.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.15 comment=static-dns-for-dhcp name=custom-current-clamp-main.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.5.11.3 comment=static-dns-for-dhcp name=camera-front-right.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.5.11.3 comment=static-dns-for-dhcp name=camera-front-right.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.17 comment=static-dns-for-dhcp name=airgradient-wizzy-office.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.17 comment=static-dns-for-dhcp name=airgradient-wizzy-office.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.10.7 comment=static-dns-for-dhcp name=mbp-mark-dietzer.foxden.network ttl=5m
@@ -495,6 +499,14 @@
 /ip dns static add address=::ffff:10.3.11.3 comment=static-dns-for-dhcp name=blfcmasto.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.3.10.1 comment=static-dns-for-dhcp name=foxcaves.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.3.10.1 comment=static-dns-for-dhcp name=foxcaves.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.4.10.2 comment=static-dns-for-dhcp name=carvera-tablet.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.4.10.2 comment=static-dns-for-dhcp name=carvera-tablet.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.22 comment=static-dns-for-dhcp name=sonoff-s31-dori-desktop.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.22 comment=static-dns-for-dhcp name=sonoff-s31-dori-desktop.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.27 comment=static-dns-for-dhcp name=hue-upstairs.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.27 comment=static-dns-for-dhcp name=hue-upstairs.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.21 comment=static-dns-for-dhcp name=led-strip-dori-office-ceiling.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.21 comment=static-dns-for-dhcp name=led-strip-dori-office-ceiling.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -596,12 +608,12 @@
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
 /system package update set channel=testing
-/system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,policy,test start-date=aug/09/2020 start-time=09:41:00
+/system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,policy,test start-date=2020-08-09 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
     \n" policy=read,write,policy,test start-time=startup
 /system scheduler add interval=1m name=wan-online-adjust on-event="/system/script/run wan-online-adjust\r\
-    \n" policy=read,write,policy,test start-date=jan/17/2023 start-time=19:51:50
+    \n" policy=read,write,policy,test start-date=2023-01-17 start-time=19:51:50
 /system script add dont-require-permissions=yes name=local-init-onboot owner=admin policy=read,write,policy,test source=":global VRRPPriorityOnline 25\r\
     \n:global VRRPPriorityOffline 5\r\
     \n\r\
