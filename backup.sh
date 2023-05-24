@@ -22,14 +22,14 @@ mtik_backup() {
         cp "${RHOST}-secret.backup" "${RHOST}-secret.rsc" "${RHOST}.rsc" "${BACKUP_MIRROR}"
     fi
 
-    sed -i '' 's~^# .../../.... ..:..:.. by RouterOS~# ---/--/---- --:--:-- by RouterOS~' "${RHOST}.rsc"
-    sed -i '' 's~key=\\"[^"]*\\"~key=\\"REMOVED\\"~g' "${RHOST}.rsc"
-    sed -i '' 's~global DynDNSKey \\".*\\"~global DynDNSKey \\"REMOVED\\"~g' "${RHOST}.rsc"
-    sed -i '' 's~^# software id = .*$~# software id = REMOVED~g' "${RHOST}.rsc"
-    sed -i '' 's~^# serial number = .*$~# serial number = REMOVED~g' "${RHOST}.rsc"
-    sed -i '' 's~name=monitor_[^ ]*~name=monitor_REMOVED~g' "${RHOST}.rsc"
-    sed -i '' 's~identity=[^ ]*~identity=REMOVED~g' "${RHOST}.rsc"
-    sed -i '' 's~network=[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]~network=REMOVED~g' "${RHOST}.rsc"
+    sed 's~^# .../../.... ..:..:.. by RouterOS~# ---/--/---- --:--:-- by RouterOS~'  -i "${RHOST}.rsc"
+    sed 's~key=\\"[^"]*\\"~key=\\"REMOVED\\"~g' -i "${RHOST}.rsc"
+    sed 's~global DynDNSKey \\".*\\"~global DynDNSKey \\"REMOVED\\"~g' -i "${RHOST}.rsc"
+    sed 's~^# software id = .*$~# software id = REMOVED~g' -i "${RHOST}.rsc"
+    sed 's~^# serial number = .*$~# serial number = REMOVED~g' -i "${RHOST}.rsc"
+    sed 's~name=monitor_[^ ]*~name=monitor_REMOVED~g' -i "${RHOST}.rsc"
+    sed 's~identity=[^ ]*~identity=REMOVED~g' -i "${RHOST}.rsc"
+    sed 's~network=[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]~network=REMOVED~g' -i "${RHOST}.rsc"
 
     sleep 1
 

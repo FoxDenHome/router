@@ -1,4 +1,4 @@
-# 2023-05-13 00:10:22 by RouterOS 7.10beta5
+# 2023-05-24 15:33:39 by RouterOS 7.10beta8
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -13,9 +13,9 @@
 /interface ethernet set [ find default-name=sfp-sfpplus1 ] advertise=1000M-full,10000M-full comment=sfp1 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether1 ] advertise=1000M-full,2500M-full comment=eth1 name=wan rx-flow-control=on tx-flow-control=on
 /interface 6to4 add !keepalive name=6to4-redfox remote-address=66.42.71.230
-/interface vrrp add disabled=yes group-master=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=25 version=2 vrid=53
-/interface vrrp add disabled=yes group-master=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=25 version=2
-/interface vrrp add disabled=yes group-master=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=25 version=2 vrid=123
+/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=25 version=2 vrid=53
+/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=25 version=2
+/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=25 version=2 vrid=123
 /interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
 /interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
@@ -23,21 +23,21 @@
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-lan vlan-id=2
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-security vlan-id=5
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-dns interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=25 version=2 vrid=53
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-gateway interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=25 version=2
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-ntp interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=25 version=2 vrid=123
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-dns interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-dns priority=25 version=2 vrid=53
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-gateway interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway priority=25 version=2
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-ntp interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-ntp priority=25 version=2 vrid=123
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-dns interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=25 version=2 vrid=53
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-gateway interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=25 version=2
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-ntp interface=vlan-labnet mtu=9000 name=vrrp-labnet-ntp priority=25 version=2 vrid=123
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-dns interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=25 version=2 vrid=53
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-gateway interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=25 version=2
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-ntp interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=25 version=2 vrid=123
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=25 version=2 vrid=53
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=25 version=2
-/interface vrrp add disabled=yes group-master=vrrp-mgmt-ntp interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=25 version=2 vrid=123
+/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=25 version=2 vrid=53
+/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=25 version=2
+/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=25 version=2 vrid=123
+/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-dns priority=25 version=2 vrid=53
+/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway priority=25 version=2
+/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-ntp priority=25 version=2 vrid=123
+/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=25 version=2 vrid=53
+/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=25 version=2
+/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-labnet mtu=9000 name=vrrp-labnet-ntp priority=25 version=2 vrid=123
+/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=25 version=2 vrid=53
+/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=25 version=2
+/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=25 version=2 vrid=123
+/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=25 version=2 vrid=53
+/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=25 version=2
+/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=25 version=2 vrid=123
 /disk add slot=docker tmpfs-max-size=128000000 type=tmpfs
 /disk add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface list add name=iface-mgmt
@@ -142,16 +142,16 @@
 /ip dhcp-server lease add address=10.2.11.1 comment=bengalfox lease-time=1d mac-address=50:6B:4B:4B:90:5E server=dhcp-lan
 /ip dhcp-server lease add address=10.2.10.2 comment=wizzy-desktop lease-time=1d mac-address=EC:0D:9A:21:DF:70 server=dhcp-lan
 /ip dhcp-server lease add address=10.1.12.1 comment=bengalfox-ipmi lease-time=1d mac-address=00:25:90:FF:CF:5B server=dhcp-mgmt
-/ip dhcp-server lease add address=10.1.10.4 comment=switch-living-room lease-time=1d mac-address=80:2A:A8:DE:F0:AE server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.4 comment=switch-den lease-time=1d mac-address=80:2A:A8:DE:F0:AE server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.11.1 comment=pdu-rack lease-time=1d mac-address=70:A7:41:F8:13:09 server=dhcp-mgmt
-/ip dhcp-server lease add address=10.1.10.2 comment=switch-rack lease-time=1d mac-address=24:5A:4C:A6:6B:9A server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.2 comment=switch-dori-office lease-time=1d mac-address=24:5A:4C:A6:6B:9A server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.3 comment=switch-rack-agg lease-time=1d mac-address=24:5A:4C:56:41:C4 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.11.2 comment=ups-rack lease-time=1d mac-address=00:C0:B7:E8:B2:A0 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.1 comment=unifi lease-time=1d mac-address=24:5A:4C:8A:23:3F server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.6 comment=ap-server-room lease-time=1d mac-address=68:D7:9A:1F:57:E2 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.7 comment=ap-corridor-upper lease-time=1d mac-address=60:22:32:1D:48:15 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.5 comment=switch-workbench lease-time=1d mac-address=74:83:C2:FF:87:16 server=dhcp-mgmt
-/ip dhcp-server lease add address=10.1.10.10 comment=switch-dori-office lease-time=1d mac-address=AC:8B:A9:A6:E7:EE server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.10 comment=switch-dori-office-agg lease-time=1d mac-address=AC:8B:A9:A6:E7:EE server=dhcp-mgmt
 /ip dhcp-server lease add address=10.6.11.2 comment=telegraf lease-time=1d mac-address=42:FE:0C:C8:E0:F5 server=dhcp-hypervisor
 /ip dhcp-server lease add address=10.2.11.2 comment=syncthing lease-time=1d mac-address=AE:FC:DD:8B:33:76 server=dhcp-lan
 /ip dhcp-server lease add address=10.1.11.3 comment=ups-dori-office lease-time=1d mac-address=00:0C:15:04:39:93 server=dhcp-mgmt
@@ -244,6 +244,8 @@
 /ip dhcp-server lease add address=10.2.13.22 comment=sonoff-s31-dori-desktop lease-time=1d mac-address=8C:AA:B5:66:12:00 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.27 comment=hue-upstairs lease-time=1d mac-address=00:17:88:61:02:4E server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.21 comment=led-strip-dori-office-ceiling lease-time=1d mac-address=C4:DE:E2:B2:D2:C7 server=dhcp-lan
+/ip dhcp-server lease add address=10.1.10.13 comment=switch-living-room lease-time=1d mac-address=E4:38:83:8C:AA:DA server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.12 comment=switch-rack lease-time=1d mac-address=D8:B3:70:1E:9E:3A server=dhcp-mgmt
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -307,12 +309,12 @@
 /ip dns static add address=::ffff:10.2.10.2 comment=static-dns-for-dhcp name=wizzy-desktop.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.12.1 comment=static-dns-for-dhcp name=bengalfox-ipmi.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.12.1 comment=static-dns-for-dhcp name=bengalfox-ipmi.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.1.10.4 comment=static-dns-for-dhcp name=switch-living-room.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.1.10.4 comment=static-dns-for-dhcp name=switch-living-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.4 comment=static-dns-for-dhcp name=switch-den.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.4 comment=static-dns-for-dhcp name=switch-den.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.11.1 comment=static-dns-for-dhcp name=pdu-rack.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.11.1 comment=static-dns-for-dhcp name=pdu-rack.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.1.10.2 comment=static-dns-for-dhcp name=switch-rack.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.1.10.2 comment=static-dns-for-dhcp name=switch-rack.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.2 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.2 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.10.3 comment=static-dns-for-dhcp name=switch-rack-agg.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.10.3 comment=static-dns-for-dhcp name=switch-rack-agg.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.11.2 comment=static-dns-for-dhcp name=ups-rack.foxden.network ttl=5m
@@ -325,8 +327,8 @@
 /ip dns static add address=::ffff:10.1.10.7 comment=static-dns-for-dhcp name=ap-corridor-upper.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.10.5 comment=static-dns-for-dhcp name=switch-workbench.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.10.5 comment=static-dns-for-dhcp name=switch-workbench.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office-agg.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office-agg.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.6.11.2 comment=static-dns-for-dhcp name=telegraf.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.6.11.2 comment=static-dns-for-dhcp name=telegraf.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.2 comment=static-dns-for-dhcp name=syncthing.foxden.network ttl=5m
@@ -507,6 +509,10 @@
 /ip dns static add address=::ffff:10.2.12.27 comment=static-dns-for-dhcp name=hue-upstairs.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.21 comment=static-dns-for-dhcp name=led-strip-dori-office-ceiling.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.21 comment=static-dns-for-dhcp name=led-strip-dori-office-ceiling.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.13 comment=static-dns-for-dhcp name=switch-living-room.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.13 comment=static-dns-for-dhcp name=switch-living-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.12 comment=static-dns-for-dhcp name=switch-rack.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.12 comment=static-dns-for-dhcp name=switch-rack.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related

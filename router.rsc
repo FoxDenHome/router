@@ -1,4 +1,4 @@
-# ---/--/---- --:--:-- by RouterOS 7.9
+# ---/--/---- --:--:-- by RouterOS 7.9.1
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -153,16 +153,16 @@
 /ip dhcp-server lease add address=10.2.11.1 comment=bengalfox lease-time=1d mac-address=50:6B:4B:4B:90:5E server=dhcp-lan
 /ip dhcp-server lease add address=10.2.10.2 comment=wizzy-desktop lease-time=1d mac-address=EC:0D:9A:21:DF:70 server=dhcp-lan
 /ip dhcp-server lease add address=10.1.12.1 comment=bengalfox-ipmi lease-time=1d mac-address=00:25:90:FF:CF:5B server=dhcp-mgmt
-/ip dhcp-server lease add address=10.1.10.4 comment=switch-living-room lease-time=1d mac-address=80:2A:A8:DE:F0:AE server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.4 comment=switch-den lease-time=1d mac-address=80:2A:A8:DE:F0:AE server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.11.1 comment=pdu-rack lease-time=1d mac-address=70:A7:41:F8:13:09 server=dhcp-mgmt
-/ip dhcp-server lease add address=10.1.10.2 comment=switch-rack lease-time=1d mac-address=24:5A:4C:A6:6B:9A server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.2 comment=switch-dori-office lease-time=1d mac-address=24:5A:4C:A6:6B:9A server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.3 comment=switch-rack-agg lease-time=1d mac-address=24:5A:4C:56:41:C4 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.11.2 comment=ups-rack lease-time=1d mac-address=00:C0:B7:E8:B2:A0 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.1 comment=unifi lease-time=1d mac-address=24:5A:4C:8A:23:3F server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.6 comment=ap-server-room lease-time=1d mac-address=68:D7:9A:1F:57:E2 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.7 comment=ap-corridor-upper lease-time=1d mac-address=60:22:32:1D:48:15 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.5 comment=switch-workbench lease-time=1d mac-address=74:83:C2:FF:87:16 server=dhcp-mgmt
-/ip dhcp-server lease add address=10.1.10.10 comment=switch-dori-office lease-time=1d mac-address=AC:8B:A9:A6:E7:EE server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.10 comment=switch-dori-office-agg lease-time=1d mac-address=AC:8B:A9:A6:E7:EE server=dhcp-mgmt
 /ip dhcp-server lease add address=10.6.11.2 comment=telegraf lease-time=1d mac-address=42:FE:0C:C8:E0:F5 server=dhcp-hypervisor
 /ip dhcp-server lease add address=10.2.11.2 comment=syncthing lease-time=1d mac-address=AE:FC:DD:8B:33:76 server=dhcp-lan
 /ip dhcp-server lease add address=10.1.11.3 comment=ups-dori-office lease-time=1d mac-address=00:0C:15:04:39:93 server=dhcp-mgmt
@@ -255,6 +255,8 @@
 /ip dhcp-server lease add address=10.2.13.22 comment=sonoff-s31-dori-desktop lease-time=1d mac-address=8C:AA:B5:66:12:00 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.27 comment=hue-upstairs lease-time=1d mac-address=00:17:88:61:02:4E server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.21 comment=led-strip-dori-office-ceiling lease-time=1d mac-address=C4:DE:E2:B2:D2:C7 server=dhcp-lan
+/ip dhcp-server lease add address=10.1.10.13 comment=switch-living-room lease-time=1d mac-address=E4:38:83:8C:AA:DA server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.12 comment=switch-rack lease-time=1d mac-address=D8:B3:70:1E:9E:3A server=dhcp-mgmt
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -318,12 +320,12 @@
 /ip dns static add address=::ffff:10.2.10.2 comment=static-dns-for-dhcp name=wizzy-desktop.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.12.1 comment=static-dns-for-dhcp name=bengalfox-ipmi.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.12.1 comment=static-dns-for-dhcp name=bengalfox-ipmi.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.1.10.4 comment=static-dns-for-dhcp name=switch-living-room.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.1.10.4 comment=static-dns-for-dhcp name=switch-living-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.4 comment=static-dns-for-dhcp name=switch-den.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.4 comment=static-dns-for-dhcp name=switch-den.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.11.1 comment=static-dns-for-dhcp name=pdu-rack.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.11.1 comment=static-dns-for-dhcp name=pdu-rack.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.1.10.2 comment=static-dns-for-dhcp name=switch-rack.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.1.10.2 comment=static-dns-for-dhcp name=switch-rack.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.2 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.2 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.10.3 comment=static-dns-for-dhcp name=switch-rack-agg.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.10.3 comment=static-dns-for-dhcp name=switch-rack-agg.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.11.2 comment=static-dns-for-dhcp name=ups-rack.foxden.network ttl=5m
@@ -336,8 +338,8 @@
 /ip dns static add address=::ffff:10.1.10.7 comment=static-dns-for-dhcp name=ap-corridor-upper.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.10.5 comment=static-dns-for-dhcp name=switch-workbench.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.10.5 comment=static-dns-for-dhcp name=switch-workbench.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office-agg.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.10 comment=static-dns-for-dhcp name=switch-dori-office-agg.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.6.11.2 comment=static-dns-for-dhcp name=telegraf.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.6.11.2 comment=static-dns-for-dhcp name=telegraf.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.2 comment=static-dns-for-dhcp name=syncthing.foxden.network ttl=5m
@@ -518,6 +520,10 @@
 /ip dns static add address=::ffff:10.2.12.27 comment=static-dns-for-dhcp name=hue-upstairs.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.21 comment=static-dns-for-dhcp name=led-strip-dori-office-ceiling.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.21 comment=static-dns-for-dhcp name=led-strip-dori-office-ceiling.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.13 comment=static-dns-for-dhcp name=switch-living-room.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.13 comment=static-dns-for-dhcp name=switch-living-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.12 comment=static-dns-for-dhcp name=switch-rack.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.12 comment=static-dns-for-dhcp name=switch-rack.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -624,7 +630,9 @@
 /system ntp client servers add address=1.pool.ntp.org
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
-/system routerboard settings set auto-upgrade=yes
+/system routerboard settings
+# Firmware upgraded successfully, please reboot for changes to take effect!
+set auto-upgrade=yes
 /system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,policy,test start-date=aug/09/2020 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
