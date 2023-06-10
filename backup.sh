@@ -6,6 +6,11 @@ BACKUP_MIRROR="$2"
 
 RDIR="tmpfs-scratch/"
 
+SED=sed
+if command -v gsed; then
+    SED=gsed
+fi
+
 mtik_backup() {
     RHOST="$1"
     RHOST_ABS="${RHOST}.foxden.network"
@@ -22,14 +27,14 @@ mtik_backup() {
         cp "${RHOST}-secret.backup" "${RHOST}-secret.rsc" "${RHOST}.rsc" "${BACKUP_MIRROR}"
     fi
 
-    sed 's~^# .../../.... ..:..:.. by RouterOS~# ---/--/---- --:--:-- by RouterOS~'  -i "${RHOST}.rsc"
-    sed 's~key=\\"[^"]*\\"~key=\\"REMOVED\\"~g' -i "${RHOST}.rsc"
-    sed 's~global DynDNSKey \\".*\\"~global DynDNSKey \\"REMOVED\\"~g' -i "${RHOST}.rsc"
-    sed 's~^# software id = .*$~# software id = REMOVED~g' -i "${RHOST}.rsc"
-    sed 's~^# serial number = .*$~# serial number = REMOVED~g' -i "${RHOST}.rsc"
-    sed 's~name=monitor_[^ ]*~name=monitor_REMOVED~g' -i "${RHOST}.rsc"
-    sed 's~identity=[^ ]*~identity=REMOVED~g' -i "${RHOST}.rsc"
-    sed 's~network=[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]~network=REMOVED~g' -i "${RHOST}.rsc"
+    $SED 's~^# .../../.... ..:..:.. by RouterOS~# ---/--/---- --:--:-- by RouterOS~'  -i "${RHOST}.rsc"
+    $SED 's~key=\\"[^"]*\\"~key=\\"REMOVED\\"~g' -i "${RHOST}.rsc"
+    $SED 's~global DynDNSKey \\".*\\"~global DynDNSKey \\"REMOVED\\"~g' -i "${RHOST}.rsc"
+    $SED 's~^# software id = .*$~# software id = REMOVED~g' -i "${RHOST}.rsc"
+    $SED 's~^# serial number = .*$~# serial number = REMOVED~g' -i "${RHOST}.rsc"
+    $SED 's~name=monitor_[^ ]*~name=monitor_REMOVED~g' -i "${RHOST}.rsc"
+    $SED 's~identity=[^ ]*~identity=REMOVED~g' -i "${RHOST}.rsc"
+    $SED 's~network=[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]~network=REMOVED~g' -i "${RHOST}.rsc"
 
     sleep 1
 
