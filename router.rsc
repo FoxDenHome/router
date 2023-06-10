@@ -1,4 +1,4 @@
-# 2023-05-26 21:32:27 by RouterOS 7.10rc1
+# 2023-06-09 21:46:38 by RouterOS 7.10rc5
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -227,7 +227,6 @@
 /ip dhcp-server lease add address=10.2.10.7 comment=mbp-mark-dietzer lease-time=1d mac-address=BC:D0:74:45:61:FB server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.17 comment=august-connect-back-door-upper lease-time=1d mac-address=2C:9F:FB:16:5F:B7 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.18 comment=uplift-dori-desk lease-time=1d mac-address=40:91:51:51:E8:B6 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.12.50 comment=amp-living-room-wifi lease-time=1d mac-address=EC:F4:51:D0:8C:B0 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.19 comment=nanoleaf-lines-wizzy lease-time=1d mac-address=80:8A:F7:03:55:58 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.20 comment=nanoleaf-shapes-dori lease-time=1d mac-address=80:8A:F7:03:EA:58 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.14.5 comment=dori-ipad lease-time=1d mac-address=6E:42:DD:F2:32:D8 server=dhcp-lan
@@ -239,12 +238,12 @@
 /ip dhcp-server lease add address=10.2.12.22 comment=laundry-dryer lease-time=1d mac-address=88:57:1D:85:70:A1 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.24 comment=appletv-dori-office lease-time=1d mac-address=9C:3E:53:1C:20:C0 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.25 comment=thermostat-nest-corridor-upper lease-time=1d mac-address=64:16:66:9F:DE:CA server=dhcp-lan
-/ip dhcp-server lease add address=10.2.12.51 comment=appletv-living-room-wifi lease-time=1d mac-address=58:D3:49:D1:3E:F1 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.11.3 comment=akvorado lease-time=1d mac-address=BA:11:EF:53:38:7A server=dhcp-hypervisor
 /ip dhcp-server lease add address=10.2.13.10 comment=custom-led-microscope lease-time=1d mac-address=D4:F9:8D:70:82:F6 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.11.2 comment=pawbfun-2 lease-time=1d mac-address=FA:3F:4C:4C:97:2C server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.11.1 comment=pawbfun-1 lease-time=1d mac-address=CE:5A:B6:F7:F3:EB server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.13.2 comment=custom-bench-psu lease-time=1d mac-address=E0:98:06:24:8D:06 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.28 comment=nanoleaf-shapes-den lease-time=1d mac-address=80:8A:F7:03:E2:1A server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.26 comment=homepod-living-room lease-time=1d mac-address=AC:BC:B5:D0:56:AE server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.13 comment=apt-mirror lease-time=1d mac-address=02:40:12:6C:D7:1A server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.14 comment=jupyter lease-time=1d mac-address=DA:53:94:31:25:26 server=dhcp-lan
@@ -258,6 +257,8 @@
 /ip dhcp-server lease add address=10.1.10.12 comment=switch-rack lease-time=1d mac-address=D8:B3:70:1E:9E:3A server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.5 comment=switch-dori-office lease-time=1d mac-address=60:22:32:39:77:9C server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.8 comment=crs-305 lease-time=1d mac-address=FF:FF:AA:EA:C8:7C server=dhcp-mgmt
+/ip dhcp-server lease add address=10.5.11.6 comment=camera-back-door-upper lease-time=1d mac-address=D0:21:F9:94:97:13 server=dhcp-security
+/ip dhcp-server lease add address=10.2.11.15 comment=backup lease-time=1d mac-address=8A:F3:D2:9F:6B:D5 server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -469,8 +470,6 @@
 /ip dns static add address=::ffff:10.2.12.17 comment=static-dns-for-dhcp name=august-connect-back-door-upper.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.18 comment=static-dns-for-dhcp name=uplift-dori-desk.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.18 comment=static-dns-for-dhcp name=uplift-dori-desk.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.12.50 comment=static-dns-for-dhcp name=amp-living-room-wifi.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.12.50 comment=static-dns-for-dhcp name=amp-living-room-wifi.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.19 comment=static-dns-for-dhcp name=nanoleaf-lines-wizzy.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.19 comment=static-dns-for-dhcp name=nanoleaf-lines-wizzy.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.20 comment=static-dns-for-dhcp name=nanoleaf-shapes-dori.foxden.network ttl=5m
@@ -493,8 +492,6 @@
 /ip dns static add address=::ffff:10.2.12.24 comment=static-dns-for-dhcp name=appletv-dori-office.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.25 comment=static-dns-for-dhcp name=thermostat-nest-corridor-upper.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.25 comment=static-dns-for-dhcp name=thermostat-nest-corridor-upper.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.12.51 comment=static-dns-for-dhcp name=appletv-living-room-wifi.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.12.51 comment=static-dns-for-dhcp name=appletv-living-room-wifi.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.6.11.3 comment=static-dns-for-dhcp name=akvorado.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.6.11.3 comment=static-dns-for-dhcp name=akvorado.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.10 comment=static-dns-for-dhcp name=custom-led-microscope.foxden.network ttl=5m
@@ -505,6 +502,8 @@
 /ip dns static add address=::ffff:10.3.11.1 comment=static-dns-for-dhcp name=pawbfun-1.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.2 comment=static-dns-for-dhcp name=custom-bench-psu.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.28 comment=static-dns-for-dhcp name=nanoleaf-shapes-den.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.28 comment=static-dns-for-dhcp name=nanoleaf-shapes-den.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.26 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.26 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.13 comment=static-dns-for-dhcp name=apt-mirror.foxden.network ttl=5m
@@ -531,6 +530,10 @@
 /ip dns static add address=::ffff:10.1.10.5 comment=static-dns-for-dhcp name=switch-dori-office.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.10.8 comment=static-dns-for-dhcp name=crs-305.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.10.8 comment=static-dns-for-dhcp name=crs-305.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.5.11.6 comment=static-dns-for-dhcp name=camera-back-door-upper.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.5.11.6 comment=static-dns-for-dhcp name=camera-back-door-upper.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.11.15 comment=static-dns-for-dhcp name=backup.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.15 comment=static-dns-for-dhcp name=backup.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -553,6 +556,7 @@
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="NAS -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.11.1
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="LAN -> UniFi" dst-address=10.1.10.1 in-interface-list=iface-lan
 /ip firewall filter add action=accept chain=lan-out-forward comment=HomeAssistant dst-address=10.2.12.2 dst-port=80,443,8080,8443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment="HomeAssistant MQTT" dst-address=10.2.12.2 dst-port=1883 in-interface-list=iface-security protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=APT dst-address=10.2.11.13 dst-port=80,443 protocol=tcp
@@ -638,13 +642,15 @@
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
 /system package update set channel=testing
-/system routerboard settings set auto-upgrade=yes
-/system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,policy,test start-date=2020-08-09 start-time=09:41:00
+/system routerboard settings
+# Firmware upgraded successfully, please reboot for changes to take effect!
+set auto-upgrade=yes
+/system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,test start-date=2020-08-09 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
-    \n" policy=read,write,policy,test start-time=startup
+    \n" policy=read,write,test start-time=startup
 /system scheduler add interval=1m name=wan-online-adjust on-event="/system/script/run wan-online-adjust\r\
-    \n" policy=read,write,policy,test start-date=2023-01-17 start-time=19:51:50
+    \n" policy=read,write,test start-date=2023-01-17 start-time=19:51:50
 /system script add dont-require-permissions=no name=dhcp-propagate-changes owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local topdomain\r\
     \n:local hostname\r\
     \n:local dhcpent\r\
@@ -667,7 +673,7 @@
     \n    /ip/dns/static/add ttl=5m type=AAAA name=\$hostname address=(\"::ffff:\" . (\$dhcpent->\"address\")) comment=\"static-dns-for-dhcp\"\r\
     \n}\r\
     \n"
-/system script add dont-require-permissions=yes name=dyndns-update owner=admin policy=read,write,policy,test source=":local ipaddrfind [ /ip/address/find interface=wan ]\r\
+/system script add dont-require-permissions=yes name=dyndns-update owner=admin policy=read,write,test source=":local ipaddrfind [ /ip/address/find interface=wan ]\r\
     \n:if ([:len \$ipaddrfind] < 1) do={\r\
     \n    :log warning \"No WAN IP address found\"\r\
     \n    :exit\r\
@@ -754,7 +760,7 @@
     \n    }\r\
     \n}\r\
     \n"
-/system script add dont-require-permissions=yes name=wan-online-adjust owner=admin policy=read,write,policy,test source=":global VRRPPriorityOffline\r\
+/system script add dont-require-permissions=yes name=wan-online-adjust owner=admin policy=read,write,test source=":global VRRPPriorityOffline\r\
     \n:global VRRPPriorityOnline\r\
     \n:local VRRPPriorityCurrent \$VRRPPriorityOffline\r\
     \n\r\
@@ -779,7 +785,7 @@
     \n:put \"Set RA priority \$RAPriorityCurrent\"\r\
     \n/ipv6/nd/set [ /ipv6/nd/find ra-preference!=\$RAPriorityCurrent ] ra-preference=\$RAPriorityCurrent\r\
     \n"
-/system script add dont-require-permissions=yes name=local-init-onboot owner=admin policy=read,write,policy,test source=":global VRRPPriorityOnline 50\r\
+/system script add dont-require-permissions=yes name=local-init-onboot owner=admin policy=read,write,test source=":global VRRPPriorityOnline 50\r\
     \n:global VRRPPriorityOffline 10\r\
     \n\r\
     \n:global DynDNSHost \"router.foxden.network\"\r\
@@ -788,7 +794,7 @@
     \n:global RAPriorityOnline \"high\"\r\
     \n:global RAPriorityOffline \"low\"\r\
     \n"
-/system script add dont-require-permissions=yes name=global-init-onboot owner=admin policy=read,write,policy,test source=":global logputdebug do={\r\
+/system script add dont-require-permissions=yes name=global-init-onboot owner=admin policy=read,write,test source=":global logputdebug do={\r\
     \n    :log debug \$1\r\
     \n    :put \$1\r\
     \n}\r\
