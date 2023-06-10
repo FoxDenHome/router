@@ -7,7 +7,7 @@ BACKUP_MIRROR="$2"
 RDIR="tmpfs-scratch/"
 
 SED=sed
-if command -v gsed; then
+if command -v gsed >/dev/null; then
     SED=gsed
 fi
 
