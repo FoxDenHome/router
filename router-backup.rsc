@@ -142,9 +142,9 @@
 /ip dhcp-server lease add address=10.2.11.1 comment=bengalfox lease-time=1d mac-address=50:6B:4B:4B:90:5E server=dhcp-lan
 /ip dhcp-server lease add address=10.2.10.2 comment=wizzy-desktop lease-time=1d mac-address=EC:0D:9A:21:DF:70 server=dhcp-lan
 /ip dhcp-server lease add address=10.1.12.1 comment=bengalfox-ipmi lease-time=1d mac-address=00:25:90:FF:CF:5B server=dhcp-mgmt
-/ip dhcp-server lease add address=10.1.10.4 comment=switch-den lease-time=1d mac-address=80:2A:A8:DE:F0:AE server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.4 comment=us-8-poe-sfp lease-time=1d mac-address=80:2A:A8:DE:F0:AE server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.11.1 comment=pdu-rack lease-time=1d mac-address=70:A7:41:F8:13:09 server=dhcp-mgmt
-/ip dhcp-server lease add address=10.1.10.2 comment=usw-pro-24 lease-time=1d mac-address=24:5A:4C:A6:6B:9A server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.2 comment=switch-den lease-time=1d mac-address=24:5A:4C:A6:6B:9A server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.3 comment=switch-rack-agg lease-time=1d mac-address=24:5A:4C:56:41:C4 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.11.2 comment=ups-rack lease-time=1d mac-address=00:C0:B7:E8:B2:A0 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.1 comment=unifi lease-time=1d mac-address=24:5A:4C:8A:23:3F server=dhcp-mgmt
@@ -312,12 +312,12 @@
 /ip dns static add address=::ffff:10.2.10.2 comment=static-dns-for-dhcp name=wizzy-desktop.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.12.1 comment=static-dns-for-dhcp name=bengalfox-ipmi.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.12.1 comment=static-dns-for-dhcp name=bengalfox-ipmi.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.1.10.4 comment=static-dns-for-dhcp name=switch-den.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.1.10.4 comment=static-dns-for-dhcp name=switch-den.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.4 comment=static-dns-for-dhcp name=us-8-poe-sfp.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.4 comment=static-dns-for-dhcp name=us-8-poe-sfp.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.11.1 comment=static-dns-for-dhcp name=pdu-rack.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.11.1 comment=static-dns-for-dhcp name=pdu-rack.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.1.10.2 comment=static-dns-for-dhcp name=usw-pro-24.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.1.10.2 comment=static-dns-for-dhcp name=usw-pro-24.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.2 comment=static-dns-for-dhcp name=switch-den.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.2 comment=static-dns-for-dhcp name=switch-den.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.10.3 comment=static-dns-for-dhcp name=switch-rack-agg.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.10.3 comment=static-dns-for-dhcp name=switch-rack-agg.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.11.2 comment=static-dns-for-dhcp name=ups-rack.foxden.network ttl=5m
