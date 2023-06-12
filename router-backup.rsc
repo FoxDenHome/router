@@ -1,4 +1,4 @@
-# 2023-06-09 21:46:42 by RouterOS 7.10rc5
+# 2023-06-12 11:21:48 by RouterOS 7.10rc5
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -248,6 +248,7 @@
 /ip dhcp-server lease add address=10.1.10.8 comment=crs-305 lease-time=1d mac-address=FF:FF:AA:EA:C8:7C server=dhcp-mgmt
 /ip dhcp-server lease add address=10.5.11.6 comment=camera-back-door-upper lease-time=1d mac-address=D0:21:F9:94:97:13 server=dhcp-security
 /ip dhcp-server lease add address=10.2.11.15 comment=backup lease-time=1d mac-address=8A:F3:D2:9F:6B:D5 server=dhcp-lan
+/ip dhcp-server lease add address=10.1.10.14 comment=switch-den-desk lease-time=1d mac-address=74:83:C2:FF:87:16 server=dhcp-mgmt
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -523,6 +524,8 @@
 /ip dns static add address=::ffff:10.5.11.6 comment=static-dns-for-dhcp name=camera-back-door-upper.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.15 comment=static-dns-for-dhcp name=backup.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.11.15 comment=static-dns-for-dhcp name=backup.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.10.14 comment=static-dns-for-dhcp name=switch-den-desk.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.10.14 comment=static-dns-for-dhcp name=switch-den-desk.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
