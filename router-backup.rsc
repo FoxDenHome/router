@@ -1,4 +1,4 @@
-# ---/--/---- --:--:-- by RouterOS 7.10rc5
+# ____-__-__ __:__:__ by RouterOS 7.10rc5
 # software id = REMOVED
 #
 # model = RB5009UG+S+
