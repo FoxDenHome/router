@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.10rc5
+# ____-__-__ __:__:__ by RouterOS 7.10rc6
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
