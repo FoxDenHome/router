@@ -258,9 +258,11 @@
 /ip dhcp-server lease add address=10.1.10.5 comment=switch-dori-office lease-time=1d mac-address=60:22:32:39:77:9C server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.8 comment=crs-305 lease-time=1d mac-address=FF:FF:AA:EA:C8:7C server=dhcp-mgmt
 /ip dhcp-server lease add address=10.5.11.6 comment=camera-back-door-upper lease-time=1d mac-address=D0:21:F9:94:97:13 server=dhcp-security
-/ip dhcp-server lease add address=10.2.11.15 comment=backup lease-time=1d mac-address=8A:F3:D2:9F:6B:D5 server=dhcp-lan
 /ip dhcp-server lease add address=10.1.10.14 comment=switch-den-desk lease-time=1d mac-address=74:83:C2:FF:87:16 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.5.11.7 comment=camera-den lease-time=1d mac-address=E4:38:83:0E:E4:A3 server=dhcp-security
+/ip dhcp-server lease add address=10.2.11.16 comment=scrypted lease-time=1d mac-address=52:81:BA:81:D3:E2 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.11.17 comment=s3 lease-time=1d mac-address=D2:5B:0F:B8:77:26 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.11.15 comment=bengalfox-syncthing lease-time=1d mac-address=6C:DE:77:10:02:AA server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -312,6 +314,7 @@
 /ip dns static add cname=foxcaves.foxden.network name=f0x.es type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=ftp.us.debian.org ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=deb.us.debian.org ttl=5m type=CNAME
+/ip dns static add cname=nas.foxden.network name=dav.foxden.network ttl=5m type=CNAME
 /ip dns static add address=10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.6.10.2 comment=static-dns-for-dhcp name=islandfox.foxden.network ttl=5m
@@ -534,12 +537,16 @@
 /ip dns static add address=::ffff:10.1.10.8 comment=static-dns-for-dhcp name=crs-305.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.5.11.6 comment=static-dns-for-dhcp name=camera-back-door-upper.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.5.11.6 comment=static-dns-for-dhcp name=camera-back-door-upper.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.11.15 comment=static-dns-for-dhcp name=backup.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.11.15 comment=static-dns-for-dhcp name=backup.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.10.14 comment=static-dns-for-dhcp name=switch-den-desk.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.10.14 comment=static-dns-for-dhcp name=switch-den-desk.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.5.11.7 comment=static-dns-for-dhcp name=camera-den.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.5.11.7 comment=static-dns-for-dhcp name=camera-den.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.11.16 comment=static-dns-for-dhcp name=scrypted.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.16 comment=static-dns-for-dhcp name=scrypted.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.11.17 comment=static-dns-for-dhcp name=s3.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.17 comment=static-dns-for-dhcp name=s3.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.11.15 comment=static-dns-for-dhcp name=bengalfox-syncthing.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.15 comment=static-dns-for-dhcp name=bengalfox-syncthing.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -566,6 +573,7 @@
 /ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=APT dst-address=10.2.11.13 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=s3 dst-address=10.2.11.17 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Plex dst-address=10.2.11.3 dst-port=32400 protocol=tcp
 /ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=8883 protocol=tcp
 /ip firewall filter add action=accept chain=security-out-forward comment="LAN -> NVR" dst-address=10.5.10.1 in-interface-list=iface-lan
