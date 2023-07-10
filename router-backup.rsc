@@ -183,12 +183,12 @@
 /ip dhcp-server lease add address=10.2.14.2 comment=dori-watch lease-time=1d mac-address=E2:47:0B:F9:D1:F1 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.10.5 comment=spaceage-web lease-time=1d mac-address=62:BF:FB:E4:89:5D server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.4 comment=spaceage-gmod lease-time=1d mac-address=5E:47:05:FC:F8:90 server=dhcp-dmz
-/ip dhcp-server lease add address=10.2.13.4 comment=sonoff-s31-lighthouse-bl lease-time=1d mac-address=8C:AA:B5:66:3B:BE server=dhcp-lan
+/ip dhcp-server lease add address=10.2.13.4 comment=sonoff-s31-wizzy-office-fan lease-time=1d mac-address=8C:AA:B5:66:3B:BE server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.3 comment=sonoff-s31-bambu-x1 lease-time=1d mac-address=E8:DB:84:9F:4F:08 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.8 comment=sonoff-s31-dori-pc lease-time=1d mac-address=8C:AA:B5:66:3D:81 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.1 comment=sonoff-s31-wizzy-pc lease-time=1d mac-address=8C:AA:B5:66:10:70 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.10.3 comment=ut2004 lease-time=1d mac-address=02:43:39:4D:B6:AA server=dhcp-dmz
-/ip dhcp-server lease add address=10.2.13.12 comment=sonoff-s31-lighthouse-br lease-time=1d mac-address=C4:5B:BE:E4:9B:00 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.13.12 comment=sonoff-s31-dori-office-fan lease-time=1d mac-address=C4:5B:BE:E4:9B:00 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.10.7 comment=factorio lease-time=1d mac-address=36:16:0C:C9:E8:0B server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.13.11 comment=uplift-wizzy-desk lease-time=1d mac-address=40:91:51:52:11:F7 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.12.1 comment=islandfox-ipmi lease-time=1d mac-address=04:7B:CB:44:C0:DD server=dhcp-hypervisor
@@ -201,8 +201,8 @@
 /ip dhcp-server lease add address=10.2.12.14 comment=homepod-wizzy lease-time=1d mac-address=04:99:B9:79:EE:C9 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.15 comment=tesla-model-3 lease-time=1d mac-address=CC:88:26:27:41:29 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.16 comment=tesla-wall-charger lease-time=1d mac-address=98:ED:5C:9B:79:CF server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.14 comment=sonoff-s31-valve-index lease-time=1d mac-address=C4:5B:BE:E4:9B:6B server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.13 comment=sonoff-s31-lighthouse-fl lease-time=1d mac-address=C4:5B:BE:E4:82:69 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.13.14 comment=sonoff-s31-mister lease-time=1d mac-address=C4:5B:BE:E4:9B:6B server=dhcp-lan
+/ip dhcp-server lease add address=10.2.13.13 comment=sonoff-s31-bedroom-fan lease-time=1d mac-address=C4:5B:BE:E4:82:69 server=dhcp-lan
 /ip dhcp-server lease add address=10.5.10.1 comment=nvr lease-time=1d mac-address=60:22:32:F1:BF:71 server=dhcp-security
 /ip dhcp-server lease add address=10.4.10.1 comment=bambu-x1 lease-time=1d mac-address=08:FB:EA:02:64:96 server=dhcp-labnet
 /ip dhcp-server lease add address=10.2.12.18 comment=hue-sync-box lease-time=1d mac-address=C4:29:96:0B:9C:82 server=dhcp-lan
@@ -253,6 +253,10 @@
 /ip dhcp-server lease add address=10.2.11.16 comment=scrypted lease-time=1d mac-address=52:81:BA:81:D3:E2 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.17 comment=s3 lease-time=1d mac-address=D2:5B:0F:B8:77:26 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.15 comment=bengalfox-syncthing lease-time=1d mac-address=6C:DE:77:10:02:AA server=dhcp-lan
+/ip dhcp-server lease add address=10.2.13.23 comment=uplift-den-desk lease-time=1d mac-address=40:91:51:45:98:06 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.13.24 comment=custom-shaving-mirror lease-time=1d mac-address=44:17:93:16:03:94 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.13.25 comment=led-strip-bambu-x1 lease-time=1d mac-address=0C:B8:15:C3:24:2C server=dhcp-lan
+/ip dhcp-server lease add address=10.2.10.10 comment=mister lease-time=1d mac-address=02:03:04:05:06:07 server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -397,8 +401,8 @@
 /ip dns static add address=::ffff:10.3.10.5 comment=static-dns-for-dhcp name=spaceage-web.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.3.10.4 comment=static-dns-for-dhcp name=spaceage-gmod.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.3.10.4 comment=static-dns-for-dhcp name=spaceage-gmod.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.13.4 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-bl.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.13.4 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-bl.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.4 comment=static-dns-for-dhcp name=sonoff-s31-wizzy-office-fan.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.4 comment=static-dns-for-dhcp name=sonoff-s31-wizzy-office-fan.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.3 comment=static-dns-for-dhcp name=sonoff-s31-bambu-x1.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.3 comment=static-dns-for-dhcp name=sonoff-s31-bambu-x1.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.8 comment=static-dns-for-dhcp name=sonoff-s31-dori-pc.foxden.network ttl=5m
@@ -407,8 +411,8 @@
 /ip dns static add address=::ffff:10.2.13.1 comment=static-dns-for-dhcp name=sonoff-s31-wizzy-pc.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.3.10.3 comment=static-dns-for-dhcp name=ut2004.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.3.10.3 comment=static-dns-for-dhcp name=ut2004.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.13.12 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-br.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.13.12 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-br.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.12 comment=static-dns-for-dhcp name=sonoff-s31-dori-office-fan.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.12 comment=static-dns-for-dhcp name=sonoff-s31-dori-office-fan.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.3.10.7 comment=static-dns-for-dhcp name=factorio.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.3.10.7 comment=static-dns-for-dhcp name=factorio.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.11 comment=static-dns-for-dhcp name=uplift-wizzy-desk.foxden.network ttl=5m
@@ -433,10 +437,10 @@
 /ip dns static add address=::ffff:10.2.12.15 comment=static-dns-for-dhcp name=tesla-model-3.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.16 comment=static-dns-for-dhcp name=tesla-wall-charger.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.16 comment=static-dns-for-dhcp name=tesla-wall-charger.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.13.14 comment=static-dns-for-dhcp name=sonoff-s31-valve-index.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.13.14 comment=static-dns-for-dhcp name=sonoff-s31-valve-index.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.13.13 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-fl.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.13.13 comment=static-dns-for-dhcp name=sonoff-s31-lighthouse-fl.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.14 comment=static-dns-for-dhcp name=sonoff-s31-mister.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.14 comment=static-dns-for-dhcp name=sonoff-s31-mister.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.13 comment=static-dns-for-dhcp name=sonoff-s31-bedroom-fan.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.13 comment=static-dns-for-dhcp name=sonoff-s31-bedroom-fan.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.5.10.1 comment=static-dns-for-dhcp name=nvr.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.5.10.1 comment=static-dns-for-dhcp name=nvr.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.4.10.1 comment=static-dns-for-dhcp name=bambu-x1.foxden.network ttl=5m
@@ -537,6 +541,14 @@
 /ip dns static add address=::ffff:10.2.11.17 comment=static-dns-for-dhcp name=s3.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.15 comment=static-dns-for-dhcp name=bengalfox-syncthing.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.11.15 comment=static-dns-for-dhcp name=bengalfox-syncthing.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.23 comment=static-dns-for-dhcp name=uplift-den-desk.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.23 comment=static-dns-for-dhcp name=uplift-den-desk.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.24 comment=static-dns-for-dhcp name=custom-shaving-mirror.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.24 comment=static-dns-for-dhcp name=custom-shaving-mirror.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.25 comment=static-dns-for-dhcp name=led-strip-bambu-x1.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.25 comment=static-dns-for-dhcp name=led-strip-bambu-x1.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.10.10 comment=static-dns-for-dhcp name=mister.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.10.10 comment=static-dns-for-dhcp name=mister.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -565,6 +577,7 @@
 /ip firewall filter add action=accept chain=lan-out-forward comment=APT dst-address=10.2.11.13 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=s3 dst-address=10.2.11.17 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Plex dst-address=10.2.11.3 dst-port=32400 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment="LabNet -> NAS" dst-address=10.2.11.1 in-interface-list=iface-labnet
 /ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=8883 protocol=tcp
 /ip firewall filter add action=accept chain=security-out-forward comment="LAN -> NVR" dst-address=10.5.10.1 in-interface-list=iface-lan
 /ip firewall filter add action=accept chain=s2s-out-forward comment="LAN -> IceFox" dst-address=10.99.10.2 in-interface-list=iface-lan
