@@ -256,7 +256,11 @@
 /ip dhcp-server lease add address=10.2.13.23 comment=uplift-den-desk lease-time=1d mac-address=40:91:51:45:98:06 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.24 comment=custom-shaving-mirror lease-time=1d mac-address=44:17:93:16:03:94 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.25 comment=led-strip-bambu-x1 lease-time=1d mac-address=0C:B8:15:C3:24:2C server=dhcp-lan
+/ip dhcp-server lease add address=10.4.10.3 comment=carvera lease-time=1d mac-address=EC:C7:00:1C:E3:2D server=dhcp-labnet
 /ip dhcp-server lease add address=10.2.10.10 comment=mister lease-time=1d mac-address=02:03:04:05:06:07 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.29 comment=tv-dori-office lease-time=1d mac-address=A8:23:FE:39:3A:1C server=dhcp-lan
+/ip dhcp-server lease add address=10.2.13.26 comment=presence-sensor-bathroom-upper lease-time=1d mac-address=E0:98:06:F9:A4:A0 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.13.27 comment=presence-sensor-bathroom-lower lease-time=1d mac-address=E0:98:06:F9:A6:97 server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -547,8 +551,16 @@
 /ip dns static add address=::ffff:10.2.13.24 comment=static-dns-for-dhcp name=custom-shaving-mirror.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.25 comment=static-dns-for-dhcp name=led-strip-bambu-x1.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.25 comment=static-dns-for-dhcp name=led-strip-bambu-x1.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.4.10.3 comment=static-dns-for-dhcp name=carvera.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.4.10.3 comment=static-dns-for-dhcp name=carvera.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.10.10 comment=static-dns-for-dhcp name=mister.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.10.10 comment=static-dns-for-dhcp name=mister.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.29 comment=static-dns-for-dhcp name=tv-dori-office.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.29 comment=static-dns-for-dhcp name=tv-dori-office.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.26 comment=static-dns-for-dhcp name=presence-sensor-bathroom-upper.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.26 comment=static-dns-for-dhcp name=presence-sensor-bathroom-upper.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.13.27 comment=static-dns-for-dhcp name=presence-sensor-bathroom-lower.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.13.27 comment=static-dns-for-dhcp name=presence-sensor-bathroom-lower.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
