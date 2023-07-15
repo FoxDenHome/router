@@ -182,7 +182,7 @@
 /ip dhcp-server lease add address=10.2.12.9 comment=vacuum-neato lease-time=1d mac-address=40:BD:32:95:26:C0 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.4 comment=homepod-unknown-room lease-time=1d mac-address=F4:34:F0:4B:87:1A server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.5 comment=homepod-bedroom lease-time=1d mac-address=94:EA:32:84:DB:90 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.14.1 comment=dori-phone lease-time=1d mac-address=3A:AF:A8:F3:A6:F5 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.14.1 comment=dori-phone lease-time=1d mac-address=EE:39:6C:E4:14:5F server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.6 comment=appletv-living-room lease-time=1d mac-address=58:D3:49:E4:02:2D server=dhcp-lan
 /ip dhcp-server lease add address=10.2.15.1 comment=nintendo-switch-wired lease-time=1d mac-address=00:0E:C6:D2:C9:DD server=dhcp-lan
 /ip dhcp-server lease add address=10.2.14.3 comment=wizzy-phone lease-time=1d mac-address=56:6C:5E:7A:0E:C7 server=dhcp-lan
@@ -191,7 +191,7 @@
 /ip dhcp-server lease add address=10.2.10.5 comment=wizzy-laptop lease-time=1d mac-address=F0:2F:4B:15:2E:54 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.10 comment=amp-living-room lease-time=1d mac-address=EC:F4:51:D0:8C:AF server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.8 comment=clock-nixie-dori lease-time=1d mac-address=C4:5B:BE:63:3A:2E server=dhcp-lan
-/ip dhcp-server lease add address=10.2.14.2 comment=dori-watch lease-time=1d mac-address=E2:47:0B:F9:D1:F1 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.14.2 comment=dori-watch lease-time=1d mac-address=16:48:B6:37:DD:7B server=dhcp-lan
 /ip dhcp-server lease add address=10.3.10.5 comment=spaceage-web lease-time=1d mac-address=62:BF:FB:E4:89:5D server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.4 comment=spaceage-gmod lease-time=1d mac-address=5E:47:05:FC:F8:90 server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.13.4 comment=sonoff-s31-wizzy-office-fan lease-time=1d mac-address=8C:AA:B5:66:3B:BE server=dhcp-lan
