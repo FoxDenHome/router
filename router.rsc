@@ -28,6 +28,7 @@
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
 /interface vlan add interface=sfpx1-rackswitch-agg mtu=9000 name=vlan-lan vlan-id=2
+/interface vlan add interface=vlan-mgmt name=vlan-retro vlan-id=7
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-security vlan-id=5
 /interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=50 version=2
@@ -66,6 +67,7 @@
 /ip pool add name=pool-security ranges=10.5.100.0-10.5.149.255
 /ip pool add name=pool-hypervisor ranges=10.6.100.0-10.6.149.255
 /ip pool add name=pool-oob ranges=192.168.88.100-192.168.88.200
+/ip pool add name=pool-retro ranges=10.7.100.0-10.7.149.255
 /ip dhcp-server add address-pool=pool-labnet dhcp-option-set=default-classless interface=vlan-labnet lease-time=1h name=dhcp-labnet
 /ip dhcp-server add address-pool=pool-lan dhcp-option-set=default-classless interface=vlan-lan lease-time=1h name=dhcp-lan
 /ip dhcp-server add address-pool=pool-dmz dhcp-option-set=default-classless interface=vlan-dmz lease-time=1h name=dhcp-dmz
@@ -73,6 +75,7 @@
 /ip dhcp-server add address-pool=pool-security dhcp-option-set=default-classless interface=vlan-security lease-time=1h name=dhcp-security
 /ip dhcp-server add address-pool=pool-hypervisor dhcp-option-set=default-classless interface=vlan-hypervisor lease-time=1h name=dhcp-hypervisor
 /ip dhcp-server add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dhcp-oob
+/ip dhcp-server add address-pool=pool-retro interface=vlan-retro lease-time=1h name=dhcp-retro
 /port set 0 name=serial0
 /port set 1 name=serial1
 /queue type add cake-nat=yes cake-rtt-scheme=internet kind=cake name=cake-internet
@@ -110,6 +113,7 @@
 /interface list member add interface=wan list=zone-wan
 /interface list member add interface=wg-s2s list=zone-local
 /interface list member add interface=wg-vpn list=zone-local
+/interface list member add interface=vlan-retro list=zone-local
 /interface wireguard peers add allowed-address=10.100.10.1/32 comment=Fennec interface=wg-vpn public-key="+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY="
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 comment="Dori Phone" interface=wg-vpn public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
@@ -144,6 +148,7 @@
 /ip address add address=10.6.0.53 interface=vrrp-hypervisor-dns network=10.6.0.53
 /ip address add address=10.100.0.1/16 interface=wg-vpn network=10.100.0.0
 /ip address add address=10.99.1.1/16 interface=wg-s2s network=10.99.0.0
+/ip address add address=10.7.1.1/16 interface=vlan-retro network=10.7.0.0
 /ip cloud set update-time=no
 /ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run wan-online-adjust\r\
     \n" use-peer-dns=no use-peer-ntp=no
@@ -247,7 +252,6 @@
 /ip dhcp-server lease add address=10.2.12.28 comment=nanoleaf-shapes-den lease-time=1d mac-address=80:8A:F7:03:E2:1A server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.26 comment=homepod-living-room lease-time=1d mac-address=AC:BC:B5:D0:56:AE server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.13 comment=apt-mirror lease-time=1d mac-address=02:40:12:6C:D7:1A server=dhcp-lan
-/ip dhcp-server lease add address=10.2.11.14 comment=jupyter lease-time=1d mac-address=DA:53:94:31:25:26 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.11.3 comment=blfcmasto lease-time=1d mac-address=DE:E4:0A:E4:BB:D2 server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.1 comment=foxcaves lease-time=1d mac-address=A6:92:B3:48:21:9D server=dhcp-dmz
 /ip dhcp-server lease add address=10.4.10.2 comment=carvera-tablet lease-time=1d mac-address=78:24:AF:DF:C3:BA server=dhcp-labnet
@@ -262,22 +266,23 @@
 /ip dhcp-server lease add address=10.1.10.14 comment=switch-den-desk lease-time=1d mac-address=74:83:C2:FF:87:16 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.5.11.7 comment=camera-den lease-time=1d mac-address=E4:38:83:0E:E4:A3 server=dhcp-security
 /ip dhcp-server lease add address=10.2.11.16 comment=scrypted lease-time=1d mac-address=52:81:BA:81:D3:E2 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.11.17 comment=s3 lease-time=1d mac-address=D2:5B:0F:B8:77:26 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.15 comment=bengalfox-syncthing lease-time=1d mac-address=6C:DE:77:10:02:AA server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.23 comment=uplift-den-desk lease-time=1d mac-address=40:91:51:45:98:06 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.24 comment=custom-shaving-mirror lease-time=1d mac-address=44:17:93:16:03:94 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.25 comment=led-strip-bambu-x1 lease-time=1d mac-address=0C:B8:15:C3:24:2C server=dhcp-lan
 /ip dhcp-server lease add address=10.4.10.3 comment=carvera lease-time=1d mac-address=EC:C7:00:1C:E3:2D server=dhcp-labnet
-/ip dhcp-server lease add address=10.2.10.10 comment=mister lease-time=1d mac-address=02:03:04:05:06:07 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.29 comment=tv-dori-office lease-time=1d mac-address=A8:23:FE:39:3A:1C server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.26 comment=presence-sensor-bathroom-upper lease-time=1d mac-address=E0:98:06:F9:A4:A0 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.27 comment=presence-sensor-bathroom-lower lease-time=1d mac-address=E0:98:06:F9:A6:97 server=dhcp-lan
+/ip dhcp-server lease add address=10.7.10.1 comment=mister lease-time=1d mac-address=02:03:04:05:06:07 server=dhcp-retro
+/ip dhcp-server lease add address=10.7.10.2 comment=wii lease-time=1d mac-address=00:27:09:8A:A7:49 server=dhcp-retro
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
 /ip dhcp-server network add address=10.4.0.0/16 dns-server=10.4.0.53 domain=foxden.network gateway=10.4.0.1 netmask=16 ntp-server=10.4.0.123
 /ip dhcp-server network add address=10.5.0.0/16 dns-server=10.5.0.53 domain=foxden.network gateway=10.5.0.1 netmask=16 ntp-server=10.5.0.123
 /ip dhcp-server network add address=10.6.0.0/16 dns-server=10.6.0.53 domain=foxden.network gateway=10.6.0.1 netmask=16 ntp-server=10.6.0.123
+/ip dhcp-server network add address=10.7.0.0/16 dns-server=10.7.1.1 domain=foxden.network gateway=10.7.1.1 netmask=16 ntp-server=10.7.1.1
 /ip dhcp-server network add address=192.168.88.0/24 dns-none=yes
 /ip dns set allow-remote-requests=yes cache-max-ttl=1d cache-size=20480KiB servers=8.8.8.8,8.8.4.4 use-doh-server=https://dns.google/dns-query verify-doh-cert=yes
 /ip dns static add address=10.2.1.1 name=router.foxden.network ttl=5m
@@ -522,8 +527,6 @@
 /ip dns static add address=::ffff:10.2.12.26 comment=static-dns-for-dhcp name=homepod-living-room.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.13 comment=static-dns-for-dhcp name=apt-mirror.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.11.13 comment=static-dns-for-dhcp name=apt-mirror.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.11.14 comment=static-dns-for-dhcp name=jupyter.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.11.14 comment=static-dns-for-dhcp name=jupyter.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.3.11.3 comment=static-dns-for-dhcp name=blfcmasto.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.3.11.3 comment=static-dns-for-dhcp name=blfcmasto.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.3.10.1 comment=static-dns-for-dhcp name=foxcaves.foxden.network ttl=5m
@@ -552,8 +555,6 @@
 /ip dns static add address=::ffff:10.5.11.7 comment=static-dns-for-dhcp name=camera-den.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.16 comment=static-dns-for-dhcp name=scrypted.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.11.16 comment=static-dns-for-dhcp name=scrypted.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.11.17 comment=static-dns-for-dhcp name=s3.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.11.17 comment=static-dns-for-dhcp name=s3.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.15 comment=static-dns-for-dhcp name=bengalfox-syncthing.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.11.15 comment=static-dns-for-dhcp name=bengalfox-syncthing.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.23 comment=static-dns-for-dhcp name=uplift-den-desk.foxden.network ttl=5m
@@ -564,14 +565,16 @@
 /ip dns static add address=::ffff:10.2.13.25 comment=static-dns-for-dhcp name=led-strip-bambu-x1.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.4.10.3 comment=static-dns-for-dhcp name=carvera.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.4.10.3 comment=static-dns-for-dhcp name=carvera.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.10.10 comment=static-dns-for-dhcp name=mister.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.10.10 comment=static-dns-for-dhcp name=mister.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.29 comment=static-dns-for-dhcp name=tv-dori-office.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.29 comment=static-dns-for-dhcp name=tv-dori-office.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.26 comment=static-dns-for-dhcp name=presence-sensor-bathroom-upper.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.26 comment=static-dns-for-dhcp name=presence-sensor-bathroom-upper.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.27 comment=static-dns-for-dhcp name=presence-sensor-bathroom-lower.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.27 comment=static-dns-for-dhcp name=presence-sensor-bathroom-lower.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.7.10.1 comment=static-dns-for-dhcp name=mister.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.7.10.1 comment=static-dns-for-dhcp name=mister.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.7.10.2 comment=static-dns-for-dhcp name=wii.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.7.10.2 comment=static-dns-for-dhcp name=wii.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -586,6 +589,7 @@
 /ip firewall filter add action=jump chain=forward comment="LabNet allowlist" jump-target=labnet-out-forward out-interface-list=iface-labnet
 /ip firewall filter add action=jump chain=forward comment="Hypervisor allowlist" jump-target=hypervisor-out-forward out-interface-list=iface-hypervisor
 /ip firewall filter add action=jump chain=forward comment="Security allowlist" jump-target=security-out-forward out-interface-list=iface-security
+/ip firewall filter add action=jump chain=forward comment="Retro allowlist" jump-target=retro-out-forward out-interface=vlan-retro
 /ip firewall filter add action=jump chain=forward comment="S2S allowlist" jump-target=s2s-out-forward out-interface=wg-s2s
 /ip firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ip firewall filter add action=reject chain=forward reject-with=icmp-admin-prohibited
@@ -593,6 +597,7 @@
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="HomeAssistant -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.12.2
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="NAS -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.11.1
 /ip firewall filter add action=accept chain=mgmt-out-forward comment="LAN -> UniFi" dst-address=10.1.10.1 in-interface-list=iface-lan
+/ip firewall filter add action=accept chain=retro-out-forward comment="LAN -> Retro" in-interface-list=iface-lan
 /ip firewall filter add action=accept chain=lan-out-forward comment=HomeAssistant dst-address=10.2.12.2 dst-port=80,443,8080,8443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment="HomeAssistant MQTT" dst-address=10.2.12.2 dst-port=1883 in-interface-list=iface-security protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
