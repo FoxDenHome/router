@@ -161,7 +161,7 @@
 /ip dhcp-server lease add address=10.1.11.3 comment=ups-dori-office lease-time=1d mac-address=00:0C:15:04:39:93 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.2.12.3 comment=printer lease-time=1d mac-address=E8:D8:D1:79:F5:98 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.1 comment=hue-downstairs lease-time=1d mac-address=00:17:88:AC:31:4B server=dhcp-lan
-/ip dhcp-server lease add address=10.2.12.2 comment=homeassistant lease-time=1d mac-address=52:54:00:92:B1:80 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.2 comment=homeassistant lease-time=1d mac-address=E4:5F:01:62:2D:8E server=dhcp-lan
 /ip dhcp-server lease add address=10.5.11.2 comment=camera-living-room lease-time=1d mac-address=68:D7:9A:CF:30:09 server=dhcp-security
 /ip dhcp-server lease add address=10.2.11.3 comment=plex lease-time=1d mac-address=00:16:3E:CA:7E:03 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.11.1 comment=prometheus lease-time=1d mac-address=4A:97:18:7B:69:10 server=dhcp-hypervisor
@@ -264,6 +264,7 @@
 /ip dhcp-server lease add address=10.2.13.27 comment=presence-sensor-bathroom-lower lease-time=1d mac-address=E0:98:06:F9:A6:97 server=dhcp-lan
 /ip dhcp-server lease add address=10.7.10.1 comment=mister lease-time=1d mac-address=02:03:04:05:06:07 server=dhcp-retro
 /ip dhcp-server lease add address=10.7.10.2 comment=wii lease-time=1d mac-address=00:27:09:8A:A7:49 server=dhcp-retro
+/ip dhcp-server lease add address=10.7.10.3 comment=atomicretro lease-time=1d mac-address=00:07:32:4D:E6:79 server=dhcp-retro
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -563,6 +564,8 @@
 /ip dns static add address=::ffff:10.7.10.1 comment=static-dns-for-dhcp name=mister.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.7.10.2 comment=static-dns-for-dhcp name=wii.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.7.10.2 comment=static-dns-for-dhcp name=wii.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.7.10.3 comment=static-dns-for-dhcp name=atomicretro.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.7.10.3 comment=static-dns-for-dhcp name=atomicretro.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -594,6 +597,7 @@
 /ip firewall filter add action=accept chain=lan-out-forward comment=s3 dst-address=10.2.11.17 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Plex dst-address=10.2.11.3 dst-port=32400 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment="LabNet -> NAS" dst-address=10.2.11.1 in-interface-list=iface-labnet
+/ip firewall filter add action=accept chain=lan-out-forward comment="Retro -> NAS" dst-address=10.2.11.1 in-interface=vlan-retro
 /ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=8883 protocol=tcp
 /ip firewall filter add action=accept chain=security-out-forward comment="LAN -> NVR" dst-address=10.5.10.1 in-interface-list=iface-lan
 /ip firewall filter add action=accept chain=s2s-out-forward comment="LAN -> IceFox" dst-address=10.99.10.2 in-interface-list=iface-lan
