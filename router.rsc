@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.10.1
+# ____-__-__ __:__:__ by RouterOS 7.11
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -56,6 +56,14 @@
 /interface list add include=iface-dmz,iface-hypervisor,iface-labnet,iface-lan,iface-mgmt,iface-security name=zone-local
 /interface list add name=zone-wan
 /interface wireless security-profiles set [ find default=yes ] supplicant-identity=REMOVED
+/iot lora servers add address=eu.mikrotik.thethings.industries down-port=1700 name=TTN-EU up-port=1700
+/iot lora servers add address=us.mikrotik.thethings.industries down-port=1700 name=TTN-US up-port=1700
+/iot lora servers add address=eu1.cloud.thethings.industries down-port=1700 name="TTS Cloud (eu1)" up-port=1700
+/iot lora servers add address=nam1.cloud.thethings.industries down-port=1700 name="TTS Cloud (nam1)" up-port=1700
+/iot lora servers add address=au1.cloud.thethings.industries down-port=1700 name="TTS Cloud (au1)" up-port=1700
+/iot lora servers add address=eu1.cloud.thethings.network down-port=1700 name="TTN V3 (eu1)" up-port=1700
+/iot lora servers add address=nam1.cloud.thethings.network down-port=1700 name="TTN V3 (nam1)" up-port=1700
+/iot lora servers add address=au1.cloud.thethings.network down-port=1700 name="TTN V3 (au1)" up-port=1700
 /ip dhcp-server option add code=121 name=classless value="'16''10''3'\$(NETWORK_GATEWAY)'0'\$(NETWORK_GATEWAY)"
 /ip dhcp-server option add code=6 name=wii-dns value="'167.86.108.126'"
 /ip dhcp-server option sets add name=default-classless options=classless
@@ -277,7 +285,8 @@
 /ip dhcp-server lease add address=10.2.13.27 comment=presence-sensor-bathroom-lower lease-time=1d mac-address=E0:98:06:F9:A6:97 server=dhcp-lan
 /ip dhcp-server lease add address=10.7.10.1 comment=mister lease-time=1d mac-address=02:03:04:05:06:07 server=dhcp-retro
 /ip dhcp-server lease add address=10.7.10.2 comment=wii lease-time=1d mac-address=00:27:09:8A:A7:49 server=dhcp-retro
-/ip dhcp-server lease add address=10.7.10.3 comment=atomicretro lease-time=1d mac-address=00:07:32:4D:E6:79 server=dhcp-retro
+/ip dhcp-server lease add address=10.7.10.3 comment=win98 lease-time=1d mac-address=00:80:64:77:75:27 server=dhcp-retro
+/ip dhcp-server lease add address=10.2.15.3 client-id=1:4:3:d6:71:42:1a comment=nintendo-3ds lease-time=1d mac-address=04:03:D6:71:42:1A server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -577,8 +586,10 @@
 /ip dns static add address=::ffff:10.7.10.1 comment=static-dns-for-dhcp name=mister.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.7.10.2 comment=static-dns-for-dhcp name=wii.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.7.10.2 comment=static-dns-for-dhcp name=wii.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.7.10.3 comment=static-dns-for-dhcp name=atomicretro.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.7.10.3 comment=static-dns-for-dhcp name=atomicretro.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.7.10.3 comment=static-dns-for-dhcp name=win98.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.7.10.3 comment=static-dns-for-dhcp name=win98.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.15.3 comment=static-dns-for-dhcp name=nintendo-3ds.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.15.3 comment=static-dns-for-dhcp name=nintendo-3ds.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -606,6 +617,7 @@
 /ip firewall filter add action=accept chain=lan-out-forward comment="HomeAssistant MQTT" dst-address=10.2.12.2 dst-port=1883 in-interface-list=iface-security protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment="TEMP FENNEC" dst-address=10.2.10.1
 /ip firewall filter add action=accept chain=lan-out-forward comment=APT dst-address=10.2.11.13 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=s3 dst-address=10.2.11.17 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Plex dst-address=10.2.11.3 dst-port=32400 protocol=tcp
