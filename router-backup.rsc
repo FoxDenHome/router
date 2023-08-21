@@ -629,7 +629,6 @@
 /ip firewall filter add action=accept chain=input in-interface=oob
 /ip firewall filter add action=accept chain=input in-interface-list=zone-local
 /ip firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
-/ip firewall filter add action=accept chain=lan-out-forward comment="Retro -> Synergy" dst-port=24800 in-interface=vlan-retro protocol=tcp
 /ip firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu passthrough=yes protocol=tcp tcp-flags=syn
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
 /ip firewall nat add action=dst-nat chain=dstnat comment=Plex dst-port=32400 protocol=tcp to-addresses=10.2.11.3
