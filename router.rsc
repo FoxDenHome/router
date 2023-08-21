@@ -287,6 +287,8 @@
 /ip dhcp-server lease add address=10.7.10.2 comment=wii lease-time=1d mac-address=00:27:09:8A:A7:49 server=dhcp-retro
 /ip dhcp-server lease add address=10.7.10.3 comment=win98 lease-time=1d mac-address=00:80:64:77:75:27 server=dhcp-retro
 /ip dhcp-server lease add address=10.2.15.3 client-id=1:4:3:d6:71:42:1a comment=nintendo-3ds lease-time=1d mac-address=04:03:D6:71:42:1A server=dhcp-lan
+/ip dhcp-server lease add address=10.1.13.1 comment=tape-library lease-time=1d mac-address=00:0E:11:14:70:8B server=dhcp-mgmt
+/ip dhcp-server lease add address=10.2.11.9 comment=nzbget lease-time=1d mac-address=F2:73:89:CC:9E:E4 server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -590,6 +592,10 @@
 /ip dns static add address=::ffff:10.7.10.3 comment=static-dns-for-dhcp name=win98.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.15.3 comment=static-dns-for-dhcp name=nintendo-3ds.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.15.3 comment=static-dns-for-dhcp name=nintendo-3ds.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.1.13.1 comment=static-dns-for-dhcp name=tape-library.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.1.13.1 comment=static-dns-for-dhcp name=tape-library.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.11.9 comment=static-dns-for-dhcp name=nzbget.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.9 comment=static-dns-for-dhcp name=nzbget.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -617,7 +623,6 @@
 /ip firewall filter add action=accept chain=lan-out-forward comment="HomeAssistant MQTT" dst-address=10.2.12.2 dst-port=1883 in-interface-list=iface-security protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
-/ip firewall filter add action=accept chain=lan-out-forward comment="TEMP FENNEC" dst-address=10.2.10.1
 /ip firewall filter add action=accept chain=lan-out-forward comment=APT dst-address=10.2.11.13 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=s3 dst-address=10.2.11.17 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Plex dst-address=10.2.11.3 dst-port=32400 protocol=tcp
@@ -634,6 +639,7 @@
 /ip firewall filter add action=accept chain=input in-interface=oob
 /ip firewall filter add action=accept chain=input in-interface-list=zone-local
 /ip firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
+/ip firewall filter add action=accept chain=lan-out-forward comment="Retro -> Synergy" dst-port=24800 in-interface=vlan-retro protocol=tcp
 /ip firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu passthrough=yes protocol=tcp tcp-flags=syn
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
 /ip firewall nat add action=dst-nat chain=dstnat comment=Plex dst-port=32400 protocol=tcp to-addresses=10.2.11.3
