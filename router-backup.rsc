@@ -276,6 +276,7 @@
 /ip dhcp-server lease add address=10.2.15.3 client-id=1:4:3:d6:71:42:1a comment=nintendo-3ds lease-time=1d mac-address=04:03:D6:71:42:1A server=dhcp-lan
 /ip dhcp-server lease add address=10.1.13.1 comment=tape-library lease-time=1d mac-address=00:0E:11:14:70:8B server=dhcp-mgmt
 /ip dhcp-server lease add address=10.2.11.9 comment=nzbget lease-time=1d mac-address=F2:73:89:CC:9E:E4 server=dhcp-lan
+/ip dhcp-server lease add address=10.7.10.4 comment=nuc7 lease-time=1d mac-address=B8:AE:ED:7C:1E:71 server=dhcp-retro
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -583,6 +584,8 @@
 /ip dns static add address=::ffff:10.1.13.1 comment=static-dns-for-dhcp name=tape-library.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.9 comment=static-dns-for-dhcp name=nzbget.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.11.9 comment=static-dns-for-dhcp name=nzbget.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.7.10.4 comment=static-dns-for-dhcp name=nuc7.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.7.10.4 comment=static-dns-for-dhcp name=nuc7.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
