@@ -285,7 +285,7 @@
 /ip dhcp-server lease add address=10.2.13.27 comment=presence-sensor-bathroom-lower lease-time=1d mac-address=E0:98:06:F9:A6:97 server=dhcp-lan
 /ip dhcp-server lease add address=10.7.10.1 comment=mister lease-time=1d mac-address=02:03:04:05:06:07 server=dhcp-retro
 /ip dhcp-server lease add address=10.7.10.2 comment=wii lease-time=1d mac-address=00:27:09:8A:A7:49 server=dhcp-retro
-/ip dhcp-server lease add address=10.7.10.3 comment=win98 lease-time=1d mac-address=00:80:64:77:75:27 server=dhcp-retro
+/ip dhcp-server lease add address=10.7.10.3 comment=wyse98 lease-time=1d mac-address=00:80:64:77:75:27 server=dhcp-retro
 /ip dhcp-server lease add address=10.2.15.3 client-id=1:4:3:d6:71:42:1a comment=nintendo-3ds lease-time=1d mac-address=04:03:D6:71:42:1A server=dhcp-lan
 /ip dhcp-server lease add address=10.1.13.1 comment=tape-library lease-time=1d mac-address=00:0E:11:14:70:8B server=dhcp-mgmt
 /ip dhcp-server lease add address=10.2.11.9 comment=nzbget lease-time=1d mac-address=F2:73:89:CC:9E:E4 server=dhcp-lan
@@ -589,8 +589,8 @@
 /ip dns static add address=::ffff:10.7.10.1 comment=static-dns-for-dhcp name=mister.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.7.10.2 comment=static-dns-for-dhcp name=wii.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.7.10.2 comment=static-dns-for-dhcp name=wii.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.7.10.3 comment=static-dns-for-dhcp name=win98.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.7.10.3 comment=static-dns-for-dhcp name=win98.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.7.10.3 comment=static-dns-for-dhcp name=wyse98.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.7.10.3 comment=static-dns-for-dhcp name=wyse98.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.15.3 comment=static-dns-for-dhcp name=nintendo-3ds.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.15.3 comment=static-dns-for-dhcp name=nintendo-3ds.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.13.1 comment=static-dns-for-dhcp name=tape-library.foxden.network ttl=5m
