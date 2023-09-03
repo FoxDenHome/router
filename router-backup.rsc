@@ -278,6 +278,7 @@
 /ip dhcp-server lease add address=10.2.11.9 comment=nzbget lease-time=1d mac-address=F2:73:89:CC:9E:E4 server=dhcp-lan
 /ip dhcp-server lease add address=10.7.10.4 comment=nuc7 lease-time=1d mac-address=B8:AE:ED:7C:1E:71 server=dhcp-retro
 /ip dhcp-server lease add address=10.7.10.5 comment=ps2 lease-time=1d mac-address=00:27:09:FF:A7:49 server=dhcp-retro
+/ip dhcp-server lease add address=10.3.10.8 comment=minecraft lease-time=1d mac-address=36:16:0C:C9:E8:B0 server=dhcp-dmz
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -589,6 +590,8 @@
 /ip dns static add address=::ffff:10.7.10.4 comment=static-dns-for-dhcp name=nuc7.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.7.10.5 comment=static-dns-for-dhcp name=ps2.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.7.10.5 comment=static-dns-for-dhcp name=ps2.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.3.10.8 comment=static-dns-for-dhcp name=minecraft.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.3.10.8 comment=static-dns-for-dhcp name=minecraft.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
