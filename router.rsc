@@ -652,6 +652,7 @@
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
 /ip firewall nat add action=dst-nat chain=dstnat comment=Plex dst-port=32400 protocol=tcp to-addresses=10.2.11.3
 /ip firewall nat add action=dst-nat chain=dstnat comment="SpaceAge GMod" dst-port=27015 protocol=udp to-addresses=10.3.10.4
+/ip firewall nat add action=dst-nat chain=dstnat comment=Minecraft dst-port=25565 protocol=tcp to-addresses=10.3.10.8
 /ip firewall nat add action=dst-nat chain=dstnat comment=Factorio dst-port=34197 protocol=udp to-addresses=10.3.10.7
 /ip firewall nat add action=dst-nat chain=dstnat dst-port=2201 protocol=tcp to-addresses=10.3.11.1 to-ports=22
 /ip firewall nat add action=dst-nat chain=dstnat dst-port=2202 protocol=tcp to-addresses=10.3.11.2 to-ports=22
