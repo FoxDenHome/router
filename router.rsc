@@ -194,18 +194,18 @@
 /ip dhcp-server lease add address=10.2.13.6 comment=airgradient-living-room lease-time=1d mac-address=AC:0B:FB:D0:7B:5B server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.5 comment=airgradient-dori-office lease-time=1d mac-address=94:B5:55:2D:78:08 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.9 comment=vacuum-neato lease-time=1d mac-address=40:BD:32:95:26:C0 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.12.4 comment=homepod-unknown-room lease-time=1d mac-address=F4:34:F0:4B:87:1A server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.4 comment=homepod-hobby-room lease-time=1d mac-address=F4:34:F0:4B:87:1A server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.5 comment=homepod-bedroom lease-time=1d mac-address=94:EA:32:84:DB:90 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.14.1 comment=dori-phone lease-time=1d mac-address=EE:39:6C:E4:14:5F server=dhcp-lan
+/ip dhcp-server lease add address=10.2.14.1 comment=dori-phone lease-time=1d mac-address=1A:15:4A:91:20:75 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.6 comment=appletv-living-room lease-time=1d mac-address=58:D3:49:E4:02:2D server=dhcp-lan
 /ip dhcp-server lease add address=10.2.15.1 comment=nintendo-switch-wired lease-time=1d mac-address=00:0E:C6:D2:C9:DD server=dhcp-lan
-/ip dhcp-server lease add address=10.2.14.3 comment=wizzy-phone lease-time=1d mac-address=56:6C:5E:7A:0E:C7 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.14.3 comment=wizzy-phone lease-time=1d mac-address=AA:E0:38:C5:93:89 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.14.4 comment=wizzy-watch lease-time=1d mac-address=2E:47:59:D7:CF:2D server=dhcp-lan
 /ip dhcp-server lease add address=10.2.10.6 comment=wizzy-laptop-2 lease-time=1d mac-address=88:66:5A:53:5E:40 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.10.5 comment=wizzy-laptop lease-time=1d mac-address=F0:2F:4B:15:2E:54 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.10 comment=amp-living-room lease-time=1d mac-address=EC:F4:51:D0:8C:AF server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.8 comment=clock-nixie-dori lease-time=1d mac-address=C4:5B:BE:63:3A:2E server=dhcp-lan
-/ip dhcp-server lease add address=10.2.14.2 comment=dori-watch lease-time=1d mac-address=16:48:B6:37:DD:7B server=dhcp-lan
+/ip dhcp-server lease add address=10.2.14.2 comment=dori-watch lease-time=1d mac-address=72:68:A8:0D:18:01 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.10.5 comment=spaceage-web lease-time=1d mac-address=62:BF:FB:E4:89:5D server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.4 comment=spaceage-gmod lease-time=1d mac-address=5E:47:05:FC:F8:90 server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.13.4 comment=sonoff-s31-wizzy-office-fan lease-time=1d mac-address=8C:AA:B5:66:3B:BE server=dhcp-lan
@@ -218,12 +218,12 @@
 /ip dhcp-server lease add address=10.2.13.11 comment=uplift-wizzy-desk lease-time=1d mac-address=40:91:51:52:11:F7 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.12.1 comment=islandfox-ipmi lease-time=1d mac-address=04:7B:CB:44:C0:DD server=dhcp-hypervisor
 /ip dhcp-server lease add address=10.2.10.4 client-id=capefox comment=capefox-wired lease-time=1d mac-address=00:30:93:12:12:38 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.12.11 comment=homepod-dori lease-time=1d mac-address=04:99:B9:66:DE:D0 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.11 comment=homepod-dori-office lease-time=1d mac-address=04:99:B9:66:DE:D0 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.12 comment=august-connect-front-door lease-time=1d mac-address=D8:61:62:12:6A:08 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.13 comment=homepod-den lease-time=1d mac-address=04:99:B9:9E:9B:95 server=dhcp-lan
 /ip dhcp-server lease add address=10.5.11.1 comment=camera-front-door lease-time=1d mac-address=E4:38:83:0E:1F:D3 server=dhcp-security
 /ip dhcp-server lease add address=10.1.10.9 comment=switch-dori-office-tv lease-time=1d mac-address=F4:92:BF:A3:E8:E8 server=dhcp-mgmt
-/ip dhcp-server lease add address=10.2.12.14 comment=homepod-wizzy lease-time=1d mac-address=04:99:B9:79:EE:C9 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.14 comment=homepod-wizzy-office lease-time=1d mac-address=04:99:B9:79:EE:C9 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.15 comment=tesla-model-3 lease-time=1d mac-address=CC:88:26:27:41:29 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.16 comment=tesla-wall-charger lease-time=1d mac-address=98:ED:5C:9B:79:CF server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.14 comment=sonoff-s31-mister lease-time=1d mac-address=C4:5B:BE:E4:9B:6B server=dhcp-lan
@@ -263,7 +263,7 @@
 /ip dhcp-server lease add address=10.2.11.13 comment=apt-mirror lease-time=1d mac-address=02:40:12:6C:D7:1A server=dhcp-lan
 /ip dhcp-server lease add address=10.3.11.3 comment=blfcmasto lease-time=1d mac-address=DE:E4:0A:E4:BB:D2 server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.1 comment=foxcaves lease-time=1d mac-address=A6:92:B3:48:21:9D server=dhcp-dmz
-/ip dhcp-server lease add address=10.4.10.2 comment=carvera-tablet lease-time=1d mac-address=78:24:AF:DF:C3:BA server=dhcp-labnet
+/ip dhcp-server lease add address=10.4.10.2 comment=carvera-controller lease-time=1d mac-address=78:24:AF:DF:C3:FF server=dhcp-labnet
 /ip dhcp-server lease add address=10.2.13.22 comment=sonoff-s31-dori-desktop lease-time=1d mac-address=8C:AA:B5:66:12:00 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.27 comment=hue-upstairs lease-time=1d mac-address=00:17:88:61:02:4E server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.21 comment=led-strip-dori-office-ceiling lease-time=1d mac-address=C4:DE:E2:B2:D2:C7 server=dhcp-lan
@@ -409,8 +409,8 @@
 /ip dns static add address=::ffff:10.2.13.5 comment=static-dns-for-dhcp name=airgradient-dori-office.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.9 comment=static-dns-for-dhcp name=vacuum-neato.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.9 comment=static-dns-for-dhcp name=vacuum-neato.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.12.4 comment=static-dns-for-dhcp name=homepod-unknown-room.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.12.4 comment=static-dns-for-dhcp name=homepod-unknown-room.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.4 comment=static-dns-for-dhcp name=homepod-hobby-room.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.4 comment=static-dns-for-dhcp name=homepod-hobby-room.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.5 comment=static-dns-for-dhcp name=homepod-bedroom.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.5 comment=static-dns-for-dhcp name=homepod-bedroom.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.14.1 comment=static-dns-for-dhcp name=dori-phone.foxden.network ttl=5m
@@ -457,8 +457,8 @@
 /ip dns static add address=::ffff:10.6.12.1 comment=static-dns-for-dhcp name=islandfox-ipmi.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.10.4 comment=static-dns-for-dhcp name=capefox-wired.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.10.4 comment=static-dns-for-dhcp name=capefox-wired.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.12.11 comment=static-dns-for-dhcp name=homepod-dori.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.12.11 comment=static-dns-for-dhcp name=homepod-dori.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.11 comment=static-dns-for-dhcp name=homepod-dori-office.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.11 comment=static-dns-for-dhcp name=homepod-dori-office.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.12 comment=static-dns-for-dhcp name=august-connect-front-door.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.12 comment=static-dns-for-dhcp name=august-connect-front-door.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.13 comment=static-dns-for-dhcp name=homepod-den.foxden.network ttl=5m
@@ -467,8 +467,8 @@
 /ip dns static add address=::ffff:10.5.11.1 comment=static-dns-for-dhcp name=camera-front-door.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.1.10.9 comment=static-dns-for-dhcp name=switch-dori-office-tv.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.1.10.9 comment=static-dns-for-dhcp name=switch-dori-office-tv.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.2.12.14 comment=static-dns-for-dhcp name=homepod-wizzy.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.2.12.14 comment=static-dns-for-dhcp name=homepod-wizzy.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.14 comment=static-dns-for-dhcp name=homepod-wizzy-office.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.14 comment=static-dns-for-dhcp name=homepod-wizzy-office.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.15 comment=static-dns-for-dhcp name=tesla-model-3.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.15 comment=static-dns-for-dhcp name=tesla-model-3.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.16 comment=static-dns-for-dhcp name=tesla-wall-charger.foxden.network ttl=5m
@@ -547,8 +547,8 @@
 /ip dns static add address=::ffff:10.3.11.3 comment=static-dns-for-dhcp name=blfcmasto.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.3.10.1 comment=static-dns-for-dhcp name=foxcaves.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.3.10.1 comment=static-dns-for-dhcp name=foxcaves.foxden.network ttl=5m type=AAAA
-/ip dns static add address=10.4.10.2 comment=static-dns-for-dhcp name=carvera-tablet.foxden.network ttl=5m
-/ip dns static add address=::ffff:10.4.10.2 comment=static-dns-for-dhcp name=carvera-tablet.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.4.10.2 comment=static-dns-for-dhcp name=carvera-controller.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.4.10.2 comment=static-dns-for-dhcp name=carvera-controller.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.13.22 comment=static-dns-for-dhcp name=sonoff-s31-dori-desktop.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.13.22 comment=static-dns-for-dhcp name=sonoff-s31-dori-desktop.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.27 comment=static-dns-for-dhcp name=hue-upstairs.foxden.network ttl=5m
@@ -667,9 +667,9 @@
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:a::1 routing-table=main
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
-/ip service set www-ssl certificate=letsencrypt-autogen_2023-06-25T17:44:33Z disabled=no tls-version=only-1.2
+/ip service set www-ssl certificate=letsencrypt-autogen_2023-09-05T16:45:35Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
-/ip service set api-ssl certificate=letsencrypt-autogen_2023-06-25T17:44:33Z tls-version=only-1.2
+/ip service set api-ssl certificate=letsencrypt-autogen_2023-09-05T16:45:35Z tls-version=only-1.2
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
