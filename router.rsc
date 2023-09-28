@@ -199,7 +199,7 @@
 /ip dhcp-server lease add address=10.2.14.1 comment=dori-phone lease-time=1d mac-address=1A:15:4A:91:20:75 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.6 comment=appletv-living-room lease-time=1d mac-address=58:D3:49:E4:02:2D server=dhcp-lan
 /ip dhcp-server lease add address=10.2.15.1 comment=nintendo-switch-wired lease-time=1d mac-address=00:0E:C6:D2:C9:DD server=dhcp-lan
-/ip dhcp-server lease add address=10.2.14.3 comment=wizzy-phone lease-time=1d mac-address=AA:E0:38:C5:93:89 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.14.3 comment=wizzy-phone lease-time=1d mac-address=1E:44:79:62:9A:8D server=dhcp-lan
 /ip dhcp-server lease add address=10.2.14.4 comment=wizzy-watch lease-time=1d mac-address=2E:47:59:D7:CF:2D server=dhcp-lan
 /ip dhcp-server lease add address=10.2.10.6 comment=wizzy-laptop-2 lease-time=1d mac-address=88:66:5A:53:5E:40 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.10.5 comment=wizzy-laptop lease-time=1d mac-address=F0:2F:4B:15:2E:54 server=dhcp-lan
