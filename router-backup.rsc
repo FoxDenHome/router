@@ -279,6 +279,8 @@
 /ip dhcp-server lease add address=10.7.10.4 comment=nuc7 lease-time=1d mac-address=B8:AE:ED:7C:1E:71 server=dhcp-retro
 /ip dhcp-server lease add address=10.7.10.5 comment=ps2 lease-time=1d mac-address=00:27:09:FF:A7:49 server=dhcp-retro
 /ip dhcp-server lease add address=10.3.10.8 comment=minecraft lease-time=1d mac-address=36:16:0C:C9:E8:B0 server=dhcp-dmz
+/ip dhcp-server lease add address=10.2.12.30 comment=streamdeckpi lease-time=1d mac-address=D8:3A:DD:40:CA:F1 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.11.17 comment=htpl lease-time=1d mac-address=F2:6C:78:D6:EE:E6 server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -592,6 +594,10 @@
 /ip dns static add address=::ffff:10.7.10.5 comment=static-dns-for-dhcp name=ps2.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.3.10.8 comment=static-dns-for-dhcp name=minecraft.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.3.10.8 comment=static-dns-for-dhcp name=minecraft.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.12.30 comment=static-dns-for-dhcp name=streamdeckpi.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.12.30 comment=static-dns-for-dhcp name=streamdeckpi.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.2.11.17 comment=static-dns-for-dhcp name=htpl.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.2.11.17 comment=static-dns-for-dhcp name=htpl.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -637,15 +643,15 @@
 /ip firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
 /ip firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu passthrough=yes protocol=tcp tcp-flags=syn
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
-/ip firewall nat add action=dst-nat chain=dstnat comment=Plex dst-port=32400 protocol=tcp to-addresses=10.2.11.3
-/ip firewall nat add action=dst-nat chain=dstnat comment="SpaceAge GMod" dst-port=27015 protocol=udp to-addresses=10.3.10.4
-/ip firewall nat add action=dst-nat chain=dstnat comment=Minecraft dst-port=25565 protocol=tcp to-addresses=10.3.10.8
-/ip firewall nat add action=dst-nat chain=dstnat comment=Factorio dst-port=34197 protocol=udp to-addresses=10.3.10.7
-/ip firewall nat add action=dst-nat chain=dstnat dst-port=2201 protocol=tcp to-addresses=10.3.11.1 to-ports=22
-/ip firewall nat add action=dst-nat chain=dstnat dst-port=2202 protocol=tcp to-addresses=10.3.11.2 to-ports=22
+/ip firewall nat add action=dst-nat chain=dstnat comment=Plex dst-port=32400 in-interface-list=zone-wan protocol=tcp to-addresses=10.2.11.3
+/ip firewall nat add action=dst-nat chain=dstnat comment="SpaceAge GMod" dst-port=27015 in-interface-list=zone-wan protocol=udp to-addresses=10.3.10.4
+/ip firewall nat add action=dst-nat chain=dstnat comment=Minecraft dst-port=25565 in-interface-list=zone-wan protocol=tcp to-addresses=10.3.10.8
+/ip firewall nat add action=dst-nat chain=dstnat comment=Factorio dst-port=34197 in-interface-list=zone-wan protocol=udp to-addresses=10.3.10.7
+/ip firewall nat add action=dst-nat chain=dstnat dst-port=2201 in-interface-list=zone-wan protocol=tcp to-addresses=10.3.11.1 to-ports=22
+/ip firewall nat add action=dst-nat chain=dstnat dst-port=2202 in-interface-list=zone-wan protocol=tcp to-addresses=10.3.11.2 to-ports=22
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.3 src-address=10.100.0.0/16
-/ip firewall nat add action=dst-nat chain=dstnat dst-port=2203 protocol=tcp to-addresses=10.3.11.3 to-ports=22
+/ip firewall nat add action=dst-nat chain=dstnat dst-port=2203 in-interface-list=zone-wan protocol=tcp to-addresses=10.3.11.3 to-ports=22
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
 /ip service set telnet disabled=yes
