@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.11.2
+# ____-__-__ __:__:__ by RouterOS 7.12
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -10,14 +10,14 @@
 /interface ethernet set [ find default-name=ether6 ] disabled=yes name=eth6 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether7 ] disabled=yes name=eth7 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether8 ] comment=eth8 name=oob rx-flow-control=on tx-flow-control=on
-/interface ethernet set [ find default-name=sfp-sfpplus1 ] advertise=1000M-full,10000M-full comment=sfp1 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
-/interface ethernet set [ find default-name=ether1 ] advertise=1000M-full,2500M-full comment=eth1 name=wan rx-flow-control=on tx-flow-control=on
-/interface 6to4 add !keepalive name=6to4-redfox remote-address=66.42.71.230
+/interface ethernet set [ find default-name=sfp-sfpplus1 ] comment=sfp1 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
+/interface ethernet set [ find default-name=ether1 ] advertise=1G-baseT-full,2.5G-baseT comment=eth1 name=wan rx-flow-control=on tx-flow-control=on
+/interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
+/interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=25 version=2 vrid=53
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=25 version=2
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=25 version=2 vrid=123
-/interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
-/interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
+/interface 6to4 add !keepalive name=6to4-redfox remote-address=66.42.71.230
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
@@ -50,14 +50,14 @@
 /interface list add include=iface-dmz,iface-hypervisor,iface-labnet,iface-lan,iface-mgmt,iface-security name=zone-local
 /interface list add name=zone-wan
 /interface wireless security-profiles set [ find default=yes ] supplicant-identity=REMOVED
-/iot lora servers add address=eu.mikrotik.thethings.industries down-port=1700 name=TTN-EU up-port=1700
-/iot lora servers add address=us.mikrotik.thethings.industries down-port=1700 name=TTN-US up-port=1700
-/iot lora servers add address=eu1.cloud.thethings.industries down-port=1700 name="TTS Cloud (eu1)" up-port=1700
-/iot lora servers add address=nam1.cloud.thethings.industries down-port=1700 name="TTS Cloud (nam1)" up-port=1700
-/iot lora servers add address=au1.cloud.thethings.industries down-port=1700 name="TTS Cloud (au1)" up-port=1700
-/iot lora servers add address=eu1.cloud.thethings.network down-port=1700 name="TTN V3 (eu1)" up-port=1700
-/iot lora servers add address=nam1.cloud.thethings.network down-port=1700 name="TTN V3 (nam1)" up-port=1700
-/iot lora servers add address=au1.cloud.thethings.network down-port=1700 name="TTN V3 (au1)" up-port=1700
+/iot lora servers add address=eu.mikrotik.thethings.industries name=TTN-EU protocol=UDP
+/iot lora servers add address=us.mikrotik.thethings.industries name=TTN-US protocol=UDP
+/iot lora servers add address=eu1.cloud.thethings.industries name="TTS Cloud (eu1)" protocol=UDP
+/iot lora servers add address=nam1.cloud.thethings.industries name="TTS Cloud (nam1)" protocol=UDP
+/iot lora servers add address=au1.cloud.thethings.industries name="TTS Cloud (au1)" protocol=UDP
+/iot lora servers add address=eu1.cloud.thethings.network name="TTN V3 (eu1)" protocol=UDP
+/iot lora servers add address=nam1.cloud.thethings.network name="TTN V3 (nam1)" protocol=UDP
+/iot lora servers add address=au1.cloud.thethings.network name="TTN V3 (au1)" protocol=UDP
 /ip dhcp-server add interface=vlan-retro lease-time=1h name=dhcp-retro
 /ip dhcp-server option add code=121 name=classless value="'16''10''3'\$(NETWORK_GATEWAY)'0'\$(NETWORK_GATEWAY)"
 /ip dhcp-server option sets add name=default-classless options=classless
@@ -177,8 +177,8 @@
 /ip dhcp-server lease add address=10.2.11.6 comment=kiwix lease-time=1d mac-address=00:16:3E:CA:7E:01 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.8 comment=dldr lease-time=1d mac-address=CA:1B:F1:2C:6C:B3 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.7 comment=clock-nixie-zen lease-time=1d mac-address=E0:4F:43:C2:BA:C2 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.7 comment=airgradient-bedroom lease-time=1d mac-address=AC:0B:FB:D0:34:B7 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.6 comment=airgradient-living-room lease-time=1d mac-address=AC:0B:FB:D0:7B:5B server=dhcp-lan
+/ip dhcp-server lease add address=10.2.13.7 comment=airgradient-bedroom lease-time=1d mac-address=94:B5:55:2D:82:54 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.13.6 comment=airgradient-living-room lease-time=1d mac-address=0C:B8:15:D8:B8:EC server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.5 comment=airgradient-dori-office lease-time=1d mac-address=94:B5:55:2D:78:08 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.9 comment=vacuum-neato lease-time=1d mac-address=40:BD:32:95:26:C0 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.4 comment=homepod-hobby-room lease-time=1d mac-address=F4:34:F0:4B:87:1A server=dhcp-lan
@@ -280,7 +280,9 @@
 /ip dhcp-server lease add address=10.7.10.5 comment=ps2 lease-time=1d mac-address=00:27:09:FF:A7:49 server=dhcp-retro
 /ip dhcp-server lease add address=10.3.10.8 comment=minecraft lease-time=1d mac-address=36:16:0C:C9:E8:B0 server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.12.30 comment=streamdeckpi lease-time=1d mac-address=D8:3A:DD:40:CA:F1 server=dhcp-lan
+/ip dhcp-server lease add address=10.4.10.4 comment=anycubic-photon-mono-m5s lease-time=1d mac-address=3E:DE:77:0C:AB:B8 server=dhcp-labnet
 /ip dhcp-server lease add address=10.2.11.17 comment=htpl lease-time=1d mac-address=F2:6C:78:D6:EE:E6 server=dhcp-lan
+/ip dhcp-server lease add address=10.5.11.8 comment=camera-garage lease-time=1d mac-address=F4:E2:C6:0C:3F:C3 server=dhcp-security
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -596,8 +598,12 @@
 /ip dns static add address=::ffff:10.3.10.8 comment=static-dns-for-dhcp name=minecraft.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.12.30 comment=static-dns-for-dhcp name=streamdeckpi.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.12.30 comment=static-dns-for-dhcp name=streamdeckpi.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.4.10.4 comment=static-dns-for-dhcp name=anycubic-photon-mono-m5s.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.4.10.4 comment=static-dns-for-dhcp name=anycubic-photon-mono-m5s.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.17 comment=static-dns-for-dhcp name=htpl.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.11.17 comment=static-dns-for-dhcp name=htpl.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.5.11.8 comment=static-dns-for-dhcp name=camera-garage.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.5.11.8 comment=static-dns-for-dhcp name=camera-garage.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -642,6 +648,7 @@
 /ip firewall filter add action=accept chain=input in-interface-list=zone-local
 /ip firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
 /ip firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu passthrough=yes protocol=tcp tcp-flags=syn
+/ip firewall nat add action=endpoint-independent-nat chain=srcnat out-interface=wan protocol=udp randomise-ports=yes
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
 /ip firewall nat add action=dst-nat chain=dstnat comment=Plex dst-port=32400 in-interface-list=zone-wan protocol=tcp to-addresses=10.2.11.3
 /ip firewall nat add action=dst-nat chain=dstnat comment="SpaceAge GMod" dst-port=27015 in-interface-list=zone-wan protocol=udp to-addresses=10.3.10.4
@@ -705,6 +712,7 @@
 /system ntp client servers add address=1.pool.ntp.org
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
+/system routerboard settings set auto-upgrade=yes
 /system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,test start-date=2020-08-09 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
