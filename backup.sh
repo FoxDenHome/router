@@ -30,6 +30,7 @@ mtik_backup() {
     $SED 's~^# ....-..-.. ..:..:.. by RouterOS~# ____-__-__ __:__:__ by RouterOS~'  -i "${RHOST}.rsc"
     $SED 's~key=\\"[^"]*\\"~key=\\"REMOVED\\"~g' -i "${RHOST}.rsc"
     $SED 's~global DynDNSKey \\".*\\"~global DynDNSKey \\"REMOVED\\"~g' -i "${RHOST}.rsc"
+    $SED 's~global IPv6Key \\".*\\"~global IPv6Key \\"REMOVED\\"~g' -i "${RHOST}.rsc"
     $SED 's~^# software id = .*$~# software id = REMOVED~g' -i "${RHOST}.rsc"
     $SED 's~^# serial number = .*$~# serial number = REMOVED~g' -i "${RHOST}.rsc"
     $SED 's~name=monitor_[^ ]*~name=monitor_REMOVED~g' -i "${RHOST}.rsc"

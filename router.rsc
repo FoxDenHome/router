@@ -23,7 +23,7 @@
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=50 version=2
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=50 version=2 vrid=123
-/interface 6to4 add !keepalive name=6to4-redfox remote-address=66.42.71.230
+/interface 6to4 add !keepalive name=6to4-he remote-address=216.218.226.238
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
@@ -118,11 +118,11 @@
 /interface list member add interface=vrrp-hypervisor-gateway list=iface-hypervisor
 /interface list member add interface=vrrp-hypervisor-dns list=iface-hypervisor
 /interface list member add interface=vrrp-hypervisor-ntp list=iface-hypervisor
-/interface list member add interface=6to4-redfox list=zone-wan
 /interface list member add interface=wan list=zone-wan
 /interface list member add interface=wg-s2s list=zone-local
 /interface list member add interface=wg-vpn list=zone-local
 /interface list member add interface=vlan-retro list=zone-local
+/interface list member add interface=6to4-he list=zone-wan
 /interface wireguard peers add allowed-address=10.100.10.1/32 comment=Fennec interface=wg-vpn public-key="+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY="
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 comment="Dori Phone" interface=wg-vpn public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
@@ -677,22 +677,22 @@
 /ip route add blackhole disabled=no distance=1 dst-address=172.16.0.0/12 gateway="" pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip route add blackhole disabled=no distance=1 dst-address=10.69.69.69/32 gateway="" pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
-/ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:a::1 routing-table=main
+/ipv6 route add disabled=no distance=1 dst-address=::/0 gateway=2001:470:a:39::1 routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
-/ip service set www-ssl certificate=letsencrypt-autogen_2023-09-05T16:45:35Z disabled=no tls-version=only-1.2
+/ip service set www-ssl certificate=letsencrypt-autogen_2023-11-17T21:03:22Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
-/ip service set api-ssl certificate=letsencrypt-autogen_2023-09-05T16:45:35Z tls-version=only-1.2
+/ip service set api-ssl certificate=letsencrypt-autogen_2023-11-17T21:03:22Z tls-version=only-1.2
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
-/ipv6 address add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
-/ipv6 address add address=2a0e:7d44:f069:1::1 interface=vlan-mgmt
-/ipv6 address add address=2a0e:7d44:f069:2::1 interface=vlan-lan
-/ipv6 address add address=2a0e:7d44:f069:3::1 interface=vlan-dmz
-/ipv6 address add address=2a0e:7d44:f069:4::1 interface=vlan-labnet
-/ipv6 address add address=2a0e:7d44:f069:5::1 interface=vlan-security
-/ipv6 address add address=2a0e:7d44:f069:6::1 interface=vlan-hypervisor
+/ipv6 address add address=2001:470:e820:1::1 interface=vlan-mgmt
+/ipv6 address add address=2001:470:e820:2::1 interface=vlan-lan
+/ipv6 address add address=2001:470:e820:3::1 interface=vlan-dmz
+/ipv6 address add address=2001:470:e820:4::1 interface=vlan-labnet
+/ipv6 address add address=2001:470:e820:5::1 interface=vlan-security
+/ipv6 address add address=2001:470:e820:6::1 interface=vlan-hypervisor
+/ipv6 address add address=2001:470:a:39::2 advertise=no interface=6to4-he
 /ipv6 dhcp-client add interface=wan pool-name=pool-wan request=prefix use-peer-dns=no
 /ipv6 firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ipv6 firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
@@ -809,9 +809,9 @@
     \n\r\
     \nif (\$isprimary) do={\r\
     \n    \$dyndnsUpdate host=\"wan.foxden.network\" key=\"REMOVED\" updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
-    \n    \$dyndnsUpdate user=\"doridian\" host=\"772305\" key=\"REMOVED\" updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https nicUpdateMode=true\r\
     \n}\r\
-    \n\$dyndnsUpdate host=\"redfoxv6\" key=(\"anonymous&primary=\" . \$isprimary) updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
+    \n\$dyndnsUpdate user=\"doridian\" host=\$IPv6Host key=\$IPv6Key updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https nicUpdateMode=true\r\
+    \n#\$dyndnsUpdate host=\"redfoxv6\" key=(\"anonymous&primary=\" . \$isprimary) updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
     \n\$dyndnsUpdate host=\$DynDNSHost key=\$DynDNSKey updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
     \n"
 /system script add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local dhcpent\r\
@@ -879,16 +879,19 @@
     \n:put \"Set RA priority \$RAPriorityCurrent\"\r\
     \n/ipv6/nd/set [ /ipv6/nd/find ra-preference!=\$RAPriorityCurrent ] ra-preference=\$RAPriorityCurrent\r\
     \n"
-/system script add dont-require-permissions=yes name=local-init-onboot owner=admin policy=read,write,test source=":global VRRPPriorityOnline 50\r\
+/system script add dont-require-permissions=yes name=local-init-onboot owner=admin policy=read,write,policy,test source=":global VRRPPriorityOnline 50\r\
     \n:global VRRPPriorityOffline 10\r\
     \n\r\
     \n:global DynDNSHost \"router.foxden.network\"\r\
     \n:global DynDNSKey \"REMOVED\"\r\
     \n\r\
+    \n:global IPv6Host \"772305\"\r\
+    \n:global IPv6Key \"REMOVED\"\r\
+    \n\r\
     \n:global RAPriorityOnline \"high\"\r\
     \n:global RAPriorityOffline \"low\"\r\
     \n"
-/system script add dont-require-permissions=yes name=global-init-onboot owner=admin policy=read,write,test source=":global logputdebug do={\r\
+/system script add dont-require-permissions=yes name=global-init-onboot owner=admin policy=read,write,policy,test source=":global logputdebug do={\r\
     \n    :log debug \$1\r\
     \n    :put \$1\r\
     \n}\r\

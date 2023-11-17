@@ -17,7 +17,7 @@
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=25 version=2 vrid=53
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=25 version=2
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=25 version=2 vrid=123
-/interface 6to4 add !keepalive name=6to4-redfox remote-address=66.42.71.230
+/interface 6to4 add !keepalive name=6to4-he remote-address=216.218.226.238
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
@@ -90,7 +90,6 @@
 /interface list member add interface=vlan-mgmt list=iface-mgmt
 /interface list member add interface=wg-s2s list=zone-local
 /interface list member add interface=wg-vpn list=zone-local
-/interface list member add interface=6to4-redfox list=zone-wan
 /interface list member add interface=vrrp-mgmt-gateway list=iface-mgmt
 /interface list member add interface=vrrp-mgmt-dns list=iface-mgmt
 /interface list member add interface=vrrp-mgmt-ntp list=iface-mgmt
@@ -660,7 +659,7 @@
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.3 src-address=10.100.0.0/16
 /ip firewall nat add action=dst-nat chain=dstnat dst-port=2203 in-interface-list=zone-wan protocol=tcp to-addresses=10.3.11.3 to-ports=22
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
-/ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
+/ipv6 route add disabled=yes distance=1 dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
 /ip service set www-ssl certificate=letsencrypt-autogen_2023-09-05T16:48:15Z disabled=no tls-version=only-1.2
@@ -669,13 +668,6 @@
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
-/ipv6 address add address=2a0e:7d44:f000:b::2 advertise=no interface=6to4-redfox
-/ipv6 address add address=2a0e:7d44:f069:1::3 interface=vlan-mgmt
-/ipv6 address add address=2a0e:7d44:f069:2::3 interface=vlan-lan
-/ipv6 address add address=2a0e:7d44:f069:3::3 interface=vlan-dmz
-/ipv6 address add address=2a0e:7d44:f069:4::3 interface=vlan-labnet
-/ipv6 address add address=2a0e:7d44:f069:5::3 interface=vlan-security
-/ipv6 address add address=2a0e:7d44:f069:6::3 interface=vlan-hypervisor
 /ipv6 firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ipv6 firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ipv6 firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -719,11 +711,14 @@
     \n" policy=read,write,policy,test start-time=startup
 /system scheduler add interval=1m name=wan-online-adjust on-event="/system/script/run wan-online-adjust\r\
     \n" policy=read,write,test start-date=2023-01-17 start-time=19:51:50
-/system script add dont-require-permissions=yes name=local-init-onboot owner=admin policy=read,write,test source=":global VRRPPriorityOnline 25\r\
+/system script add dont-require-permissions=yes name=local-init-onboot owner=admin policy=read,write,policy,test source=":global VRRPPriorityOnline 25\r\
     \n:global VRRPPriorityOffline 5\r\
     \n\r\
     \n:global DynDNSHost \"router-backup.foxden.network\"\r\
     \n:global DynDNSKey \"REMOVED\"\r\
+    \n\r\
+    \n:global IPv6Host \"889575\"\r\
+    \n:global IPv6Key \"REMOVED\"\r\
     \n\r\
     \n:global RAPriorityOnline \"medium\"\r\
     \n:global RAPriorityOffline \"low\"\r\
@@ -799,9 +794,9 @@
     \n\r\
     \nif (\$isprimary) do={\r\
     \n    \$dyndnsUpdate host=\"wan.foxden.network\" key=\"REMOVED\" updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
-    \n    \$dyndnsUpdate user=\"doridian\" host=\"772305\" key=\"REMOVED\" updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https nicUpdateMode=true\r\
     \n}\r\
-    \n\$dyndnsUpdate host=\"redfoxv6\" key=(\"anonymous&primary=\" . \$isprimary) updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
+    \n\$dyndnsUpdate user=\"doridian\" host=\$IPv6Host key=\$IPv6Key updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https nicUpdateMode=true\r\
+    \n#\$dyndnsUpdate host=\"redfoxv6\" key=(\"anonymous&primary=\" . \$isprimary) updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
     \n\$dyndnsUpdate host=\$DynDNSHost key=\$DynDNSKey updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
     \n"
 /system script add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local dhcpent\r\
@@ -869,7 +864,7 @@
     \n:put \"Set RA priority \$RAPriorityCurrent\"\r\
     \n/ipv6/nd/set [ /ipv6/nd/find ra-preference!=\$RAPriorityCurrent ] ra-preference=\$RAPriorityCurrent\r\
     \n"
-/system script add dont-require-permissions=yes name=global-init-onboot owner=admin policy=read,write,test source=":global logputdebug do={\r\
+/system script add dont-require-permissions=yes name=global-init-onboot owner=admin policy=read,write,policy,test source=":global logputdebug do={\r\
     \n    :log debug \$1\r\
     \n    :put \$1\r\
     \n}\r\
