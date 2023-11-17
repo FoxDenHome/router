@@ -716,7 +716,7 @@
 /system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,test start-date=2020-08-09 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
-    \n" policy=read,write,test start-time=startup
+    \n" policy=read,write,policy,test start-time=startup
 /system scheduler add interval=1m name=wan-online-adjust on-event="/system/script/run wan-online-adjust\r\
     \n" policy=read,write,test start-date=2023-01-17 start-time=19:51:50
 /system script add dont-require-permissions=yes name=local-init-onboot owner=admin policy=read,write,test source=":global VRRPPriorityOnline 25\r\
@@ -781,10 +781,17 @@
     \n            :return \"\"\r\
     \n        }\r\
     \n    }\r\
+    \n\r\
     \n    :delay 5s\r\
+    \n\r\
     \n    :do {\r\
-    \n        :local result [/tool/fetch mode=\$mode url=\"\$mode://\$updatehost/api/dynamicURL/\?q=\$key&ip=\$ipaddr&notify=1\" as-value output=user]\r\
-    \n        \$logputdebug (\"[DynDNS] Result of update for \". \$host . \": \" . (\$result->\"data\"))\r\
+    \n        :if (\$nicUpdateMode=\"true\") do={\r\
+    \n             :local result [/tool/fetch mode=\$mode user=\"\$user\" password=\"\$key\" url=\"\$mode://\$updatehost/nic/update/\?hostname=\$host&myip=\$ipaddr\" as-value output=user]\r\
+    \n             \$logputdebug (\"[DynDNS] Result of nic/update update for \". \$host . \": \" . (\$result->\"data\"))\r\
+    \n        } else={\r\
+    \n             :local result [/tool/fetch mode=\$mode url=\"\$mode://\$updatehost/api/dynamicURL/\?q=\$key&ip=\$ipaddr&notify=1\" as-value output=user]\r\
+    \n             \$logputdebug (\"[DynDNS] Result of api/dynamicURL update for \". \$host . \": \" . (\$result->\"data\"))\r\
+    \n        }\r\
     \n    } on-error={\r\
     \n        \$logputerror (\"[DynDNS] Unable to update \" . \$host)\r\
     \n    }\r\
@@ -792,7 +799,7 @@
     \n\r\
     \nif (\$isprimary) do={\r\
     \n    \$dyndnsUpdate host=\"wan.foxden.network\" key=\"REMOVED\" updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
-    \n    #\$dyndnsUpdate host=\"772305\" key=\"REMOVED\" updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https\r\
+    \n    \$dyndnsUpdate user=\"doridian\" host=\"772305\" key=\"REMOVED\" updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https nicUpdateMode=true\r\
     \n}\r\
     \n\$dyndnsUpdate host=\"redfoxv6\" key=(\"anonymous&primary=\" . \$isprimary) updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
     \n\$dyndnsUpdate host=\$DynDNSHost key=\$DynDNSKey updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
