@@ -771,6 +771,8 @@
     \n\r\
     \n:global DynDNSHost\r\
     \n:global DynDNSKey\r\
+    \n:global IPv6Host\r\
+    \n:global IPv6Key\r\
     \n\r\
     \n:local dyndnsUpdate do={\r\
     \n    :global logputdebug\r\
