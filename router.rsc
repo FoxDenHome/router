@@ -732,12 +732,12 @@
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
 /system routerboard settings set auto-upgrade=yes
-/system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,test start-date=2020-08-09 start-time=09:41:00
+/system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,policy,test start-date=2020-08-09 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
     \n" policy=read,write,policy,test start-time=startup
 /system scheduler add interval=1m name=wan-online-adjust on-event="/system/script/run wan-online-adjust\r\
-    \n" policy=read,write,test start-date=2023-01-17 start-time=19:51:50
+    \n" policy=read,write,policy,test start-date=2023-01-17 start-time=19:51:50
 /system script add dont-require-permissions=no name=dhcp-propagate-changes owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local topdomain\r\
     \n:local hostname\r\
     \n:local dhcpent\r\
@@ -760,7 +760,7 @@
     \n    /ip/dns/static/add ttl=5m type=AAAA name=\$hostname address=(\"::ffff:\" . (\$dhcpent->\"address\")) comment=\"static-dns-for-dhcp\"\r\
     \n}\r\
     \n"
-/system script add dont-require-permissions=yes name=dyndns-update owner=admin policy=read,write,test source=":local ipaddrfind [ /ip/address/find interface=wan ]\r\
+/system script add dont-require-permissions=yes name=dyndns-update owner=admin policy=read,write,policy,test source=":local ipaddrfind [ /ip/address/find interface=wan ]\r\
     \n:if ([:len \$ipaddrfind] < 1) do={\r\
     \n    :log warning \"No WAN IP address found\"\r\
     \n    :exit\r\
@@ -856,7 +856,7 @@
     \n    }\r\
     \n}\r\
     \n"
-/system script add dont-require-permissions=yes name=wan-online-adjust owner=admin policy=read,write,test source=":global VRRPPriorityOffline\r\
+/system script add dont-require-permissions=yes name=wan-online-adjust owner=admin policy=read,write,policy,test source=":global VRRPPriorityOffline\r\
     \n:global VRRPPriorityOnline\r\
     \n:local VRRPPriorityCurrent \$VRRPPriorityOffline\r\
     \n\r\
