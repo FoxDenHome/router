@@ -660,7 +660,7 @@
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.3 src-address=10.100.0.0/16
 /ip firewall nat add action=dst-nat chain=dstnat dst-port=2203 in-interface-list=zone-wan protocol=tcp to-addresses=10.3.11.3 to-ports=22
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
-/ipv6 route add disabled=yes distance=1 dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main scope=30 suppress-hw-offload=no target-scope=10
+/ipv6 route add disabled=no distance=1 dst-address=::/0 gateway=2001:470:a:3c9::1 routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
 /ip service set www-ssl certificate=letsencrypt-autogen_2023-09-05T16:48:15Z disabled=no tls-version=only-1.2
@@ -669,6 +669,14 @@
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
+/ipv6 address add address=2001:470:e963:1::1 interface=vlan-mgmt
+/ipv6 address add address=2001:470:e963:2::1 interface=vlan-lan
+/ipv6 address add address=2001:470:e963:3::1 interface=vlan-dmz
+/ipv6 address add address=2001:470:e963:4::1 interface=vlan-labnet
+/ipv6 address add address=2001:470:e963:5::1 interface=vlan-security
+/ipv6 address add address=2001:470:e963:6::1 interface=vlan-hypervisor
+/ipv6 address add address=2001:470:e963:7::1 interface=vlan-retro
+/ipv6 address add address=2001:470:a:3c9::2 advertise=no interface=6to4-he
 /ipv6 firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ipv6 firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ipv6 firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
