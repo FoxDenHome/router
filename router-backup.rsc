@@ -283,6 +283,7 @@
 /ip dhcp-server lease add address=10.4.10.4 comment=anycubic-photon-mono-m5s lease-time=1d mac-address=3E:DE:77:0C:AB:B8 server=dhcp-labnet
 /ip dhcp-server lease add address=10.2.11.17 comment=htpl lease-time=1d mac-address=F2:6C:78:D6:EE:E6 server=dhcp-lan
 /ip dhcp-server lease add address=10.5.11.8 comment=camera-garage lease-time=1d mac-address=F4:E2:C6:0C:3F:C3 server=dhcp-security
+/ip dhcp-server lease add address=10.4.10.5 comment=laser-controller lease-time=1d mac-address=B8:AE:ED:7C:1E:71 server=dhcp-labnet
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -604,6 +605,8 @@
 /ip dns static add address=::ffff:10.2.11.17 comment=static-dns-for-dhcp name=htpl.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.5.11.8 comment=static-dns-for-dhcp name=camera-garage.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.5.11.8 comment=static-dns-for-dhcp name=camera-garage.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.4.10.5 comment=static-dns-for-dhcp name=laser-controller.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.4.10.5 comment=static-dns-for-dhcp name=laser-controller.foxden.network ttl=5m type=AAAA
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -663,9 +666,9 @@
 /ipv6 route add disabled=no distance=1 dst-address=::/0 gateway=2001:470:a:3c9::1 routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
-/ip service set www-ssl certificate=letsencrypt-autogen_2023-09-05T16:48:15Z disabled=no tls-version=only-1.2
+/ip service set www-ssl certificate=letsencrypt-autogen_2023-11-17T23:06:35Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
-/ip service set api-ssl certificate=letsencrypt-autogen_2023-09-05T16:48:15Z tls-version=only-1.2
+/ip service set api-ssl certificate=letsencrypt-autogen_2023-11-17T23:06:35Z tls-version=only-1.2
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
