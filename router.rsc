@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.12
+# ____-__-__ __:__:__ by RouterOS 7.12.1
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -23,7 +23,7 @@
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=50 version=2
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=50 version=2 vrid=123
-/interface 6to4 add !keepalive name=6to4-he remote-address=216.218.226.238
+/interface 6to4 add !keepalive mtu=1480 name=6to4-he remote-address=216.218.226.238
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
@@ -182,7 +182,7 @@
 /ip dhcp-server lease add address=10.1.11.3 comment=ups-dori-office lease-time=1d mac-address=00:0C:15:04:39:93 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.2.12.3 comment=printer lease-time=1d mac-address=E8:D8:D1:79:F5:98 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.1 comment=hue-downstairs lease-time=1d mac-address=00:17:88:AC:31:4B server=dhcp-lan
-/ip dhcp-server lease add address=10.2.12.2 comment=homeassistant lease-time=1d mac-address=E4:5F:01:62:2D:8E server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.2 comment=homeassistant lease-time=1d mac-address=D8:3A:DD:93:72:8D server=dhcp-lan
 /ip dhcp-server lease add address=10.5.11.2 comment=camera-living-room lease-time=1d mac-address=68:D7:9A:CF:30:09 server=dhcp-security
 /ip dhcp-server lease add address=10.2.11.3 comment=plex lease-time=1d mac-address=00:16:3E:CA:7E:03 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.11.1 comment=prometheus lease-time=1d mac-address=4A:97:18:7B:69:10 server=dhcp-hypervisor
