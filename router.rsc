@@ -168,7 +168,7 @@
 /ip address add address=10.7.1.1/16 interface=vlan-retro network=10.7.0.0
 /ip address add address=172.17.0.1/24 interface=veth-sinrouter network=172.17.0.0
 /ip address add address=172.17.1.1/24 interface=veth-foxdns network=172.17.1.0
-/ip cloud set update-time=no
+/ip cloud set ddns-enabled=yes update-time=no
 /ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run wan-online-adjust\r\
     \n" use-peer-dns=no use-peer-ntp=no
 /ip dhcp-server config set store-leases-disk=never
@@ -341,11 +341,11 @@
 /ip dns static add name=foxden.network ns=ns4.foxden.network ttl=5m type=NS
 /ip dns static add name=wpad ttl=5m type=NXDOMAIN
 /ip dns static add name=wpad.foxden.network ttl=5m type=NXDOMAIN
-/ip dns static add address=10.3.10.5 name=api.spaceage.mp ttl=5m
-/ip dns static add address=::ffff:10.3.10.5 name=api.spaceage.mp ttl=5m type=AAAA
 /ip dns static add cname=bengalfox.foxden.network name=nas.foxden.network ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=us.archive.ubuntu.com ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=apt.foxden.network ttl=5m type=CNAME
+/ip dns static add cname=spaceage-website.foxden.network name=spaceage.doridian.net ttl=5m type=CNAME
+/ip dns static add cname=spaceage-website.foxden.network name=www.spaceage.doridian.net ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=archive.ubuntu.com ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=ftp.debian.org ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=deb.debian.org ttl=5m type=CNAME
@@ -359,7 +359,6 @@
 /ip dns static add cname=foxcaves.foxden.network name=f0x.es type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=ftp.us.debian.org ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=deb.us.debian.org ttl=5m type=CNAME
-/ip dns static add cname=nas.foxden.network name=dav.foxden.network ttl=5m type=CNAME
 /ip dns static add address=10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.10.3 comment=static-dns-for-dhcp name=capefox.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.6.10.2 comment=static-dns-for-dhcp name=islandfox.foxden.network ttl=5m
@@ -630,6 +629,8 @@
 /ip dns static add address=::ffff:10.5.11.8 comment=static-dns-for-dhcp name=camera-garage.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.4.10.5 comment=static-dns-for-dhcp name=laser-controller.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.4.10.5 comment=static-dns-for-dhcp name=laser-controller.foxden.network ttl=5m type=AAAA
+/ip firewall address-list add address=REMOVED.sn.mynetname.net list=wan-ips
+/ip firewall address-list add address=REMOVED.sn.mynetname.net list=wan-ips
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -678,18 +679,18 @@
 /ip firewall nat add action=endpoint-independent-nat chain=srcnat out-interface=wan protocol=udp randomise-ports=yes
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
 /ip firewall nat add action=masquerade chain=srcnat src-address=172.17.0.0/16
-/ip firewall nat add action=dst-nat chain=dstnat comment=Plex dst-port=32400 in-interface-list=zone-wan protocol=tcp to-addresses=10.2.11.3
-/ip firewall nat add action=dst-nat chain=dstnat comment="HTTP(S)" dst-port=80,443 in-interface-list=zone-wan protocol=tcp to-addresses=172.17.0.2
-/ip firewall nat add action=dst-nat chain=dstnat comment=FoxDNS dst-port=53 in-interface-list=zone-wan protocol=tcp to-addresses=172.17.1.2
-/ip firewall nat add action=dst-nat chain=dstnat comment=FoxDNS dst-port=53 in-interface-list=zone-wan protocol=udp to-addresses=172.17.1.2
-/ip firewall nat add action=dst-nat chain=dstnat comment="SpaceAge GMod" dst-port=27015 in-interface-list=zone-wan protocol=udp to-addresses=10.3.10.4
-/ip firewall nat add action=dst-nat chain=dstnat comment=Minecraft dst-port=25565 in-interface-list=zone-wan protocol=tcp to-addresses=10.3.10.8
-/ip firewall nat add action=dst-nat chain=dstnat comment=Factorio dst-port=34197 in-interface-list=zone-wan protocol=udp to-addresses=10.3.10.7
-/ip firewall nat add action=dst-nat chain=dstnat dst-port=2201 in-interface-list=zone-wan protocol=tcp to-addresses=10.3.11.1 to-ports=22
-/ip firewall nat add action=dst-nat chain=dstnat dst-port=2202 in-interface-list=zone-wan protocol=tcp to-addresses=10.3.11.2 to-ports=22
+/ip firewall nat add action=jump chain=dstnat comment=Hairpin dst-address=REMOVED jump-target=port-forward
+/ip firewall nat add action=jump chain=dstnat comment="Hairpin fallback" dst-address=REMOVED jump-target=port-forward
+/ip firewall nat add action=jump chain=dstnat comment=External in-interface-list=zone-wan jump-target=port-forward
+/ip firewall nat add action=dst-nat chain=port-forward comment=Plex dst-port=32400 protocol=tcp to-addresses=10.2.11.3
+/ip firewall nat add action=dst-nat chain=port-forward comment="HTTP(S)" dst-port=80,443 protocol=tcp to-addresses=172.17.0.2
+/ip firewall nat add action=dst-nat chain=port-forward comment=FoxDNS dst-port=53 protocol=tcp to-addresses=172.17.1.2
+/ip firewall nat add action=dst-nat chain=port-forward comment=FoxDNS dst-port=53 protocol=udp to-addresses=172.17.1.2
+/ip firewall nat add action=dst-nat chain=port-forward comment="SpaceAge GMod" dst-port=27015 protocol=udp to-addresses=10.3.10.4
+/ip firewall nat add action=dst-nat chain=port-forward comment=Minecraft dst-port=25565 protocol=tcp to-addresses=10.3.10.8
+/ip firewall nat add action=dst-nat chain=port-forward comment=Factorio dst-port=34197 protocol=udp to-addresses=10.3.10.7
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.3 src-address=10.100.0.0/16
-/ip firewall nat add action=dst-nat chain=dstnat dst-port=2203 in-interface-list=zone-wan protocol=tcp to-addresses=10.3.11.3 to-ports=22
 /ip route add blackhole disabled=no dst-address=10.0.0.0/8 gateway="" routing-table=main suppress-hw-offload=no
 /ip route add blackhole disabled=no dst-address=192.168.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ip route add blackhole disabled=no distance=1 dst-address=172.16.0.0/12 gateway="" pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
@@ -787,6 +788,8 @@
     \n:local ipaddr [:pick \$ipaddrcidr 0 [:find \$ipaddrcidr \"/\"]]\r\
     \n:local isprimary [ /interface/vrrp/get vrrp-mgmt-dns master ]\r\
     \n\r\
+    \n/system/script/run firewall-update\r\
+    \n\r\
     \n:global DynDNSHost\r\
     \n:global DynDNSKey\r\
     \n:global IPv6Host\r\
@@ -882,6 +885,8 @@
     \n:global RAPriorityOnline\r\
     \n:local RAPriorityCurrent \$RAPriorityOffline\r\
     \n\r\
+    \n/system/script/run firewall-update\r\
+    \n\r\
     \n:local defgwidx [ /ip/route/find dynamic active dst-address=0.0.0.0/0 ]\r\
     \n\r\
     \nif ([:len \$defgwidx] > 0) do={\r\
@@ -927,6 +932,17 @@
     \n    :log error \$1\r\
     \n    :put \$1\r\
     \n}\r\
+    \n"
+/system script add dont-require-permissions=yes name=firewall-update owner=admin policy=read,write,policy,test source=":local ipaddrfind [ /ip/address/find interface=wan ]\r\
+    \n:if ([:len \$ipaddrfind] < 1) do={\r\
+    \n    :log warning \"No WAN IP address found\"\r\
+    \n    :exit\r\
+    \n}\r\
+    \n:local ipaddrcidr [/ip/address/get (\$ipaddrfind->0) address]\r\
+    \n:local ipaddr [:pick \$ipaddrcidr 0 [:find \$ipaddrcidr \"/\"]]\r\
+    \n\r\
+    \n/ip/firewall/nat/set [ find comment=\"Hairpin\" ] dst-address=\$ipaddr\r\
+    \n/ip/firewall/nat/set [ find comment=\"Hairpin fallback\" ] dst-address=\"!\$ipaddr\"\r\
     \n"
 /tool netwatch add comment=monitor-default disabled=no down-script="/system/script/run wan-online-adjust\r\
     \n" host=8.8.8.8 http-codes="" interval=30s startup-delay=1m test-script="" timeout=1s type=icmp up-script="/system/script/run wan-online-adjust\r\

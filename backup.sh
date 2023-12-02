@@ -35,6 +35,9 @@ mtik_backup() {
     $SED 's~^# serial number = .*$~# serial number = REMOVED~g' -i "${RHOST}.rsc"
     $SED 's~name=monitor_[^ ]*~name=monitor_REMOVED~g' -i "${RHOST}.rsc"
     $SED 's~identity=[^ ]*~identity=REMOVED~g' -i "${RHOST}.rsc"
+    $SED 's~comment=Hairpin dst-address=.* ~comment=Hairpin dst-address=REMOVED ~g' -i "${RHOST}.rsc"
+    $SED 's~comment="Hairpin fallback" dst-address=.* ~comment="Hairpin fallback" dst-address=REMOVED ~g' -i "${RHOST}.rsc"
+    $SED 's~address=.*\.sn\.mynetname\.net~address=REMOVED.sn.mynetname.net~g' -i "${RHOST}.rsc"
     $SED 's~network=[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]~network=REMOVED~g' -i "${RHOST}.rsc"
 
     sleep 1
@@ -46,6 +49,5 @@ mtik_backup() {
 
 mtik_backup router
 mtik_backup router-backup
-#mtik_backup switch-dori-office-10g
 
 git commit -a -m "${COMMIT_MSG}"

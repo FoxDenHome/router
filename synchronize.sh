@@ -45,3 +45,5 @@ sleep 1
 ssh router-backup.foxden.network "/file remove tmpfs-scratch/transfer.rsc"
 
 rm -f "$F"
+
+ssh router-backup.foxden.network "/system/script/run firewall-update"
