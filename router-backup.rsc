@@ -336,8 +336,8 @@
 /ip dns static add cname=spaceage-website.foxden.network name=spaceage.doridian.net ttl=5m type=CNAME
 /ip dns static add cname=website.foxden.network name=doridian.net ttl=5m type=CNAME
 /ip dns static add cname=website.foxden.network name=www.doridian.net ttl=5m type=CNAME
-/ip dns static add cname=spaceage-website.foxden.network name=tts.spaceage.doridian.net ttl=5m type=CNAME
-/ip dns static add cname=spaceage-website.foxden.network name=api.spaceage.doridian.net ttl=5m type=CNAME
+/ip dns static add cname=spaceage-web.foxden.network name=tts.spaceage.doridian.net ttl=5m type=CNAME
+/ip dns static add cname=spaceage-web.foxden.network name=api.spaceage.doridian.net ttl=5m type=CNAME
 /ip dns static add cname=spaceage-website.foxden.network name=www.spaceage.doridian.net ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=archive.ubuntu.com ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=ftp.debian.org ttl=5m type=CNAME
