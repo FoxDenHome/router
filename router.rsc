@@ -19,7 +19,7 @@
 /interface ethernet set [ find default-name=sfp28-2 ] auto-negotiation=no comment=sfpx2-rackswitch-agg fec-mode=fec74 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus12 ] comment=sfp1 name=wan rx-flow-control=on tx-flow-control=on
 /interface veth add address=172.17.1.2/24 gateway=172.17.1.1 gateway6="" name=veth-foxdns
-/interface veth add address="" gateway=172.17.0.1 gateway6="" name=veth-snirouter
+/interface veth add address=172.17.0.2/24 gateway=172.17.0.1 gateway6="" name=veth-snirouter
 /interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
 /interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 version=2 vrid=53
@@ -130,6 +130,7 @@
 /interface list member add interface=wg-vpn list=zone-local
 /interface list member add interface=vlan-retro list=zone-local
 /interface list member add interface=6to4-he list=zone-wan
+/interface list member add interface=veth-foxdns list=zone-local
 /interface list member add interface=veth-snirouter list=zone-local
 /interface wireguard peers add allowed-address=10.100.10.1/32 comment=Fennec interface=wg-vpn public-key="+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY="
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
