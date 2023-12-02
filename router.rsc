@@ -658,7 +658,8 @@
 /ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=APT dst-address=10.2.11.13 dst-port=80,443 protocol=tcp
-/ip firewall filter add action=accept chain=lan-out-forward comment=s3 dst-address=10.2.11.17 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=syncthing dst-address=10.2.11.2 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=bengalfox-syncthing dst-address=10.2.11.15 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Plex dst-address=10.2.11.3 dst-port=32400 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment="LabNet -> NAS" dst-address=10.2.11.1 in-interface-list=iface-labnet
 /ip firewall filter add action=accept chain=lan-out-forward comment="Retro -> NAS" dst-address=10.2.11.1 in-interface=vlan-retro
@@ -676,6 +677,7 @@
 /ip firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu passthrough=yes protocol=tcp tcp-flags=syn
 /ip firewall nat add action=endpoint-independent-nat chain=srcnat out-interface=wan protocol=udp randomise-ports=yes
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
+/ip firewall nat add action=masquerade chain=srcnat src-address=172.17.0.0/16
 /ip firewall nat add action=dst-nat chain=dstnat comment=Plex dst-port=32400 in-interface-list=zone-wan protocol=tcp to-addresses=10.2.11.3
 /ip firewall nat add action=dst-nat chain=dstnat comment="HTTP(S)" dst-port=80,443 in-interface-list=zone-wan protocol=tcp to-addresses=172.17.0.2
 /ip firewall nat add action=dst-nat chain=dstnat comment=FoxDNS dst-port=53 in-interface-list=zone-wan protocol=tcp to-addresses=172.17.1.2
