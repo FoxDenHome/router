@@ -951,8 +951,8 @@
     \n:local ipaddrcidr [/ip/address/get (\$ipaddrfind->0) address]\r\
     \n:local ipaddr [:pick \$ipaddrcidr 0 [:find \$ipaddrcidr \"/\"]]\r\
     \n\r\
-    \n/ip/firewall/nat/set [ find comment=\"Hairpin\" ] dst-address=\$ipaddr\r\
-    \n/ip/firewall/nat/set [ find comment=\"Hairpin fallback\" ] dst-address=\"!\$ipaddr\"\r\
+    \n/ip/firewall/nat/set [ find comment=\"Hairpin\" dst-address!=\$ipaddr  ] dst-address=\$ipaddr\r\
+    \n/ip/firewall/nat/set [ find comment=\"Hairpin fallback\" dst-address!=\"!\$ipaddr\" ] dst-address=\"!\$ipaddr\"\r\
     \n"
 /tool netwatch add comment=monitor-default disabled=no down-script="/system/script/run wan-online-adjust\r\
     \n" host=8.8.8.8 http-codes="" interval=30s startup-delay=1m test-script="" timeout=1s type=icmp up-script="/system/script/run wan-online-adjust\r\
