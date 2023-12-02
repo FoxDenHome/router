@@ -19,7 +19,7 @@
 /interface ethernet set [ find default-name=sfp28-2 ] auto-negotiation=no comment=sfpx2-rackswitch-agg fec-mode=fec74 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus12 ] comment=sfp1 name=wan rx-flow-control=on tx-flow-control=on
 /interface veth add address=172.17.1.2/24 gateway=172.17.1.1 gateway6="" name=veth-foxdns
-/interface veth add address=172.17.0.2/24 gateway=172.17.0.1 gateway6="" name=veth-sinrouter
+/interface veth add address="" gateway=172.17.0.1 gateway6="" name=veth-snirouter
 /interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
 /interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 version=2 vrid=53
@@ -97,7 +97,7 @@
 /snmp community add addresses=::/0 name=monitor_REMOVED
 /user group add name=monitoring policy=read,api,!local,!telnet,!ssh,!ftp,!reboot,!write,!policy,!test,!winbox,!password,!web,!sniff,!sensitive,!romon,!rest-api
 /container add interface=veth-foxdns logging=yes mounts=foxdns-config start-on-boot=yes workdir=/config
-/container add interface=veth-sinrouter logging=yes mounts=snirouter-config start-on-boot=yes workdir=/
+/container add interface=veth-snirouter logging=yes mounts=snirouter-config start-on-boot=yes workdir=/
 /container config set registry-url=https://ghcr.io
 /ip settings set rp-filter=loose tcp-syncookies=yes
 /ipv6 settings set accept-redirects=no accept-router-advertisements=no
@@ -130,7 +130,7 @@
 /interface list member add interface=wg-vpn list=zone-local
 /interface list member add interface=vlan-retro list=zone-local
 /interface list member add interface=6to4-he list=zone-wan
-/interface list member add interface=veth-sinrouter list=zone-local
+/interface list member add interface=veth-snirouter list=zone-local
 /interface wireguard peers add allowed-address=10.100.10.1/32 comment=Fennec interface=wg-vpn public-key="+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY="
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 comment="Dori Phone" interface=wg-vpn public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
@@ -166,7 +166,7 @@
 /ip address add address=10.100.0.1/16 interface=wg-vpn network=10.100.0.0
 /ip address add address=10.99.1.1/16 interface=wg-s2s network=10.99.0.0
 /ip address add address=10.7.1.1/16 interface=vlan-retro network=10.7.0.0
-/ip address add address=172.17.0.1/24 interface=veth-sinrouter network=172.17.0.0
+/ip address add address=172.17.0.1/24 interface=veth-snirouter network=172.17.0.0
 /ip address add address=172.17.1.1/24 interface=veth-foxdns network=172.17.1.0
 /ip cloud set ddns-enabled=yes update-time=no
 /ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run wan-online-adjust\r\
