@@ -294,6 +294,8 @@
 /ip dhcp-server lease add address=10.2.11.17 comment=htpl lease-time=1d mac-address=F2:6C:78:D6:EE:E6 server=dhcp-lan
 /ip dhcp-server lease add address=10.5.11.8 comment=camera-garage lease-time=1d mac-address=F4:E2:C6:0C:3F:C3 server=dhcp-security
 /ip dhcp-server lease add address=10.4.10.5 comment=laser-controller lease-time=1d mac-address=8C:16:45:46:05:22 server=dhcp-labnet
+/ip dhcp-server lease add address=10.3.10.10 comment=website lease-time=1d mac-address=AE:75:D4:40:07:76 server=dhcp-dmz
+/ip dhcp-server lease add address=10.3.10.9 comment=spaceage-website lease-time=1d mac-address=5E:1A:40:6A:64:06 server=dhcp-dmz
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -332,6 +334,10 @@
 /ip dns static add cname=apt-mirror.foxden.network name=us.archive.ubuntu.com ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=apt.foxden.network ttl=5m type=CNAME
 /ip dns static add cname=spaceage-website.foxden.network name=spaceage.doridian.net ttl=5m type=CNAME
+/ip dns static add cname=website.foxden.network name=doridian.net ttl=5m type=CNAME
+/ip dns static add cname=website.foxden.network name=www.doridian.net ttl=5m type=CNAME
+/ip dns static add cname=spaceage-website.foxden.network name=tts.spaceage.doridian.net ttl=5m type=CNAME
+/ip dns static add cname=spaceage-website.foxden.network name=api.spaceage.doridian.net ttl=5m type=CNAME
 /ip dns static add cname=spaceage-website.foxden.network name=www.spaceage.doridian.net ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=archive.ubuntu.com ttl=5m type=CNAME
 /ip dns static add cname=apt-mirror.foxden.network name=ftp.debian.org ttl=5m type=CNAME
@@ -616,6 +622,10 @@
 /ip dns static add address=::ffff:10.5.11.8 comment=static-dns-for-dhcp name=camera-garage.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.4.10.5 comment=static-dns-for-dhcp name=laser-controller.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.4.10.5 comment=static-dns-for-dhcp name=laser-controller.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.3.10.10 comment=static-dns-for-dhcp name=website.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.3.10.10 comment=static-dns-for-dhcp name=website.foxden.network ttl=5m type=AAAA
+/ip dns static add address=10.3.10.9 comment=static-dns-for-dhcp name=spaceage-website.foxden.network ttl=5m
+/ip dns static add address=::ffff:10.3.10.9 comment=static-dns-for-dhcp name=spaceage-website.foxden.network ttl=5m type=AAAA
 /ip firewall address-list add address=REMOVED.sn.mynetname.net list=wan-ips
 /ip firewall address-list add address=REMOVED.sn.mynetname.net list=wan-ips
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
