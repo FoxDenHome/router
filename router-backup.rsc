@@ -749,6 +749,8 @@
     \n" policy=read,write,policy,test start-time=startup
 /system scheduler add interval=1m name=wan-online-adjust on-event="/system/script/run wan-online-adjust\r\
     \n" policy=read,write,policy,test start-date=2023-01-17 start-time=19:51:50
+/system scheduler add interval=1m name=container-autoheal on-event="/system/script/run container-autoheal\r\
+    \n" policy=read,write,policy,test start-date=2023-12-02 start-time=07:56:27
 /system script add dont-require-permissions=yes name=local-init-onboot owner=admin policy=read,write,policy,test source=":global VRRPPriorityOnline 25\r\
     \n:global VRRPPriorityOffline 5\r\
     \n\r\
@@ -935,6 +937,14 @@
     \n\r\
     \n/ip/firewall/nat/set [ find comment=\"Hairpin\" dst-address!=\$ipaddr  ] dst-address=\$ipaddr\r\
     \n/ip/firewall/nat/set [ find comment=\"Hairpin fallback\" dst-address!=\"!\$ipaddr\" ] dst-address=\"!\$ipaddr\"\r\
+    \n"
+/system script add dont-require-permissions=no name=container-autoheal owner=admin policy=read,write,policy,test source=":global logputinfo\r\
+    \n\r\
+    \n/container\r\
+    \n:foreach ct in=[find status!=running] do={\r\
+    \n  \$logputinfo (\"Starting container with interface \" . [get \$ct interface])\r\
+    \n  start \$ct\r\
+    \n}\r\
     \n"
 /tool netwatch add comment=monitor-default disabled=no down-script="/system/script/run wan-online-adjust\r\
     \n" host=8.8.8.8 http-codes="" interval=30s startup-delay=1m test-script="" timeout=1s type=icmp up-script="/system/script/run wan-online-adjust\r\
