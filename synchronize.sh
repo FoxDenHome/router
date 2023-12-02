@@ -47,3 +47,8 @@ ssh router-backup.foxden.network "/file remove tmpfs-scratch/transfer.rsc"
 rm -f "$F"
 
 ssh router-backup.foxden.network "/system/script/run firewall-update"
+
+cd files
+scp -r . "router.foxden.network:/"
+scp -r . "router-backup.foxden.network:/"
+cd ..
