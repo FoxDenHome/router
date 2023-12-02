@@ -1,0 +1,18 @@
+global:
+  nameservers:
+  - ns-ip1.foxden.network
+  - ns-ip2.foxden.network
+  - ns-ip3.foxden.network
+  - ns-ip4.foxden.network
+  mailbox: ips.foxden.network
+  listen:
+  - ":53"
+
+rdns:
+  - ip_version: 6
+    suffix: ip6.foxden.network
+    subnets:
+      - 3.6.9.e.0.7.4.0.1.0.0.2.ip6.arpa
+      - 0.2.8.e.0.7.4.0.1.0.0.2.ip6.arpa
+      - 9.3.0.0.b.0.0.0.0.7.4.0.1.0.0.2.ip6.arpa
+      - 9.c.3.0.b.0.0.0.0.7.4.0.1.0.0.2.ip6.arpa
