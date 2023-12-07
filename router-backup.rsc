@@ -123,7 +123,6 @@
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 comment="Dori Phone" interface=wg-vpn public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
 /interface wireguard peers add allowed-address=10.100.10.4/32 comment="Wizzy Laptop" interface=wg-vpn public-key="5QUN5FumE8LM1Ak9tv8gwaF8K4wTXlCw2BSDfBIEL3g="
-/interface wireguard peers add allowed-address=10.99.10.1/32 comment=RedFox endpoint-address=66.42.71.230 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="yY6nKPCqcj+0O6Sm7qcBlG7O5tyQlarlZFIKjp+ivGM="
 /interface wireguard peers add allowed-address=10.99.10.2/32 comment=IceFox endpoint-address=107.181.226.74 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
 /interface wireguard peers add allowed-address=10.100.10.5/32 comment=Wizzy-Desktop interface=wg-vpn public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0="
 /ip address add address=10.1.1.3/16 interface=vlan-mgmt network=10.1.0.0
