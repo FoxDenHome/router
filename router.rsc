@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.12.1
+# ____-__-__ __:__:__ by RouterOS 7.13
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -18,14 +18,15 @@
 /interface ethernet set [ find default-name=sfp28-1 ] auto-negotiation=no fec-mode=fec74 l2mtu=9092 mtu=9000 name=sfpx1-rackswitch-agg rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp28-2 ] auto-negotiation=no comment=sfpx2-rackswitch-agg fec-mode=fec74 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus12 ] comment=sfp1 name=wan rx-flow-control=on tx-flow-control=on
+/interface 6to4 add !keepalive mtu=1480 name=6to4-he remote-address=216.218.226.238
 /interface veth add address=172.17.1.2/24 gateway=172.17.1.1 gateway6="" name=veth-foxdns
+/interface veth add address=172.17.2.2/24 gateway=172.17.2.1 gateway6="" name=veth-foxdns-internal
 /interface veth add address=172.17.0.2/24 gateway=172.17.0.1 gateway6="" name=veth-snirouter
-/interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
-/interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=50 version=2
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=50 version=2 vrid=123
-/interface 6to4 add !keepalive mtu=1480 name=6to4-he remote-address=216.218.226.238
+/interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
+/interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
@@ -49,6 +50,7 @@
 /interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=50 version=2 vrid=123
 /container mounts add dst=/config name=snirouter-config src=/snirouter
 /container mounts add dst=/config name=foxdns-config src=/foxdns
+/container mounts add dst=/config name=foxdns-internal-config src=/foxdns-internal
 /disk add slot=docker tmpfs-max-size=128000000 type=tmpfs
 /disk add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface list add name=iface-mgmt
@@ -98,6 +100,7 @@
 /user group add name=monitoring policy=read,api,!local,!telnet,!ssh,!ftp,!reboot,!write,!policy,!test,!winbox,!password,!web,!sniff,!sensitive,!romon,!rest-api
 /container add interface=veth-foxdns logging=yes mounts=foxdns-config start-on-boot=yes workdir=/config
 /container add interface=veth-snirouter logging=yes mounts=snirouter-config start-on-boot=yes workdir=/
+/container add interface=veth-foxdns-internal logging=yes mounts=foxdns-internal-config start-on-boot=yes workdir=/config
 /container config set registry-url=https://ghcr.io
 /ip settings set rp-filter=loose tcp-syncookies=yes
 /ipv6 settings set accept-redirects=no accept-router-advertisements=no
@@ -132,6 +135,7 @@
 /interface list member add interface=6to4-he list=zone-wan
 /interface list member add interface=veth-foxdns list=zone-local
 /interface list member add interface=veth-snirouter list=zone-local
+/interface list member add interface=veth-foxdns-internal list=zone-local
 /interface wireguard peers add allowed-address=10.100.10.1/32 comment=Fennec interface=wg-vpn public-key="+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY="
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 comment="Dori Phone" interface=wg-vpn public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
@@ -168,6 +172,7 @@
 /ip address add address=10.7.1.1/16 interface=vlan-retro network=10.7.0.0
 /ip address add address=172.17.0.1/24 interface=veth-snirouter network=172.17.0.0
 /ip address add address=172.17.1.1/24 interface=veth-foxdns network=172.17.1.0
+/ip address add address=172.17.2.1/24 interface=veth-foxdns-internal network=172.17.2.0
 /ip cloud set ddns-enabled=yes update-time=no
 /ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run wan-online-adjust\r\
     \n" use-peer-dns=no use-peer-ntp=no
@@ -318,7 +323,7 @@
 /ip dhcp-server network add address=10.6.0.0/16 dns-server=10.6.0.53 domain=foxden.network gateway=10.6.0.1 netmask=16 ntp-server=10.6.0.123
 /ip dhcp-server network add address=10.7.0.0/16 dns-server=10.7.1.1 domain=foxden.network gateway=10.7.1.1 netmask=16 ntp-server=10.7.1.1
 /ip dhcp-server network add address=192.168.88.0/24 dns-none=yes
-/ip dns set allow-remote-requests=yes cache-max-ttl=1d cache-size=20480KiB servers=8.8.8.8,8.8.4.4 use-doh-server=https://dns.google/dns-query verify-doh-cert=yes
+/ip dns set allow-remote-requests=yes cache-max-ttl=1d cache-size=20480KiB servers=8.8.8.8,8.8.4.4 verify-doh-cert=yes
 /ip dns static add address=10.2.1.1 name=router.foxden.network ttl=5m
 /ip dns static add address=10.2.1.3 name=router-backup.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.1.1 name=router.foxden.network ttl=5m type=AAAA
@@ -642,11 +647,24 @@
 /ip dns static add address=::ffff:10.3.10.9 comment=static-dns-for-dhcp name=spaceage-website.foxden.network ttl=5m type=AAAA
 /ip dns static add address=10.2.11.18 comment=static-dns-for-dhcp name=jellyfin.foxden.network ttl=5m
 /ip dns static add address=::ffff:10.2.11.18 comment=static-dns-for-dhcp name=jellyfin.foxden.network ttl=5m type=AAAA
+/ip dns static add forward-to=172.17.1.2 match-subdomain=yes name=foxden.test type=FWD
 /ip firewall address-list add address=REMOVED.sn.mynetname.net list=wan-ips
 /ip firewall address-list add address=REMOVED.sn.mynetname.net list=wan-ips
+/ip firewall address-list add address=10.1.0.53 list=local-dns-ip
+/ip firewall address-list add address=10.2.0.53 list=local-dns-ip
+/ip firewall address-list add address=10.3.0.53 list=local-dns-ip
+/ip firewall address-list add address=10.4.0.53 list=local-dns-ip
+/ip firewall address-list add address=10.5.0.53 list=local-dns-ip
+/ip firewall address-list add address=10.6.0.53 list=local-dns-ip
+/ip firewall address-list add address=10.7.0.53 list=local-dns-ip
+/ip firewall address-list add address=10.8.0.53 list=local-dns-ip
+/ip firewall address-list add address=10.9.0.53 list=local-dns-ip
+/ip firewall address-list add address=10.100.0.1 list=local-dns-ip
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
+/ip firewall filter add action=passthrough chain=forward comment=debug disabled=yes log=yes src-address=10.2.12.6
+/ip firewall filter add action=passthrough chain=input comment=debug disabled=yes log=yes src-address=10.2.12.6
 /ip firewall filter add action=accept chain=forward comment="dstnat'd" connection-nat-state=dstnat
 /ip firewall filter add action=accept chain=forward out-interface-list=zone-wan
 /ip firewall filter add action=accept chain=forward in-interface=wg-vpn
@@ -695,15 +713,17 @@
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
 /ip firewall nat add action=masquerade chain=srcnat src-address=172.17.0.0/16
 /ip firewall nat add action=jump chain=dstnat comment=Hairpin dst-address=REMOVED jump-target=port-forward
+/ip firewall nat add action=jump chain=dstnat comment="DNS forward" disabled=yes dst-address-list=local-dns-ip jump-target=dns-port-forward
 /ip firewall nat add action=jump chain=dstnat comment="Hairpin fallback" dst-address=REMOVED jump-target=port-forward
 /ip firewall nat add action=jump chain=dstnat comment=External in-interface-list=zone-wan jump-target=port-forward
-/ip firewall nat add action=dst-nat chain=port-forward comment=Plex dst-port=32400 protocol=tcp to-addresses=10.2.11.3
 /ip firewall nat add action=dst-nat chain=port-forward comment="HTTP(S)" dst-port=80,443 protocol=tcp to-addresses=172.17.0.2
 /ip firewall nat add action=dst-nat chain=port-forward comment=FoxDNS dst-port=53 protocol=tcp to-addresses=172.17.1.2
 /ip firewall nat add action=dst-nat chain=port-forward comment=FoxDNS dst-port=53 protocol=udp to-addresses=172.17.1.2
 /ip firewall nat add action=dst-nat chain=port-forward comment="SpaceAge GMod" dst-port=27015 protocol=udp to-addresses=10.3.10.4
 /ip firewall nat add action=dst-nat chain=port-forward comment=Minecraft dst-port=25565 protocol=tcp to-addresses=10.3.10.8
 /ip firewall nat add action=dst-nat chain=port-forward comment=Factorio dst-port=34197 protocol=udp to-addresses=10.3.10.7
+/ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 protocol=tcp to-addresses=172.17.2.2
+/ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 protocol=udp to-addresses=172.17.2.2
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.3 src-address=10.100.0.0/16
 /ip route add blackhole disabled=no dst-address=10.0.0.0/8 gateway="" routing-table=main suppress-hw-offload=no
@@ -766,7 +786,7 @@
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
 /system routerboard settings set auto-upgrade=yes
-/system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=read,write,policy,test start-date=2020-08-09 start-time=09:41:00
+/system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=ftp,read,write,policy,test start-date=2020-08-09 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
     \n" policy=read,write,policy,test start-time=startup
@@ -796,7 +816,7 @@
     \n    /ip/dns/static/add ttl=5m type=AAAA name=\$hostname address=(\"::ffff:\" . (\$dhcpent->\"address\")) comment=\"static-dns-for-dhcp\"\r\
     \n}\r\
     \n"
-/system script add dont-require-permissions=yes name=dyndns-update owner=admin policy=read,write,policy,test source=":local ipaddrfind [ /ip/address/find interface=wan ]\r\
+/system script add dont-require-permissions=yes name=dyndns-update owner=admin policy=ftp,read,write,policy,test source=":local ipaddrfind [ /ip/address/find interface=wan ]\r\
     \n:if ([:len \$ipaddrfind] < 1) do={\r\
     \n    :log warning \"No WAN IP address found\"\r\
     \n    :exit\r\
