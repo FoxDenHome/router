@@ -17,6 +17,10 @@ rdns:
       - 9.3.0.0.b.0.0.0.0.7.4.0.1.0.0.2.ip6.arpa
       - 9.c.3.0.b.0.0.0.0.7.4.0.1.0.0.2.ip6.arpa
 
+resolvers:
+  - zone: .
+    nameservers: ["8.8.8.8:53", "8.8.4.4:53"]
+
 localizers:
   gateway.foxden.test:
   - 0.0.0.1/16
