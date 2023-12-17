@@ -37,7 +37,6 @@ mtik_backup() {
     $SED 's~identity=[^ ]*~identity=REMOVED~g' -i "${RHOST}.rsc"
     $SED 's~comment=Hairpin dst-address=.* ~comment=Hairpin dst-address=REMOVED ~g' -i "${RHOST}.rsc"
     $SED 's~comment="Hairpin fallback" dst-address=.* ~comment="Hairpin fallback" dst-address=REMOVED ~g' -i "${RHOST}.rsc"
-    $SED 's~address=.*\.sn\.mynetname\.net~address=REMOVED.sn.mynetname.net~g' -i "${RHOST}.rsc"
     $SED 's~network=[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]~network=REMOVED~g' -i "${RHOST}.rsc"
 
     sleep 1
