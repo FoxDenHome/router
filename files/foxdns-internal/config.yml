@@ -37,7 +37,9 @@ static-zones:
 resolvers:
   - zone: .
     cache-size: 20480
-    nameservers: ["8.8.8.8:53", "8.8.4.4:53"]
+    nameservers: ["8.8.8.8:853", "8.8.4.4:853"]
+    proto: tcp-tls
+    server-name: dns.google
 
 localizers:
   gateway.foxden.network:
