@@ -310,22 +310,22 @@
 /ip dhcp-server network add address=10.6.0.0/16 dns-server=10.6.0.53 domain=foxden.network gateway=10.6.0.1 netmask=16 ntp-server=10.6.0.123
 /ip dhcp-server network add address=10.7.0.0/16 dns-server=10.7.1.1 domain=foxden.network gateway=10.7.1.1 netmask=16 ntp-server=10.7.1.1
 /ip dhcp-server network add address=192.168.88.0/24 dns-none=yes
-/ip dns set allow-remote-requests=yes cache-max-ttl=1d cache-size=20480KiB max-udp-packet-size=512 servers=8.8.8.8,8.8.4.4 verify-doh-cert=yes
+/ip dns set cache-max-ttl=1d cache-size=20480KiB max-udp-packet-size=512 servers=8.8.8.8,8.8.4.4 verify-doh-cert=yes
 /ip dns static add name=wpad ttl=5m type=NXDOMAIN
 /ip dns static add name=wpad.foxden.network ttl=5m type=NXDOMAIN
 /ip dns static add forward-to=172.17.1.2 match-subdomain=yes name=foxden.test type=FWD
-/ip firewall address-list add address=10.1.0.53 list=local-dns-ip
-/ip firewall address-list add address=10.2.0.53 list=local-dns-ip
-/ip firewall address-list add address=10.3.0.53 list=local-dns-ip
-/ip firewall address-list add address=10.4.0.53 list=local-dns-ip
-/ip firewall address-list add address=10.5.0.53 list=local-dns-ip
-/ip firewall address-list add address=10.6.0.53 list=local-dns-ip
-/ip firewall address-list add address=10.7.0.53 list=local-dns-ip
-/ip firewall address-list add address=10.8.0.53 list=local-dns-ip
-/ip firewall address-list add address=10.9.0.53 list=local-dns-ip
-/ip firewall address-list add address=10.100.0.1 list=local-dns-ip
 /ip firewall address-list add address=router.foxden.network list=wan-ips
 /ip firewall address-list add address=router-backup.foxden.network list=wan-ips
+/ip firewall address-list add address=10.1.0.0/24 list=local-dns-ip
+/ip firewall address-list add address=10.2.0.0/24 list=local-dns-ip
+/ip firewall address-list add address=10.3.0.0/24 list=local-dns-ip
+/ip firewall address-list add address=10.4.0.0/24 list=local-dns-ip
+/ip firewall address-list add address=10.5.0.0/24 list=local-dns-ip
+/ip firewall address-list add address=10.6.0.0/24 list=local-dns-ip
+/ip firewall address-list add address=10.7.0.0/24 list=local-dns-ip
+/ip firewall address-list add address=10.8.0.0/24 list=local-dns-ip
+/ip firewall address-list add address=10.9.0.0/24 list=local-dns-ip
+/ip firewall address-list add address=10.100.0.1 list=local-dns-ip
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -388,7 +388,8 @@
 /ip firewall nat add action=dst-nat chain=port-forward comment="SpaceAge GMod" dst-port=27015 protocol=udp to-addresses=10.3.10.4
 /ip firewall nat add action=dst-nat chain=port-forward comment=Minecraft dst-port=25565 protocol=tcp to-addresses=10.3.10.8
 /ip firewall nat add action=dst-nat chain=port-forward comment=Factorio dst-port=34197 protocol=udp to-addresses=10.3.10.7
-/ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 protocol=tcp to-addresses=172.17.2.2
+/ip firewall nat add action=passthrough chain=dns-port-forward comment=FoxDNS connection-mark=incoming-conn log=yes
+/ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 log=yes protocol=tcp to-addresses=172.17.2.2
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 protocol=udp to-addresses=172.17.2.2
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.3 src-address=10.100.0.0/16
