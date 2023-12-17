@@ -3,6 +3,11 @@
 #
 # model = RB5009UG+S+
 # serial number = REMOVED
+/container mounts add dst=/config name=snirouter-config src=/snirouter
+/container mounts add dst=/config name=foxdns-config src=/foxdns
+/container mounts add dst=/config name=foxdns-internal-config src=/foxdns-internal
+/disk add slot=docker tmpfs-max-size=128000000 type=tmpfs
+/disk add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface ethernet set [ find default-name=ether2 ] disabled=yes name=eth2 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether3 ] disabled=yes name=eth3 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether4 ] disabled=yes name=eth4 rx-flow-control=on tx-flow-control=on
@@ -16,11 +21,11 @@
 /interface veth add address=172.17.1.2/24 gateway=172.17.1.1 gateway6="" name=veth-foxdns
 /interface veth add address=172.17.2.2/24 gateway=172.17.2.1 gateway6="" name=veth-foxdns-internal
 /interface veth add address=172.17.0.2/24 gateway=172.17.0.1 gateway6="" name=veth-snirouter
+/interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
+/interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=25 version=2 vrid=53
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=25 version=2
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=25 version=2 vrid=123
-/interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
-/interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
@@ -42,11 +47,6 @@
 /interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=25 version=2 vrid=53
 /interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=25 version=2
 /interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=25 version=2 vrid=123
-/container mounts add dst=/config name=snirouter-config src=/snirouter
-/container mounts add dst=/config name=foxdns-config src=/foxdns
-/container mounts add dst=/config name=foxdns-internal-config src=/foxdns-internal
-/disk add slot=docker tmpfs-max-size=128000000 type=tmpfs
-/disk add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface list add name=iface-mgmt
 /interface list add name=iface-lan
 /interface list add name=iface-dmz
@@ -55,7 +55,6 @@
 /interface list add name=iface-hypervisor
 /interface list add include=iface-dmz,iface-hypervisor,iface-labnet,iface-lan,iface-mgmt,iface-security name=zone-local
 /interface list add name=zone-wan
-/interface wireless security-profiles set [ find default=yes ] supplicant-identity=REMOVED
 /iot lora servers add address=eu.mikrotik.thethings.industries name=TTN-EU protocol=UDP
 /iot lora servers add address=us.mikrotik.thethings.industries name=TTN-US protocol=UDP
 /iot lora servers add address=eu1.cloud.thethings.industries name="TTS Cloud (eu1)" protocol=UDP
@@ -316,15 +315,15 @@
 /ip dns static add forward-to=172.17.1.2 match-subdomain=yes name=foxden.test type=FWD
 /ip firewall address-list add address=router.foxden.network list=wan-ips
 /ip firewall address-list add address=router-backup.foxden.network list=wan-ips
-/ip firewall address-list add address=10.1.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.2.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.3.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.4.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.5.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.6.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.7.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.8.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.9.0.0/24 list=local-dns-ip
+/ip firewall address-list add address=10.1.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.2.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.3.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.4.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.5.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.6.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.7.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.8.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.9.0.0/23 list=local-dns-ip
 /ip firewall address-list add address=10.100.0.1 list=local-dns-ip
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
@@ -388,8 +387,10 @@
 /ip firewall nat add action=dst-nat chain=port-forward comment="SpaceAge GMod" dst-port=27015 protocol=udp to-addresses=10.3.10.4
 /ip firewall nat add action=dst-nat chain=port-forward comment=Minecraft dst-port=25565 protocol=tcp to-addresses=10.3.10.8
 /ip firewall nat add action=dst-nat chain=port-forward comment=Factorio dst-port=34197 protocol=udp to-addresses=10.3.10.7
-/ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 log=yes protocol=tcp to-addresses=172.17.2.2
+/ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 protocol=tcp to-addresses=172.17.2.2
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 protocol=udp to-addresses=172.17.2.2
+/ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus" dst-port=5302 protocol=tcp to-addresses=172.17.2.2 to-ports=9001
+/ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus External" dst-port=5301 protocol=tcp to-addresses=172.17.1.2 to-ports=9001
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.3 src-address=10.100.0.0/16
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10

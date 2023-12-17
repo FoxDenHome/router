@@ -327,15 +327,15 @@
 /ip dns static add name=wpad ttl=5m type=NXDOMAIN
 /ip dns static add name=wpad.foxden.network ttl=5m type=NXDOMAIN
 /ip dns static add forward-to=172.17.1.2 match-subdomain=yes name=foxden.test type=FWD
-/ip firewall address-list add address=10.1.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.2.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.3.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.4.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.5.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.6.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.7.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.8.0.0/24 list=local-dns-ip
-/ip firewall address-list add address=10.9.0.0/24 list=local-dns-ip
+/ip firewall address-list add address=10.1.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.2.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.3.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.4.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.5.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.6.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.7.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.8.0.0/23 list=local-dns-ip
+/ip firewall address-list add address=10.9.0.0/23 list=local-dns-ip
 /ip firewall address-list add address=10.100.0.1 list=local-dns-ip
 /ip firewall address-list add address=router.foxden.network list=wan-ips
 /ip firewall address-list add address=router-backup.foxden.network list=wan-ips
@@ -401,8 +401,10 @@
 /ip firewall nat add action=dst-nat chain=port-forward comment="SpaceAge GMod" dst-port=27015 protocol=udp to-addresses=10.3.10.4
 /ip firewall nat add action=dst-nat chain=port-forward comment=Minecraft dst-port=25565 protocol=tcp to-addresses=10.3.10.8
 /ip firewall nat add action=dst-nat chain=port-forward comment=Factorio dst-port=34197 protocol=udp to-addresses=10.3.10.7
-/ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 log=yes protocol=tcp to-addresses=172.17.2.2
+/ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 protocol=tcp to-addresses=172.17.2.2
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 protocol=udp to-addresses=172.17.2.2
+/ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus" dst-port=5302 protocol=tcp to-addresses=172.17.2.2 to-ports=9001
+/ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus External" dst-port=5301 protocol=tcp to-addresses=172.17.1.2 to-ports=9001
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.3 src-address=10.100.0.0/16
 /ip route add blackhole disabled=no dst-address=10.0.0.0/8 gateway="" routing-table=main suppress-hw-offload=no
