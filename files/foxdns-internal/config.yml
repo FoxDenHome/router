@@ -26,15 +26,15 @@ resolvers:
     nameservers: ["8.8.8.8:53", "8.8.4.4:53"]
 
 localizers:
-  gateway.foxden.test:
-  - 0.0.0.1/16
-  dns.foxden.test:
-  - 0.0.0.53/16
-  ntp.foxden.test:
-  - 0.0.0.123/16
   gateway.foxden.network:
   - 0.0.0.1/16
   dns.foxden.network:
   - 0.0.0.53/16
   ntp.foxden.network:
   - 0.0.0.123/16
+  vpn.foxden.network:
+  - 0.0.1.1/16
+  router.foxden.network:
+  - 0.0.1.1/16
+  router-backup.foxden.network:
+  - 0.0.1.3/16
