@@ -1,0 +1,3 @@
+$TTL 300
+@ IN CNAME apt-mirror.foxden.network.
+us IN CNAME apt-mirror.foxden.network.

@@ -1,0 +1,5 @@
+$ORIGIN f0x.es.
+$TTL 300
+
+@ IN CNAME foxcaves.foxden.network.
+www IN CNAME foxcaves.foxden.network.

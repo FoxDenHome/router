@@ -20,6 +20,18 @@ rdns:
 static-zones:
   foxden.network: foxden.network.txt
 
+  doridian.net: doridian.net.db
+  foxcav.es: foxcav.es.db
+  f0x.es: f0x.es.db
+
+  archive.ubuntu.com: apt-mirror.ubuntu.db
+  ports.ubuntu.com: apt-mirror.ubuntu.db
+  security.ubuntu.com: apt-mirror.ubuntu.db
+  ftp.debian.org: apt-mirror.db
+  deb.debian.org: apt-mirror.db
+  ftp.us.debian.org: apt-mirror.db
+  deb.us.debian.org: apt-mirror.db
+
 resolvers:
   - zone: .
     cache-size: 20480

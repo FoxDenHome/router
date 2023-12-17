@@ -1,0 +1,11 @@
+$ORIGIN doridian.net.
+$TTL 300
+
+@ IN CNAME website.foxden.network.
+www IN CNAME website.foxden.network.
+
+spaceage IN CNAME spaceage-website.foxden.network.
+www.spaceage IN CNAME spaceage-website.foxden.network.
+
+tts.spaceage IN CNAME spaceage-web.foxden.network.
+api.spaceage IN CNAME spaceage-web.foxden.network.
