@@ -388,7 +388,6 @@
 /ip firewall nat add action=dst-nat chain=port-forward comment="SpaceAge GMod" dst-port=27015 protocol=udp to-addresses=10.3.10.4
 /ip firewall nat add action=dst-nat chain=port-forward comment=Minecraft dst-port=25565 protocol=tcp to-addresses=10.3.10.8
 /ip firewall nat add action=dst-nat chain=port-forward comment=Factorio dst-port=34197 protocol=udp to-addresses=10.3.10.7
-/ip firewall nat add action=passthrough chain=dns-port-forward comment=FoxDNS connection-mark=incoming-conn log=yes
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 log=yes protocol=tcp to-addresses=172.17.2.2
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 protocol=udp to-addresses=172.17.2.2
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
