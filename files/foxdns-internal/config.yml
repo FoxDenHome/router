@@ -40,6 +40,7 @@ resolvers:
     nameservers: ["8.8.8.8:853", "8.8.4.4:853"]
     proto: tcp-tls
     server-name: dns.google
+    allow-only-from-private: true
 
 localizers:
   gateway.foxden.network:
