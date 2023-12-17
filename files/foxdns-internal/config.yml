@@ -7,6 +7,7 @@ global:
   mailbox: dns.foxden.network
   listen:
   - ":53"
+  prometheus-listen: :9001
 
 rdns:
   - ip_version: 6
