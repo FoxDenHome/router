@@ -1,11 +1,11 @@
 $TTL 300
 @ IN SOA ns1.foxden.network. dns.foxden.network. 2022010169 43200 3600 86400 300
 
-@ IN CNAME website.foxden.network.
-www IN CNAME website.foxden.network.
+@ IN A 10.3.10.10
+www IN CNAME doridian.net.
 
-spaceage IN CNAME spaceage-website.foxden.network.
-www.spaceage IN CNAME spaceage-website.foxden.network.
+spaceage IN A 10.3.10.9
+www.spaceage IN CNAME spaceage.doridian.net.
 
-tts.spaceage IN CNAME spaceage-web.foxden.network.
-api.spaceage IN CNAME spaceage-web.foxden.network.
+tts.spaceage IN A 10.3.10.5
+api.spaceage IN A 10.3.10.5
