@@ -26,6 +26,7 @@ static-zones:
   f0x.es: f0x.es.db
 
   wpad: empty.db
+  local: empty.db
 
   archive.ubuntu.com: apt-mirror.ubuntu.db
   ports.ubuntu.com: apt-mirror.ubuntu.db
