@@ -486,6 +486,11 @@
     \n\r\
     \n:local loadscript \":put \\\"\\\\\\\$ORIGIN \$topdomain.\\\"\r\
     \n:put \\\"\\\\\\\$TTL 300\\\"\r\
+    \n:put \\\"@ IN SOA ns1.foxden.network. dns.foxden.network. 2022010169 43200 3600 86400 300\\\"\r\
+    \n:put \\\"@ IN NS ns1.foxden.network.\\\"\r\
+    \n:put \\\"@ IN NS ns2.foxden.network.\\\"\r\
+    \n:put \\\"@ IN NS ns3.foxden.network.\\\"\r\
+    \n:put \\\"@ IN NS ns4.foxden.network.\\\"\r\
     \n:put \\\"nas IN CNAME bengalfox.foxden.network.\\\"\r\
     \n:local hostshort\r\
     \n:local dhcpent\r\
