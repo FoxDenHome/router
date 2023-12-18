@@ -85,8 +85,8 @@
 /snmp community add addresses=::/0 name=monitor_REMOVED
 /user group add name=monitoring policy=read,api,!local,!telnet,!ssh,!ftp,!reboot,!write,!policy,!test,!winbox,!password,!web,!sniff,!sensitive,!romon,!rest-api
 /container add interface=veth-snirouter logging=yes mounts=snirouter-config start-on-boot=yes workdir=/
-/container add interface=veth-foxdns-internal logging=yes mounts=foxdns-internal-config start-on-boot=yes workdir=/config
 /container add interface=veth-foxdns logging=yes mounts=foxdns-config start-on-boot=yes workdir=/config
+/container add interface=veth-foxdns-internal logging=yes mounts=foxdns-internal-config start-on-boot=yes workdir=/config
 /container config set registry-url=https://ghcr.io
 /ip settings set rp-filter=loose tcp-syncookies=yes
 /ipv6 settings set accept-redirects=no accept-router-advertisements=no
