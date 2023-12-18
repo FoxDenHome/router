@@ -1,5 +1,5 @@
-$ORIGIN doridian.net.
 $TTL 300
+@ IN SOA ns1.foxden.network. dns.foxden.network. 2022010169 43200 3600 86400 300
 
 @ IN CNAME website.foxden.network.
 www IN CNAME website.foxden.network.
