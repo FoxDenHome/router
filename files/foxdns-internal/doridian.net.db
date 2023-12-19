@@ -4,6 +4,8 @@ $TTL 300
 @ IN A 10.3.10.10
 www IN CNAME doridian.net.
 
+icefox IN A 107.181.226.74
+
 spaceage IN A 10.3.10.9
 www.spaceage IN CNAME spaceage.doridian.net.
 
