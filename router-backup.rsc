@@ -483,6 +483,7 @@
     \n:put \\\"@ IN NS ns3.foxden.network.\\\"\r\
     \n:put \\\"@ IN NS ns4.foxden.network.\\\"\r\
     \n:put \\\"nas IN CNAME bengalfox.foxden.network.\\\"\r\
+    \n:put \\\"nas-ro IN A 107.181.226.74\\\"\r\
     \n:local hostshort\r\
     \n:local dhcpent\r\
     \n:foreach i in=[/ip/dhcp-server/lease/find comment dynamic=no] do={\r\
