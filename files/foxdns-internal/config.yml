@@ -85,7 +85,13 @@ resolvers:
   - zone: .
     max-connections: 100
     cache-size: 20480
-    nameservers: ["8.8.8.8:853", "8.8.4.4:853"]
+    nameservers:
+      - proto: tcp-tls
+        server-name: dns.google
+        addr: "8.8.8.8:853"
+      - proto: tcp-tls
+        server-name: dns.google
+        addr: "8.8.4.4:853"
     proto: tcp-tls
     server-name: dns.google
     allow-only-from-private: true
