@@ -45,6 +45,11 @@ resolvers:
     server-name: dns.google
     allow-only-from-private: true
 
+    cache-min-time: 60s
+    cache-max-time: 3600s
+    cache-no-reply-time: 60s
+    record-min-ttl: 60s
+
 localizers:
   gateway.foxden.network:
   - 0.0.0.1/16
