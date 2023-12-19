@@ -3,6 +3,10 @@
 #
 # model = CCR2004-1G-12S+2XS
 # serial number = REMOVED
+/container mounts add dst=/config name=snirouter-config src=/snirouter
+/container mounts add dst=/config name=foxdns-config src=/foxdns
+/container mounts add dst=/config name=foxdns-internal-config src=/foxdns-internal
+/disk add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface ethernet set [ find default-name=ether1 ] comment=eth1 l2mtu=1514 name=oob rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus1 ] disabled=yes name=sfp1 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus2 ] auto-negotiation=no disabled=yes name=sfp2 rx-flow-control=on tx-flow-control=on
@@ -22,11 +26,11 @@
 /interface veth add address=172.17.1.2/24 gateway=172.17.1.1 gateway6="" name=veth-foxdns
 /interface veth add address=172.17.2.2/24 gateway=172.17.2.1 gateway6="" name=veth-foxdns-internal
 /interface veth add address=172.17.0.2/24 gateway=172.17.0.1 gateway6="" name=veth-snirouter
+/interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
+/interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=50 version=2
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=50 version=2 vrid=123
-/interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
-/interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
@@ -48,11 +52,6 @@
 /interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=50 version=2
 /interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=50 version=2 vrid=123
-/container mounts add dst=/config name=snirouter-config src=/snirouter
-/container mounts add dst=/config name=foxdns-config src=/foxdns
-/container mounts add dst=/config name=foxdns-internal-config src=/foxdns-internal
-/disk add slot=docker tmpfs-max-size=128000000 type=tmpfs
-/disk add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface list add name=iface-mgmt
 /interface list add name=iface-lan
 /interface list add name=iface-dmz
@@ -61,7 +60,6 @@
 /interface list add name=iface-hypervisor
 /interface list add include=iface-dmz,iface-hypervisor,iface-labnet,iface-lan,iface-mgmt,iface-security name=zone-local
 /interface list add name=zone-wan
-/interface wireless security-profiles set [ find default=yes ] supplicant-identity=REMOVED
 /iot lora servers add address=eu.mikrotik.thethings.industries name=TTN-EU protocol=UDP
 /iot lora servers add address=us.mikrotik.thethings.industries name=TTN-US protocol=UDP
 /iot lora servers add address=eu1.cloud.thethings.industries name="TTS Cloud (eu1)" protocol=UDP
@@ -484,8 +482,7 @@
     \n\r\
     \n:put \"Appending zone file\"\r\
     \n\r\
-    \n:local loadscript \":put \\\"\\\\\\\$ORIGIN \$topdomain.\\\"\r\
-    \n:put \\\"\\\\\\\$TTL 300\\\"\r\
+    \n:local loadscript \":put \\\"\\\\\\\$TTL 300\\\"\r\
     \n:put \\\"@ IN SOA ns1.foxden.network. dns.foxden.network. 2022010169 43200 3600 86400 300\\\"\r\
     \n:put \\\"@ IN NS ns1.foxden.network.\\\"\r\
     \n:put \\\"@ IN NS ns2.foxden.network.\\\"\r\

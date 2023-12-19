@@ -6,7 +6,6 @@
 /container mounts add dst=/config name=snirouter-config src=/snirouter
 /container mounts add dst=/config name=foxdns-config src=/foxdns
 /container mounts add dst=/config name=foxdns-internal-config src=/foxdns-internal
-/disk add slot=docker tmpfs-max-size=128000000 type=tmpfs
 /disk add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface ethernet set [ find default-name=ether2 ] disabled=yes name=eth2 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether3 ] disabled=yes name=eth3 rx-flow-control=on tx-flow-control=on
@@ -477,8 +476,7 @@
     \n\r\
     \n:put \"Appending zone file\"\r\
     \n\r\
-    \n:local loadscript \":put \\\"\\\\\\\$ORIGIN \$topdomain.\\\"\r\
-    \n:put \\\"\\\\\\\$TTL 300\\\"\r\
+    \n:local loadscript \":put \\\"\\\\\\\$TTL 300\\\"\r\
     \n:put \\\"@ IN SOA ns1.foxden.network. dns.foxden.network. 2022010169 43200 3600 86400 300\\\"\r\
     \n:put \\\"@ IN NS ns1.foxden.network.\\\"\r\
     \n:put \\\"@ IN NS ns2.foxden.network.\\\"\r\
