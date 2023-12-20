@@ -24,7 +24,6 @@ rdns:
   - ip_version: 4
     suffix: ip4.foxden.network
     subnets:
-      - 10.in-addr.arpa
       - 168.192.in-addr.arpa
       - 16.172.in-addr.arpa
       - 17.172.in-addr.arpa
@@ -66,6 +65,7 @@ rdns:
 
 static-zones:
   foxden.network: foxden.network.txt
+  10.in-addr.arpa: 10.in-addr.arpa.txt
 
   doridian.net: doridian.net.db
   foxcav.es: foxcav.es.db
