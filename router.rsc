@@ -22,7 +22,7 @@
 /interface ethernet set [ find default-name=sfp28-1 ] auto-negotiation=no fec-mode=fec74 l2mtu=9092 mtu=9000 name=sfpx1-rackswitch-agg rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp28-2 ] auto-negotiation=no comment=sfpx2-rackswitch-agg fec-mode=fec74 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus12 ] comment=sfp1 name=wan rx-flow-control=on tx-flow-control=on
-/interface 6to4 add !keepalive mtu=1480 name=6to4-he remote-address=216.218.226.238
+/interface 6to4 add !keepalive mtu=1480 name=6to4-redfox remote-address=144.202.81.146
 /interface veth add address=172.17.1.2/24 gateway=172.17.1.1 gateway6="" name=veth-foxdns
 /interface veth add address=172.17.2.2/24 gateway=172.17.2.1 gateway6="" name=veth-foxdns-internal
 /interface veth add address=172.17.0.2/24 gateway=172.17.0.1 gateway6="" name=veth-snirouter
@@ -130,16 +130,17 @@
 /interface list member add interface=wg-s2s list=zone-local
 /interface list member add interface=wg-vpn list=zone-local
 /interface list member add interface=vlan-retro list=zone-local
-/interface list member add interface=6to4-he list=zone-wan
 /interface list member add interface=veth-foxdns list=zone-local
 /interface list member add interface=veth-snirouter list=zone-local
 /interface list member add interface=veth-foxdns-internal list=zone-local
+/interface list member add interface=6to4-redfox list=zone-wan
 /interface wireguard peers add allowed-address=10.100.10.1/32 comment=Fennec interface=wg-vpn public-key="+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY="
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 comment="Dori Phone" interface=wg-vpn public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
 /interface wireguard peers add allowed-address=10.100.10.4/32 comment="Wizzy Laptop" interface=wg-vpn public-key="5QUN5FumE8LM1Ak9tv8gwaF8K4wTXlCw2BSDfBIEL3g="
 /interface wireguard peers add allowed-address=10.99.10.2/32 comment=IceFox endpoint-address=107.181.226.74 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
 /interface wireguard peers add allowed-address=10.100.10.5/32 comment=Wizzy-Desktop interface=wg-vpn public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0="
+/interface wireguard peers add allowed-address=10.99.10.1/32 comment=RedFox endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="AiSDKCRp/G+wnbLjdWHBLouTen0f4sof+F7MIyboDzk="
 /ip address add address=10.1.1.1/16 interface=vlan-mgmt network=10.1.0.0
 /ip address add address=10.2.1.1/16 interface=vlan-lan network=10.2.0.0
 /ip address add address=10.3.1.1/16 interface=vlan-dmz network=10.3.0.0
@@ -410,7 +411,7 @@
 /ip route add blackhole disabled=no distance=1 dst-address=172.16.0.0/12 gateway="" pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip route add blackhole disabled=no distance=1 dst-address=10.69.69.69/32 gateway="" pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
-/ipv6 route add disabled=no distance=1 dst-address=::/0 gateway=2001:470:a:39::1 routing-table=main scope=30 suppress-hw-offload=no target-scope=10
+/ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:a::1 routing-table=main
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
 /ip service set www-ssl certificate=letsencrypt-autogen_2023-11-17T21:03:22Z disabled=no tls-version=only-1.2
@@ -419,13 +420,13 @@
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
-/ipv6 address add address=2001:470:e820:1::1 interface=vlan-mgmt
-/ipv6 address add address=2001:470:e820:2::1 interface=vlan-lan
-/ipv6 address add address=2001:470:e820:3::1 interface=vlan-dmz
-/ipv6 address add address=2001:470:e820:4::1 interface=vlan-labnet
-/ipv6 address add address=2001:470:e820:5::1 interface=vlan-security
-/ipv6 address add address=2001:470:e820:6::1 interface=vlan-hypervisor
-/ipv6 address add address=2001:470:a:39::2 advertise=no interface=6to4-he
+/ipv6 address add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
+/ipv6 address add address=2a0e:7d44:f069:1::1 interface=vlan-mgmt
+/ipv6 address add address=2a0e:7d44:f069:2::1 interface=vlan-lan
+/ipv6 address add address=2a0e:7d44:f069:3::1 interface=vlan-dmz
+/ipv6 address add address=2a0e:7d44:f069:4::1 interface=vlan-labnet
+/ipv6 address add address=2a0e:7d44:f069:5::1 interface=vlan-security
+/ipv6 address add address=2a0e:7d44:f069:6::1 interface=vlan-hypervisor
 /ipv6 dhcp-client add interface=wan pool-name=pool-wan request=prefix use-peer-dns=no
 /ipv6 firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ipv6 firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
@@ -580,7 +581,7 @@
     \n\r\
     \n    :delay 5s\r\
     \n\r\
-    \n    #:do {\r\
+    \n    :do {\r\
     \n        :if (\$nicUpdateMode=\"true\") do={\r\
     \n             :local result [/tool/fetch mode=\$mode http-auth-scheme=basic user=\"\$user\" password=\"\$key\" url=\"\$mode://\$updatehost/nic/update/\?hostname=\$host&myip=\$ipaddr\" as-value output=user]\r\
     \n             \$logputdebug (\"[DynDNS] Result of nic/update update for \". \$host . \": \" . (\$result->\"data\"))\r\
@@ -588,15 +589,16 @@
     \n             :local result [/tool/fetch mode=\$mode http-auth-scheme=basic url=\"\$mode://\$updatehost/api/dynamicURL/\?q=\$key&ip=\$ipaddr&notify=1\" as-value output=user]\r\
     \n             \$logputdebug (\"[DynDNS] Result of api/dynamicURL update for \". \$host . \": \" . (\$result->\"data\"))\r\
     \n        }\r\
-    \n    #} on-error={\r\
-    \n    #    \$logputerror (\"[DynDNS] Unable to update \" . \$host)\r\
-    \n    #}\r\
+    \n    } on-error={\r\
+    \n        \$logputerror (\"[DynDNS] Unable to update \" . \$host)\r\
+    \n    }\r\
     \n}\r\
     \n\r\
     \nif (\$isprimary) do={\r\
     \n    \$dyndnsUpdate host=\"wan.foxden.network\" key=\"REMOVED\" updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
     \n}\r\
-    \n\$dyndnsUpdate user=\"doridian\" host=\$IPv6Host key=\$IPv6Key updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https nicUpdateMode=true\r\
+    \n#\$dyndnsUpdate user=\"doridian\" host=\$IPv6Host key=\$IPv6Key updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https nicUpdateMode=true\r\
+    \n\$dyndnsUpdate host=\"redfoxv6\" key=(\"anonymous&primary=\" . \$isprimary) updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
     \n\$dyndnsUpdate host=\$DynDNSHost key=\$DynDNSKey updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
     \n"
 /system script add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local dhcpent\r\
