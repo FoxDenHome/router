@@ -1,10 +1,11 @@
 global:
-  nameservers:
-  - ns1.foxden.network
-  - ns2.foxden.network
-  - ns3.foxden.network
-  - ns4.foxden.network
-  mailbox: dns.foxden.network
+  authority-config:
+    nameservers:
+    - ns1.foxden.network
+    - ns2.foxden.network
+    - ns3.foxden.network
+    - ns4.foxden.network
+    mailbox: dns.foxden.network
   listen:
   - ":53"
   prometheus-listen: :9001
