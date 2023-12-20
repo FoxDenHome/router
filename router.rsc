@@ -480,7 +480,7 @@
     \n:put \"Adjusting lease times\"\r\
     \n/ip/dhcp-server/lease set [/ip/dhcp-server/lease find dynamic=no] lease-time=1d\r\
     \n\r\
-    \n:put \"Appending zone file\"\r\
+    \n:put \"Appending zone file foxden.network\"\r\
     \n\r\
     \n:local loadscript \":put \\\"\\\\\\\$TTL 300\\\"\r\
     \n:put \\\"@ IN SOA ns1.foxden.network. dns.foxden.network. 2022010169 43200 3600 86400 300\\\"\r\
@@ -504,10 +504,43 @@
     \n:put \$loadscript\r\
     \n:execute script=\$loadscript file=foxdns-internal/foxden.network.txt\r\
     \n\r\
-    \n:put done\r\
+    \n:put \"Appending zone file 10.in-addr.arpa\"\r\
     \n\r\
-    \n#:put \"\$zonefile\"\r\
-    \n#/file/add name=\"foxdns-internal/foxden.network.db\" contents=\$zonefile\r\
+    \n:local loadscript \":put \\\"\\\\\\\$TTL 300\\\"\r\
+    \n:put \\\"@ IN SOA ns1.foxden.network. dns.foxden.network. 2022010169 43200 3600 86400 300\\\"\r\
+    \n:put \\\"@ IN NS ns1.foxden.network.\\\"\r\
+    \n:put \\\"@ IN NS ns2.foxden.network.\\\"\r\
+    \n:put \\\"@ IN NS ns3.foxden.network.\\\"\r\
+    \n:put \\\"@ IN NS ns4.foxden.network.\\\"\r\
+    \n:for i from=1 to=9 do={ \r\
+    \n    :put \\\"1.0.\\\$i IN PTR gateway.foxden.network.\\\"\r\
+    \n    :put \\\"53.0.\\\$i IN PTR dns.foxden.network.\\\"\r\
+    \n    :put \\\"123.0.\\\$i IN PTR ntp.foxden.network.\\\"\r\
+    \n    :put \\\"1.1.\\\$i IN PTR router.foxden.network.\\\"\r\
+    \n    :put \\\"2.1.\\\$i IN PTR ntp.foxden.network.\\\"\r\
+    \n    :put \\\"3.1.\\\$i IN PTR router-backup.foxden.network.\\\"\r\
+    \n}\r\
+    \n:local hostname\r\
+    \n:local hostshort\r\
+    \n:local dhcpent\r\
+    \n:local ipNum\r\
+    \n:local reverseIpString\r\
+    \n:foreach i in=[/ip/dhcp-server/lease/find comment dynamic=no] do={\r\
+    \n    :set dhcpent [/ip/dhcp-server/lease/get \\\$i]\r\
+    \n    :set hostshort (\\\$dhcpent->\\\"comment\\\")\r\
+    \n\r\
+    \n    :if (\\\$hostshort != \\\"ntp\\\" && \\\$hostshort != \\\"dns\\\" && \\\$hostshort != \\\"gateway\\\") do={\r\
+    \n      :set hostname (\\\$hostshort . \\\".\$topdomain.\\\")\r\
+    \n      :set ipNum [ :tonum [ :toip (\\\$dhcpent->\\\"address\\\") ] ]\r\
+    \n      :set reverseIpString ((\\\$ipNum & 255) . \\\".\\\" . ((\\\$ipNum >> 8) & 255) . \\\".\\\" . ((\\\$ipNum >> 16) & 255))\r\
+    \n      :put (\\\$reverseIpString . \\\" IN PTR \\\" . \\\$hostname)\r\
+    \n    }\r\
+    \n}\"\r\
+    \n\r\
+    \n:put \$loadscript\r\
+    \n:execute script=\$loadscript file=foxdns-internal/10.in-addr.arpa.txt\r\
+    \n\r\
+    \n:put Done\r\
     \n"
 /system script add dont-require-permissions=yes name=dyndns-update owner=admin policy=ftp,read,write,policy,test source=":local ipaddrfind [ /ip/address/find interface=wan ]\r\
     \n:if ([:len \$ipaddrfind] < 1) do={\r\
