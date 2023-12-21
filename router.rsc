@@ -518,7 +518,7 @@
     \n    :put \\\"53.0.\\\$i IN PTR dns.foxden.network.\\\"\r\
     \n    :put \\\"123.0.\\\$i IN PTR ntp.foxden.network.\\\"\r\
     \n    :put \\\"1.1.\\\$i IN PTR router.foxden.network.\\\"\r\
-    \n    :put \\\"2.1.\\\$i IN PTR ntp.foxden.network.\\\"\r\
+    \n    :put \\\"2.1.\\\$i IN PTR ntpi.foxden.network.\\\"\r\
     \n    :put \\\"3.1.\\\$i IN PTR router-backup.foxden.network.\\\"\r\
     \n}\r\
     \n:local hostname\r\
