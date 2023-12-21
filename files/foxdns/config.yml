@@ -1,7 +1,7 @@
 global:
   authority-config:
-    soa-ttl: 86400
-    ns-ttl: 86400
+    soa-ttl: 24h
+    ns-ttl: 24h
     nameservers:
     - ns-ip1.foxden.network
     - ns-ip2.foxden.network
@@ -14,8 +14,8 @@ global:
 
 rdns:
   - ip_version: 6
-    address-ttl: 86400
-    ptr-ttl: 86400
+    address-ttl: 24h
+    ptr-ttl: 24h
     suffix: ip6.foxden.network
     subnets:
       - 3.6.9.e.0.7.4.0.1.0.0.2.ip6.arpa
