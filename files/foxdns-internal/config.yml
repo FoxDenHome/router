@@ -96,8 +96,8 @@ resolvers:
         server-name: dns.google
         addr: "8.8.4.4:853"
     allow-only-from-private: true
-    cache-max-time: 3600s
-    cache-no-reply-time: 60s
+    cache-max-time: 24h
+    cache-no-reply-time: 1m
 
 localizers:
   - zone: gateway.foxden.network
