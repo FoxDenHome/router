@@ -322,7 +322,7 @@
 /ip dhcp-server network add address=10.6.0.0/16 dns-server=10.6.0.53 domain=foxden.network gateway=10.6.0.1 netmask=16 ntp-server=10.6.0.123
 /ip dhcp-server network add address=10.7.0.0/16 dns-server=10.7.1.1 domain=foxden.network gateway=10.7.1.1 netmask=16 ntp-server=10.7.1.1
 /ip dhcp-server network add address=192.168.88.0/24 dns-none=yes
-/ip dns set cache-max-ttl=1d cache-size=20480KiB max-udp-packet-size=512 servers=8.8.8.8,8.8.4.4 verify-doh-cert=yes
+/ip dns set cache-max-ttl=1d max-udp-packet-size=512 servers=8.8.8.8,8.8.4.4 verify-doh-cert=yes
 /ip dns static add name=wpad ttl=5m type=NXDOMAIN
 /ip dns static add name=wpad.foxden.network ttl=5m type=NXDOMAIN
 /ip dns static add forward-to=172.17.1.2 match-subdomain=yes name=foxden.test type=FWD
