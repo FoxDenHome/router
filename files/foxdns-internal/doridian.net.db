@@ -6,6 +6,8 @@ www IN CNAME doridian.net.
 
 icefox IN A 107.181.226.74
 redfox IN A 144.202.81.146
+arcticfox IN A 81.4.122.10
+arcticfox IN AAAA 2a00:d880:11::348
 
 spaceage IN A 10.3.10.9
 www.spaceage IN CNAME spaceage.doridian.net.
