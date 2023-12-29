@@ -100,6 +100,8 @@ resolvers:
     cache-max-time: 24h
     cache-no-reply-time: 1m
     record-min-ttl: 1m
+    cache-stale-entry-keep-period: 2m
+    cache-return-stale-period: 1m
 
 localizers:
   - zone: gateway.foxden.network
