@@ -84,6 +84,9 @@ static-zones:
   ftp.us.debian.org: apt-mirror.db
   deb.us.debian.org: apt-mirror.db
 
+  localhost: localhost.db
+  localdomain: localhost.db
+
 resolvers:
   - zone: .
     max-connections: 100
