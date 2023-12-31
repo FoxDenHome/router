@@ -295,8 +295,6 @@
 /ip dhcp-server lease add address=10.2.13.25 comment=led-strip-bambu-x1 lease-time=1d mac-address=0C:B8:15:C3:24:2C server=dhcp-lan
 /ip dhcp-server lease add address=10.4.10.3 comment=carvera lease-time=1d mac-address=EC:C7:00:1C:E3:2D server=dhcp-labnet
 /ip dhcp-server lease add address=10.2.12.29 comment=tv-dori-office lease-time=1d mac-address=A8:23:FE:39:3A:1C server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.26 comment=presence-sensor-bathroom-upper lease-time=1d mac-address=E0:98:06:F9:A4:A0 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.27 comment=presence-sensor-bathroom-lower lease-time=1d mac-address=E0:98:06:F9:A6:97 server=dhcp-lan
 /ip dhcp-server lease add address=10.7.10.1 comment=mister lease-time=1d mac-address=02:03:04:05:06:07 server=dhcp-retro
 /ip dhcp-server lease add address=10.7.10.2 comment=wii lease-time=1d mac-address=00:27:09:8A:A7:49 server=dhcp-retro
 /ip dhcp-server lease add address=10.7.10.3 comment=wyse98 lease-time=1d mac-address=00:80:64:77:75:27 server=dhcp-retro
@@ -311,9 +309,12 @@
 /ip dhcp-server lease add address=10.2.11.17 comment=htpl lease-time=1d mac-address=F2:6C:78:D6:EE:E6 server=dhcp-lan
 /ip dhcp-server lease add address=10.5.11.8 comment=camera-garage lease-time=1d mac-address=F4:E2:C6:0C:3F:C3 server=dhcp-security
 /ip dhcp-server lease add address=10.4.10.5 comment=laser-controller lease-time=1d mac-address=8C:16:45:46:05:22 server=dhcp-labnet
+/ip dhcp-server lease add address=10.2.13.27 comment=humidity-switch-bathroom-upper lease-time=1d mac-address=70:03:9F:37:4D:3E server=dhcp-lan
 /ip dhcp-server lease add address=10.3.10.10 comment=website lease-time=1d mac-address=AE:75:D4:40:07:76 server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.9 comment=spaceage-website lease-time=1d mac-address=5E:1A:40:6A:64:06 server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.11.18 comment=jellyfin lease-time=1d mac-address=00:16:3E:CA:7E:18 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.11.19 comment=ollama lease-time=1d mac-address=00:16:3E:CA:7E:99 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.13.26 comment=sonoff-s31-resin-printer lease-time=1d mac-address=48:3F:DA:28:30:FC server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -711,7 +712,7 @@
 /system script add dont-require-permissions=no name=container-autoheal owner=admin policy=read,write,policy,test source=":global logputinfo\r\
     \n\r\
     \n/container\r\
-    \n:foreach ct in=[find status!=running] do={\r\
+    \n:foreach ct in=[find status=stopped] do={\r\
     \n  \$logputinfo (\"Starting container with interface \" . [get \$ct interface])\r\
     \n  start \$ct\r\
     \n}\r\
