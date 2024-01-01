@@ -63,6 +63,9 @@ static-zones:
   0.0.c.f.ip6.arpa: empty.db
   0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa: empty.db
 
+  8.8.8.8.in-addr.arpa: dns-google-ptr.db
+  4.4.8.8.in-addr.arpa: dns-google-ptr.db
+
   archive.ubuntu.com: apt-mirror.ubuntu.db
   ports.ubuntu.com: apt-mirror.ubuntu.db
   security.ubuntu.com: apt-mirror.ubuntu.db
@@ -92,6 +95,7 @@ resolvers:
     record-min-ttl: 1m
     cache-stale-entry-keep-period: 15m
     cache-return-stale-period: 5m
+    log-failures: true
 
 localizers:
   - zone: gateway.foxden.network
