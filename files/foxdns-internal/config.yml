@@ -80,7 +80,7 @@ static-zones:
 resolvers:
   - zone: .
     max-connections: 20
-    cache-size: 20480
+    cache-size: 32768
     nameservers:
       - proto: tcp-tls
         server-name: dns.google
