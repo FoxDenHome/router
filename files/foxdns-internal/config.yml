@@ -76,7 +76,7 @@ static-zones:
 
 resolvers:
   - zone: .
-    max-connections: 100
+    max-connections: 20
     cache-size: 20480
     nameservers:
       - proto: tcp-tls
