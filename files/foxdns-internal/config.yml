@@ -36,6 +36,7 @@ static-zones:
   foxcav.es: foxcav.es.db
   f0x.es: f0x.es.db
   yiff.ws: yiff.ws.db
+  fox.mov: fox.mov.db
 
   wpad: empty.db
   local: empty.db
