@@ -9,8 +9,8 @@ jellyfin IN A 107.181.226.75
 syncthing IN A 107.181.226.76
 
 redfox IN A 144.202.81.146
-arcticfox IN A 81.4.122.10
-arcticfox IN AAAA 2a00:d880:11::348
+arcticfox IN A 107.189.10.224
+arcticfox IN AAAA 2605:6400:30:fcce:e1b0:1f53:2826:5331
 
 spaceage IN A 10.3.10.9
 www.spaceage IN CNAME spaceage.doridian.net.
