@@ -35,6 +35,7 @@ static-zones:
   doridian.net: doridian.net.db
   foxcav.es: foxcav.es.db
   f0x.es: f0x.es.db
+  yiff.ws: yiff.ws.db
 
   wpad: empty.db
   local: empty.db
