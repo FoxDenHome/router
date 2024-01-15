@@ -29,55 +29,105 @@ rdns:
 
 
 static-zones:
-  foxden.network: foxden.network.txt
-  10.in-addr.arpa: 10.in-addr.arpa.txt
+  - zone: foxden.network
+    file: foxden.network.txt
+    resolve-external-cnames: true
+  - zone: 10.in-addr.arpa
+    file: 10.in-addr.arpa.txt
 
-  doridian.net: doridian.net.db
-  foxcav.es: foxcav.es.db
-  f0x.es: f0x.es.db
-  yiff.ws: yiff.ws.db
-  fox.mov: fox.mov.db
+  - zone: doridian.net
+    file: doridian.net.db
+    resolve-external-cnames: true
+  - zone: foxcav.es
+    file: foxcav.es.db
+    resolve-external-cnames: true
+  - zone: f0x.es
+    file: f0x.es.db
+    resolve-external-cnames: true
+  - zone: yiff.ws
+    file: yiff.ws.db
+    resolve-external-cnames: true
+  - zone: fox.mov
+    file: fox.mov.db
+    resolve-external-cnames: true
 
-  wpad: empty.db
-  local: empty.db
+  - zone: wpad
+    file: empty.db
+  - zone: local
+    file: empty.db
 
-  254.169.in-addr.arpa: empty.db
-  127.in-addr.arpa: empty.db
-  0.0.0.0.in-addr.arpa: empty.db
-  255.255.255.255.in-addr.arpa: empty.db
-  224.in-addr.arpa: empty.db
-  225.in-addr.arpa: empty.db
-  226.in-addr.arpa: empty.db
-  227.in-addr.arpa: empty.db
-  228.in-addr.arpa: empty.db
-  229.in-addr.arpa: empty.db
-  230.in-addr.arpa: empty.db
-  231.in-addr.arpa: empty.db
-  232.in-addr.arpa: empty.db
-  233.in-addr.arpa: empty.db
-  234.in-addr.arpa: empty.db
-  235.in-addr.arpa: empty.db
-  236.in-addr.arpa: empty.db
-  237.in-addr.arpa: empty.db
-  238.in-addr.arpa: empty.db
-  239.in-addr.arpa: empty.db
-  0.0.f.f.ip6.arpa: empty.db
-  0.0.c.f.ip6.arpa: empty.db
-  0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa: empty.db
+  - zone: 254.169.in-addr.arpa
+    file: empty.db
+  - zone: 127.in-addr.arpa
+    file: empty.db
+  - zone: 0.0.0.0.in-addr.arpa
+    file: empty.db
+  - zone: 255.255.255.255.in-addr.arpa
+    file: empty.db
+  - zone: 224.in-addr.arpa
+    file: empty.db
+  - zone: 225.in-addr.arpa
+    file: empty.db
+  - zone: 226.in-addr.arpa
+    file: empty.db
+  - zone: 227.in-addr.arpa
+    file: empty.db
+  - zone: 228.in-addr.arpa
+    file: empty.db
+  - zone: 229.in-addr.arpa
+    file: empty.db
+  - zone: 230.in-addr.arpa
+    file: empty.db
+  - zone: 231.in-addr.arpa
+    file: empty.db
+  - zone: 232.in-addr.arpa
+    file: empty.db
+  - zone: 233.in-addr.arpa
+    file: empty.db
+  - zone: 234.in-addr.arpa
+    file: empty.db
+  - zone: 235.in-addr.arpa
+    file: empty.db
+  - zone: 236.in-addr.arpa
+    file: empty.db
+  - zone: 237.in-addr.arpa
+    file: empty.db
+  - zone: 238.in-addr.arpa
+    file: empty.db
+  - zone: 239.in-addr.arpa
+    file: empty.db
 
-  8.8.8.8.in-addr.arpa: dns-google-ptr.db
-  4.4.8.8.in-addr.arpa: dns-google-ptr.db
+  - zone: 0.0.f.f.ip6.arpa
+    file: empty.db
+  - zone: 0.0.c.f.ip6.arpa
+    file: empty.db
+  - zone: 0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa
+    file: empty.db
 
-  archive.ubuntu.com: apt-mirror.ubuntu.db
-  ports.ubuntu.com: apt-mirror.ubuntu.db
-  security.ubuntu.com: apt-mirror.ubuntu.db
-  ftp.debian.org: apt-mirror.db
-  deb.debian.org: apt-mirror.db
-  ftp.us.debian.org: apt-mirror.db
-  deb.us.debian.org: apt-mirror.db
+  - zone: 8.8.8.8.in-addr.arpa
+    file: dns-google-ptr.db
+  - zone: 4.4.8.8.in-addr.arpa
+    file: dns-google-ptr.db
 
-  localhost: localhost.db
-  localdomain: localhost.db
+  - zone: archive.ubuntu.com
+    file: apt-mirror.ubuntu.db
+  - zone: ports.ubuntu.com
+    file: apt-mirror.ubuntu.db
+  - zone: security.ubuntu.com
+    file: apt-mirror.ubuntu.db
+  - zone: ftp.debian.org
+    file: apt-mirror.db
+  - zone: deb.debian.org
+    file: apt-mirror.db
+  - zone: ftp.us.debian.org
+    file: apt-mirror.db
+  - zone: deb.us.debian.org
+    file: apt-mirror.db
+
+  - zone: localhost
+    file: localhost.db
+  - zone: localdomain
+    file: localhost.db
 
 resolvers:
   - zone: .
