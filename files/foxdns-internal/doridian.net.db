@@ -15,9 +15,10 @@ arcticfox IN AAAA 2605:6400:30:fcce:1337:1337:1337:1337
 www.arcticfox IN CNAME arcticfox.doridian.net.
 mysql IN CNAME arcticfox.doridian.net.
 
-spaceage IN A 10.3.10.9
-www.spaceage IN CNAME spaceage.doridian.net.
-tts.spaceage IN A 10.3.10.5
-api.spaceage IN A 10.3.10.5
+spaceage IN CNAME spaceage-website.foxden.network.
+www.spaceage IN CNAME spaceage-website.foxden.network.
+tts.spaceage IN CNAME spaceage-web.foxden.network.
+api.spaceage IN CNAME spaceage-web.foxden.network.
 
-mc IN A 10.3.10.8
+mc IN CNAME minecraft.foxden.network.
+

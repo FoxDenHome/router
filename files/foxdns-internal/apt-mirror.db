@@ -2,4 +2,4 @@ $TTL 300
 
 @ IN SOA ns1.foxden.network. dns.foxden.network. 2022010169 43200 3600 86400 300
 
-@ IN A 10.2.11.13
+@ IN CNAME apt-mirror.foxden.network.
