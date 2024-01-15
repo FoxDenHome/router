@@ -3,3 +3,5 @@ $TTL 300
 
 @ IN CNAME foxcaves.foxden.network.
 www IN CNAME foxcaves.foxden.network.
+
+c0de IN CNAME c0defox.es.
