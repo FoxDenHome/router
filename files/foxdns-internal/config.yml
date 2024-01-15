@@ -103,21 +103,42 @@ localizers:
   - zone: gateway.foxden.network
     subnets:
     - 0.0.0.1/16
+    rewrites:
+    - from: 10.100.0.0/16
+      to: 10.2.0.0
   - zone: dns.foxden.network
     subnets:
     - 0.0.0.53/16
+    rewrites:
+    - from: 10.100.0.0/16
+      to: 10.2.0.0
   - zone: ntp.foxden.network
     subnets:
     - 0.0.0.123/16
+    rewrites:
+    - from: 10.100.0.0/16
+      to: 10.2.0.0
   - zone: vpn.foxden.network
     subnets:
     - 0.0.1.1/16
+    rewrites:
+    - from: 10.100.0.0/16
+      to: 10.2.0.0
   - zone: router.foxden.network
     subnets:
     - 0.0.1.1/16
+    rewrites:
+    - from: 10.100.0.0/16
+      to: 10.2.0.0
   - zone: ntpi.foxden.network
     subnets:
     - 0.0.1.2/16
+    rewrites:
+    - from: 10.100.0.0/16
+      to: 10.2.0.0
   - zone: router-backup.foxden.network
     subnets:
     - 0.0.1.3/16
+    rewrites:
+    - from: 10.100.0.0/16
+      to: 10.2.0.0
