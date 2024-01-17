@@ -391,6 +391,8 @@
 /ip firewall nat add action=endpoint-independent-nat chain=srcnat out-interface=wan protocol=udp randomise-ports=yes
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
 /ip firewall nat add action=masquerade chain=srcnat src-address=172.17.0.0/16
+/ip firewall nat add action=dst-nat chain=dstnat comment=spaceage-website dst-address=55.69.1.1 in-interface-list=zone-local to-addresses=10.3.10.9
+/ip firewall nat add action=dst-nat chain=dstnat comment=spaceage-web dst-address=55.69.1.2 in-interface-list=zone-local to-addresses=10.3.10.5
 /ip firewall nat add action=jump chain=dstnat comment=Hairpin dst-address=REMOVED jump-target=port-forward
 /ip firewall nat add action=jump chain=dstnat comment="DNS forward" dst-address-list=local-dns-ip jump-target=dns-port-forward
 /ip firewall nat add action=jump chain=dstnat comment="Hairpin fallback" dst-address=REMOVED jump-target=port-forward
@@ -412,6 +414,7 @@
 /ip route add blackhole disabled=no distance=1 dst-address=172.16.0.0/12 gateway="" pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip route add blackhole disabled=no distance=1 dst-address=10.69.69.69/32 gateway="" pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
+/ip route add blackhole disabled=no dst-address=55.69.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:a::1 routing-table=main
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
