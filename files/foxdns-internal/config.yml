@@ -111,18 +111,25 @@ static-zones:
 
   - zone: archive.ubuntu.com
     file: apt-mirror.ubuntu.db
+    resolve-external-cnames: true
   - zone: ports.ubuntu.com
     file: apt-mirror.ubuntu.db
+    resolve-external-cnames: true
   - zone: security.ubuntu.com
     file: apt-mirror.ubuntu.db
+    resolve-external-cnames: true
   - zone: ftp.debian.org
     file: apt-mirror.db
+    resolve-external-cnames: true
   - zone: deb.debian.org
     file: apt-mirror.db
+    resolve-external-cnames: true
   - zone: ftp.us.debian.org
     file: apt-mirror.db
+    resolve-external-cnames: true
   - zone: deb.us.debian.org
     file: apt-mirror.db
+    resolve-external-cnames: true
 
   - zone: localhost
     file: localhost.db
