@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.13.2
+# ____-__-__ __:__:__ by RouterOS 7.13.3
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -471,9 +471,7 @@
 /system ntp client servers add address=1.pool.ntp.org
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
-/system routerboard settings
-# Firmware upgraded successfully, please reboot for changes to take effect!
-set auto-upgrade=yes
+/system routerboard settings set auto-upgrade=yes
 /system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=ftp,read,write,policy,test start-date=2020-08-09 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
