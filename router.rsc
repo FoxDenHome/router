@@ -100,6 +100,7 @@
 /container add interface=veth-foxdns logging=yes mounts=foxdns-config start-on-boot=yes workdir=/config
 /container add interface=veth-foxdns-internal logging=yes mounts=foxdns-internal-config start-on-boot=yes workdir=/config
 /container config set registry-url=https://ghcr.io
+/ip firewall connection tracking set loose-tcp-tracking=no
 /ip settings set rp-filter=loose tcp-syncookies=yes
 /ipv6 settings set accept-redirects=no accept-router-advertisements=no
 /interface list member add interface=vlan-mgmt list=iface-mgmt
@@ -418,9 +419,9 @@
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:a::1 routing-table=main
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
-/ip service set www-ssl certificate=letsencrypt-autogen_2023-11-17T21:03:22Z disabled=no tls-version=only-1.2
+/ip service set www-ssl certificate=letsencrypt-autogen_2024-01-28T20:04:24Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
-/ip service set api-ssl certificate=letsencrypt-autogen_2023-11-17T21:03:22Z tls-version=only-1.2
+/ip service set api-ssl certificate=letsencrypt-autogen_2024-01-28T20:04:24Z tls-version=only-1.2
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
