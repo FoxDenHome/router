@@ -4,21 +4,20 @@ set -e
 transfer_section() {
     SECTION="$1"
     WHERE="$2"
-    SEDCLAUSE="$3"
 
     echo "$SECTION" >> "$F"
     echo "remove [ find $WHERE ]" >> "$F"
 
-    if [ ! -z "$SEDCLAUSE" ]
+    if [ ! -z "$WHERE" ]
     then
-        ssh router.foxden.network "$SECTION/export show-sensitive terse" | dos2unix | sed "$SEDCLAUSE" >> "$F"
+        ssh router.foxden.network "$SECTION/export show-sensitive terse where $WHERE" | dos2unix  >> "$F"
     else
         ssh router.foxden.network "$SECTION/export show-sensitive terse" | dos2unix >> "$F"
     fi
 }
 
 transfer_section_localclause() {
-    transfer_section "$1" '(!(name~"^local-"))' 's~add .* name=local-~find name=local-~'
+    transfer_section "$1" '(!(name~"^local-"))'
 }
 
 transfer_section_notdynamic() {
