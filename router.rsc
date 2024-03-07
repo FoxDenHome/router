@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.13.3
+# ____-__-__ __:__:__ by RouterOS 7.14
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -422,8 +422,9 @@
 /ip service set www-ssl certificate=letsencrypt-autogen_2024-01-28T20:04:24Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
 /ip service set api-ssl certificate=letsencrypt-autogen_2024-01-28T20:04:24Z tls-version=only-1.2
+/ip smb shares set [ find default=yes ] directory=/pub
 /ip ssh set forwarding-enabled=local strong-crypto=yes
-/ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
+/ip traffic-flow set cache-entries=512k enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
 /ipv6 address add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
 /ipv6 address add address=2a0e:7d44:f069:1::1 interface=vlan-mgmt
@@ -649,7 +650,9 @@
     \n    }\r\
     \n}\r\
     \n"
-/system script add dont-require-permissions=yes name=wan-online-adjust owner=admin policy=read,write,policy,test source=":global VRRPPriorityOffline\r\
+/system script add dont-require-permissions=yes name=wan-online-adjust owner=admin policy=read,write,policy,test source=":global logputwarning\r\
+    \n\r\
+    \n:global VRRPPriorityOffline\r\
     \n:global VRRPPriorityOnline\r\
     \n:local VRRPPriorityCurrent \$VRRPPriorityOffline\r\
     \n\r\
@@ -659,14 +662,18 @@
     \n\r\
     \n/system/script/run firewall-update\r\
     \n\r\
-    \n:local defgwidx [ /ip/route/find dynamic active dst-address=0.0.0.0/0 ]\r\
+    \nif ([/system/script/find name=local-maintenance-mode ]) do={\r\
+    \n    \$logputwarning \"Maintenance mode ON\"\r\
+    \n} else={\r\
+    \n    :local defgwidx [ /ip/route/find dynamic active dst-address=0.0.0.0/0 ]\r\
     \n\r\
-    \nif ([:len \$defgwidx] > 0) do={\r\
-    \n    :local defgw [ /ip/route/get (\$defgwidx->0) gateway ]\r\
-    \n    :local status [ /tool/netwatch/get [ /tool/netwatch/find comment=\"monitor-default\" ] status ]\r\
-    \n    if (\$status = \"up\") do={\r\
-    \n        :set VRRPPriorityCurrent \$VRRPPriorityOnline\r\
-    \n        :set RAPriorityCurrent \$RAPriorityOnline\r\
+    \n    if ([:len \$defgwidx] > 0) do={\r\
+    \n        :local defgw [ /ip/route/get (\$defgwidx->0) gateway ]\r\
+    \n        :local status [ /tool/netwatch/get [ /tool/netwatch/find comment=\"monitor-default\" ] status ]\r\
+    \n        if (\$status = \"up\") do={\r\
+    \n            :set VRRPPriorityCurrent \$VRRPPriorityOnline\r\
+    \n            :set RAPriorityCurrent \$RAPriorityOnline\r\
+    \n        }\r\
     \n    }\r\
     \n}\r\
     \n\r\
@@ -723,6 +730,12 @@
     \n  \$logputinfo (\"Starting container with interface \" . [get \$ct interface])\r\
     \n  start \$ct\r\
     \n}\r\
+    \n"
+/system script add dont-require-permissions=no name=maintenance-on owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="/system/script/add name=local-maintenance-mode source=\"# Maintenance mode is on\"\r\
+    \n/system/script/run wan-online-adjust\r\
+    \n"
+/system script add dont-require-permissions=no name=maintenance-off owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="/system/script/remove local-maintenance-mode\r\
+    \n/system/script/run wan-online-adjust\r\
     \n"
 /tool netwatch add comment=monitor-default disabled=no down-script="/system/script/run wan-online-adjust\r\
     \n" host=8.8.8.8 http-codes="" interval=30s startup-delay=1m test-script="" timeout=1s type=icmp up-script="/system/script/run wan-online-adjust\r\
