@@ -18,6 +18,7 @@ mysql IN CNAME arcticfox.doridian.net.
 spaceage IN A 55.69.1.1
 www.spaceage IN A 55.69.1.1
 tts.spaceage IN A 55.69.1.2
+tts-cdn.spaceage IN CNAME d2ebj9zmmxo6g8.cloudfront.net.
 api.spaceage IN A 55.69.1.2
 
 mc IN CNAME minecraft.foxden.network.
