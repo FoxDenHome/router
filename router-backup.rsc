@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.14
+# ____-__-__ __:__:__ by RouterOS 7.14.1
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -304,6 +304,9 @@
 /ip dhcp-server lease add address=10.2.11.18 comment=jellyfin lease-time=1d mac-address=00:16:3E:CA:7E:18 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.19 comment=ollama lease-time=1d mac-address=00:16:3E:CA:7E:99 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.26 comment=sonoff-s31-resin-printer lease-time=1d mac-address=48:3F:DA:28:30:FC server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.31 comment=ecoflow-delta-pro lease-time=1d mac-address=4C:EB:D6:D6:3C:9C server=dhcp-lan
+/ip dhcp-server lease add address=10.2.20.20 comment=ht802 lease-time=1d mac-address=00:0B:82:8C:C9:7C server=dhcp-lan
+/ip dhcp-server lease add address=10.2.16.1 comment=grandstream-ht812 lease-time=1d mac-address=C0:74:AD:F4:16:9B server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -329,8 +332,75 @@
 /ip firewall address-list add address=10.9.0.0/23 list=local-dns-ip
 /ip firewall address-list add address=10.100.0.1 list=local-dns-ip
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
+/ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
+/ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
+/ip firewall filter add action=passthrough chain=forward comment=debug disabled=yes log=yes src-address=10.2.12.6
+/ip firewall filter add action=passthrough chain=input comment=debug disabled=yes log=yes src-address=10.2.12.6
+/ip firewall filter add action=accept chain=forward comment="dstnat'd" connection-nat-state=dstnat
+/ip firewall filter add action=accept chain=forward out-interface-list=zone-wan
+/ip firewall filter add action=accept chain=forward in-interface=wg-vpn
+/ip firewall filter add action=accept chain=forward in-interface=oob
+/ip firewall filter add action=accept chain=forward in-interface-list=iface-mgmt
+/ip firewall filter add action=accept chain=forward comment="Prometheus -> NodeExporter" dst-port=9100 in-interface-list=iface-hypervisor protocol=tcp src-address=10.6.11.1
+/ip firewall filter add action=jump chain=forward comment="LAN allowlist" jump-target=lan-out-forward out-interface-list=iface-lan
+/ip firewall filter add action=jump chain=forward comment="MGMT allowlist" jump-target=mgmt-out-forward out-interface-list=iface-mgmt
+/ip firewall filter add action=jump chain=forward comment="LabNet allowlist" jump-target=labnet-out-forward out-interface-list=iface-labnet
+/ip firewall filter add action=jump chain=forward comment="Hypervisor allowlist" jump-target=hypervisor-out-forward out-interface-list=iface-hypervisor
+/ip firewall filter add action=jump chain=forward comment="Security allowlist" jump-target=security-out-forward out-interface-list=iface-security
+/ip firewall filter add action=jump chain=forward comment="Retro allowlist" jump-target=retro-out-forward out-interface=vlan-retro
+/ip firewall filter add action=jump chain=forward comment="S2S allowlist" jump-target=s2s-out-forward out-interface=wg-s2s
+/ip firewall filter add action=accept chain=forward out-interface-list=iface-dmz
+/ip firewall filter add action=reject chain=forward reject-with=icmp-admin-prohibited
+/ip firewall filter add action=accept chain=mgmt-out-forward comment="Hypervisor -> SNMP" dst-port=161 in-interface-list=iface-hypervisor protocol=udp
+/ip firewall filter add action=accept chain=mgmt-out-forward comment="HomeAssistant -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.12.2
+/ip firewall filter add action=accept chain=mgmt-out-forward comment="NAS -> SNMP" dst-port=161 in-interface-list=iface-lan protocol=udp src-address=10.2.11.1
+/ip firewall filter add action=accept chain=mgmt-out-forward comment="LAN -> UniFi" dst-address=10.1.10.1 in-interface-list=iface-lan
+/ip firewall filter add action=accept chain=retro-out-forward comment="LAN -> Retro" in-interface-list=iface-lan
+/ip firewall filter add action=accept chain=lan-out-forward comment=HomeAssistant dst-address=10.2.12.2 dst-port=80,443,8080,8443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment="HomeAssistant MQTT" dst-address=10.2.12.2 dst-port=1883 in-interface-list=iface-security protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=APT dst-address=10.2.11.13 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=syncthing dst-address=10.2.11.2 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=bengalfox-syncthing dst-address=10.2.11.15 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=Hashtopolis dst-address=10.2.11.17 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=jellyfin dst-address=10.2.11.18 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=Plex dst-address=10.2.11.3 dst-port=32400 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment="LabNet -> NAS" dst-address=10.2.11.1 in-interface-list=iface-labnet
+/ip firewall filter add action=accept chain=lan-out-forward comment="Retro -> NAS" dst-address=10.2.11.1 in-interface=vlan-retro
+/ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=8883 protocol=tcp
+/ip firewall filter add action=accept chain=security-out-forward comment="LAN -> NVR" dst-address=10.5.10.1 in-interface-list=iface-lan
+/ip firewall filter add action=accept chain=s2s-out-forward comment="LAN -> IceFox" dst-address=10.99.10.2 in-interface-list=iface-lan
+/ip firewall filter add action=accept chain=input connection-state=established,related
+/ip firewall filter add action=accept chain=input protocol=ipv6-encap
+/ip firewall filter add action=accept chain=input protocol=icmp
+/ip firewall filter add action=accept chain=input comment="HTTP(S)" dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=input comment=WireGuard dst-port=13231-13232 protocol=udp
+/ip firewall filter add action=accept chain=input in-interface=oob
+/ip firewall filter add action=accept chain=input in-interface-list=zone-local
+/ip firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
 /ip firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu passthrough=yes protocol=tcp tcp-flags=syn
 /ip firewall nat add action=endpoint-independent-nat chain=srcnat out-interface=wan protocol=udp randomise-ports=yes
+/ip firewall nat add action=masquerade chain=srcnat out-interface=wan
+/ip firewall nat add action=masquerade chain=srcnat src-address=172.17.0.0/16
+/ip firewall nat add action=dst-nat chain=dstnat comment=spaceage-website dst-address=55.69.1.1 in-interface-list=zone-local to-addresses=10.3.10.9
+/ip firewall nat add action=dst-nat chain=dstnat comment=spaceage-web dst-address=55.69.1.2 in-interface-list=zone-local to-addresses=10.3.10.5
+/ip firewall nat add action=jump chain=dstnat comment=Hairpin dst-address=REMOVED jump-target=port-forward
+/ip firewall nat add action=jump chain=dstnat comment="DNS forward" dst-address-list=local-dns-ip jump-target=dns-port-forward
+/ip firewall nat add action=jump chain=dstnat comment="Hairpin fallback" dst-address=REMOVED jump-target=port-forward
+/ip firewall nat add action=jump chain=dstnat comment=External in-interface-list=zone-wan jump-target=port-forward
+/ip firewall nat add action=dst-nat chain=port-forward comment="HTTP(S)" dst-port=80,443 protocol=tcp to-addresses=172.17.0.2
+/ip firewall nat add action=dst-nat chain=port-forward comment=FoxDNS dst-port=53 protocol=tcp to-addresses=172.17.1.2
+/ip firewall nat add action=dst-nat chain=port-forward comment=FoxDNS dst-port=53 protocol=udp to-addresses=172.17.1.2
+/ip firewall nat add action=dst-nat chain=port-forward comment="SpaceAge GMod" dst-port=27015 protocol=udp to-addresses=10.3.10.4
+/ip firewall nat add action=dst-nat chain=port-forward comment=Minecraft dst-port=25565 protocol=tcp to-addresses=10.3.10.8
+/ip firewall nat add action=dst-nat chain=port-forward comment=Factorio dst-port=34197 protocol=udp to-addresses=10.3.10.7
+/ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 protocol=tcp to-addresses=172.17.2.2
+/ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 protocol=udp to-addresses=172.17.2.2
+/ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus" dst-port=5302 protocol=tcp to-addresses=172.17.2.2 to-ports=9001
+/ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus External" dst-port=5301 protocol=tcp to-addresses=172.17.1.2 to-ports=9001
+/ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
+/ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.3 src-address=10.100.0.0/16
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip route add blackhole disabled=no dst-address=55.69.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
@@ -351,6 +421,21 @@
 /ipv6 address add address=2a0e:7d44:f069:5::3 interface=vlan-security
 /ipv6 address add address=2a0e:7d44:f069:6::3 interface=vlan-hypervisor
 /ipv6 firewall filter add action=accept chain=forward out-interface-list=iface-dmz
+/ipv6 firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
+/ipv6 firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
+/ipv6 firewall filter add action=accept chain=forward protocol=icmpv6
+/ipv6 firewall filter add action=accept chain=forward in-interface=oob
+/ipv6 firewall filter add action=accept chain=forward in-interface-list=iface-mgmt
+/ipv6 firewall filter add action=accept chain=forward out-interface-list=zone-wan
+/ipv6 firewall filter add action=reject chain=forward reject-with=icmp-admin-prohibited
+/ipv6 firewall filter add action=accept chain=input connection-state=established,related
+/ipv6 firewall filter add action=accept chain=input protocol=icmpv6
+/ipv6 firewall filter add action=accept chain=input comment="HTTP(S)" dst-port=80,443 protocol=tcp
+/ipv6 firewall filter add action=accept chain=input comment=WireGuard dst-port=13231-13232 protocol=udp
+/ipv6 firewall filter add action=accept chain=input comment=ZeroTier dst-port=9993 protocol=udp
+/ipv6 firewall filter add action=accept chain=input in-interface=oob
+/ipv6 firewall filter add action=accept chain=input in-interface-list=zone-local
+/ipv6 firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
 /ipv6 firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu passthrough=yes protocol=tcp tcp-flags=syn
 /ipv6 nd set [ find default=yes ] advertise-dns=no disabled=yes ra-interval=1m-3m
 /ipv6 nd add advertise-dns=no disabled=yes interface=vlan-dmz ra-interval=1m-3m

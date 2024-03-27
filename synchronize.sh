@@ -30,11 +30,11 @@ echo > "$F"
 
 transfer_section '/ip/dns/static'
 transfer_section_notdynamic '/ip/dhcp-server/lease'
-transfer_section_notdynamic '/ip/firewall/filter'
-transfer_section_notdynamic '/ip/firewall/mangle'
-transfer_section_notdynamic '/ip/firewall/nat'
-transfer_section_notdynamic '/ipv6/firewall/filter'
-transfer_section_notdynamic '/ipv6/firewall/mangle'
+transfer_section '/ip/firewall/filter'
+transfer_section '/ip/firewall/mangle'
+transfer_section '/ip/firewall/nat'
+transfer_section '/ipv6/firewall/filter'
+transfer_section '/ipv6/firewall/mangle'
 transfer_section_localclause '/system/script'
 transfer_section_localclause '/system/scheduler'
 

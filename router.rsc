@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.14
+# ____-__-__ __:__:__ by RouterOS 7.14.1
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -316,6 +316,9 @@
 /ip dhcp-server lease add address=10.2.11.18 comment=jellyfin lease-time=1d mac-address=00:16:3E:CA:7E:18 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.19 comment=ollama lease-time=1d mac-address=00:16:3E:CA:7E:99 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.26 comment=sonoff-s31-resin-printer lease-time=1d mac-address=48:3F:DA:28:30:FC server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.31 comment=ecoflow-delta-pro lease-time=1d mac-address=4C:EB:D6:D6:3C:9C server=dhcp-lan
+/ip dhcp-server lease add address=10.2.20.20 comment=ht802 lease-time=1d mac-address=00:0B:82:8C:C9:7C server=dhcp-lan
+/ip dhcp-server lease add address=10.2.16.1 comment=grandstream-ht812 lease-time=1d mac-address=C0:74:AD:F4:16:9B server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
