@@ -50,6 +50,9 @@ static-zones:
   - zone: fox.mov
     file: fox.mov.db
     resolve-external-cnames: true
+  - zone: spaceage.mp
+    file: spaceage.mp.db
+    resolve-external-cnames: true
 
   - zone: wpad
     file: empty.db
