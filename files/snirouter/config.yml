@@ -137,14 +137,6 @@ hosts:
     template: router-backup
 
   # SpaceAge
-  api.spaceage.doridian.net:
-    template: spaceage-web
-  tts.spaceage.doridian.net:
-    template: spaceage-web
-  spaceage.doridian.net:
-    template: spaceage-website
-  www.spaceage.doridian.net:
-    template: spaceage-website
   api.spaceage.mp:
     template: spaceage-web
   tts.spaceage.mp:
