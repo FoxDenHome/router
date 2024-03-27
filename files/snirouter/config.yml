@@ -145,6 +145,14 @@ hosts:
     template: spaceage-website
   www.spaceage.doridian.net:
     template: spaceage-website
+  api.spaceage.mp:
+    template: spaceage-web
+  tts.spaceage.mp:
+    template: spaceage-web
+  spaceage.mp:
+    template: spaceage-website
+  www.spaceage.mp:
+    template: spaceage-website
 
   # foxCaves
   foxcav.es:
