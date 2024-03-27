@@ -1,0 +1,8 @@
+$TTL 300
+@ IN SOA ns1.foxden.network. dns.foxden.network. 2022010169 43200 3600 86400 300
+
+@ IN A 55.69.1.1
+www IN A 55.69.1.1
+tts IN A 55.69.1.2
+tts-cdn IN CNAME d2ebj9zmmxo6g8.cloudfront.net.
+api IN A 55.69.1.2
