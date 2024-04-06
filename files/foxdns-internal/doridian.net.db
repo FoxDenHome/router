@@ -4,9 +4,9 @@ $TTL 300
 @ IN A 10.3.10.10
 www IN CNAME doridian.net.
 
-icefox IN A 107.181.226.74
-jellyfin IN A 107.181.226.75
-syncthing IN A 107.181.226.76
+icefox IN A 23.239.97.10
+jellyfin IN A 23.239.97.11
+syncthing IN A 23.239.97.12
 
 redfox IN A 144.202.81.146
 
