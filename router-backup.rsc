@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.14.1
+# ____-__-__ __:__:__ by RouterOS 7.14.3
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -406,9 +406,9 @@
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
-/ip service set www-ssl certificate=letsencrypt-autogen_2024-01-28T22:07:05Z disabled=no tls-version=only-1.2
+/ip service set www-ssl certificate=letsencrypt-autogen_2024-04-09T21:07:32Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
-/ip service set api-ssl certificate=letsencrypt-autogen_2024-01-28T22:07:05Z tls-version=only-1.2
+/ip service set api-ssl certificate=letsencrypt-autogen_2024-04-09T21:07:32Z tls-version=only-1.2
 /ip smb shares set [ find default=yes ] directory=/pub
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1

@@ -422,9 +422,9 @@
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:a::1 routing-table=main
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
-/ip service set www-ssl certificate=letsencrypt-autogen_2024-01-28T20:04:24Z disabled=no tls-version=only-1.2
+/ip service set www-ssl certificate=letsencrypt-autogen_2024-04-09T19:05:45Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
-/ip service set api-ssl certificate=letsencrypt-autogen_2024-01-28T20:04:24Z tls-version=only-1.2
+/ip service set api-ssl certificate=letsencrypt-autogen_2024-04-09T19:05:45Z tls-version=only-1.2
 /ip smb shares set [ find default=yes ] directory=/pub
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip traffic-flow set cache-entries=512k enabled=yes sampling-interval=1 sampling-space=1
