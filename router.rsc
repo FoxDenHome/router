@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.14.2
+# ____-__-__ __:__:__ by RouterOS 7.14.3
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -138,7 +138,7 @@
 /interface wireguard peers add allowed-address=10.100.10.1/32 comment=Fennec interface=wg-vpn public-key="+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY="
 /interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 comment="Dori Phone" interface=wg-vpn public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
-/interface wireguard peers add allowed-address=10.100.10.4/32 comment="Wizzy Laptop" interface=wg-vpn public-key="5QUN5FumE8LM1Ak9tv8gwaF8K4wTXlCw2BSDfBIEL3g="
+/interface wireguard peers add allowed-address=10.100.10.4/32 comment="Wizzy Laptop" interface=wg-vpn public-key="aL7QLtq2YoYVb0bhueG1InlbAdyZE0bmdmRPQ67rNjk="
 /interface wireguard peers add allowed-address=10.99.10.2/32 comment=IceFox endpoint-address=23.239.97.10 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
 /interface wireguard peers add allowed-address=10.100.10.5/32 comment=Wizzy-Desktop interface=wg-vpn public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0="
 /interface wireguard peers add allowed-address=10.99.10.1/32 comment=RedFox endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="AiSDKCRp/G+wnbLjdWHBLouTen0f4sof+F7MIyboDzk="
@@ -319,6 +319,9 @@
 /ip dhcp-server lease add address=10.2.12.31 comment=ecoflow-delta-pro lease-time=1d mac-address=4C:EB:D6:D6:3C:9C server=dhcp-lan
 /ip dhcp-server lease add address=10.2.20.20 comment=ht802 lease-time=1d mac-address=00:0B:82:8C:C9:7C server=dhcp-lan
 /ip dhcp-server lease add address=10.2.16.1 comment=grandstream-ht812 lease-time=1d mac-address=C0:74:AD:F4:16:9B server=dhcp-lan
+/ip dhcp-server lease add address=10.1.10.15 comment=switch-dori-office-tv lease-time=1d mac-address=F4:E2:C6:AC:81:3D server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.16 comment=switch-dori-office-desk lease-time=1d mac-address=F4:E2:C6:AC:81:DC server=dhcp-mgmt
+/ip dhcp-server lease add address=10.5.11.9 comment=camera-server-room lease-time=1d mac-address=F4:E2:C6:0C:E8:3C server=dhcp-security
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123

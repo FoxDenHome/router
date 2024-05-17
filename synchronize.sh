@@ -4,9 +4,14 @@ set -e
 transfer_section() {
     SECTION="$1"
     WHERE="$2"
+    WHERER="$3"
+    if [ -z "$WHERER" ]
+    then
+        WHERER="$WHERE"
+    fi
 
     echo "$SECTION" >> "$F"
-    echo "remove [ find $WHERE ]" >> "$F"
+    echo "remove [ find $WHERER ]" >> "$F"
 
     if [ ! -z "$WHERE" ]
     then
@@ -24,17 +29,21 @@ transfer_section_notdynamic() {
     transfer_section "$1" 'dynamic=no'
 }
 
+transfer_section_notdynamic_remove() {
+    transfer_section "$1" '' 'dynamic=no'
+}
+
 F="$(mktemp)"
 chmod 600 "$F"
 echo > "$F"
 
 transfer_section '/ip/dns/static'
 transfer_section_notdynamic '/ip/dhcp-server/lease'
-transfer_section_notdynamic '/ip/firewall/filter'
-transfer_section_notdynamic '/ip/firewall/mangle'
-transfer_section_notdynamic '/ip/firewall/nat'
-transfer_section_notdynamic '/ipv6/firewall/filter'
-transfer_section_notdynamic '/ipv6/firewall/mangle'
+transfer_section_notdynamic_remove '/ip/firewall/filter'
+transfer_section_notdynamic_remove '/ip/firewall/mangle'
+transfer_section_notdynamic_remove '/ip/firewall/nat'
+transfer_section_notdynamic_remove '/ipv6/firewall/filter'
+transfer_section_notdynamic_remove '/ipv6/firewall/mangle'
 transfer_section_localclause '/system/script'
 transfer_section_localclause '/system/scheduler'
 
