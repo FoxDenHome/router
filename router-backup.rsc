@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.14.3
+# ____-__-__ __:__:__ by RouterOS 7.15
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -6,7 +6,7 @@
 /container mounts add dst=/config name=snirouter-config src=/snirouter
 /container mounts add dst=/config name=foxdns-config src=/foxdns
 /container mounts add dst=/config name=foxdns-internal-config src=/foxdns-internal
-/disk add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
+/disk add media-interface=none media-sharing=no slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface ethernet set [ find default-name=ether2 ] disabled=yes name=eth2 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether3 ] disabled=yes name=eth3 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether4 ] disabled=yes name=eth4 rx-flow-control=on tx-flow-control=on
@@ -83,7 +83,6 @@
 /port set 0 baud-rate=115200
 /snmp community set [ find default=yes ] disabled=yes
 /snmp community add addresses=::/0 name=monitor_REMOVED
-/user group add name=monitoring policy=read,api,!local,!telnet,!ssh,!ftp,!reboot,!write,!policy,!test,!winbox,!password,!web,!sniff,!sensitive,!romon,!rest-api
 /container add interface=veth-snirouter logging=yes mounts=snirouter-config start-on-boot=yes workdir=/
 /container add interface=veth-foxdns logging=yes mounts=foxdns-config start-on-boot=yes workdir=/config
 /container add interface=veth-foxdns-internal logging=yes mounts=foxdns-internal-config start-on-boot=yes workdir=/config
@@ -123,13 +122,13 @@
 /interface list member add interface=veth-foxdns list=zone-local
 /interface list member add interface=veth-foxdns-internal list=zone-local
 /interface list member add interface=6to4-redfox list=zone-wan
-/interface wireguard peers add allowed-address=10.100.10.1/32 comment=Fennec interface=wg-vpn public-key="+23L+00o9c/O+9UaFp5mxCNMldExLtkngk3cjIIKXzY="
-/interface wireguard peers add allowed-address=10.100.10.2/32 comment=CapeFox interface=wg-vpn public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
-/interface wireguard peers add allowed-address=10.100.10.3/32 comment="Dori Phone" interface=wg-vpn public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
-/interface wireguard peers add allowed-address=10.100.10.4/32 comment="Wizzy Laptop" interface=wg-vpn public-key="aL7QLtq2YoYVb0bhueG1InlbAdyZE0bmdmRPQ67rNjk="
-/interface wireguard peers add allowed-address=10.99.10.2/32 comment=IceFox endpoint-address=23.239.97.10 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
-/interface wireguard peers add allowed-address=10.100.10.5/32 comment=Wizzy-Desktop interface=wg-vpn public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0="
-/interface wireguard peers add allowed-address=10.99.10.1/32 comment=RedFox endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s persistent-keepalive=25s public-key="AiSDKCRp/G+wnbLjdWHBLouTen0f4sof+F7MIyboDzk="
+/interface wireguard peers add allowed-address=10.100.10.1/32 interface=wg-vpn is-responder=yes name=fennec persistent-keepalive=25s public-key="i/thQFtyJPTmq8QC44PV6QeETM6VlMQQs1tKWzTCqDU="
+/interface wireguard peers add allowed-address=10.100.10.2/32 interface=wg-vpn is-responder=yes name=capefox persistent-keepalive=25s public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
+/interface wireguard peers add allowed-address=10.100.10.3/32 interface=wg-vpn is-responder=yes name=dori-phone persistent-keepalive=25s public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
+/interface wireguard peers add allowed-address=10.100.10.4/32 interface=wg-vpn is-responder=yes name=wizzy-laptop persistent-keepalive=25s public-key="aL7QLtq2YoYVb0bhueG1InlbAdyZE0bmdmRPQ67rNjk="
+/interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=23.239.97.10 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
+/interface wireguard peers add allowed-address=10.100.10.5/32 interface=wg-vpn is-responder=yes name=wizzy-desktop persistent-keepalive=25s public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0="
+/interface wireguard peers add allowed-address=10.99.10.1/32 endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s name=redfox persistent-keepalive=25s public-key="AiSDKCRp/G+wnbLjdWHBLouTen0f4sof+F7MIyboDzk="
 /ip address add address=10.1.1.3/16 interface=vlan-mgmt network=10.1.0.0
 /ip address add address=192.168.88.100/24 interface=oob network=192.168.88.0
 /ip address add address=10.2.1.3/16 interface=vlan-lan network=10.2.0.0
@@ -185,7 +184,7 @@
 /ip dhcp-server lease add address=10.1.11.3 comment=ups-dori-office lease-time=1d mac-address=00:0C:15:04:39:93 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.2.12.3 comment=printer lease-time=1d mac-address=E8:D8:D1:79:F5:98 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.1 comment=hue-downstairs lease-time=1d mac-address=00:17:88:AC:31:4B server=dhcp-lan
-/ip dhcp-server lease add address=10.2.12.2 comment=homeassistant lease-time=1d mac-address=D8:3A:DD:93:72:8D server=dhcp-lan
+/ip dhcp-server lease add address=10.2.12.2 comment=homeassistant lease-time=1d mac-address=D8:3A:DD:B2:52:89 server=dhcp-lan
 /ip dhcp-server lease add address=10.5.11.2 comment=camera-living-room lease-time=1d mac-address=68:D7:9A:CF:30:09 server=dhcp-security
 /ip dhcp-server lease add address=10.2.11.3 comment=plex lease-time=1d mac-address=00:16:3E:CA:7E:03 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.11.1 comment=prometheus lease-time=1d mac-address=4A:97:18:7B:69:10 server=dhcp-hypervisor
@@ -728,3 +727,4 @@
 /tool netwatch add comment=monitor-default disabled=no down-script="/system/script/run wan-online-adjust\r\
     \n" host=8.8.8.8 http-codes="" interval=30s startup-delay=1m test-script="" timeout=1s type=icmp up-script="/system/script/run wan-online-adjust\r\
     \n"
+/user group add name=monitoring policy=read,api,!local,!telnet,!ssh,!ftp,!reboot,!write,!policy,!test,!winbox,!password,!web,!sniff,!sensitive,!romon,!rest-api
