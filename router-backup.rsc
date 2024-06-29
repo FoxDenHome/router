@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.15.1
+# ____-__-__ __:__:__ by RouterOS 7.15.2
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -310,11 +310,11 @@
 /ip dhcp-server lease add address=10.1.10.16 comment=switch-dori-office-desk lease-time=1d mac-address=F4:E2:C6:AC:81:DC server=dhcp-mgmt
 /ip dhcp-server lease add address=10.5.11.9 comment=camera-server-room lease-time=1d mac-address=F4:E2:C6:0C:E8:3C server=dhcp-security
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
-/ip dhcp-server network add address=10.2.0.0/16 dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 ntp-server=10.2.0.123
+/ip dhcp-server network add address=10.2.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 next-server=10.2.0.1 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
 /ip dhcp-server network add address=10.4.0.0/16 dns-server=10.4.0.53 domain=foxden.network gateway=10.4.0.1 netmask=16 ntp-server=10.4.0.123
 /ip dhcp-server network add address=10.5.0.0/16 dns-server=10.5.0.53 domain=foxden.network gateway=10.5.0.1 netmask=16 ntp-server=10.5.0.123
-/ip dhcp-server network add address=10.6.0.0/16 dns-server=10.6.0.53 domain=foxden.network gateway=10.6.0.1 netmask=16 ntp-server=10.6.0.123
+/ip dhcp-server network add address=10.6.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.6.0.53 domain=foxden.network gateway=10.6.0.1 netmask=16 next-server=10.6.0.1 ntp-server=10.6.0.123
 /ip dhcp-server network add address=10.7.0.0/16 dns-server=10.7.1.1 domain=foxden.network gateway=10.7.1.1 netmask=16 ntp-server=10.7.1.1
 /ip dhcp-server network add address=192.168.88.0/24 dns-none=yes
 /ip dns set cache-max-ttl=1d max-udp-packet-size=512 servers=8.8.8.8,8.8.4.4 verify-doh-cert=yes
@@ -386,6 +386,7 @@
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
 /ip firewall nat add action=masquerade chain=srcnat src-address=172.17.0.0/16
 /ip firewall nat add action=dst-nat chain=dstnat comment=spaceage-website dst-address=55.69.1.1 in-interface-list=zone-local to-addresses=10.3.10.9
+/ip firewall nat add action=jump chain=dstnat comment=dns dst-address=55.53.53.53 in-interface-list=zone-local jump-target=dns-port-forward to-addresses=10.3.0.53
 /ip firewall nat add action=dst-nat chain=dstnat comment=spaceage-web dst-address=55.69.1.2 in-interface-list=zone-local to-addresses=10.3.10.5
 /ip firewall nat add action=jump chain=dstnat comment=Hairpin dst-address=REMOVED jump-target=port-forward
 /ip firewall nat add action=jump chain=dstnat comment="DNS forward" dst-address-list=local-dns-ip jump-target=dns-port-forward
@@ -408,11 +409,17 @@
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
-/ip service set www-ssl certificate=letsencrypt-autogen_2024-04-09T21:07:32Z disabled=no tls-version=only-1.2
+/ip service set www-ssl certificate=sslcert-autogen_2024-06-20T20:08:42Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
-/ip service set api-ssl certificate=letsencrypt-autogen_2024-04-09T21:07:32Z tls-version=only-1.2
+/ip service set api-ssl certificate=sslcert-autogen_2024-06-20T20:08:42Z tls-version=only-1.2
 /ip smb shares set [ find default=yes ] directory=/pub
 /ip ssh set forwarding-enabled=local strong-crypto=yes
+/ip tftp add real-filename=/ipxe-arch.efi req-filename=ipxe-arch.efi
+/ip tftp add real-filename=/ipxe-arch.efi req-filename=/ipxe-arch.efi
+/ip tftp add real-filename=/ipxe-arch-signed.efi req-filename=ipxe-arch-signed.efi
+/ip tftp add real-filename=/ipxe-arch-signed.efi req-filename=/ipxe-arch-signed.efi
+/ip tftp add allow=no
+/ip tftp settings set max-block-size=65536
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
 /ipv6 address add address=2a0e:7d44:f000:b::2 advertise=no interface=6to4-redfox

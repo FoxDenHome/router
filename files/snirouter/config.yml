@@ -160,10 +160,6 @@ hosts:
     template: yiffws
   www.yiff.ws:
     template: yiffws
-  fox.mov:
-    template: foxmov
-  www.fox.mov:
-    template: foxmov
 
   # Personal website
   doridian.de:

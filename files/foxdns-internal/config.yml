@@ -47,9 +47,6 @@ static-zones:
   - zone: yiff.ws
     file: yiff.ws.db
     resolve-external-cnames: true
-  - zone: fox.mov
-    file: fox.mov.db
-    resolve-external-cnames: true
   - zone: spaceage.mp
     file: spaceage.mp.db
     resolve-external-cnames: true
