@@ -128,7 +128,7 @@
 /interface wireguard peers add allowed-address=10.100.10.4/32 interface=wg-vpn is-responder=yes name=wizzy-laptop persistent-keepalive=25s public-key="aL7QLtq2YoYVb0bhueG1InlbAdyZE0bmdmRPQ67rNjk="
 /interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=23.239.97.10 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
 /interface wireguard peers add allowed-address=10.100.10.5/32 interface=wg-vpn is-responder=yes name=wizzy-desktop persistent-keepalive=25s public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0="
-/interface wireguard peers add allowed-address=10.99.10.1/32 endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s name=redfox persistent-keepalive=25s public-key="AiSDKCRp/G+wnbLjdWHBLouTen0f4sof+F7MIyboDzk="
+/interface wireguard peers add allowed-address=10.99.10.1/32 endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s name=redfox persistent-keepalive=25s public-key="s1COjkpfpzfQ05ZLNLGQrlEhomlzwHv+APvUABzbSh8="
 /ip address add address=10.1.1.3/16 interface=vlan-mgmt network=10.1.0.0
 /ip address add address=192.168.88.100/24 interface=oob network=192.168.88.0
 /ip address add address=10.2.1.3/16 interface=vlan-lan network=10.2.0.0
@@ -312,7 +312,7 @@
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 next-server=10.2.0.1 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
-/ip dhcp-server network add address=10.4.0.0/16 dns-server=10.4.0.53 domain=foxden.network gateway=10.4.0.1 netmask=16 ntp-server=10.4.0.123
+/ip dhcp-server network add address=10.4.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.4.0.53 domain=foxden.network gateway=10.4.0.1 netmask=16 next-server=10.4.0.1 ntp-server=10.4.0.123
 /ip dhcp-server network add address=10.5.0.0/16 dns-server=10.5.0.53 domain=foxden.network gateway=10.5.0.1 netmask=16 ntp-server=10.5.0.123
 /ip dhcp-server network add address=10.6.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.6.0.53 domain=foxden.network gateway=10.6.0.1 netmask=16 next-server=10.6.0.1 ntp-server=10.6.0.123
 /ip dhcp-server network add address=10.7.0.0/16 dns-server=10.7.1.1 domain=foxden.network gateway=10.7.1.1 netmask=16 ntp-server=10.7.1.1
@@ -336,8 +336,6 @@
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
-/ip firewall filter add action=passthrough chain=forward comment=debug disabled=yes log=yes src-address=10.2.12.6
-/ip firewall filter add action=passthrough chain=input comment=debug disabled=yes log=yes src-address=10.2.12.6
 /ip firewall filter add action=accept chain=forward comment="dstnat'd" connection-nat-state=dstnat
 /ip firewall filter add action=accept chain=forward out-interface-list=zone-wan
 /ip firewall filter add action=accept chain=forward in-interface=wg-vpn
@@ -377,6 +375,7 @@
 /ip firewall filter add action=accept chain=input protocol=ipv6-encap
 /ip firewall filter add action=accept chain=input protocol=icmp
 /ip firewall filter add action=accept chain=input comment="HTTP(S)" dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=input comment=BGP dst-port=179 protocol=tcp
 /ip firewall filter add action=accept chain=input comment=WireGuard dst-port=13231-13232 protocol=udp
 /ip firewall filter add action=accept chain=input in-interface=oob
 /ip firewall filter add action=accept chain=input in-interface-list=zone-local
@@ -407,6 +406,7 @@
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip route add blackhole disabled=no dst-address=55.69.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
+/ipv6 route add blackhole disabled=no dst-address=2a0e:7d44:f00b::/48 gateway="" routing-table=main suppress-hw-offload=no
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
 /ip service set www-ssl certificate=sslcert-autogen_2024-06-20T20:08:42Z disabled=no tls-version=only-1.2
@@ -429,6 +429,7 @@
 /ipv6 address add address=2a0e:7d44:f069:4::3 interface=vlan-labnet
 /ipv6 address add address=2a0e:7d44:f069:5::3 interface=vlan-security
 /ipv6 address add address=2a0e:7d44:f069:6::3 interface=vlan-hypervisor
+/ipv6 firewall address-list add address=2a0e:7d44:f00b::/48 list=bgp-redfox
 /ipv6 firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ipv6 firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ipv6 firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -454,6 +455,7 @@
 /ipv6 nd add advertise-dns=no disabled=yes interface=vlan-mgmt ra-interval=1m-3m
 /ipv6 nd add advertise-dns=no disabled=yes interface=vlan-security ra-interval=1m-3m
 /ipv6 nd prefix default set preferred-lifetime=15m valid-lifetime=1h
+/routing bgp connection add address-families=ipv6 as=64601 connect=yes disabled=no listen=yes local.address=10.99.1.3 .role=ebgp multihop=yes name=bgp-redfox output.default-originate=never .network=bgp-redfox remote.address=10.99.10.1/32 .as=207618 router-id=10.99.1.3 routing-table=main
 /snmp set contact=admin@foxden.network enabled=yes location="Server room" trap-generators=""
 /system clock set time-zone-autodetect=no time-zone-name=America/Los_Angeles
 /system identity set name=router-backup
