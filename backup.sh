@@ -13,7 +13,8 @@ fi
 
 mtik_backup() {
     RHOST="$1"
-    RHOST_ABS="${RHOST}.foxden.network"
+    RDOM="$2"
+    RHOST_ABS="${RHOST}.${RDOM}"
 
     ssh "${RHOST_ABS}" "/system/backup/save dont-encrypt=yes name=${RDIR}${RHOST}-secret.backup"
     ssh "${RHOST_ABS}" "/export file=${RDIR}${RHOST}-secret.rsc show-sensitive terse"
@@ -37,6 +38,8 @@ mtik_backup() {
     $SED 's~identity=[^ ]*~identity=REMOVED~g' -i "${RHOST}.rsc"
     $SED 's~comment=Hairpin dst-address=.* ~comment=Hairpin dst-address=REMOVED ~g' -i "${RHOST}.rsc"
     $SED 's~comment="Hairpin fallback" dst-address=.* ~comment="Hairpin fallback" dst-address=REMOVED ~g' -i "${RHOST}.rsc"
+    $SED 's~name=6to4-router remote-address=.*$~name=6to4-router remote-qaddress=REMOVED~g' -i "${RHOST}.rsc"
+    $SED 's~name=6to4-router-backup remote-address=.*$~name=6to4-router-backup remote-qaddress=REMOVED~g' -i "${RHOST}.rsc"
     $SED 's~network=[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]~network=REMOVED~g' -i "${RHOST}.rsc"
 
     sleep 1
@@ -46,7 +49,8 @@ mtik_backup() {
     ssh "${RHOST_ABS}" "/file/remove ${RDIR}${RHOST}.rsc"
 }
 
-mtik_backup router
-mtik_backup router-backup
+mtik_backup router foxden.network
+mtik_backup router-backup foxden.network
+mtik_backup redfox doridian.net
 
 git commit -a -m "${COMMIT_MSG}"
