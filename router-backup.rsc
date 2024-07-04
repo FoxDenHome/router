@@ -16,7 +16,9 @@
 /interface ethernet set [ find default-name=ether8 ] comment=eth8 name=oob rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus1 ] comment=sfp1 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether1 ] advertise=1G-baseT-full,2.5G-baseT comment=eth1 name=wan rx-flow-control=on tx-flow-control=on
-/interface 6to4 add !keepalive mtu=1480 name=6to4-redfox remote-address=144.202.81.146
+/interface gre add name=gre-tunnel1 remote-address=0.0.0.0
+/interface 6to4 add disabled=yes !keepalive mtu=1480 name=6to4-redfox remote-address=144.202.81.146
+/interface eoip add mac-address=02:E9:BE:DE:CE:F1 name=eoip-redfox remote-address=144.202.81.146 tunnel-id=2
 /interface veth add address=172.17.1.2/24 gateway=172.17.1.1 gateway6="" name=veth-foxdns
 /interface veth add address=172.17.2.2/24 gateway=172.17.2.1 gateway6="" name=veth-foxdns-internal
 /interface veth add address=172.17.0.2/24 gateway=172.17.0.1 gateway6="" name=veth-snirouter
@@ -81,6 +83,7 @@
 /ip dhcp-server add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dhcp-oob
 /ip smb users set [ find default=yes ] disabled=yes
 /port set 0 baud-rate=115200
+/routing bgp template set default disabled=yes routing-table=main
 /snmp community set [ find default=yes ] disabled=yes
 /snmp community add addresses=::/0 name=monitor_REMOVED
 /container add interface=veth-snirouter logging=yes mounts=snirouter-config start-on-boot=yes workdir=/
@@ -122,6 +125,7 @@
 /interface list member add interface=veth-foxdns list=zone-local
 /interface list member add interface=veth-foxdns-internal list=zone-local
 /interface list member add interface=6to4-redfox list=zone-wan
+/interface list member add interface=eoip-redfox list=zone-wan
 /interface wireguard peers add allowed-address=10.100.10.1/32 interface=wg-vpn is-responder=yes name=fennec persistent-keepalive=25s public-key="i/thQFtyJPTmq8QC44PV6QeETM6VlMQQs1tKWzTCqDU="
 /interface wireguard peers add allowed-address=10.100.10.2/32 interface=wg-vpn is-responder=yes name=capefox persistent-keepalive=25s public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 interface=wg-vpn is-responder=yes name=dori-phone persistent-keepalive=25s public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
@@ -129,14 +133,14 @@
 /interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=23.239.97.10 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
 /interface wireguard peers add allowed-address=10.100.10.5/32 interface=wg-vpn is-responder=yes name=wizzy-desktop persistent-keepalive=25s public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0="
 /interface wireguard peers add allowed-address=10.99.10.1/32 endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s name=redfox persistent-keepalive=25s public-key="s1COjkpfpzfQ05ZLNLGQrlEhomlzwHv+APvUABzbSh8="
-/ip address add address=10.1.1.3/16 interface=vlan-mgmt network=10.1.0.0
+/ip address add address=10.1.1.2/16 interface=vlan-mgmt network=10.1.0.0
 /ip address add address=192.168.88.100/24 interface=oob network=192.168.88.0
-/ip address add address=10.2.1.3/16 interface=vlan-lan network=10.2.0.0
-/ip address add address=10.3.1.3/16 interface=vlan-dmz network=10.3.0.0
-/ip address add address=10.4.1.3/16 interface=vlan-labnet network=10.4.0.0
-/ip address add address=10.5.1.3/16 interface=vlan-security network=10.5.0.0
-/ip address add address=10.6.1.3/16 interface=vlan-hypervisor network=10.6.0.0
-/ip address add address=10.99.1.3/16 interface=wg-s2s network=10.99.0.0
+/ip address add address=10.2.1.2/16 interface=vlan-lan network=10.2.0.0
+/ip address add address=10.3.1.2/16 interface=vlan-dmz network=10.3.0.0
+/ip address add address=10.4.1.2/16 interface=vlan-labnet network=10.4.0.0
+/ip address add address=10.5.1.2/16 interface=vlan-security network=10.5.0.0
+/ip address add address=10.6.1.2/16 interface=vlan-hypervisor network=10.6.0.0
+/ip address add address=10.99.1.2/16 interface=wg-s2s network=10.99.0.0
 /ip address add address=10.100.0.1/16 interface=wg-vpn network=10.100.0.0
 /ip address add address=10.1.0.1 interface=vrrp-mgmt-gateway network=10.1.0.1
 /ip address add address=10.1.0.123 interface=vrrp-mgmt-ntp network=10.1.0.123
@@ -156,7 +160,7 @@
 /ip address add address=10.6.0.1 interface=vrrp-hypervisor-gateway network=10.6.0.1
 /ip address add address=10.6.0.123 interface=vrrp-hypervisor-ntp network=10.6.0.123
 /ip address add address=10.6.0.53 interface=vrrp-hypervisor-dns network=10.6.0.53
-/ip address add address=10.7.1.3/16 interface=vlan-retro network=10.7.0.0
+/ip address add address=10.7.1.2/16 interface=vlan-retro network=10.7.0.0
 /ip address add address=172.17.0.1/24 interface=veth-snirouter network=172.17.0.0
 /ip address add address=172.17.1.1/24 interface=veth-foxdns network=172.17.1.0
 /ip address add address=172.17.2.1/24 interface=veth-foxdns-internal network=172.17.2.0
@@ -383,10 +387,11 @@
 /ip firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu passthrough=yes protocol=tcp tcp-flags=syn
 /ip firewall nat add action=endpoint-independent-nat chain=srcnat out-interface=wan protocol=udp randomise-ports=yes
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
+/ip firewall nat add action=masquerade chain=srcnat out-interface=wg-s2s
 /ip firewall nat add action=masquerade chain=srcnat src-address=172.17.0.0/16
 /ip firewall nat add action=dst-nat chain=dstnat comment=spaceage-website dst-address=55.69.1.1 in-interface-list=zone-local to-addresses=10.3.10.9
-/ip firewall nat add action=jump chain=dstnat comment=dns dst-address=55.53.53.53 in-interface-list=zone-local jump-target=dns-port-forward to-addresses=10.3.0.53
 /ip firewall nat add action=dst-nat chain=dstnat comment=spaceage-web dst-address=55.69.1.2 in-interface-list=zone-local to-addresses=10.3.10.5
+/ip firewall nat add action=jump chain=dstnat comment=dns dst-address=55.53.53.53 in-interface-list=zone-local jump-target=dns-port-forward to-addresses=10.3.0.53
 /ip firewall nat add action=jump chain=dstnat comment=Hairpin dst-address=REMOVED jump-target=port-forward
 /ip firewall nat add action=jump chain=dstnat comment="DNS forward" dst-address-list=local-dns-ip jump-target=dns-port-forward
 /ip firewall nat add action=jump chain=dstnat comment="Hairpin fallback" dst-address=REMOVED jump-target=port-forward
@@ -402,7 +407,8 @@
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus" dst-port=5302 protocol=tcp to-addresses=172.17.2.2 to-ports=9001
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus External" dst-port=5301 protocol=tcp to-addresses=172.17.1.2 to-ports=9001
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
-/ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.3 src-address=10.100.0.0/16
+/ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.2 src-address=10.100.0.0/16
+/ip packing add aggregated-size=1458 interface=eoip-redfox packing=compress-headers unpacking=compress-headers
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip route add blackhole disabled=no dst-address=55.69.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
@@ -411,6 +417,7 @@
 /ip service set ftp disabled=yes
 /ip service set www-ssl certificate=sslcert-autogen_2024-06-20T20:08:42Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
+/ip service set winbox address=10.0.0.0/8
 /ip service set api-ssl certificate=sslcert-autogen_2024-06-20T20:08:42Z tls-version=only-1.2
 /ip smb shares set [ find default=yes ] directory=/pub
 /ip ssh set forwarding-enabled=local strong-crypto=yes
@@ -422,7 +429,7 @@
 /ip tftp settings set max-block-size=65536
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
-/ipv6 address add address=2a0e:7d44:f000:b::2 advertise=no interface=6to4-redfox
+/ipv6 address add address=2a0e:7d44:f000:b::2 advertise=no interface=eoip-redfox
 /ipv6 address add address=2a0e:7d44:f069:1::3 interface=vlan-mgmt
 /ipv6 address add address=2a0e:7d44:f069:2::3 interface=vlan-lan
 /ipv6 address add address=2a0e:7d44:f069:3::3 interface=vlan-dmz
@@ -455,7 +462,7 @@
 /ipv6 nd add advertise-dns=no disabled=yes interface=vlan-mgmt ra-interval=1m-3m
 /ipv6 nd add advertise-dns=no disabled=yes interface=vlan-security ra-interval=1m-3m
 /ipv6 nd prefix default set preferred-lifetime=15m valid-lifetime=1h
-/routing bgp connection add address-families=ipv6 as=64601 connect=yes disabled=no listen=yes local.address=10.99.1.3 .role=ebgp multihop=yes name=bgp-redfox output.default-originate=never .network=bgp-redfox remote.address=10.99.10.1/32 .as=207618 router-id=10.99.1.3 routing-table=main
+/routing bgp connection add address-families=ipv6 as=64602 connect=yes disabled=no listen=yes local.address=10.99.1.2 .role=ebgp multihop=yes name=bgp-redfox output.default-originate=never .network=bgp-redfox remote.address=10.99.10.1/32 .as=207618 router-id=10.99.1.2 routing-table=main
 /snmp set contact=admin@foxden.network enabled=yes location="Server room" trap-generators=""
 /system clock set time-zone-autodetect=no time-zone-name=America/Los_Angeles
 /system identity set name=router-backup
@@ -535,8 +542,8 @@
     \n    :put \\\"53.0.\\\$i IN PTR dns.foxden.network.\\\"\r\
     \n    :put \\\"123.0.\\\$i IN PTR ntp.foxden.network.\\\"\r\
     \n    :put \\\"1.1.\\\$i IN PTR router.foxden.network.\\\"\r\
-    \n    :put \\\"2.1.\\\$i IN PTR ntpi.foxden.network.\\\"\r\
-    \n    :put \\\"3.1.\\\$i IN PTR router-backup.foxden.network.\\\"\r\
+    \n    :put \\\"2.1.\\\$i IN PTR router-backup.foxden.network.\\\"\r\
+    \n    :put \\\"123.1.\\\$i IN PTR ntpi.foxden.network.\\\"\r\
     \n}\r\
     \n:local hostname\r\
     \n:local hostshort\r\
