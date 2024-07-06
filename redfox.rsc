@@ -14,8 +14,10 @@
 /disk set slot11 media-interface=none media-sharing=no slot=slot11
 /disk add media-interface=none media-sharing=no slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface ethernet set [ find default-name=ether1 ] disable-running-check=no name=eth0
-/interface 6to4 add comment=router !keepalive local-address=144.202.81.146 name=6to4-router remote-qaddress=REMOVED
-/interface 6to4 add comment=router-backup !keepalive local-address=144.202.81.146 name=6to4-router-backup remote-qaddress=REMOVED
+/interface 6to4 add comment=router disabled=yes !keepalive local-address=144.202.81.146 name=6to4-router remote-qaddress=REMOVED
+/interface 6to4 add comment=router-backup disabled=yes !keepalive local-address=144.202.81.146 name=6to4-router-backup remote-qaddress=REMOVED
+/interface eoip add comment=router local-address=144.202.81.146 mac-address=02:D0:A9:DB:CE:9A name=eoip-router remote-address=50.47.241.7 tunnel-id=1
+/interface eoip add comment=router-backup local-address=144.202.81.146 mac-address=02:D0:A9:DB:CE:9A name=eoip-router-backup remote-address=50.47.244.194 tunnel-id=2
 /interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
 /iot lora servers add address=eu.mikrotik.thethings.industries name=TTN-EU protocol=UDP
 /iot lora servers add address=us.mikrotik.thethings.industries name=TTN-US protocol=UDP
@@ -29,11 +31,14 @@
 /ip settings set tcp-syncookies=yes
 /ipv6 settings set accept-redirects=no accept-router-advertisements=no
 /interface wireguard peers add allowed-address=10.0.0.0/8,10.99.1.1/32 interface=wg-s2s is-responder=yes name=router persistent-keepalive=25s public-key="nCTAIMDv50QhwjCw72FwP2u2pKGMcqxJ09DQ9wJdxH0="
-/interface wireguard peers add allowed-address=10.99.1.3/32 interface=wg-s2s is-responder=yes name=router-backup persistent-keepalive=25s public-key="8zUl7b1frvuzcBrIA5lNsegzzyAOniaZ4tczSdoqcWM="
+/interface wireguard peers add allowed-address=10.99.1.2/32 interface=wg-s2s is-responder=yes name=router-backup persistent-keepalive=25s public-key="8zUl7b1frvuzcBrIA5lNsegzzyAOniaZ4tczSdoqcWM="
+/interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=23.239.97.10 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
 /ip address add address=144.202.81.146/23 interface=eth0 network=144.202.80.0
 /ip address add address=10.99.10.1/16 interface=wg-s2s network=10.99.0.0
 /ip dhcp-client add disabled=yes interface=eth0
 /ip dns set servers=8.8.8.8
+/ip packing add aggregated-size=1458 interface=eoip-router-backup packing=compress-headers unpacking=compress-headers
+/ip packing add aggregated-size=1458 interface=eoip-router packing=compress-headers unpacking=compress-headers
 /ip route add gateway=144.202.80.1
 /ip route add blackhole disabled=no dst-address=192.168.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ipv6 route add disabled=no distance=1 dst-address=::/0 gateway=fe80::fc00:4ff:feb1:d2e3%eth0 routing-table=main scope=30 suppress-hw-offload=no target-scope=10
@@ -47,12 +52,13 @@
 /ip service set www disabled=yes
 /ip service set ssh port=2222
 /ip service set api disabled=yes
+/ip service set winbox address=10.0.0.0/8
 /ip service set api-ssl disabled=yes
 /ip ssh set forwarding-enabled=both host-key-type=ed25519 strong-crypto=yes
 /ipv6 address add address=2001:19f0:8001:f07:5400:4ff:feb1:d2e3 advertise=no interface=eth0
 /ipv6 address add address=2a0e:7d44:f000::1/48 advertise=no interface=eth0
-/ipv6 address add address=2a0e:7d44:f000:a::1 advertise=no interface=6to4-router
-/ipv6 address add address=2a0e:7d44:f000:b::1 advertise=no interface=6to4-router-backup
+/ipv6 address add address=2a0e:7d44:f000:a::1 advertise=no interface=eoip-router
+/ipv6 address add address=2a0e:7d44:f000:b::1 advertise=no interface=eoip-router-backup
 /ipv6 firewall address-list add address=2a0e:7d44:f000::/48 list=bgp6-vultr-direct
 /ipv6 firewall address-list add address=2a0e:7d44:f042::/48 list=bgp6-vultr-direct
 /ipv6 firewall address-list add address=2a0e:7d44:f069::/48 list=bgp6-router
@@ -64,8 +70,8 @@
 /ipv6 nd set [ find default=yes ] disabled=yes
 /routing bgp connection add address-families=ip as=207618 connect=yes disabled=no input.filter=reject-all listen=yes local.address=144.202.81.146 .role=ebgp multihop=yes name=bgp-vultr-v4 nexthop-choice=force-self output.default-originate=never .remove-private-as=yes remote.address=169.254.169.254/32 .as=64515 router-id=144.202.81.146 routing-table=main
 /routing bgp connection add address-families=ipv6 as=207618 connect=yes disabled=no input.filter=reject-all listen=yes local.address=2001:19f0:8001:f07:5400:4ff:feb1:d2e3 .role=ebgp multihop=yes name=bgp-vultr-v6 nexthop-choice=force-self output.default-originate=never .network=bgp6-vultr-direct .remove-private-as=yes remote.address=2001:19f0:ffff::1/128 .as=64515 router-id=144.202.81.146 routing-table=main
-/routing bgp connection add address-families=ipv6 as=207618 connect=yes disabled=no input.filter=router-in listen=yes local.address=10.99.10.1 .role=ebgp multihop=yes name=bgp-router output.default-originate=never .filter-chain=reject-all remote.address=10.99.1.1/32 .as=64600 router-id=144.202.81.146 routing-table=main
-/routing bgp connection add address-families=ipv6 as=207618 connect=yes disabled=no input.filter=route-backup-in listen=yes local.address=10.99.10.1 .role=ebgp multihop=yes name=bgp-router-backup output.default-originate=never .filter-chain=reject-all remote.address=10.99.1.3/32 .as=64601 router-id=144.202.81.146 routing-table=main
+/routing bgp connection add address-families=ipv6 as=207618 connect=yes disabled=no input.filter=router-in listen=yes local.address=10.99.10.1 .role=ebgp multihop=yes name=bgp-router output.default-originate=never .filter-chain=reject-all remote.address=10.99.1.1/32 .as=64601 router-id=144.202.81.146 routing-table=main
+/routing bgp connection add address-families=ipv6 as=207618 connect=yes disabled=no input.filter=route-backup-in listen=yes local.address=10.99.10.1 .role=ebgp multihop=yes name=bgp-router-backup output.default-originate=never .filter-chain=reject-all remote.address=10.99.1.2/32 .as=64602 router-id=144.202.81.146 routing-table=main
 /routing filter rule add chain=router-in disabled=no rule="if (dst in bgp6-router) { set gw 2a0e:7d44:f000:a::2; accept; }"
 /routing filter rule add chain=route-backup-in disabled=no rule="if (dst in bgp6-router-backup) { set gw 2a0e:7d44:f000:b::2; accept; }"
 /routing filter rule add chain=reject-all disabled=no rule="reject;"
@@ -77,12 +83,12 @@
     \n:local IPRouterBackup [ /interface/wireguard/peers/get [ find name=\"router-backup\" ] current-endpoint-address ]\r\
     \n\r\
     \n:if ( \$IPRouterBackup != \"\" ) do={\r\
-    \n    /interface/6to4/set [ find comment=\"router-backup\" remote-address!=\"\$IPRouterBackup\" ] remote-address=\"\$IPRouterBackup\"\r\
+    \n    /interface/eoip/set [ find comment=\"router-backup\" remote-address!=\"\$IPRouterBackup\" ] remote-address=\"\$IPRouterBackup\"\r\
     \n    :put \"Set router-backup to \$IPRouterBackup\"\r\
     \n}\r\
     \n\r\
     \n:if ( \$IPRouter != \"\" ) do={\r\
-    \n    /interface/6to4/set [ find comment=\"router\" remote-address!=\"\$IPRouter\" ] remote-address=\"\$IPRouter\"\r\
+    \n    /interface/eoip/set [ find comment=\"router\" remote-address!=\"\$IPRouter\" ] remote-address=\"\$IPRouter\"\r\
     \n    :put \"Set router to \$IPRouter\"\r\
     \n}\r\
     \n"
