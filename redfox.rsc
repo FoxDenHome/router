@@ -41,12 +41,11 @@
 /ip packing add aggregated-size=1458 disabled=yes interface=eoip-router packing=compress-headers unpacking=compress-headers
 /ip route add gateway=144.202.80.1
 /ip route add blackhole disabled=no dst-address=192.168.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
-/ipv6 route add disabled=no distance=1 dst-address=::/0 gateway=fe80::fc00:4ff:feb1:d2e3%eth0 routing-table=main scope=30 suppress-hw-offload=no target-scope=10
-/ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f000::/48 gateway="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
-/ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f00b::/48 gateway="" routing-table=main suppress-hw-offload=no
-/ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f00a::/48 gateway="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
-/ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f069::/48 gateway="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
-/ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f042::/48 gateway="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
+/ipv6 route add disabled=no distance=1 dst-address=::/0 gateway=fe80::fc00:4ff:feb1:d2e3%eth0 routing-table=main suppress-hw-offload=no
+/ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f000::/48 routing-table=main suppress-hw-offload=no
+/ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f00b::/48 routing-table=main suppress-hw-offload=no
+/ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f00a::/48 routing-table=main suppress-hw-offload=no
+/ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f069::/48 routing-table=main suppress-hw-offload=no
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
 /ip service set www disabled=yes
@@ -60,13 +59,13 @@
 /ipv6 address add address=2a0e:7d44:f000:a::1 advertise=no interface=6to4-router
 /ipv6 address add address=2a0e:7d44:f000:b::1 advertise=no interface=6to4-router-backup
 /ipv6 firewall address-list add address=2a0e:7d44:f000::/48 list=bgp6-vultr-direct
-/ipv6 firewall address-list add address=2a0e:7d44:f042::/48 list=bgp6-vultr-direct
 /ipv6 firewall address-list add address=2a0e:7d44:f069::/48 list=bgp6-router
 /ipv6 firewall address-list add address=2a0e:7d44:f00a::/48 list=bgp6-router
 /ipv6 firewall address-list add address=2a0e:7d44:f069::/48 list=bgp6-router-backup
 /ipv6 firewall address-list add address=2a0e:7d44:f00b::/48 list=bgp6-router-backup
-/ipv6 firewall address-list add address=2a0e:7d44:f042::/48 list=bgp6-router
-/ipv6 firewall address-list add address=2a0e:7d44:f042::/48 list=bgp6-router-backup
+/ipv6 firewall address-list add address=2a0e:7d44:f069::/48 list=bgp6-vultr-direct
+/ipv6 firewall address-list add address=2a0e:7d44:f00a::/48 list=bgp6-vultr-direct
+/ipv6 firewall address-list add address=2a0e:7d44:f00b::/48 list=bgp6-vultr-direct
 /ipv6 nd set [ find default=yes ] disabled=yes
 /routing bgp connection add address-families=ip as=207618 connect=yes disabled=no input.filter=reject-all listen=yes local.address=144.202.81.146 .role=ebgp multihop=yes name=bgp-vultr-v4 nexthop-choice=force-self output.default-originate=never .remove-private-as=yes remote.address=169.254.169.254/32 .as=64515 router-id=144.202.81.146 routing-table=main
 /routing bgp connection add address-families=ipv6 as=207618 connect=yes disabled=no input.filter=reject-all listen=yes local.address=2001:19f0:8001:f07:5400:4ff:feb1:d2e3 .role=ebgp multihop=yes name=bgp-vultr-v6 nexthop-choice=force-self output.default-originate=never .network=bgp6-vultr-direct .remove-private-as=yes remote.address=2001:19f0:ffff::1/128 .as=64515 router-id=144.202.81.146 routing-table=main
