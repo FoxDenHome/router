@@ -14,10 +14,10 @@
 /disk set slot11 media-interface=none media-sharing=no slot=slot11
 /disk add media-interface=none media-sharing=no slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface ethernet set [ find default-name=ether1 ] disable-running-check=no name=eth0
-/interface 6to4 add comment=router disabled=yes !keepalive local-address=144.202.81.146 name=6to4-router remote-qaddress=REMOVED
-/interface 6to4 add comment=router-backup disabled=yes !keepalive local-address=144.202.81.146 name=6to4-router-backup remote-qaddress=REMOVED
-/interface eoip add comment=router local-address=144.202.81.146 mac-address=02:D0:A9:DB:CE:9A name=eoip-router remote-address=50.47.241.7 tunnel-id=1
-/interface eoip add comment=router-backup local-address=144.202.81.146 mac-address=02:D0:A9:DB:CE:9A name=eoip-router-backup remote-address=50.47.244.194 tunnel-id=2
+/interface 6to4 add comment=router !keepalive local-address=144.202.81.146 name=6to4-router remote-qaddress=REMOVED
+/interface 6to4 add comment=router-backup !keepalive local-address=144.202.81.146 name=6to4-router-backup remote-qaddress=REMOVED
+/interface eoip add comment=router disabled=yes local-address=144.202.81.146 mac-address=02:D0:A9:DB:CE:9A name=eoip-router remote-address=50.47.241.7 tunnel-id=1
+/interface eoip add comment=router-backup disabled=yes local-address=144.202.81.146 mac-address=02:D0:A9:DB:CE:9A name=eoip-router-backup remote-address=50.47.244.194 tunnel-id=2
 /interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
 /iot lora servers add address=eu.mikrotik.thethings.industries name=TTN-EU protocol=UDP
 /iot lora servers add address=us.mikrotik.thethings.industries name=TTN-US protocol=UDP
@@ -37,8 +37,8 @@
 /ip address add address=10.99.10.1/16 interface=wg-s2s network=10.99.0.0
 /ip dhcp-client add disabled=yes interface=eth0
 /ip dns set servers=8.8.8.8
-/ip packing add aggregated-size=1458 interface=eoip-router-backup packing=compress-headers unpacking=compress-headers
-/ip packing add aggregated-size=1458 interface=eoip-router packing=compress-headers unpacking=compress-headers
+/ip packing add aggregated-size=1458 disabled=yes interface=eoip-router-backup packing=compress-headers unpacking=compress-headers
+/ip packing add aggregated-size=1458 disabled=yes interface=eoip-router packing=compress-headers unpacking=compress-headers
 /ip route add gateway=144.202.80.1
 /ip route add blackhole disabled=no dst-address=192.168.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ipv6 route add disabled=no distance=1 dst-address=::/0 gateway=fe80::fc00:4ff:feb1:d2e3%eth0 routing-table=main scope=30 suppress-hw-offload=no target-scope=10
@@ -57,8 +57,8 @@
 /ip ssh set forwarding-enabled=both host-key-type=ed25519 strong-crypto=yes
 /ipv6 address add address=2001:19f0:8001:f07:5400:4ff:feb1:d2e3 advertise=no interface=eth0
 /ipv6 address add address=2a0e:7d44:f000::1/48 advertise=no interface=eth0
-/ipv6 address add address=2a0e:7d44:f000:a::1 advertise=no interface=eoip-router
-/ipv6 address add address=2a0e:7d44:f000:b::1 advertise=no interface=eoip-router-backup
+/ipv6 address add address=2a0e:7d44:f000:a::1 advertise=no interface=6to4-router
+/ipv6 address add address=2a0e:7d44:f000:b::1 advertise=no interface=6to4-router-backup
 /ipv6 firewall address-list add address=2a0e:7d44:f000::/48 list=bgp6-vultr-direct
 /ipv6 firewall address-list add address=2a0e:7d44:f042::/48 list=bgp6-vultr-direct
 /ipv6 firewall address-list add address=2a0e:7d44:f069::/48 list=bgp6-router
@@ -83,12 +83,12 @@
     \n:local IPRouterBackup [ /interface/wireguard/peers/get [ find name=\"router-backup\" ] current-endpoint-address ]\r\
     \n\r\
     \n:if ( \$IPRouterBackup != \"\" ) do={\r\
-    \n    /interface/eoip/set [ find comment=\"router-backup\" remote-address!=\"\$IPRouterBackup\" ] remote-address=\"\$IPRouterBackup\"\r\
+    \n    /interface/6to4/set [ find comment=\"router-backup\" remote-address!=\"\$IPRouterBackup\" ] remote-address=\"\$IPRouterBackup\"\r\
     \n    :put \"Set router-backup to \$IPRouterBackup\"\r\
     \n}\r\
     \n\r\
     \n:if ( \$IPRouter != \"\" ) do={\r\
-    \n    /interface/eoip/set [ find comment=\"router\" remote-address!=\"\$IPRouter\" ] remote-address=\"\$IPRouter\"\r\
+    \n    /interface/6to4/set [ find comment=\"router\" remote-address!=\"\$IPRouter\" ] remote-address=\"\$IPRouter\"\r\
     \n    :put \"Set router to \$IPRouter\"\r\
     \n}\r\
     \n"

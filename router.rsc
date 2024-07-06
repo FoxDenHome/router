@@ -22,8 +22,8 @@
 /interface ethernet set [ find default-name=sfp28-1 ] auto-negotiation=no fec-mode=fec74 l2mtu=9092 mtu=9000 name=sfpx1-rackswitch-agg rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp28-2 ] auto-negotiation=no comment=sfpx2-rackswitch-agg fec-mode=fec74 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus12 ] comment=sfp1 name=wan rx-flow-control=on tx-flow-control=on
-/interface 6to4 add disabled=yes !keepalive mtu=1480 name=6to4-redfox remote-address=144.202.81.146
-/interface eoip add mac-address=02:F4:95:CD:FF:D0 name=eoip-redfox remote-address=144.202.81.146 tunnel-id=1
+/interface 6to4 add !keepalive mtu=1480 name=6to4-redfox remote-address=144.202.81.146
+/interface eoip add disabled=yes mac-address=02:F4:95:CD:FF:D0 name=eoip-redfox remote-address=144.202.81.146 tunnel-id=1
 /interface veth add address=172.17.1.2/24 gateway=172.17.1.1 gateway6="" name=veth-foxdns
 /interface veth add address=172.17.2.2/24 gateway=172.17.2.1 gateway6="" name=veth-foxdns-internal
 /interface veth add address=172.17.0.2/24 gateway=172.17.0.1 gateway6="" name=veth-snirouter
@@ -418,7 +418,7 @@
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus External" dst-port=5301 protocol=tcp to-addresses=172.17.1.2 to-ports=9001
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.2 src-address=10.100.0.0/16
-/ip packing add aggregated-size=1458 interface=eoip-redfox packing=compress-headers unpacking=compress-headers
+/ip packing add aggregated-size=1458 disabled=yes interface=eoip-redfox packing=compress-headers unpacking=compress-headers
 /ip route add blackhole disabled=no dst-address=10.0.0.0/8 gateway="" routing-table=main suppress-hw-offload=no
 /ip route add blackhole disabled=no dst-address=192.168.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ip route add blackhole disabled=no distance=1 dst-address=172.16.0.0/12 gateway="" pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
@@ -444,7 +444,7 @@
 /ip tftp settings set max-block-size=65536
 /ip traffic-flow set cache-entries=512k enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
-/ipv6 address add address=2a0e:7d44:f000:a::2 advertise=no interface=eoip-redfox
+/ipv6 address add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
 /ipv6 address add address=2a0e:7d44:f069:1::1 interface=vlan-mgmt
 /ipv6 address add address=2a0e:7d44:f069:2::1 interface=vlan-lan
 /ipv6 address add address=2a0e:7d44:f069:3::1 interface=vlan-dmz

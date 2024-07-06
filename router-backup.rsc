@@ -17,8 +17,8 @@
 /interface ethernet set [ find default-name=sfp-sfpplus1 ] comment=sfp1 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether1 ] advertise=1G-baseT-full,2.5G-baseT comment=eth1 name=wan rx-flow-control=on tx-flow-control=on
 /interface gre add name=gre-tunnel1 remote-address=0.0.0.0
-/interface 6to4 add disabled=yes !keepalive mtu=1480 name=6to4-redfox remote-address=144.202.81.146
-/interface eoip add mac-address=02:E9:BE:DE:CE:F1 name=eoip-redfox remote-address=144.202.81.146 tunnel-id=2
+/interface 6to4 add !keepalive mtu=1480 name=6to4-redfox remote-address=144.202.81.146
+/interface eoip add disabled=yes mac-address=02:E9:BE:DE:CE:F1 name=eoip-redfox remote-address=144.202.81.146 tunnel-id=2
 /interface veth add address=172.17.1.2/24 gateway=172.17.1.1 gateway6="" name=veth-foxdns
 /interface veth add address=172.17.2.2/24 gateway=172.17.2.1 gateway6="" name=veth-foxdns-internal
 /interface veth add address=172.17.0.2/24 gateway=172.17.0.1 gateway6="" name=veth-snirouter
@@ -408,7 +408,7 @@
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus External" dst-port=5301 protocol=tcp to-addresses=172.17.1.2 to-ports=9001
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.2 src-address=10.100.0.0/16
-/ip packing add aggregated-size=1458 interface=eoip-redfox packing=compress-headers unpacking=compress-headers
+/ip packing add aggregated-size=1458 disabled=yes interface=eoip-redfox packing=compress-headers unpacking=compress-headers
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip route add blackhole disabled=no dst-address=55.69.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
@@ -429,7 +429,7 @@
 /ip tftp settings set max-block-size=65536
 /ip traffic-flow set enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
-/ipv6 address add address=2a0e:7d44:f000:b::2 advertise=no interface=eoip-redfox
+/ipv6 address add address=2a0e:7d44:f000:b::2 advertise=no interface=6to4-redfox
 /ipv6 address add address=2a0e:7d44:f069:1::3 interface=vlan-mgmt
 /ipv6 address add address=2a0e:7d44:f069:2::3 interface=vlan-lan
 /ipv6 address add address=2a0e:7d44:f069:3::3 interface=vlan-dmz
