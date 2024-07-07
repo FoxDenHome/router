@@ -119,12 +119,10 @@ resolvers:
     max-connections: 20
     cache-size: 32768
     nameservers:
-      - proto: tcp-tls
-        server-name: dns.google
-        addr: "8.8.8.8:853"
-      - proto: tcp-tls
-        server-name: dns.google
-        addr: "8.8.4.4:853"
+      - proto: tcp
+        addr: 192.152.0.1:53
+      - proto: tcp
+        addr: 192.152.0.2:53
     allow-only-from-private: true
     cache-min-time: 1m
     cache-max-time: 24h
