@@ -620,7 +620,7 @@
     \n    \$dyndnsUpdate host=\"wan.foxden.network\" key=\"REMOVED\" updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
     \n}\r\
     \n#\$dyndnsUpdate user=\"doridian\" host=\$IPv6Host key=\$IPv6Key updatehost=\"ipv4.tunnelbroker.net\" dns=\"\" ipaddr=\$ipaddr mode=https nicUpdateMode=true\r\
-    \n\$dyndnsUpdate host=\"redfoxv6\" key=(\"anonymous&primary=\" . \$isprimary) updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
+    \n#\$dyndnsUpdate host=\"redfoxv6\" key=(\"anonymous&primary=\" . \$isprimary) updatehost=\"10.99.10.1:9999\" dns=\"\" ipaddr=\$ipaddr mode=http\r\
     \n\$dyndnsUpdate host=\$DynDNSHost key=\$DynDNSKey updatehost=\"ipv4.cloudns.net\" dns=\"pns41.cloudns.net\" ipaddr=\$ipaddr mode=https\r\
     \n"
 /system script add dont-require-permissions=no name=dhcp-mac-checker owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local dhcpent\r\
