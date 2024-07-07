@@ -18,7 +18,6 @@
 /interface ethernet set [ find default-name=ether1 ] advertise=1G-baseT-full,2.5G-baseT comment=eth1 name=wan rx-flow-control=on tx-flow-control=on
 /interface gre add name=gre-tunnel1 remote-address=0.0.0.0
 /interface 6to4 add !keepalive mtu=1480 name=6to4-redfox remote-address=144.202.81.146
-/interface eoip add disabled=yes mac-address=02:E9:BE:DE:CE:F1 name=eoip-redfox remote-address=144.202.81.146 tunnel-id=2
 /interface veth add address=172.17.1.2/24 gateway=172.17.1.1 gateway6="" name=veth-foxdns
 /interface veth add address=172.17.2.2/24 gateway=172.17.2.1 gateway6="" name=veth-foxdns-internal
 /interface veth add address=172.17.0.2/24 gateway=172.17.0.1 gateway6="" name=veth-snirouter
@@ -125,7 +124,6 @@
 /interface list member add interface=veth-foxdns list=zone-local
 /interface list member add interface=veth-foxdns-internal list=zone-local
 /interface list member add interface=6to4-redfox list=zone-wan
-/interface list member add interface=eoip-redfox list=zone-wan
 /interface wireguard peers add allowed-address=10.100.10.1/32 interface=wg-vpn is-responder=yes name=fennec persistent-keepalive=25s public-key="i/thQFtyJPTmq8QC44PV6QeETM6VlMQQs1tKWzTCqDU="
 /interface wireguard peers add allowed-address=10.100.10.2/32 interface=wg-vpn is-responder=yes name=capefox persistent-keepalive=25s public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
 /interface wireguard peers add allowed-address=10.100.10.3/32 interface=wg-vpn is-responder=yes name=dori-phone persistent-keepalive=25s public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
@@ -180,7 +178,7 @@
 /ip dhcp-server lease add address=10.1.10.3 comment=switch-rack-agg lease-time=1d mac-address=24:5A:4C:56:41:C4 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.11.2 comment=ups-rack lease-time=1d mac-address=00:C0:B7:E8:B2:A0 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.1 comment=unifi lease-time=1d mac-address=24:5A:4C:8A:23:3F server=dhcp-mgmt
-/ip dhcp-server lease add address=10.1.10.6 comment=ap-server-room lease-time=1d mac-address=68:D7:9A:1F:57:E2 server=dhcp-mgmt
+/ip dhcp-server lease add address=10.1.10.6 comment=ap-backyard lease-time=1d mac-address=68:D7:9A:1F:57:E2 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.7 comment=ap-corridor-upper lease-time=1d mac-address=60:22:32:1D:48:15 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.10 comment=switch-dori-office-agg lease-time=1d mac-address=AC:8B:A9:A6:E7:EE server=dhcp-mgmt
 /ip dhcp-server lease add address=10.6.11.2 comment=telegraf lease-time=1d mac-address=42:FE:0C:C8:E0:F5 server=dhcp-hypervisor
@@ -381,6 +379,7 @@
 /ip firewall filter add action=accept chain=input comment="HTTP(S)" dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=input comment=BGP dst-port=179 protocol=tcp
 /ip firewall filter add action=accept chain=input comment=WireGuard dst-port=13231-13232 protocol=udp
+/ip firewall filter add action=accept chain=input in-interface=lo
 /ip firewall filter add action=accept chain=input in-interface=oob
 /ip firewall filter add action=accept chain=input in-interface-list=zone-local
 /ip firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
@@ -408,7 +407,6 @@
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus External" dst-port=5301 protocol=tcp to-addresses=172.17.1.2 to-ports=9001
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.2 src-address=10.100.0.0/16
-/ip packing add aggregated-size=1458 disabled=yes interface=eoip-redfox packing=compress-headers unpacking=compress-headers
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip route add blackhole disabled=no dst-address=55.69.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
@@ -449,7 +447,7 @@
 /ipv6 firewall filter add action=accept chain=input protocol=icmpv6
 /ipv6 firewall filter add action=accept chain=input comment="HTTP(S)" dst-port=80,443 protocol=tcp
 /ipv6 firewall filter add action=accept chain=input comment=WireGuard dst-port=13231-13232 protocol=udp
-/ipv6 firewall filter add action=accept chain=input comment=ZeroTier dst-port=9993 protocol=udp
+/ipv6 firewall filter add action=accept chain=input in-interface=lo
 /ipv6 firewall filter add action=accept chain=input in-interface=oob
 /ipv6 firewall filter add action=accept chain=input in-interface-list=zone-local
 /ipv6 firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited

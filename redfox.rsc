@@ -16,8 +16,6 @@
 /interface ethernet set [ find default-name=ether1 ] disable-running-check=no name=eth0
 /interface 6to4 add comment=router !keepalive local-address=144.202.81.146 name=6to4-router remote-qaddress=REMOVED
 /interface 6to4 add comment=router-backup !keepalive local-address=144.202.81.146 name=6to4-router-backup remote-qaddress=REMOVED
-/interface eoip add comment=router disabled=yes local-address=144.202.81.146 mac-address=02:D0:A9:DB:CE:9A name=eoip-router remote-address=50.47.241.7 tunnel-id=1
-/interface eoip add comment=router-backup disabled=yes local-address=144.202.81.146 mac-address=02:D0:A9:DB:CE:9A name=eoip-router-backup remote-address=50.47.244.194 tunnel-id=2
 /interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
 /iot lora servers add address=eu.mikrotik.thethings.industries name=TTN-EU protocol=UDP
 /iot lora servers add address=us.mikrotik.thethings.industries name=TTN-US protocol=UDP
@@ -28,6 +26,7 @@
 /iot lora servers add address=nam1.cloud.thethings.network name="TTN V3 (nam1)" protocol=UDP
 /iot lora servers add address=au1.cloud.thethings.network name="TTN V3 (au1)" protocol=UDP
 /routing bgp template set default disabled=yes routing-table=main
+/ip firewall connection tracking set loose-tcp-tracking=no
 /ip settings set tcp-syncookies=yes
 /ipv6 settings set accept-redirects=no accept-router-advertisements=no
 /interface wireguard peers add allowed-address=10.0.0.0/8,10.99.1.1/32 interface=wg-s2s is-responder=yes name=router persistent-keepalive=25s public-key="nCTAIMDv50QhwjCw72FwP2u2pKGMcqxJ09DQ9wJdxH0="
@@ -36,9 +35,18 @@
 /ip address add address=144.202.81.146/23 interface=eth0 network=144.202.80.0
 /ip address add address=10.99.10.1/16 interface=wg-s2s network=10.99.0.0
 /ip dhcp-client add disabled=yes interface=eth0
-/ip dns set servers=8.8.8.8
-/ip packing add aggregated-size=1458 disabled=yes interface=eoip-router-backup packing=compress-headers unpacking=compress-headers
-/ip packing add aggregated-size=1458 disabled=yes interface=eoip-router packing=compress-headers unpacking=compress-headers
+/ip dns set servers=8.8.8.8,8.8.4.4
+/ip firewall filter add action=fasttrack-connection chain=forward comment="established, related" connection-state=established,related hw-offload=yes
+/ip firewall filter add action=accept chain=forward comment="established, related" connection-state=established,related
+/ip firewall filter add action=fasttrack-connection chain=input comment="established, related" connection-state=established,related hw-offload=yes
+/ip firewall filter add action=accept chain=input comment="established, related" connection-state=established,related
+/ip firewall filter add action=accept chain=input comment=loopback in-interface=lo
+/ip firewall filter add action=accept chain=input comment=ICMP protocol=icmp
+/ip firewall filter add action=accept chain=input comment=WireGuard dst-port=13232 protocol=udp src-port=""
+/ip firewall filter add action=accept chain=input comment=6to4 protocol=ipv6-encap
+/ip firewall filter add action=accept chain=input in-interface=wg-s2s
+/ip firewall filter add action=drop chain=input
+/ip firewall filter add action=drop chain=forward log=yes
 /ip route add gateway=144.202.80.1
 /ip route add blackhole disabled=no dst-address=192.168.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ipv6 route add disabled=no distance=1 dst-address=::/0 gateway=fe80::fc00:4ff:feb1:d2e3%eth0 routing-table=main suppress-hw-offload=no
@@ -49,7 +57,7 @@
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
 /ip service set www disabled=yes
-/ip service set ssh port=2222
+/ip service set ssh address=10.0.0.0/8
 /ip service set api disabled=yes
 /ip service set winbox address=10.0.0.0/8
 /ip service set api-ssl disabled=yes
@@ -66,6 +74,15 @@
 /ipv6 firewall address-list add address=2a0e:7d44:f069::/48 list=bgp6-vultr-direct
 /ipv6 firewall address-list add address=2a0e:7d44:f00a::/48 list=bgp6-vultr-direct
 /ipv6 firewall address-list add address=2a0e:7d44:f00b::/48 list=bgp6-vultr-direct
+/ipv6 firewall filter add action=accept chain=input comment="related, established" connection-state=established,related
+/ipv6 firewall filter add action=accept chain=input comment=loopback in-interface=lo
+/ipv6 firewall filter add action=accept chain=input comment=ICMPv6 protocol=icmpv6
+/ipv6 firewall filter add action=accept chain=input comment=WireGuard dst-port=13232 protocol=udp
+/ipv6 firewall filter add action=drop chain=input
+/ipv6 firewall filter add action=accept chain=forward
+/ipv6 firewall raw add action=notrack chain=prerouting dst-address=2a0e:7d44:f000::/40
+/ipv6 firewall raw add action=notrack chain=prerouting src-address=2a0e:7d44:f000::/40
+/ipv6 firewall raw add action=accept chain=output disabled=yes log=yes
 /ipv6 nd set [ find default=yes ] disabled=yes
 /routing bgp connection add address-families=ip as=207618 connect=yes disabled=no input.filter=reject-all listen=yes local.address=144.202.81.146 .role=ebgp multihop=yes name=bgp-vultr-v4 nexthop-choice=force-self output.default-originate=never .remove-private-as=yes remote.address=169.254.169.254/32 .as=64515 router-id=144.202.81.146 routing-table=main
 /routing bgp connection add address-families=ipv6 as=207618 connect=yes disabled=no input.filter=reject-all listen=yes local.address=2001:19f0:8001:f07:5400:4ff:feb1:d2e3 .role=ebgp multihop=yes name=bgp-vultr-v6 nexthop-choice=force-self output.default-originate=never .network=bgp6-vultr-direct .remove-private-as=yes remote.address=2001:19f0:ffff::1/128 .as=64515 router-id=144.202.81.146 routing-table=main
@@ -74,6 +91,7 @@
 /routing filter rule add chain=router-in disabled=no rule="if (dst in bgp6-router) { set gw 2a0e:7d44:f000:a::2; accept; }"
 /routing filter rule add chain=route-backup-in disabled=no rule="if (dst in bgp6-router-backup) { set gw 2a0e:7d44:f000:b::2; accept; }"
 /routing filter rule add chain=reject-all disabled=no rule="reject;"
+/system clock set time-zone-name=America/Los_Angeles
 /system identity set name=redfox
 /system note set show-at-login=no
 /system scheduler add interval=15s name=ip-update on-event="/system/script/run ip-update\r\
