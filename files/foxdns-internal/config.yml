@@ -118,6 +118,7 @@ resolvers:
   - zone: .
     max-connections: 20
     cache-size: 32768
+    nameserver-strategy: failover
     nameservers:
       - proto: tcp
         addr: 192.152.0.1:53
