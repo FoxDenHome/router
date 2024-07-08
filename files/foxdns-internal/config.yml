@@ -122,11 +122,11 @@ resolvers:
       - proto: tcp
         addr: 192.152.0.1:53
         max-parallel-queries: 20
-        timeout: 200ms
+        timeout: 500ms
       - proto: tcp
         addr: 192.152.0.2:53
         max-parallel-queries: 20
-        timeout: 200ms
+        timeout: 500ms
     allow-only-from-private: true
     cache-min-time: 1m
     cache-max-time: 24h
