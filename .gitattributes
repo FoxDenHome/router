@@ -1,0 +1,2 @@
+*-secret.backup filter=git-crypt diff=git-crypt
+*-secret.rsc filter=git-crypt diff=git-crypt
