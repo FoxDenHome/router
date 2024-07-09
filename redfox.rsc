@@ -50,10 +50,10 @@
 /ip route add gateway=144.202.80.1
 /ip route add blackhole disabled=no dst-address=192.168.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ipv6 route add disabled=no distance=1 dst-address=::/0 gateway=fe80::fc00:4ff:feb1:d2e3%eth0 routing-table=main suppress-hw-offload=no
-/ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f000::/48 routing-table=main suppress-hw-offload=no
+/ipv6 route add blackhole disabled=no distance=100 dst-address=2a0e:7d44:f000::/48 gateway="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f00b::/48 routing-table=main suppress-hw-offload=no
-/ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f00a::/48 routing-table=main suppress-hw-offload=no
-/ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f069::/48 routing-table=main suppress-hw-offload=no
+/ipv6 route add blackhole disabled=no distance=100 dst-address=2a0e:7d44:f00a::/48 gateway="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
+/ipv6 route add blackhole disabled=no distance=100 dst-address=2a0e:7d44:f069::/48 gateway="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
 /ip service set www disabled=yes
@@ -88,8 +88,8 @@
 /routing bgp connection add address-families=ipv6 as=207618 connect=yes disabled=no input.filter=reject-all listen=yes local.address=2001:19f0:8001:f07:5400:4ff:feb1:d2e3 .role=ebgp multihop=yes name=bgp-vultr-v6 nexthop-choice=force-self output.default-originate=never .network=bgp6-vultr-direct .remove-private-as=yes remote.address=2001:19f0:ffff::1/128 .as=64515 router-id=144.202.81.146 routing-table=main
 /routing bgp connection add address-families=ipv6 as=207618 connect=yes disabled=no input.filter=router-in listen=yes local.address=10.99.10.1 .role=ebgp multihop=yes name=bgp-router output.default-originate=never .filter-chain=reject-all remote.address=10.99.1.1/32 .as=64601 router-id=144.202.81.146 routing-table=main
 /routing bgp connection add address-families=ipv6 as=207618 connect=yes disabled=no input.filter=route-backup-in listen=yes local.address=10.99.10.1 .role=ebgp multihop=yes name=bgp-router-backup output.default-originate=never .filter-chain=reject-all remote.address=10.99.1.2/32 .as=64602 router-id=144.202.81.146 routing-table=main
-/routing filter rule add chain=router-in disabled=no rule="if (dst in bgp6-router) { set gw 2a0e:7d44:f000:a::2; accept; }"
-/routing filter rule add chain=route-backup-in disabled=no rule="if (dst in bgp6-router-backup) { set gw 2a0e:7d44:f000:b::2; accept; }"
+/routing filter rule add chain=router-in disabled=no rule="if (dst in bgp6-router) { set gw 2a0e:7d44:f000:a::2; set distance 50; accept; }"
+/routing filter rule add chain=route-backup-in disabled=no rule="if (dst in bgp6-router-backup) { set gw 2a0e:7d44:f000:b::2; set distance 60; accept; }"
 /routing filter rule add chain=reject-all disabled=no rule="reject;"
 /system clock set time-zone-name=America/Los_Angeles
 /system identity set name=redfox

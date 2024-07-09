@@ -30,6 +30,7 @@
 /interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=50 version=2
+/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway6 priority=50 remote-address=10.1.1.2 sync-connection-tracking=yes v3-protocol=ipv6 vrid=2
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=50 version=2 vrid=123
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
@@ -39,18 +40,23 @@
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-security vlan-id=5
 /interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=50 version=2
+/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway6 priority=50 v3-protocol=ipv6 vrid=2
 /interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=50 version=2 vrid=123
 /interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway priority=50 version=2
+/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway6 priority=50 v3-protocol=ipv6 vrid=2
 /interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-ntp priority=50 version=2 vrid=123
 /interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=50 version=2
+/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway6 priority=50 v3-protocol=ipv6 vrid=2
 /interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-labnet mtu=9000 name=vrrp-labnet-ntp priority=50 version=2 vrid=123
 /interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=50 version=2
+/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-lan mtu=9000 name=vrrp-lan-gateway6 priority=50 v3-protocol=ipv6 vrid=2
 /interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=50 version=2 vrid=123
 /interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=50 version=2
+/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-security mtu=9000 name=vrrp-security-gateway6 priority=50 v3-protocol=ipv6 vrid=2
 /interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=50 version=2 vrid=123
 /interface list add name=iface-mgmt
 /interface list add name=iface-lan
@@ -134,12 +140,12 @@
 /interface list member add interface=veth-snirouter list=zone-local
 /interface list member add interface=veth-foxdns-internal list=zone-local
 /interface list member add interface=6to4-redfox list=zone-wan
-/interface wireguard peers add allowed-address=10.100.10.1/32 interface=wg-vpn is-responder=yes name=fennec persistent-keepalive=25s public-key="i/thQFtyJPTmq8QC44PV6QeETM6VlMQQs1tKWzTCqDU="
-/interface wireguard peers add allowed-address=10.100.10.2/32 interface=wg-vpn is-responder=yes name=capefox persistent-keepalive=25s public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
-/interface wireguard peers add allowed-address=10.100.10.3/32 interface=wg-vpn is-responder=yes name=dori-phone persistent-keepalive=25s public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
-/interface wireguard peers add allowed-address=10.100.10.4/32 interface=wg-vpn is-responder=yes name=wizzy-laptop persistent-keepalive=25s public-key="aL7QLtq2YoYVb0bhueG1InlbAdyZE0bmdmRPQ67rNjk="
+/interface wireguard peers add allowed-address=10.100.10.1/32 interface=wg-vpn is-responder=yes name=fennec public-key="i/thQFtyJPTmq8QC44PV6QeETM6VlMQQs1tKWzTCqDU="
+/interface wireguard peers add allowed-address=10.100.10.2/32 interface=wg-vpn is-responder=yes name=capefox public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs="
+/interface wireguard peers add allowed-address=10.100.10.3/32 interface=wg-vpn is-responder=yes name=dori-phone public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
+/interface wireguard peers add allowed-address=10.100.10.4/32 interface=wg-vpn is-responder=yes name=wizzy-laptop public-key="aL7QLtq2YoYVb0bhueG1InlbAdyZE0bmdmRPQ67rNjk="
 /interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=23.239.97.10 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
-/interface wireguard peers add allowed-address=10.100.10.5/32 interface=wg-vpn is-responder=yes name=wizzy-desktop persistent-keepalive=25s public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0="
+/interface wireguard peers add allowed-address=10.100.10.5/32 interface=wg-vpn is-responder=yes name=wizzy-desktop public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0="
 /interface wireguard peers add allowed-address=10.99.10.1/32 endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s name=redfox persistent-keepalive=25s public-key="s1COjkpfpzfQ05ZLNLGQrlEhomlzwHv+APvUABzbSh8="
 /ip address add address=10.1.1.1/16 interface=vlan-mgmt network=10.1.0.0
 /ip address add address=10.2.1.1/16 interface=vlan-lan network=10.2.0.0
@@ -174,7 +180,7 @@
 /ip address add address=172.17.2.1/24 interface=veth-foxdns-internal network=172.17.2.0
 /ip cloud set update-time=no
 /ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run wan-online-adjust\r\
-    \n" use-peer-dns=no use-peer-ntp=no
+    \n" use-peer-ntp=no
 /ip dhcp-server config set store-leases-disk=never
 /ip dhcp-server lease add address=10.2.10.3 comment=capefox lease-time=1d mac-address=F0:2F:4B:14:84:F4 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.10.2 comment=islandfox lease-time=1d mac-address=0A:98:86:2C:85:87 server=dhcp-hypervisor
@@ -329,7 +335,7 @@
 /ip dhcp-server network add address=10.6.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.6.0.53 domain=foxden.network gateway=10.6.0.1 netmask=16 next-server=10.6.0.1 ntp-server=10.6.0.123
 /ip dhcp-server network add address=10.7.0.0/16 dns-server=10.7.1.1 domain=foxden.network gateway=10.7.1.1 netmask=16 ntp-server=10.7.1.1
 /ip dhcp-server network add address=192.168.88.0/24 dns-none=yes
-/ip dns set cache-max-ttl=1d max-udp-packet-size=512 servers=8.8.8.8,8.8.4.4 verify-doh-cert=yes
+/ip dns set cache-max-ttl=1d max-udp-packet-size=512 verify-doh-cert=yes
 /ip dns static add name=wpad ttl=5m type=NXDOMAIN
 /ip dns static add name=wpad.foxden.network ttl=5m type=NXDOMAIN
 /ip dns static add forward-to=172.17.1.2 match-subdomain=yes name=foxden.test type=FWD
@@ -426,6 +432,7 @@
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:a::1 routing-table=main
 /ipv6 route add blackhole disabled=no dst-address=2a0e:7d44:f069::/48 gateway="" routing-table=main suppress-hw-offload=no
 /ipv6 route add blackhole disabled=no distance=1 dst-address=2a0e:7d44:f00a::/48 gateway="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
+/ipv6 route add blackhole disabled=no distance=1 dst-address=2a0e:7d44:f00b::/48 gateway="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
 /ip service set www-ssl certificate=sslcert-autogen_2024-06-20T18:06:25Z disabled=no tls-version=only-1.2
@@ -443,14 +450,14 @@
 /ip traffic-flow set cache-entries=512k enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
 /ipv6 address add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
-/ipv6 address add address=2a0e:7d44:f069:1::1 interface=vlan-mgmt
-/ipv6 address add address=2a0e:7d44:f069:2::1 interface=vlan-lan
-/ipv6 address add address=2a0e:7d44:f069:3::1 interface=vlan-dmz
-/ipv6 address add address=2a0e:7d44:f069:4::1 interface=vlan-labnet
-/ipv6 address add address=2a0e:7d44:f069:5::1 interface=vlan-security
-/ipv6 address add address=2a0e:7d44:f069:6::1 interface=vlan-hypervisor
+/ipv6 address add address=2a0e:7d44:f069:1::1 interface=vrrp-mgmt-gateway6
+/ipv6 address add address=2a0e:7d44:f069:2::1 interface=vrrp-lan-gateway6
+/ipv6 address add address=2a0e:7d44:f069:3::1 interface=vrrp-dmz-gateway6
+/ipv6 address add address=2a0e:7d44:f069:4::1 interface=vrrp-labnet-gateway6
+/ipv6 address add address=2a0e:7d44:f069:5::1 interface=vrrp-security-gateway6
+/ipv6 address add address=2a0e:7d44:f069:6::1 interface=vrrp-hypervisor-gateway6
 /ipv6 dhcp-client add interface=wan pool-name=pool-wan request=prefix use-peer-dns=no
-/ipv6 firewall address-list add address=2a0e:7d44:f069::/48 list=bgp-redfox
+/ipv6 firewall address-list add address=2a0e:7d44:f069::/48 comment=primary list=bgp-redfox
 /ipv6 firewall address-list add address=2a0e:7d44:f00a::/48 list=bgp-redfox
 /ipv6 firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ipv6 firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
