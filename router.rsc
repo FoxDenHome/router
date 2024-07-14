@@ -450,14 +450,6 @@
 /ip traffic-flow set cache-entries=512k enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
 /ipv6 address add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
-<<<<<<< HEAD
-/ipv6 address add address=2a0e:7d44:f069:1::1 interface=vrrp-mgmt-gateway6
-/ipv6 address add address=2a0e:7d44:f069:2::1 interface=vrrp-lan-gateway6
-/ipv6 address add address=2a0e:7d44:f069:3::1 interface=vrrp-dmz-gateway6
-/ipv6 address add address=2a0e:7d44:f069:4::1 interface=vrrp-labnet-gateway6
-/ipv6 address add address=2a0e:7d44:f069:5::1 interface=vrrp-security-gateway6
-/ipv6 address add address=2a0e:7d44:f069:6::1 interface=vrrp-hypervisor-gateway6
-=======
 /ipv6 address add address=2a0e:7d44:f069:1::1:1 interface=vlan-mgmt
 /ipv6 address add address=2a0e:7d44:f069:2::1:1 interface=vlan-lan
 /ipv6 address add address=2a0e:7d44:f069:3::1:1 interface=vlan-dmz
@@ -470,7 +462,6 @@
 /ipv6 address add address=2a0e:7d44:f069:4::1 advertise=no interface=vrrp-labnet-gateway6
 /ipv6 address add address=2a0e:7d44:f069:5::1 advertise=no interface=vrrp-security-gateway6
 /ipv6 address add address=2a0e:7d44:f069:6::1 advertise=no interface=vrrp-hypervisor-gateway6
->>>>>>> 953d580 (upgrades)
 /ipv6 dhcp-client add interface=wan pool-name=pool-wan request=prefix use-peer-dns=no
 /ipv6 firewall address-list add address=2a0e:7d44:f069::/48 comment=primary list=bgp-redfox
 /ipv6 firewall address-list add address=2a0e:7d44:f00a::/48 list=bgp-redfox
