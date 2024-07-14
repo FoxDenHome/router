@@ -6,6 +6,10 @@ global:
     - ns3.foxden.network
     - ns4.foxden.network
     mailbox: dns.foxden.network
+    dnssec-private-ksk: Kfoxden.network.+013+56289.private
+    dnssec-public-ksk: Kfoxden.network.+013+56289.key
+    dnssec-private-zsk: Kfoxden.network.+013+12422.private
+    dnssec-public-zsk: Kfoxden.network.+013+12422.key
   listen:
   - ":53"
   prometheus-listen: :9001
