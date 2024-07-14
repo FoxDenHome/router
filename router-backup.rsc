@@ -520,6 +520,8 @@
     \n:put \"Appending zone file foxden.network\"\r\
     \n\r\
     \n:local loadscript \":put \\\"\\\\\\\$TTL 300\\\"\r\
+    \n:put \\\"@ 3600 DS 56289 13 2 E0198538615845C4226057A4A9D3908FF76A054A49B76E72954D63BFCB88A257\\\"\r\
+    \n:put \\\"@ 3600 DS 26212 13 2 9C50921B3FDB72B43A78713AF57E66D2BBA87C6CFDEC4FC2EA1320686B31FED4\\\"\r\
     \n:put \\\"nas IN CNAME bengalfox.foxden.network.\\\"\r\
     \n:put \\\"dav IN CNAME bengalfox.foxden.network.\\\"\r\
     \n:put \\\"nas-ro IN CNAME icefox.doridian.net.\\\"\r\
