@@ -450,12 +450,27 @@
 /ip traffic-flow set cache-entries=512k enabled=yes sampling-interval=1 sampling-space=1
 /ip traffic-flow target add dst-address=10.6.11.4 src-address=10.6.1.1 version=ipfix
 /ipv6 address add address=2a0e:7d44:f000:a::2 advertise=no interface=6to4-redfox
+<<<<<<< HEAD
 /ipv6 address add address=2a0e:7d44:f069:1::1 interface=vrrp-mgmt-gateway6
 /ipv6 address add address=2a0e:7d44:f069:2::1 interface=vrrp-lan-gateway6
 /ipv6 address add address=2a0e:7d44:f069:3::1 interface=vrrp-dmz-gateway6
 /ipv6 address add address=2a0e:7d44:f069:4::1 interface=vrrp-labnet-gateway6
 /ipv6 address add address=2a0e:7d44:f069:5::1 interface=vrrp-security-gateway6
 /ipv6 address add address=2a0e:7d44:f069:6::1 interface=vrrp-hypervisor-gateway6
+=======
+/ipv6 address add address=2a0e:7d44:f069:1::1:1 interface=vlan-mgmt
+/ipv6 address add address=2a0e:7d44:f069:2::1:1 interface=vlan-lan
+/ipv6 address add address=2a0e:7d44:f069:3::1:1 interface=vlan-dmz
+/ipv6 address add address=2a0e:7d44:f069:4::1:1 interface=vlan-labnet
+/ipv6 address add address=2a0e:7d44:f069:5::1:1 interface=vlan-security
+/ipv6 address add address=2a0e:7d44:f069:6::1:1 interface=vlan-hypervisor
+/ipv6 address add address=2a0e:7d44:f069:1::1 advertise=no interface=vrrp-mgmt-gateway6
+/ipv6 address add address=2a0e:7d44:f069:2::1 advertise=no interface=vrrp-lan-gateway6
+/ipv6 address add address=2a0e:7d44:f069:3::1 advertise=no interface=vrrp-dmz-gateway6
+/ipv6 address add address=2a0e:7d44:f069:4::1 advertise=no interface=vrrp-labnet-gateway6
+/ipv6 address add address=2a0e:7d44:f069:5::1 advertise=no interface=vrrp-security-gateway6
+/ipv6 address add address=2a0e:7d44:f069:6::1 advertise=no interface=vrrp-hypervisor-gateway6
+>>>>>>> 953d580 (upgrades)
 /ipv6 dhcp-client add interface=wan pool-name=pool-wan request=prefix use-peer-dns=no
 /ipv6 firewall address-list add address=2a0e:7d44:f069::/48 comment=primary list=bgp-redfox
 /ipv6 firewall address-list add address=2a0e:7d44:f00a::/48 list=bgp-redfox
@@ -518,14 +533,21 @@
     \n:put \"Appending zone file foxden.network\"\r\
     \n\r\
     \n:local loadscript \":put \\\"\\\\\\\$TTL 300\\\"\r\
-    \n:put \\\"@ IN SOA ns1.foxden.network. dns.foxden.network. 2022010169 43200 3600 86400 300\\\"\r\
-    \n:put \\\"@ IN NS ns1.foxden.network.\\\"\r\
-    \n:put \\\"@ IN NS ns2.foxden.network.\\\"\r\
-    \n:put \\\"@ IN NS ns3.foxden.network.\\\"\r\
-    \n:put \\\"@ IN NS ns4.foxden.network.\\\"\r\
     \n:put \\\"nas IN CNAME bengalfox.foxden.network.\\\"\r\
     \n:put \\\"dav IN CNAME bengalfox.foxden.network.\\\"\r\
     \n:put \\\"nas-ro IN CNAME icefox.doridian.net.\\\"\r\
+    \n:put \\\"@ IN A 23.239.97.13\\\"\r\
+    \n:put \\\"@ IN AAAA 2606:c700:4020:af::5\\\"\r\
+    \n:put \\\"xmpp IN A 23.239.97.13\\\"\r\
+    \n:put \\\"xmpp IN AAAA 2606:c700:4020:af::5\\\"\r\
+    \n:put \\\"upload.xmpp IN CNAME xmpp.foxden.network.\\\"\r\
+    \n:put \\\"muc.xmpp IN CNAME xmpp.foxden.network.\\\"\r\
+    \n:put \\\"proxy.xmpp IN CNAME xmpp.foxden.network.\\\"\r\
+    \n:put \\\"pubsub.xmpp IN CNAME xmpp.foxden.network.\\\"\r\
+    \n:put \\\"_xmpp-client._tcp IN SRV 5 0 5222 xmpp.foxden.network.\\\"\r\
+    \n:put \\\"_xmpps-client._tcp SRV 5 0 5223 xmpp.foxden.network.\\\"\r\
+    \n:put \\\"_xmpp-server._tcp SRV 5 0 5269 xmpp.foxden.network.\\\"\r\
+    \n\r\
     \n:local hostshort\r\
     \n:local dhcpent\r\
     \n:foreach i in=[/ip/dhcp-server/lease/find comment dynamic=no] do={\r\

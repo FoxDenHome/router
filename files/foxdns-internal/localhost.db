@@ -1,5 +1,4 @@
 $TTL 300
-@ IN SOA ns1.foxden.network. dns.foxden.network. 2022010169 43200 3600 86400 300
 
 @ IN A 127.0.0.1
 localhost IN A 127.0.0.1

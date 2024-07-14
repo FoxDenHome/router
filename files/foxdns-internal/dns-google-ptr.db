@@ -1,3 +1,2 @@
 $TTL 3600
-@ IN SOA ns1.google.com. dns-admin.google.com. 592507334 900 900 1800 60
 @ IN PTR dns.google.

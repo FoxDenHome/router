@@ -1,5 +1,0 @@
-$TTL 300
-@ IN SOA ns1.foxden.network. dns.foxden.network. 2022010169 43200 3600 86400 300
-
-@ IN CNAME yiffws.foxden.network.
-www IN CNAME yiffws.foxden.network.
