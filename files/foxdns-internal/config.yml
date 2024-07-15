@@ -5,6 +5,11 @@ global:
     - ns2.foxden.network
     - ns3.foxden.network
     - ns4.foxden.network
+    serial: 2024042069
+    refresh: 2h
+    retry: 30m
+    expire: 336h
+    minttl: 1h
     mailbox: dns.foxden.network
   listen:
   - ":53"
