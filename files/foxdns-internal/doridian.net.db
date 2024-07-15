@@ -2,6 +2,15 @@ $TTL 300
 @ IN A 10.3.10.10
 www IN CNAME doridian.net.
 
+@ IN NS ns1.doridian.net.
+@ IN NS ns2.doridian.net.
+@ IN NS ns3.doridian.net.
+@ IN NS ns4.doridian.net.
+ns1 IN A 10.3.0.53
+ns2 IN A 10.3.0.53
+ns3 IN A 10.3.0.53
+ns4 IN A 10.3.0.53
+
 icefox IN A 23.239.97.10
 dav IN A 23.239.97.10
 jellyfin IN A 23.239.97.11
