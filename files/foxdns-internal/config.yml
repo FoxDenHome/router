@@ -14,31 +14,27 @@ rdns:
   - ip_version: 6
     suffix: ip6.foxden.network
     subnets:
-      - 2001:470:b:39::/64
-      - 2001:470:e820::/48
-      - 2001:470:b:3c9::/64
-      - 2001:470:e963::/48
       - 2a0e:7d44:f069::/48
       - 2a0e:7d44:f00a::/48
       - 2a0e:7d44:f00b::/48
-    authority-config:
+    addr-authority-config:
+      zone-name: foxden.network
       dnssec-private-ksk: Kfoxden.network.+013+56289.private
       dnssec-public-ksk: Kfoxden.network.+013+56289.key
       dnssec-private-zsk: Kfoxden.network.+013+12422.private
       dnssec-public-zsk: Kfoxden.network.+013+12422.key
-      dnssec-signer-name: foxden.network
       dnssec-cache-signatures: false
   - ip_version: 4
     suffix: ip4.foxden.network
     subnets:
       - 192.168.0.0/16
       - 172.16.0.0/12
-    authority-config:
+    addr-authority-config:
+      zone-name: foxden.network
       dnssec-private-ksk: Kfoxden.network.+013+56289.private
       dnssec-public-ksk: Kfoxden.network.+013+56289.key
       dnssec-private-zsk: Kfoxden.network.+013+12422.private
       dnssec-public-zsk: Kfoxden.network.+013+12422.key
-      dnssec-signer-name: foxden.network
       dnssec-cache-signatures: false
 
 
@@ -47,11 +43,11 @@ static-zones:
     file: foxden.network.txt
     resolve-external-cnames: true
     authority-config:
+      zone-name: foxden.network
       dnssec-private-ksk: Kfoxden.network.+013+56289.private
       dnssec-public-ksk: Kfoxden.network.+013+56289.key
       dnssec-private-zsk: Kfoxden.network.+013+12422.private
       dnssec-public-zsk: Kfoxden.network.+013+12422.key
-      dnssec-signer-name: foxden.network
       dnssec-cache-signatures: true
   - zone: 10.in-addr.arpa
     file: 10.in-addr.arpa.txt
@@ -162,11 +158,11 @@ localizers:
     - from: 10.100.0.0/16
       to: 10.2.0.0
     authority-config:
+      zone-name: foxden.network
       dnssec-private-ksk: Kfoxden.network.+013+56289.private
       dnssec-public-ksk: Kfoxden.network.+013+56289.key
       dnssec-private-zsk: Kfoxden.network.+013+12422.private
       dnssec-public-zsk: Kfoxden.network.+013+12422.key
-      dnssec-signer-name: foxden.network
       dnssec-cache-signatures: true
   - zone: dns.foxden.network
     subnets:
@@ -175,11 +171,11 @@ localizers:
     - from: 10.100.0.0/16
       to: 10.2.0.0
     authority-config:
+      zone-name: foxden.network
       dnssec-private-ksk: Kfoxden.network.+013+56289.private
       dnssec-public-ksk: Kfoxden.network.+013+56289.key
       dnssec-private-zsk: Kfoxden.network.+013+12422.private
       dnssec-public-zsk: Kfoxden.network.+013+12422.key
-      dnssec-signer-name: foxden.network
       dnssec-cache-signatures: true
   - zone: ntp.foxden.network
     subnets:
@@ -188,11 +184,11 @@ localizers:
     - from: 10.100.0.0/16
       to: 10.2.0.0
     authority-config:
+      zone-name: foxden.network
       dnssec-private-ksk: Kfoxden.network.+013+56289.private
       dnssec-public-ksk: Kfoxden.network.+013+56289.key
       dnssec-private-zsk: Kfoxden.network.+013+12422.private
       dnssec-public-zsk: Kfoxden.network.+013+12422.key
-      dnssec-signer-name: foxden.network
       dnssec-cache-signatures: true
   - zone: vpn.foxden.network
     subnets:
@@ -201,11 +197,11 @@ localizers:
     - from: 10.100.0.0/16
       to: 10.2.0.0
     authority-config:
+      zone-name: foxden.network
       dnssec-private-ksk: Kfoxden.network.+013+56289.private
       dnssec-public-ksk: Kfoxden.network.+013+56289.key
       dnssec-private-zsk: Kfoxden.network.+013+12422.private
       dnssec-public-zsk: Kfoxden.network.+013+12422.key
-      dnssec-signer-name: foxden.network
       dnssec-cache-signatures: true
   - zone: router.foxden.network
     subnets:
@@ -214,11 +210,11 @@ localizers:
     - from: 10.100.0.0/16
       to: 10.2.0.0
     authority-config:
+      zone-name: foxden.network
       dnssec-private-ksk: Kfoxden.network.+013+56289.private
       dnssec-public-ksk: Kfoxden.network.+013+56289.key
       dnssec-private-zsk: Kfoxden.network.+013+12422.private
       dnssec-public-zsk: Kfoxden.network.+013+12422.key
-      dnssec-signer-name: foxden.network
       dnssec-cache-signatures: true
   - zone: ntpi.foxden.network
     subnets:
@@ -227,11 +223,11 @@ localizers:
     - from: 10.100.0.0/16
       to: 10.2.0.0
     authority-config:
+      zone-name: foxden.network
       dnssec-private-ksk: Kfoxden.network.+013+56289.private
       dnssec-public-ksk: Kfoxden.network.+013+56289.key
       dnssec-private-zsk: Kfoxden.network.+013+12422.private
       dnssec-public-zsk: Kfoxden.network.+013+12422.key
-      dnssec-signer-name: foxden.network
       dnssec-cache-signatures: true
   - zone: router-backup.foxden.network
     subnets:
@@ -240,9 +236,9 @@ localizers:
     - from: 10.100.0.0/16
       to: 10.2.0.0
     authority-config:
+      zone-name: foxden.network
       dnssec-private-ksk: Kfoxden.network.+013+56289.private
       dnssec-public-ksk: Kfoxden.network.+013+56289.key
       dnssec-private-zsk: Kfoxden.network.+013+12422.private
       dnssec-public-zsk: Kfoxden.network.+013+12422.key
-      dnssec-signer-name: foxden.network
       dnssec-cache-signatures: true
