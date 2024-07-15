@@ -21,17 +21,35 @@ rdns:
       - 2a0e:7d44:f069::/48
       - 2a0e:7d44:f00a::/48
       - 2a0e:7d44:f00b::/48
+    authority-config:
+      dnssec-private-ksk: Kfoxden.network.+013+56289.private
+      dnssec-public-ksk: Kfoxden.network.+013+56289.key
+      dnssec-private-zsk: Kfoxden.network.+013+12422.private
+      dnssec-public-zsk: Kfoxden.network.+013+12422.key
+      dnssec-signer-name: foxden.network
   - ip_version: 4
     suffix: ip4.foxden.network
     subnets:
       - 192.168.0.0/16
       - 172.16.0.0/12
+    authority-config:
+      dnssec-private-ksk: Kfoxden.network.+013+56289.private
+      dnssec-public-ksk: Kfoxden.network.+013+56289.key
+      dnssec-private-zsk: Kfoxden.network.+013+12422.private
+      dnssec-public-zsk: Kfoxden.network.+013+12422.key
+      dnssec-signer-name: foxden.network
 
 
 static-zones:
   - zone: foxden.network
     file: foxden.network.txt
     resolve-external-cnames: true
+    authority-config:
+      dnssec-private-ksk: Kfoxden.network.+013+56289.private
+      dnssec-public-ksk: Kfoxden.network.+013+56289.key
+      dnssec-private-zsk: Kfoxden.network.+013+12422.private
+      dnssec-public-zsk: Kfoxden.network.+013+12422.key
+      dnssec-signer-name: foxden.network
   - zone: 10.in-addr.arpa
     file: 10.in-addr.arpa.txt
 
@@ -140,39 +158,81 @@ localizers:
     rewrites:
     - from: 10.100.0.0/16
       to: 10.2.0.0
+    authority-config:
+      dnssec-private-ksk: Kfoxden.network.+013+56289.private
+      dnssec-public-ksk: Kfoxden.network.+013+56289.key
+      dnssec-private-zsk: Kfoxden.network.+013+12422.private
+      dnssec-public-zsk: Kfoxden.network.+013+12422.key
+      dnssec-signer-name: foxden.network
   - zone: dns.foxden.network
     subnets:
     - 0.0.0.53/16
     rewrites:
     - from: 10.100.0.0/16
       to: 10.2.0.0
+    authority-config:
+      dnssec-private-ksk: Kfoxden.network.+013+56289.private
+      dnssec-public-ksk: Kfoxden.network.+013+56289.key
+      dnssec-private-zsk: Kfoxden.network.+013+12422.private
+      dnssec-public-zsk: Kfoxden.network.+013+12422.key
+      dnssec-signer-name: foxden.network
   - zone: ntp.foxden.network
     subnets:
     - 0.0.0.123/16
     rewrites:
     - from: 10.100.0.0/16
       to: 10.2.0.0
+    authority-config:
+      dnssec-private-ksk: Kfoxden.network.+013+56289.private
+      dnssec-public-ksk: Kfoxden.network.+013+56289.key
+      dnssec-private-zsk: Kfoxden.network.+013+12422.private
+      dnssec-public-zsk: Kfoxden.network.+013+12422.key
+      dnssec-signer-name: foxden.network
   - zone: vpn.foxden.network
     subnets:
     - 0.0.1.1/16
     rewrites:
     - from: 10.100.0.0/16
       to: 10.2.0.0
+    authority-config:
+      dnssec-private-ksk: Kfoxden.network.+013+56289.private
+      dnssec-public-ksk: Kfoxden.network.+013+56289.key
+      dnssec-private-zsk: Kfoxden.network.+013+12422.private
+      dnssec-public-zsk: Kfoxden.network.+013+12422.key
+      dnssec-signer-name: foxden.network
   - zone: router.foxden.network
     subnets:
     - 0.0.1.1/16
     rewrites:
     - from: 10.100.0.0/16
       to: 10.2.0.0
+    authority-config:
+      dnssec-private-ksk: Kfoxden.network.+013+56289.private
+      dnssec-public-ksk: Kfoxden.network.+013+56289.key
+      dnssec-private-zsk: Kfoxden.network.+013+12422.private
+      dnssec-public-zsk: Kfoxden.network.+013+12422.key
+      dnssec-signer-name: foxden.network
   - zone: ntpi.foxden.network
     subnets:
     - 0.0.1.123/16
     rewrites:
     - from: 10.100.0.0/16
       to: 10.2.0.0
+    authority-config:
+      dnssec-private-ksk: Kfoxden.network.+013+56289.private
+      dnssec-public-ksk: Kfoxden.network.+013+56289.key
+      dnssec-private-zsk: Kfoxden.network.+013+12422.private
+      dnssec-public-zsk: Kfoxden.network.+013+12422.key
+      dnssec-signer-name: foxden.network
   - zone: router-backup.foxden.network
     subnets:
     - 0.0.1.2/16
     rewrites:
     - from: 10.100.0.0/16
       to: 10.2.0.0
+    authority-config:
+      dnssec-private-ksk: Kfoxden.network.+013+56289.private
+      dnssec-public-ksk: Kfoxden.network.+013+56289.key
+      dnssec-private-zsk: Kfoxden.network.+013+12422.private
+      dnssec-public-zsk: Kfoxden.network.+013+12422.key
+      dnssec-signer-name: foxden.network
