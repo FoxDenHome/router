@@ -102,16 +102,6 @@ templates:
       host: 10.2.11.18
     https:
       host: 10.2.11.18
-  yiffws:
-    http:
-      host: 10.3.10.11
-    https:
-      host: 10.3.10.11
-  foxmov:
-    http:
-      host: 10.3.10.12
-    https:
-      host: 10.3.10.12
 hosts:
   # Home network
   grafana.foxden.network:
@@ -155,11 +145,6 @@ hosts:
     template: foxcaves
   www.f0x.es:
     template: foxcaves
-
-  yiff.ws:
-    template: yiffws
-  www.yiff.ws:
-    template: yiffws
 
   # Personal website
   doridian.de:
