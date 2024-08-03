@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.15.2
+# ____-__-__ __:__:__ by RouterOS 7.15.3
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -327,6 +327,7 @@
 /ip dhcp-server lease add address=10.1.10.15 comment=switch-dori-office-tv lease-time=1d mac-address=F4:E2:C6:AC:81:3D server=dhcp-mgmt
 /ip dhcp-server lease add address=10.1.10.16 comment=switch-dori-office-desk lease-time=1d mac-address=F4:E2:C6:AC:81:DC server=dhcp-mgmt
 /ip dhcp-server lease add address=10.5.11.9 comment=camera-server-room lease-time=1d mac-address=F4:E2:C6:0C:E8:3C server=dhcp-security
+/ip dhcp-server lease add address=10.1.13.2 comment=pikvm-rack lease-time=1d mac-address=D8:3A:DD:A3:82:A8 server=dhcp-mgmt
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 next-server=10.2.0.1 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -514,6 +515,8 @@
     \n" policy=read,write,policy,test start-date=2023-01-17 start-time=19:51:50
 /system scheduler add interval=1m name=container-autoheal on-event="/system/script/run container-autoheal\r\
     \n" policy=read,write,policy,test start-date=2023-12-02 start-time=07:56:27
+/system scheduler add disabled=yes interval=1s name=keep-laser-awake on-event="/tool/wol mac=8C:16:45:46:05:22 interface=vlan-labnet\r\
+    \n" policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon start-date=2024-07-18 start-time=00:03:44
 /system script add dont-require-permissions=no name=dhcp-propagate-changes owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local topdomain\r\
     \n\r\
     \n:set topdomain \"foxden.network\"\r\
@@ -526,6 +529,14 @@
     \n:local loadscript \":put \\\"\\\\\\\$TTL 300\\\"\r\
     \n:put \\\"@ 3600 DS 56289 13 2 E0198538615845C4226057A4A9D3908FF76A054A49B76E72954D63BFCB88A257\\\"\r\
     \n:put \\\"@ 3600 DS 26212 13 2 9C50921B3FDB72B43A78713AF57E66D2BBA87C6CFDEC4FC2EA1320686B31FED4\\\"\r\
+    \n:put \\\"@ IN NS ns1.foxden.network.\\\"\r\
+    \n:put \\\"@ IN NS ns2.foxden.network.\\\"\r\
+    \n:put \\\"@ IN NS ns3.foxden.network.\\\"\r\
+    \n:put \\\"@ IN NS ns4.foxden.network.\\\"\r\
+    \n:put \\\"ns1 IN A 10.3.0.53\\\"\r\
+    \n:put \\\"ns2 IN A 10.3.0.53\\\"\r\
+    \n:put \\\"ns3 IN A 10.3.0.53\\\"\r\
+    \n:put \\\"ns4 IN A 10.3.0.53\\\"\r\
     \n:put \\\"nas IN CNAME bengalfox.foxden.network.\\\"\r\
     \n:put \\\"dav IN CNAME bengalfox.foxden.network.\\\"\r\
     \n:put \\\"nas-ro IN CNAME icefox.doridian.net.\\\"\r\
@@ -558,7 +569,6 @@
     \n:put \"Appending zone file 10.in-addr.arpa\"\r\
     \n\r\
     \n:local loadscript \":put \\\"\\\\\\\$TTL 300\\\"\r\
-    \n:put \\\"@ IN SOA ns1.foxden.network. dns.foxden.network. 2022010169 43200 3600 86400 300\\\"\r\
     \n:put \\\"@ IN NS ns1.foxden.network.\\\"\r\
     \n:put \\\"@ IN NS ns2.foxden.network.\\\"\r\
     \n:put \\\"@ IN NS ns3.foxden.network.\\\"\r\

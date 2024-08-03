@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.15.2
+# ____-__-__ __:__:__ by RouterOS 7.15.3
 # software id = REMOVED
 #
 /disk set slot1 media-interface=none media-sharing=no slot=slot1
@@ -12,6 +12,7 @@
 /disk set slot9 media-interface=none media-sharing=no slot=slot9
 /disk set slot10 media-interface=none media-sharing=no slot=slot10
 /disk set slot11 media-interface=none media-sharing=no slot=slot11
+/disk set slot12 media-interface=none media-sharing=no slot=slot12
 /disk add media-interface=none media-sharing=no slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface ethernet set [ find default-name=ether1 ] disable-running-check=no name=eth0
 /interface 6to4 add comment=router !keepalive local-address=144.202.81.146 name=6to4-router remote-qaddress=REMOVED
