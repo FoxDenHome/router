@@ -17,6 +17,8 @@ dav IN A 23.239.97.10
 jellyfin IN A 23.239.97.11
 syncthing IN A 23.239.97.12
 
+archlinux IN CNAME icefox.doridian.net.
+
 redfox IN A 144.202.81.146
 
 arcticfox IN A 23.239.97.14
