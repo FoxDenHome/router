@@ -12,12 +12,12 @@ ns3 IN A 10.3.0.53
 ns4 IN A 10.3.0.53
 
 icefox IN A 23.239.97.10
-dldr.icefox IN A 23.239.97.10
-dav IN A 23.239.97.10
-jellyfin IN A 23.239.97.11
+archlinux IN A 23.239.97.11
 syncthing IN A 23.239.97.12
 
-archlinux IN CNAME icefox.doridian.net.
+dldr.icefox IN CNAME icefox.doridian.net.
+dav IN CNAME icefox.doridian.net.
+jellyfin IN CNAME icefox.doridian.net.
 
 redfox IN A 144.202.81.146
 
