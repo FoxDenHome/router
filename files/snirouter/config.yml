@@ -102,6 +102,13 @@ templates:
       host: 10.2.11.18
     https:
       host: 10.2.11.18
+  archlinux:
+    http:
+      host: 10.3.10.11
+      proxy_protocol: true
+    https:
+      host: 10.3.10.11
+      proxy_protocol: true
 hosts:
   # Home network
   grafana.foxden.network:
@@ -120,6 +127,8 @@ hosts:
     template: hashtopolis
   jellyfin.foxden.network:
     template: jellyfin
+  archlinux.foxden.network:
+    template: archlinux
 
   router.foxden.network:
     template: router
