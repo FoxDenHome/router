@@ -17,6 +17,11 @@ templates:
       host: 10.3.1.1
     https:
       host: 10.3.1.1
+  auth:
+    http:
+      host: 10.3.1.1
+    https:
+      host: 10.3.1.1
   router-backup:
     http:
       host: 10.3.1.2
@@ -129,6 +134,8 @@ hosts:
     template: jellyfin
   archlinux.foxden.network:
     template: archlinux
+  auth.foxden.network:
+    template: auth
 
   router.foxden.network:
     template: router
