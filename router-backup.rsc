@@ -319,6 +319,7 @@
 /ip dhcp-server lease add address=10.5.11.9 comment=camera-server-room lease-time=1d mac-address=F4:E2:C6:0C:E8:3C server=dhcp-security
 /ip dhcp-server lease add address=10.1.13.2 comment=pikvm-rack lease-time=1d mac-address=D8:3A:DD:A3:82:A8 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.3.10.11 comment=archlinux lease-time=1d mac-address=CA:1B:F1:2D:6D:B3 server=dhcp-dmz
+/ip dhcp-server lease add address=10.2.11.20 comment=auth lease-time=1d mac-address=A6:92:B3:68:21:9D server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 next-server=10.2.0.1 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -423,10 +424,10 @@
 /ipv6 route add blackhole disabled=no distance=1 dst-address=2a0e:7d44:f00a::/48 gateway="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
-/ip service set www-ssl certificate=sslcert-autogen_2024-06-20T20:08:42Z disabled=no tls-version=only-1.2
+/ip service set www-ssl certificate=sslcert-autogen_2024-08-31T19:10:02Z disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
 /ip service set winbox address=10.0.0.0/8
-/ip service set api-ssl certificate=sslcert-autogen_2024-06-20T20:08:42Z tls-version=only-1.2
+/ip service set api-ssl certificate=sslcert-autogen_2024-08-31T19:10:02Z tls-version=only-1.2
 /ip smb shares set [ find default=yes ] directory=/pub
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip tftp add real-filename=/ipxe-arch.efi req-filename=ipxe-arch.efi
