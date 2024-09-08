@@ -147,6 +147,7 @@
 /interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=23.239.97.10 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
 /interface wireguard peers add allowed-address=10.100.10.5/32 interface=wg-vpn is-responder=yes name=wizzy-desktop public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0="
 /interface wireguard peers add allowed-address=10.99.10.1/32 endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s name=redfox persistent-keepalive=25s public-key="s1COjkpfpzfQ05ZLNLGQrlEhomlzwHv+APvUABzbSh8="
+/interface wireguard peers add allowed-address=10.100.10.6/32 interface=wg-vpn is-responder=yes name=vixen public-key="Rc9Qxwi5lASfR1/urnWTKhuzXx0cDHVU+glTQgTbCBY="
 /ip address add address=10.1.1.1/16 interface=vlan-mgmt network=10.1.0.0
 /ip address add address=10.2.1.1/16 interface=vlan-lan network=10.2.0.0
 /ip address add address=10.3.1.1/16 interface=vlan-dmz network=10.3.0.0
@@ -381,7 +382,8 @@
 /ip firewall filter add action=accept chain=lan-out-forward comment="HomeAssistant MQTT" dst-address=10.2.12.2 dst-port=1883 in-interface-list=iface-security protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
-/ip firewall filter add action=accept chain=lan-out-forward comment=APT dst-address=10.2.11.13 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment="auth (TCP)" dst-address=10.2.11.20 dst-port=80,443,1812 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment="auth (UDP)" dst-address=10.2.11.20 dst-port=1812 protocol=udp
 /ip firewall filter add action=accept chain=lan-out-forward comment=syncthing dst-address=10.2.11.2 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=bengalfox-syncthing dst-address=10.2.11.15 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Hashtopolis dst-address=10.2.11.17 dst-port=80,443 protocol=tcp

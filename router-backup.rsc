@@ -91,6 +91,8 @@
 /routing bgp template set default disabled=yes routing-table=main
 /snmp community set [ find default=yes ] disabled=yes
 /snmp community add addresses=::/0 name=monitor_REMOVED
+/user group add name=monitoring policy=read,api,!local,!telnet,!ssh,!ftp,!reboot,!write,!policy,!test,!winbox,!password,!web,!sniff,!sensitive,!romon,!rest-api
+/user group add name=nologin
 /container add interface=veth-snirouter logging=yes mounts=snirouter-config start-on-boot=yes workdir=/
 /container add interface=veth-foxdns logging=yes mounts=foxdns-config start-on-boot=yes workdir=/config
 /container add interface=veth-foxdns-internal logging=yes mounts=foxdns-internal-config start-on-boot=yes workdir=/config
@@ -137,6 +139,7 @@
 /interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=23.239.97.10 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
 /interface wireguard peers add allowed-address=10.100.10.5/32 interface=wg-vpn is-responder=yes name=wizzy-desktop public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0="
 /interface wireguard peers add allowed-address=10.99.10.1/32 endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s name=redfox persistent-keepalive=25s public-key="s1COjkpfpzfQ05ZLNLGQrlEhomlzwHv+APvUABzbSh8="
+/interface wireguard peers add allowed-address=10.100.10.6/32 interface=wg-vpn is-responder=yes name=vixen public-key="Rc9Qxwi5lASfR1/urnWTKhuzXx0cDHVU+glTQgTbCBY="
 /ip address add address=10.1.1.2/16 interface=vlan-mgmt network=10.1.0.0
 /ip address add address=192.168.88.100/24 interface=oob network=192.168.88.0
 /ip address add address=10.2.1.2/16 interface=vlan-lan network=10.2.0.0
@@ -371,7 +374,8 @@
 /ip firewall filter add action=accept chain=lan-out-forward comment="HomeAssistant MQTT" dst-address=10.2.12.2 dst-port=1883 in-interface-list=iface-security protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
-/ip firewall filter add action=accept chain=lan-out-forward comment=APT dst-address=10.2.11.13 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment="auth (TCP)" dst-address=10.2.11.20 dst-port=80,443,1812 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment="auth (UDP)" dst-address=10.2.11.20 dst-port=1812 protocol=udp
 /ip firewall filter add action=accept chain=lan-out-forward comment=syncthing dst-address=10.2.11.2 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=bengalfox-syncthing dst-address=10.2.11.15 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Hashtopolis dst-address=10.2.11.17 dst-port=80,443 protocol=tcp
@@ -478,12 +482,15 @@
 /ipv6 nd add advertise-dns=no disabled=yes interface=vlan-mgmt ra-interval=1m-3m
 /ipv6 nd add advertise-dns=no disabled=yes interface=vlan-security ra-interval=1m-3m
 /ipv6 nd prefix default set preferred-lifetime=15m valid-lifetime=1h
+/radius add accounting-port=1812 address=10.2.11.20 require-message-auth=no service=login
+/radius add accounting-port=1812 address=10.2.10.1 disabled=yes require-message-auth=no service=login
 /routing bgp connection add address-families=ipv6 as=64602 connect=yes disabled=no listen=yes local.address=10.99.1.2 .role=ebgp multihop=yes name=bgp-redfox output.default-originate=never .network=bgp-redfox remote.address=10.99.10.1/32 .as=207618 router-id=10.99.1.2 routing-table=main
 /snmp set contact=admin@foxden.network enabled=yes location="Server room" trap-generators=""
 /system clock set time-zone-autodetect=no time-zone-name=America/Los_Angeles
 /system identity set name=router-backup
 /system logging set 0 topics=info,!debug
 /system logging add topics=container,info
+/system logging add topics=radius
 /system note set show-at-login=no
 /system ntp client set enabled=yes
 /system ntp server set enabled=yes
@@ -777,4 +784,4 @@
 /tool netwatch add comment=monitor-default disabled=no down-script="/system/script/run wan-online-adjust\r\
     \n" host=8.8.8.8 http-codes="" interval=30s startup-delay=1m test-script="" timeout=1s type=icmp up-script="/system/script/run wan-online-adjust\r\
     \n"
-/user group add name=monitoring policy=read,api,!local,!telnet,!ssh,!ftp,!reboot,!write,!policy,!test,!winbox,!password,!web,!sniff,!sensitive,!romon,!rest-api
+/user aaa set accounting=no use-radius=yes
