@@ -112,4 +112,53 @@
     \n    :put \"Set router to \$IPRouter\"\r\
     \n}\r\
     \n"
+/system script add dont-require-permissions=yes name=fetch-intermediates owner=admin policy=ftp,read,write,policy,test,sensitive source=":local res [/tool/fetch url=\"https://letsencrypt.org/certificates/\" as-value output=user]\r\
+    \n:local certificates (\$res->\"data\")\r\
+    \n\r\
+    \n:do {\r\
+    \n    :local nextlinkbegin [:find \$certificates \"<a href=\\\"\" 0]\r\
+    \n    :if (\$nextlinkbegin < 0) do={\r\
+    \n        :put \"No more links found\"\r\
+    \n        :set certificates \"\"\r\
+    \n    } else={\r\
+    \n        :local nextlinkend [:find \$certificates \"\\\">\" \$nextlinkbegin]\r\
+    \n        :local nextlink [:pick \$certificates (\$nextlinkbegin + 9) \$nextlinkend]\r\
+    \n        :set certificates [:pick \$certificates \$nextlinkend [:len \$certificates]]\r\
+    \n\r\
+    \n        # Minimal URL path resolver...\r\
+    \n        :if ([:pick \$nextlink 0 1] = \"/\") do={\r\
+    \n            :set nextlink (\"https://letsencrypt.org\" . \$nextlink)\r\
+    \n        } else={\r\
+    \n            :if ([:find \$nextlink \"://\" 0] < 0) do={\r\
+    \n                :set nextlink (\"https://letsencrypt.org/certificates/\" . \$nextlink)\r\
+    \n            }\r\
+    \n        }\r\
+    \n\r\
+    \n        :if ([:pick \$nextlink ([:len \$nextlink] - 4) [:len \$nextlink]] = \".pem\") do={\r\
+    \n            :if ([:find \$nextlink \"-cross\" 0] < 0) do={\r\
+    \n                :if ([:find \$nextlink \"/letsencryptauthorityx\" 0] < 0) do={\r\
+    \n                    :local foundcerts [/certificate/find name=\$nextlink]\r\
+    \n                    :if ([:len \$foundcerts] = 0) do={\r\
+    \n                        :put \"Downloading \$nextlink\"\r\
+    \n                        :do {\r\
+    \n                            /file/remove tmpfs-scratch/intermediates-cert.pem\r\
+    \n                            :delay 1s\r\
+    \n                        } on-error={}\r\
+    \n                        /tool/fetch url=\$nextlink dst-path=tmpfs-scratch/intermediates-cert.pem\r\
+    \n                        :delay 1s\r\
+    \n                        /certificate/import file-name=tmpfs-scratch/intermediates-cert.pem name=\$nextlink trusted=yes\r\
+    \n                        :delay 1s\r\
+    \n                    } else={\r\
+    \n                        :put \"Skipping already downloaded \$nextlink\"\r\
+    \n                    }\r\
+    \n                } else={\r\
+    \n                    :put \"Skipping obsolete letsencryptauthorityx# certificate \$nextlink\"\r\
+    \n                }\r\
+    \n            } else={\r\
+    \n                :put \"Skipping cross-signed certificate \$nextlink\"\r\
+    \n            }\r\
+    \n        }\r\
+    \n    }\r\
+    \n} while ([:len \$certificates] > 0)\r\
+    \n"
 /tool sniffer set filter-mac-protocol=ipv6
