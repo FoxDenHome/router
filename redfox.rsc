@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.15.3
+# ____-__-__ __:__:__ by RouterOS 7.16.1
 # software id = REMOVED
 #
 /disk set slot1 media-interface=none media-sharing=no slot=slot1
@@ -13,6 +13,7 @@
 /disk set slot10 media-interface=none media-sharing=no slot=slot10
 /disk set slot11 media-interface=none media-sharing=no slot=slot11
 /disk set slot12 media-interface=none media-sharing=no slot=slot12
+/disk set slot13 media-interface=none media-sharing=no slot=slot13
 /disk add media-interface=none media-sharing=no slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface ethernet set [ find default-name=ether1 ] disable-running-check=no name=eth0
 /interface 6to4 add comment=router !keepalive local-address=144.202.81.146 name=6to4-router remote-qaddress=REMOVED
@@ -48,6 +49,7 @@
 /ip firewall filter add action=accept chain=input in-interface=wg-s2s
 /ip firewall filter add action=drop chain=input
 /ip firewall filter add action=drop chain=forward log=yes
+/ip ipsec profile set [ find default=yes ] dpd-interval=2m dpd-maximum-failures=5
 /ip route add gateway=144.202.80.1
 /ip route add blackhole disabled=no dst-address=192.168.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ipv6 route add disabled=no distance=1 dst-address=::/0 gateway=fe80::fc00:4ff:feb1:d2e3%eth0 routing-table=main suppress-hw-offload=no

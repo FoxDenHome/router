@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.15.3
+# ____-__-__ __:__:__ by RouterOS 7.16.1
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -140,6 +140,7 @@
 /interface wireguard peers add allowed-address=10.100.10.5/32 interface=wg-vpn is-responder=yes name=wizzy-desktop public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0="
 /interface wireguard peers add allowed-address=10.99.10.1/32 endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s name=redfox persistent-keepalive=25s public-key="s1COjkpfpzfQ05ZLNLGQrlEhomlzwHv+APvUABzbSh8="
 /interface wireguard peers add allowed-address=10.100.10.6/32 interface=wg-vpn is-responder=yes name=vixen public-key="Rc9Qxwi5lASfR1/urnWTKhuzXx0cDHVU+glTQgTbCBY="
+/interface wireguard peers add allowed-address=10.99.10.3/32 interface=wg-s2s is-responder=yes name=foxden-travel public-key="uI6WThZHWOMxg9aUxfAd2oTt/kY2TtOoyIDwaH2BIFM="
 /ip address add address=10.1.1.2/16 interface=vlan-mgmt network=10.1.0.0
 /ip address add address=192.168.88.100/24 interface=oob network=192.168.88.0
 /ip address add address=10.2.1.2/16 interface=vlan-lan network=10.2.0.0
@@ -323,6 +324,8 @@
 /ip dhcp-server lease add address=10.1.13.2 comment=pikvm-rack lease-time=1d mac-address=D8:3A:DD:A3:82:A8 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.3.10.11 comment=archlinux lease-time=1d mac-address=CA:1B:F1:2D:6D:B3 server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.11.20 comment=auth lease-time=1d mac-address=A6:92:B3:68:21:9D server=dhcp-lan
+/ip dhcp-server lease add address=10.2.11.21 comment=e621 lease-time=1d mac-address=F2:6C:78:D6:DD:E6 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.11.22 comment=furaffinity lease-time=1d mac-address=F2:6C:78:D6:DE:E6 server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 next-server=10.2.0.1 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -420,6 +423,7 @@
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus External" dst-port=5301 protocol=tcp to-addresses=172.17.1.2 to-ports=9001
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.2 src-address=10.100.0.0/16
+/ip ipsec profile set [ find default=yes ] dpd-interval=2m dpd-maximum-failures=5
 /ip route add disabled=no distance=10 dst-address=0.0.0.0/0 gateway=10.1.0.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip route add blackhole disabled=no dst-address=55.69.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
 /ipv6 route add disabled=no dst-address=::/0 gateway=2a0e:7d44:f000:b::1 routing-table=main
@@ -428,10 +432,10 @@
 /ipv6 route add blackhole disabled=no distance=1 dst-address=2a0e:7d44:f00a::/48 gateway="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ip service set telnet disabled=yes
 /ip service set ftp disabled=yes
-/ip service set www-ssl certificate=sslcert-autogen_2024-08-31T19:10:02Z disabled=no tls-version=only-1.2
+/ip service set www-ssl certificate=router-backup.foxden.network disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
 /ip service set winbox address=10.0.0.0/8
-/ip service set api-ssl certificate=sslcert-autogen_2024-08-31T19:10:02Z tls-version=only-1.2
+/ip service set api-ssl certificate=router-backup.foxden.network tls-version=only-1.2
 /ip smb shares set [ find default=yes ] directory=/pub
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip tftp add real-filename=/ipxe-arch.efi req-filename=ipxe-arch.efi
@@ -490,7 +494,7 @@
 /system identity set name=router-backup
 /system logging set 0 topics=info,!debug
 /system logging add topics=container,info
-/system logging add topics=radius
+/system logging add disabled=yes topics=radius
 /system note set show-at-login=no
 /system ntp client set enabled=yes
 /system ntp server set enabled=yes
@@ -780,6 +784,55 @@
     \n"
 /system script add dont-require-permissions=no name=maintenance-off owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="/system/script/remove local-maintenance-mode\r\
     \n/system/script/run wan-online-adjust\r\
+    \n"
+/system script add dont-require-permissions=yes name=fetch-intermediates owner=admin policy=ftp,read,write,policy,test,sensitive source=":local res [/tool/fetch url=\"https://letsencrypt.org/certificates/\" as-value output=user]\r\
+    \n:local certificates (\$res->\"data\")\r\
+    \n\r\
+    \n:do {\r\
+    \n    :local nextlinkbegin [:find \$certificates \"<a href=\\\"\" 0]\r\
+    \n    :if (\$nextlinkbegin < 0) do={\r\
+    \n        :put \"No more links found\"\r\
+    \n        :set certificates \"\"\r\
+    \n    } else={\r\
+    \n        :local nextlinkend [:find \$certificates \"\\\">\" \$nextlinkbegin]\r\
+    \n        :local nextlink [:pick \$certificates (\$nextlinkbegin + 9) \$nextlinkend]\r\
+    \n        :set certificates [:pick \$certificates \$nextlinkend [:len \$certificates]]\r\
+    \n\r\
+    \n        # Minimal URL path resolver...\r\
+    \n        :if ([:pick \$nextlink 0 1] = \"/\") do={\r\
+    \n            :set nextlink (\"https://letsencrypt.org\" . \$nextlink)\r\
+    \n        } else={\r\
+    \n            :if ([:find \$nextlink \"://\" 0] < 0) do={\r\
+    \n                :set nextlink (\"https://letsencrypt.org/certificates/\" . \$nextlink)\r\
+    \n            }\r\
+    \n        }\r\
+    \n\r\
+    \n        :if ([:pick \$nextlink ([:len \$nextlink] - 4) [:len \$nextlink]] = \".pem\") do={\r\
+    \n            :if ([:find \$nextlink \"-cross\" 0] < 0) do={\r\
+    \n                :if ([:find \$nextlink \"/letsencryptauthorityx\" 0] < 0) do={\r\
+    \n                    :local foundcerts [/certificate/find name=\$nextlink]\r\
+    \n                    :if ([:len \$foundcerts] = 0) do={\r\
+    \n                        :put \"Downloading \$nextlink\"\r\
+    \n                        :do {\r\
+    \n                            /file/remove tmpfs-scratch/intermediates-cert.pem\r\
+    \n                            :delay 1s\r\
+    \n                        } on-error={}\r\
+    \n                        /tool/fetch url=\$nextlink dst-path=tmpfs-scratch/intermediates-cert.pem\r\
+    \n                        :delay 1s\r\
+    \n                        /certificate/import file-name=tmpfs-scratch/intermediates-cert.pem name=\$nextlink trusted=yes\r\
+    \n                        :delay 1s\r\
+    \n                    } else={\r\
+    \n                        :put \"Skipping already downloaded \$nextlink\"\r\
+    \n                    }\r\
+    \n                } else={\r\
+    \n                    :put \"Skipping obsolete letsencryptauthorityx# certificate \$nextlink\"\r\
+    \n                }\r\
+    \n            } else={\r\
+    \n                :put \"Skipping cross-signed certificate \$nextlink\"\r\
+    \n            }\r\
+    \n        }\r\
+    \n    }\r\
+    \n} while ([:len \$certificates] > 0)\r\
     \n"
 /tool netwatch add comment=monitor-default disabled=no down-script="/system/script/run wan-online-adjust\r\
     \n" host=8.8.8.8 http-codes="" interval=30s startup-delay=1m test-script="" timeout=1s type=icmp up-script="/system/script/run wan-online-adjust\r\
