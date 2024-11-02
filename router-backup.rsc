@@ -176,7 +176,7 @@
 /ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run wan-online-adjust\r\
     \n" use-peer-ntp=no
 /ip dhcp-server config set store-leases-disk=never
-/ip dhcp-server lease add address=10.2.10.3 comment=capefox lease-time=1d mac-address=F0:2F:4B:14:84:F4 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.10.3 comment=capefox lease-time=1d mac-address=E8:BF:B8:0C:C6:46 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.10.2 comment=islandfox lease-time=1d mac-address=0A:98:86:2C:85:87 server=dhcp-hypervisor
 /ip dhcp-server lease add address=10.2.10.1 comment=fennec lease-time=1d mac-address=00:02:C9:23:3C:E0 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.1 comment=bengalfox lease-time=1d mac-address=50:6B:4B:4B:90:5E server=dhcp-lan
@@ -231,7 +231,7 @@
 /ip dhcp-server lease add address=10.3.10.7 comment=factorio lease-time=1d mac-address=36:16:0C:C9:E8:0B server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.13.11 comment=uplift-wizzy-desk lease-time=1d mac-address=40:91:51:52:11:F7 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.12.1 comment=islandfox-ipmi lease-time=1d mac-address=04:7B:CB:44:C0:DD server=dhcp-hypervisor
-/ip dhcp-server lease add address=10.2.10.4 client-id=capefox comment=capefox-wired lease-time=1d mac-address=00:30:93:12:12:38 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.10.4 client-id=capefox-wired comment=capefox-wired lease-time=1d mac-address=00:30:93:12:12:38 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.11 comment=homepod-dori-office lease-time=1d mac-address=04:99:B9:66:DE:D0 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.12 comment=august-connect-front-door lease-time=1d mac-address=D8:61:62:12:6A:08 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.13 comment=homepod-den lease-time=1d mac-address=04:99:B9:9E:9B:95 server=dhcp-lan
@@ -400,7 +400,7 @@
 /ip firewall filter add action=accept chain=input in-interface-list=zone-local
 /ip firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
 /ip firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu passthrough=yes protocol=tcp tcp-flags=syn
-/ip firewall nat add action=endpoint-independent-nat chain=srcnat out-interface=wan protocol=udp randomise-ports=yes
+/ip firewall nat add action=endpoint-independent-nat chain=srcnat disabled=yes out-interface=wan protocol=udp randomise-ports=yes
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wg-s2s
 /ip firewall nat add action=masquerade chain=srcnat src-address=172.17.0.0/16

@@ -44,10 +44,10 @@
 /ip firewall filter add action=accept chain=input comment="established, related" connection-state=established,related
 /ip firewall filter add action=accept chain=input comment=loopback in-interface=lo
 /ip firewall filter add action=accept chain=input comment=ICMP protocol=icmp
-/ip firewall filter add action=accept chain=input comment=WireGuard dst-port=13232 protocol=udp src-port=""
+/ip firewall filter add action=accept chain=input comment=WireGuard dst-port=13232 protocol=udp
 /ip firewall filter add action=accept chain=input comment=6to4 protocol=ipv6-encap
 /ip firewall filter add action=accept chain=input in-interface=wg-s2s
-/ip firewall filter add action=drop chain=input
+/ip firewall filter add action=drop chain=input log=yes
 /ip firewall filter add action=drop chain=forward log=yes
 /ip ipsec profile set [ find default=yes ] dpd-interval=2m dpd-maximum-failures=5
 /ip route add gateway=144.202.80.1
