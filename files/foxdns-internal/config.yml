@@ -22,25 +22,11 @@ rdns:
       - 2a0e:7d44:f069::/48
       - 2a0e:7d44:f00a::/48
       - 2a0e:7d44:f00b::/48
-    addr-authority-config:
-      zone-name: foxden.network
-      dnssec-private-ksk: Kfoxden.network.+013+56289.private
-      dnssec-public-ksk: Kfoxden.network.+013+56289.key
-      dnssec-private-zsk: Kfoxden.network.+013+12422.private
-      dnssec-public-zsk: Kfoxden.network.+013+12422.key
-      dnssec-cache-signatures: false
   - ip_version: 4
     suffix: ip4.foxden.network
     subnets:
       - 192.168.0.0/16
       - 172.16.0.0/12
-    addr-authority-config:
-      zone-name: foxden.network
-      dnssec-private-ksk: Kfoxden.network.+013+56289.private
-      dnssec-public-ksk: Kfoxden.network.+013+56289.key
-      dnssec-private-zsk: Kfoxden.network.+013+12422.private
-      dnssec-public-zsk: Kfoxden.network.+013+12422.key
-      dnssec-cache-signatures: false
 
 
 static-zones:
