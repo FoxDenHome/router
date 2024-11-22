@@ -116,17 +116,17 @@ templates:
       proxy_protocol: true
   furaffinity:
     http:
-      host: 10.2.11.22
+      host: 10.3.10.13
       proxy_protocol: true
     https:
-      host: 10.2.11.22
+      host: 10.3.10.13
       proxy_protocol: true
   e621:
     http:
-      host: 10.2.11.21
+      host: 10.3.10.12
       proxy_protocol: true
     https:
-      host: 10.2.11.21
+      host: 10.3.10.12
       proxy_protocol: true
 hosts:
   # Home network
