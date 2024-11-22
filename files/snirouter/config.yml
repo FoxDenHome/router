@@ -114,6 +114,20 @@ templates:
     https:
       host: 10.3.10.11
       proxy_protocol: true
+  furaffinity:
+    http:
+      host: 10.2.11.22
+      proxy_protocol: true
+    https:
+      host: 10.2.11.22
+      proxy_protocol: true
+  e621:
+    http:
+      host: 10.2.11.21
+      proxy_protocol: true
+    https:
+      host: 10.2.11.21
+      proxy_protocol: true
 hosts:
   # Home network
   grafana.foxden.network:
@@ -136,6 +150,10 @@ hosts:
     template: archlinux
   auth.foxden.network:
     template: auth
+  furaffinity.foxden.network:
+    template: furaffinity
+  e621.foxden.network:
+    template: e621
 
   router.foxden.network:
     template: router
