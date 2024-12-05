@@ -191,6 +191,3 @@ hosts:
     template: website
   www.doridian.net:
     template: website
-
-  git.foxden.network:
-    template: git
