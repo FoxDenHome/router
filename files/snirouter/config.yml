@@ -154,6 +154,8 @@ hosts:
     template: furaffinity
   e621.foxden.network:
     template: e621
+  git.foxden.network:
+    template: git
 
   router.foxden.network:
     template: router
