@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.16.1
+# ____-__-__ __:__:__ by RouterOS 7.16.2
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -85,7 +85,9 @@
 /ip dhcp-server add address-pool=pool-mgmt authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-mgmt lease-time=1h name=dhcp-mgmt
 /ip dhcp-server add address-pool=pool-security authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-security lease-time=1h name=dhcp-security
 /ip dhcp-server add address-pool=pool-hypervisor authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-hypervisor lease-time=1h name=dhcp-hypervisor
-/ip dhcp-server add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dhcp-oob
+/ip dhcp-server
+# Interface not running
+add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dhcp-oob
 /ip smb users set [ find default=yes ] disabled=yes
 /port set 0 baud-rate=115200
 /routing bgp template set default disabled=yes routing-table=main
@@ -176,7 +178,7 @@
 /ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run wan-online-adjust\r\
     \n" use-peer-ntp=no
 /ip dhcp-server config set store-leases-disk=never
-/ip dhcp-server lease add address=10.2.10.3 comment=capefox lease-time=1d mac-address=E8:BF:B8:0C:C6:46 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.10.3 comment=capefox lease-time=1d mac-address=7C:E7:12:81:29:9B server=dhcp-lan
 /ip dhcp-server lease add address=10.6.10.2 comment=islandfox lease-time=1d mac-address=0A:98:86:2C:85:87 server=dhcp-hypervisor
 /ip dhcp-server lease add address=10.2.10.1 comment=fennec lease-time=1d mac-address=00:02:C9:23:3C:E0 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.1 comment=bengalfox lease-time=1d mac-address=50:6B:4B:4B:90:5E server=dhcp-lan
@@ -324,8 +326,9 @@
 /ip dhcp-server lease add address=10.1.13.2 comment=pikvm-rack lease-time=1d mac-address=D8:3A:DD:A3:82:A8 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.3.10.11 comment=archlinux lease-time=1d mac-address=CA:1B:F1:2D:6D:B3 server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.11.20 comment=auth lease-time=1d mac-address=A6:92:B3:68:21:9D server=dhcp-lan
-/ip dhcp-server lease add address=10.2.11.21 comment=e621 lease-time=1d mac-address=F2:6C:78:D6:DD:E6 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.11.22 comment=furaffinity lease-time=1d mac-address=F2:6C:78:D6:DE:E6 server=dhcp-lan
+/ip dhcp-server lease add address=10.3.10.12 comment=e621 lease-time=1d mac-address=F2:6C:78:D6:DD:E6 server=dhcp-dmz
+/ip dhcp-server lease add address=10.3.10.13 comment=furaffinity lease-time=1d mac-address=F2:6C:78:D6:DE:E6 server=dhcp-dmz
+/ip dhcp-server lease add address=10.3.10.2 comment=git lease-time=1d mac-address=A6:92:B3:68:D1:AD server=dhcp-dmz
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 next-server=10.2.0.1 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -417,6 +420,7 @@
 /ip firewall nat add action=dst-nat chain=port-forward comment="SpaceAge GMod" dst-port=27015 protocol=udp to-addresses=10.3.10.4
 /ip firewall nat add action=dst-nat chain=port-forward comment=Minecraft dst-port=25565 protocol=tcp to-addresses=10.3.10.8
 /ip firewall nat add action=dst-nat chain=port-forward comment=Factorio dst-port=34197 protocol=udp to-addresses=10.3.10.7
+/ip firewall nat add action=dst-nat chain=port-forward comment=Plex dst-port=32400 protocol=tcp to-addresses=10.2.11.3
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 protocol=tcp to-addresses=172.17.2.2
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment=FoxDNS dst-port=53 protocol=udp to-addresses=172.17.2.2
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus" dst-port=5302 protocol=tcp to-addresses=172.17.2.2 to-ports=9001
@@ -503,7 +507,9 @@
 /system ntp client servers add address=1.pool.ntp.org
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
-/system routerboard settings set auto-upgrade=yes
+/system routerboard settings
+# Firmware upgraded successfully, please reboot for changes to take effect!
+set auto-upgrade=yes
 /system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=ftp,read,write,policy,test start-date=2020-08-09 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\
