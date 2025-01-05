@@ -48,15 +48,20 @@ transfer_section_localclause '/system/script'
 transfer_section_localclause '/system/scheduler'
 
 scp "$F" router-backup.foxden.network:/tmpfs-scratch/transfer.rsc
-ssh router-backup.foxden.network "/import file-name=tmpfs-scratch/transfer.rsc"
+ssh router-backup.foxden.network '/import file-name=tmpfs-scratch/transfer.rsc'
 sleep 1
-ssh router-backup.foxden.network "/file remove tmpfs-scratch/transfer.rsc"
+ssh router-backup.foxden.network '/file/remove tmpfs-scratch/transfer.rsc'
 
 rm -f "$F"
 
-ssh router-backup.foxden.network "/system/script/run firewall-update"
+ssh router-backup.foxden.network '/system/script/run firewall-update'
 
-cd files
-scp -r . "router.foxden.network:/"
-scp -r . "router-backup.foxden.network:/"
-cd ..
+transfer_files() {
+    cd files
+    scp -r . "$1:/"
+    ssh "$1" '/file/add name=container-restart-all'
+    cd ..
+}
+
+transfer_files router.foxden.network
+transfer_files router-backup.foxden.network
