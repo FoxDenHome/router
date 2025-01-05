@@ -442,7 +442,7 @@ add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dh
 /ip service set www-ssl certificate=router-backup.foxden.network disabled=no tls-version=only-1.2
 /ip service set api disabled=yes
 /ip service set winbox address=10.0.0.0/8
-/ip service set api-ssl certificate=router-backup.foxden.network tls-version=only-1.2
+/ip service set api-ssl certificate=*6 tls-version=only-1.2
 /ip smb shares set [ find default=yes ] directory=/pub
 /ip ssh set forwarding-enabled=local strong-crypto=yes
 /ip tftp add real-filename=/ipxe-arch.efi req-filename=ipxe-arch.efi
@@ -780,14 +780,57 @@ set auto-upgrade=yes
     \n/ip/firewall/nat/set [ find comment=\"Hairpin\" dst-address!=\$ipaddr  ] dst-address=\$ipaddr\r\
     \n/ip/firewall/nat/set [ find comment=\"Hairpin fallback\" dst-address!=\"!\$ipaddr\" ] dst-address=\"!\$ipaddr\"\r\
     \n"
-/system script add dont-require-permissions=no name=container-autoheal owner=admin policy=read,write,policy,test source=":global logputinfo\r\
-    \n\r\
-    \n/container\r\
-    \n:foreach ct in=[find status=stopped] do={\r\
-    \n  \$logputinfo (\"Starting container with interface \" . [get \$ct interface])\r\
-    \n  start \$ct\r\
-    \n}\r\
-    \n"
+/system script add dont-require-permissions=no name=container-autoheal owner=admin policy=read,write,policy,test source=":global logputinfo\
+    \n:global logputerror\
+    \n\
+    \n:local needrestart ([:len [/file/find name=container-restart-all]] > 0)\
+    \n:local clearrestart \$needrestart\
+    \n\
+    \n\$logputinfo (\"Need restart = \$needrestart\")\
+    \n\
+    \n/container\
+    \n:foreach ct in=[find] do={\
+    \n  :if (\$needrestart) do={\
+    \n    \$logputinfo (\"Stopping container with interface \" . [get \$ct interface])\
+    \n    stop \$ct\
+    \n\
+    \n    :local maxtries 50\
+    \n    :while (\$maxtries > 0) do={\
+    \n      :delay 100ms\
+    \n      :set maxtries (\$maxtries - 1)\
+    \n      :if ([get \$ct status] = \"stopped\") do={\
+    \n        :set maxtries -999\
+    \n      }\
+    \n    }\
+    \n    :if (\$maxtries != -999) do={\
+    \n      \$logputerror (\"FAILED stopping container with interface \" . \$maxtries)\
+    \n    }\
+    \n\
+    \n  }\
+    \n\
+    \n  :if ([get \$ct status] = \"stopped\") do={\
+    \n    \$logputinfo (\"Starting container with interface \" . [get \$ct interface])\
+    \n    start \$ct\
+    \n  }\
+    \n\
+    \n  :local maxtries 50\
+    \n  :while (\$maxtries > 0) do={\
+    \n    :delay 100ms\
+    \n    :set maxtries (\$maxtries - 1)\
+    \n    :if ([get \$ct status] = \"running\") do={\
+    \n      :set maxtries -999\
+    \n    }\
+    \n  }\
+    \n  :if (\$maxtries != -999) do={\
+    \n    \$logputerror (\"FAILED starting container with interface \" . \$maxtries)\
+    \n    :set clearrestart false\
+    \n  }\
+    \n}\
+    \n\
+    \n:if (\$clearrestart) do={\
+    \n  /file/remove container-restart-all\
+    \n  \$logputinfo (\"Cleared container-restart-all\")\
+    \n}"
 /system script add dont-require-permissions=no name=maintenance-on owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="/system/script/add name=local-maintenance-mode source=\"# Maintenance mode is on\"\r\
     \n/system/script/run wan-online-adjust\r\
     \n"

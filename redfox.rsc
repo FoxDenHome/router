@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.16.1
+# ____-__-__ __:__:__ by RouterOS 7.16.2
 # software id = REMOVED
 #
 /disk set slot1 media-interface=none media-sharing=no slot=slot1
@@ -52,6 +52,7 @@
 /ip ipsec profile set [ find default=yes ] dpd-interval=2m dpd-maximum-failures=5
 /ip route add gateway=144.202.80.1
 /ip route add blackhole disabled=no dst-address=192.168.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
+/ip route add dst-address=10.0.0.0/8 gateway=wg-s2s
 /ipv6 route add disabled=no distance=1 dst-address=::/0 gateway=fe80::fc00:4ff:feb1:d2e3%eth0 routing-table=main suppress-hw-offload=no
 /ipv6 route add blackhole disabled=no distance=100 dst-address=2a0e:7d44:f000::/48 gateway="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 /ipv6 route add blackhole disabled=no distance=50 dst-address=2a0e:7d44:f00b::/48 routing-table=main suppress-hw-offload=no
@@ -97,6 +98,8 @@
 /system clock set time-zone-name=America/Los_Angeles
 /system identity set name=redfox
 /system note set show-at-login=no
+/system ntp client set enabled=yes
+/system ntp client servers add address=10.3.0.123
 /system scheduler add interval=15s name=ip-update on-event="/system/script/run ip-update\r\
     \n" policy=read,write,policy,test,sensitive start-date=2024-07-02 start-time=17:25:00
 /system script add dont-require-permissions=yes name=ip-update owner=admin policy=read,write,policy,test,sensitive source=":local IPRouter [ /interface/wireguard/peers/get [ find name=\"router\" ] current-endpoint-address ]\r\
