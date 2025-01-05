@@ -801,8 +801,13 @@ set auto-upgrade=yes
     \n\
     \n/container\
     \n:foreach ct in=[find] do={\
-    \n  :if (\$needrestart) do={\
-    \n    \$logputinfo (\"Stopping container with interface \" . [get \$ct interface])\
+    \n  :local ctneedstop \$needrestart\
+    \n  :if ([get \$ct status] != \"running\") do={\
+    \n    :set ctneedstop true\
+    \n  }\
+    \n\
+    \n  :if (\$ctneedstop) do={\
+    \n    \$logputinfo (\"STOPPING container with interface \" . [get \$ct interface])\
     \n    stop \$ct\
     \n\
     \n    :local maxtries 50\
@@ -814,13 +819,14 @@ set auto-upgrade=yes
     \n      }\
     \n    }\
     \n    :if (\$maxtries != -999) do={\
-    \n      \$logputerror (\"FAILED stopping container with interface \" . \$maxtries)\
+    \n      \$logputerror (\"FAILED STOPPING container with interface \" . \$maxtries)\
+    \n    } else={\
+    \n      \$logputinfo (\"STOPPED container with interface \" . [get \$ct interface])\
     \n    }\
-    \n\
     \n  }\
     \n\
     \n  :if ([get \$ct status] = \"stopped\") do={\
-    \n    \$logputinfo (\"Starting container with interface \" . [get \$ct interface])\
+    \n    \$logputinfo (\"STARTING container with interface \" . [get \$ct interface])\
     \n    start \$ct\
     \n  }\
     \n\
@@ -833,8 +839,10 @@ set auto-upgrade=yes
     \n    }\
     \n  }\
     \n  :if (\$maxtries != -999) do={\
-    \n    \$logputerror (\"FAILED starting container with interface \" . \$maxtries)\
+    \n    \$logputerror (\"FAILED STARTING container with interface \" . \$maxtries)\
     \n    :set clearrestart false\
+    \n  } else={\
+    \n    \$logputinfo (\"STARTED container with interface \" . [get \$ct interface])\
     \n  }\
     \n}\
     \n\
