@@ -97,6 +97,11 @@ templates:
       host: 10.2.11.2
     https:
       host: 10.2.11.2
+  restic:
+    http:
+      host: 10.2.11.12
+    https:
+      host: 10.2.11.12
   bengalfox-syncthing:
     http:
       host: 10.2.11.15
@@ -156,6 +161,8 @@ hosts:
     template: e621
   git.foxden.network:
     template: git
+  restic.foxden.network:
+    template: restic
 
   router.foxden.network:
     template: router
