@@ -232,12 +232,7 @@ add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dh
 /ip dhcp-server lease add address=10.2.14.2 comment=dori-watch lease-time=1d mac-address=72:68:A8:0D:18:01 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.10.5 comment=spaceage-web lease-time=1d mac-address=62:BF:FB:E4:89:5D server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.4 comment=spaceage-gmod lease-time=1d mac-address=5E:47:05:FC:F8:90 server=dhcp-dmz
-/ip dhcp-server lease add address=10.2.13.4 comment=sonoff-s31-wizzy-office-fan lease-time=1d mac-address=8C:AA:B5:66:3B:BE server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.3 comment=sonoff-s31-bambu-x1 lease-time=1d mac-address=E8:DB:84:9F:4F:08 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.8 comment=sonoff-s31-dori-pc lease-time=1d mac-address=8C:AA:B5:66:3D:81 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.1 comment=sonoff-s31-wizzy-pc lease-time=1d mac-address=8C:AA:B5:66:10:70 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.10.3 comment=ut2004 lease-time=1d mac-address=02:43:39:4D:B6:AA server=dhcp-dmz
-/ip dhcp-server lease add address=10.2.13.12 comment=sonoff-s31-dori-office-fan lease-time=1d mac-address=C4:5B:BE:E4:9B:00 server=dhcp-lan
 /ip dhcp-server lease add address=10.3.10.7 comment=factorio lease-time=1d mac-address=36:16:0C:C9:E8:0B server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.13.11 comment=uplift-wizzy-desk lease-time=1d mac-address=40:91:51:52:11:F7 server=dhcp-lan
 /ip dhcp-server lease add address=10.6.12.1 comment=islandfox-ipmi lease-time=1d mac-address=04:7B:CB:44:C0:DD server=dhcp-hypervisor
@@ -250,12 +245,9 @@ add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dh
 /ip dhcp-server lease add address=10.2.12.14 comment=homepod-wizzy-office lease-time=1d mac-address=04:99:B9:79:EE:C9 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.15 comment=tesla-model-3 lease-time=1d mac-address=CC:88:26:27:41:29 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.16 comment=tesla-wall-charger lease-time=1d mac-address=98:ED:5C:9B:79:CF server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.14 comment=sonoff-s31-mister lease-time=1d mac-address=C4:5B:BE:E4:9B:6B server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.13 comment=sonoff-s31-bedroom-fan lease-time=1d mac-address=C4:5B:BE:E4:82:69 server=dhcp-lan
 /ip dhcp-server lease add address=10.5.10.1 comment=nvr lease-time=1d mac-address=60:22:32:F1:BF:71 server=dhcp-security
 /ip dhcp-server lease add address=10.4.10.1 comment=bambu-x1 lease-time=1d mac-address=08:FB:EA:02:64:96 server=dhcp-labnet
 /ip dhcp-server lease add address=10.2.12.18 comment=hue-sync-box lease-time=1d mac-address=C4:29:96:0B:9C:82 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.19 comment=sonoff-s31-microwave lease-time=1d mac-address=C4:5B:BE:E4:B7:03 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.20 comment=custom-garage-door lease-time=1d mac-address=4C:EB:D6:0B:80:73 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.16 comment=airgradient-den lease-time=1d mac-address=0C:B8:15:C4:B3:74 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.15 comment=custom-current-clamp-main lease-time=1d mac-address=40:91:51:51:D0:A6 server=dhcp-lan
@@ -288,7 +280,6 @@ add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dh
 /ip dhcp-server lease add address=10.3.11.3 comment=blfcmasto lease-time=1d mac-address=DE:E4:0A:E4:BB:D2 server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.1 comment=foxcaves lease-time=1d mac-address=A6:92:B3:48:21:9D server=dhcp-dmz
 /ip dhcp-server lease add address=10.4.10.2 comment=carvera-controller lease-time=1d mac-address=38:DE:AD:30:57:0F server=dhcp-labnet
-/ip dhcp-server lease add address=10.2.13.22 comment=sonoff-s31-dori-desktop lease-time=1d mac-address=8C:AA:B5:66:12:00 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.27 comment=hue-upstairs lease-time=1d mac-address=00:17:88:61:02:4E server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.21 comment=led-strip-dori-office-ceiling lease-time=1d mac-address=C4:DE:E2:B2:D2:C7 server=dhcp-lan
 /ip dhcp-server lease add address=10.1.10.13 comment=switch-living-room lease-time=1d mac-address=E4:38:83:8C:AA:DA server=dhcp-mgmt
@@ -324,7 +315,6 @@ add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dh
 /ip dhcp-server lease add address=10.3.10.9 comment=spaceage-website lease-time=1d mac-address=5E:1A:40:6A:64:06 server=dhcp-dmz
 /ip dhcp-server lease add address=10.2.11.18 comment=jellyfin lease-time=1d mac-address=00:16:3E:CA:7E:18 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.19 comment=ollama lease-time=1d mac-address=00:16:3E:CA:7E:99 server=dhcp-lan
-/ip dhcp-server lease add address=10.2.13.26 comment=sonoff-s31-resin-printer lease-time=1d mac-address=48:3F:DA:28:30:FC server=dhcp-lan
 /ip dhcp-server lease add address=10.2.12.31 comment=ecoflow-delta-pro lease-time=1d mac-address=4C:EB:D6:D6:3C:9C server=dhcp-lan
 /ip dhcp-server lease add address=10.2.20.20 comment=ht802 lease-time=1d mac-address=00:0B:82:8C:C9:7C server=dhcp-lan
 /ip dhcp-server lease add address=10.2.16.1 comment=grandstream-ht812 lease-time=1d mac-address=C0:74:AD:F4:16:9B server=dhcp-lan
