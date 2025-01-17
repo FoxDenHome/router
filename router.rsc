@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.16.2
+# ____-__-__ __:__:__ by RouterOS 7.17
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -6,7 +6,7 @@
 /container mounts add dst=/config name=snirouter-config src=/snirouter
 /container mounts add dst=/config name=foxdns-config src=/foxdns
 /container mounts add dst=/config name=foxdns-internal-config src=/foxdns-internal
-/disk add media-interface=none media-sharing=no slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
+/disk add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface ethernet set [ find default-name=ether1 ] comment=eth1 l2mtu=1514 name=oob rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus1 ] disabled=yes name=sfp1 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus2 ] auto-negotiation=no disabled=yes name=sfp2 rx-flow-control=on tx-flow-control=on
@@ -30,7 +30,7 @@
 /interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=50 version=2
-/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway6 priority=50 remote-address=10.1.1.2 sync-connection-tracking=yes v3-protocol=ipv6 vrid=2
+/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway6 priority=50 v3-protocol=ipv6 vrid=2
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=50 version=2 vrid=123
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
@@ -93,9 +93,7 @@
 /ip dhcp-server add address-pool=pool-mgmt dhcp-option-set=default-classless interface=vlan-mgmt lease-time=1h name=dhcp-mgmt
 /ip dhcp-server add address-pool=pool-security dhcp-option-set=default-classless interface=vlan-security lease-time=1h name=dhcp-security
 /ip dhcp-server add address-pool=pool-hypervisor dhcp-option-set=default-classless interface=vlan-hypervisor lease-time=1h name=dhcp-hypervisor
-/ip dhcp-server
-# Interface not running
-add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dhcp-oob
+/ip dhcp-server add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dhcp-oob
 /ip dhcp-server add address-pool=pool-retro interface=vlan-retro lease-time=1h name=dhcp-retro
 /port set 0 name=serial0
 /port set 1 name=serial1
@@ -142,15 +140,18 @@ add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dh
 /interface list member add interface=veth-snirouter list=zone-local
 /interface list member add interface=veth-foxdns-internal list=zone-local
 /interface list member add interface=6to4-redfox list=zone-wan
-/interface wireguard peers add allowed-address=10.100.10.1/32 interface=wg-vpn is-responder=yes name=fennec public-key="i/thQFtyJPTmq8QC44PV6QeETM6VlMQQs1tKWzTCqDU="
-/interface wireguard peers add allowed-address=10.100.10.2/32 interface=wg-vpn is-responder=yes name=capefox public-key="axzlQbYqVu5aoh62tLB+vWNKnQJvBxj9aV3dJmz/sBo="
-/interface wireguard peers add allowed-address=10.100.10.3/32 interface=wg-vpn is-responder=yes name=dori-phone public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g="
-/interface wireguard peers add allowed-address=10.100.10.4/32 interface=wg-vpn is-responder=yes name=wizzy-laptop public-key="aL7QLtq2YoYVb0bhueG1InlbAdyZE0bmdmRPQ67rNjk="
+/interface ovpn-server server add mac-address=FE:A4:C2:0E:C6:83 name=ovpn-server1
+/interface wireguard peers add allowed-address=10.100.10.1/32 interface=wg-vpn name=fennec public-key="i/thQFtyJPTmq8QC44PV6QeETM6VlMQQs1tKWzTCqDU=" responder=yes
+/interface wireguard peers add allowed-address=10.100.10.2/32 interface=wg-vpn name=capefox public-key="axzlQbYqVu5aoh62tLB+vWNKnQJvBxj9aV3dJmz/sBo=" responder=yes
+/interface wireguard peers add allowed-address=10.100.10.3/32 interface=wg-vpn name=dori-phone public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g=" responder=yes
+/interface wireguard peers add allowed-address=10.100.10.4/32 interface=wg-vpn name=wizzy-laptop public-key="aL7QLtq2YoYVb0bhueG1InlbAdyZE0bmdmRPQ67rNjk=" responder=yes
 /interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=23.239.97.10 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
-/interface wireguard peers add allowed-address=10.100.10.5/32 interface=wg-vpn is-responder=yes name=wizzy-desktop public-key="TZmEOXXV8R3CajG/Y3msO1IAy5bqPTlqnKIClwq4blc="
+/interface wireguard peers add allowed-address=10.100.10.5/32 interface=wg-vpn name=wizzy-desktop public-key="TZmEOXXV8R3CajG/Y3msO1IAy5bqPTlqnKIClwq4blc=" responder=yes
 /interface wireguard peers add allowed-address=10.99.10.1/32 endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s name=redfox persistent-keepalive=25s public-key="s1COjkpfpzfQ05ZLNLGQrlEhomlzwHv+APvUABzbSh8="
-/interface wireguard peers add allowed-address=10.100.10.6/32 interface=wg-vpn is-responder=yes name=vixen public-key="Rc9Qxwi5lASfR1/urnWTKhuzXx0cDHVU+glTQgTbCBY="
-/interface wireguard peers add allowed-address=10.99.10.3/32 interface=wg-s2s is-responder=yes name=foxden-travel public-key="uI6WThZHWOMxg9aUxfAd2oTt/kY2TtOoyIDwaH2BIFM="
+/interface wireguard peers add allowed-address=10.100.10.6/32 interface=wg-vpn name=vixen public-key="Rc9Qxwi5lASfR1/urnWTKhuzXx0cDHVU+glTQgTbCBY=" responder=yes
+/interface wireguard peers add allowed-address=10.99.10.3/32 interface=wg-s2s name=foxden-travel public-key="uI6WThZHWOMxg9aUxfAd2oTt/kY2TtOoyIDwaH2BIFM=" responder=yes
+/iot lora traffic options set crc-errors=no
+/iot lora traffic options set crc-errors=no
 /ip address add address=10.1.1.1/16 interface=vlan-mgmt network=10.1.0.0
 /ip address add address=10.2.1.1/16 interface=vlan-lan network=10.2.0.0
 /ip address add address=10.3.1.1/16 interface=vlan-dmz network=10.3.0.0
@@ -330,6 +331,7 @@ add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dh
 /ip dhcp-server lease add address=10.2.13.28 comment=custom-dori-rca-switcher lease-time=1d mac-address=28:CD:C1:0B:31:44 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.29 comment=dori-office-hifi lease-time=1d mac-address=B8:27:EB:BF:3A:4C server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.30 comment=btproxy-living-room lease-time=1d mac-address=94:E6:86:48:E9:87 server=dhcp-lan
+/ip dhcp-server lease add address=10.2.11.12 comment=restic lease-time=1d mac-address=A6:92:B3:68:DD:AD server=dhcp-lan
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 next-server=10.2.0.1 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -381,6 +383,7 @@ add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dh
 /ip firewall filter add action=accept chain=lan-out-forward comment="HomeAssistant MQTT" dst-address=10.2.12.2 dst-port=1883 in-interface-list=iface-security protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=restic dst-address=10.2.11.12 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment="auth (TCP)" dst-address=10.2.11.20 dst-port=80,443,1812 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment="auth (UDP)" dst-address=10.2.11.20 dst-port=1812 protocol=udp
 /ip firewall filter add action=accept chain=lan-out-forward comment=syncthing dst-address=10.2.11.2 dst-port=80,443 protocol=tcp
@@ -393,6 +396,7 @@ add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dh
 /ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=8883 protocol=tcp
 /ip firewall filter add action=accept chain=security-out-forward comment="LAN -> NVR" dst-address=10.5.10.1 in-interface-list=iface-lan
 /ip firewall filter add action=accept chain=s2s-out-forward comment="LAN -> IceFox" dst-address=10.99.10.2 in-interface-list=iface-lan
+/ip firewall filter add action=accept chain=s2s-out-forward comment="Hypervisor -> IceFox" dst-address=10.99.10.2 dst-port=22,8000 in-interface-list=iface-hypervisor protocol=tcp
 /ip firewall filter add action=accept chain=input connection-state=established,related
 /ip firewall filter add action=accept chain=input protocol=ipv6-encap
 /ip firewall filter add action=accept chain=input protocol=icmp
@@ -403,7 +407,7 @@ add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dh
 /ip firewall filter add action=accept chain=input in-interface=oob
 /ip firewall filter add action=accept chain=input in-interface-list=zone-local
 /ip firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
-/ip firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu passthrough=yes protocol=tcp tcp-flags=syn
+/ip firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu protocol=tcp tcp-flags=syn
 /ip firewall nat add action=endpoint-independent-nat chain=srcnat disabled=yes out-interface=wan protocol=udp randomise-ports=yes
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wg-s2s
@@ -428,6 +432,7 @@ add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dh
 /ip firewall nat add action=dst-nat chain=dns-port-forward comment="FoxDNS Prometheus External" dst-port=5301 protocol=tcp to-addresses=172.17.1.2 to-ports=9001
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.1 src-address=10.100.0.0/16
 /ip firewall nat add action=masquerade chain=srcnat dst-address=10.2.1.2 src-address=10.100.0.0/16
+/ip hotspot profile set [ find default=yes ] html-directory=hotspot
 /ip ipsec profile set [ find default=yes ] dpd-interval=2m dpd-maximum-failures=5
 /ip route add blackhole disabled=no dst-address=10.0.0.0/8 gateway="" routing-table=main suppress-hw-offload=no
 /ip route add blackhole disabled=no dst-address=192.168.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
@@ -487,7 +492,7 @@ add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dh
 /ipv6 firewall filter add action=accept chain=input in-interface=oob
 /ipv6 firewall filter add action=accept chain=input in-interface-list=zone-local
 /ipv6 firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
-/ipv6 firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu passthrough=yes protocol=tcp tcp-flags=syn
+/ipv6 firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu protocol=tcp tcp-flags=syn
 /ipv6 nd set [ find default=yes ] advertise-dns=no disabled=yes ra-interval=1m-3m ra-preference=high
 /ipv6 nd add advertise-dns=no interface=vlan-dmz ra-interval=1m-3m ra-preference=high
 /ipv6 nd add advertise-dns=no interface=vlan-hypervisor ra-interval=1m-3m ra-preference=high
@@ -511,9 +516,7 @@ add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dh
 /system ntp client servers add address=1.pool.ntp.org
 /system ntp client servers add address=2.pool.ntp.org
 /system ntp client servers add address=3.pool.ntp.org
-/system routerboard settings
-# Firmware upgraded successfully, please reboot for changes to take effect!
-set auto-upgrade=yes
+/system routerboard settings set auto-upgrade=yes
 /system scheduler add interval=5m name=dyndns-update on-event="/system/script/run dyndns-update" policy=ftp,read,write,policy,test start-date=2020-08-09 start-time=09:41:00
 /system scheduler add name=init-onboot on-event="/system/script/run global-init-onboot\r\
     \n/system/script/run local-init-onboot\r\

@@ -1,20 +1,20 @@
-# ____-__-__ __:__:__ by RouterOS 7.16.2
-# software id = REMOVED
+# ____-__-__ __:__:__ by RouterOS 7.17
+# system id = REMOVED
 #
-/disk set slot1 media-interface=none media-sharing=no slot=slot1
-/disk set slot2 media-interface=none media-sharing=no slot=slot2
-/disk set slot3 media-interface=none media-sharing=no slot=slot3
-/disk set slot4 media-interface=none media-sharing=no slot=slot4
-/disk set slot5 media-interface=none media-sharing=no slot=slot5
-/disk set slot6 media-interface=none media-sharing=no slot=slot6
-/disk set slot7 media-interface=none media-sharing=no slot=slot7
-/disk set slot8 media-interface=none media-sharing=no slot=slot8
-/disk set slot9 media-interface=none media-sharing=no slot=slot9
-/disk set slot10 media-interface=none media-sharing=no slot=slot10
-/disk set slot11 media-interface=none media-sharing=no slot=slot11
-/disk set slot12 media-interface=none media-sharing=no slot=slot12
-/disk set slot13 media-interface=none media-sharing=no slot=slot13
-/disk add media-interface=none media-sharing=no slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
+/disk set slot1 slot=slot1
+/disk set slot2 slot=slot2
+/disk set slot3 slot=slot3
+/disk set slot4 slot=slot4
+/disk set slot5 slot=slot5
+/disk set slot6 slot=slot6
+/disk set slot7 slot=slot7
+/disk set slot8 slot=slot8
+/disk set slot9 slot=slot9
+/disk set slot10 slot=slot10
+/disk set slot11 slot=slot11
+/disk set slot12 slot=slot12
+/disk set slot13 slot=slot13
+/disk add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
 /interface ethernet set [ find default-name=ether1 ] disable-running-check=no name=eth0
 /interface 6to4 add comment=router !keepalive local-address=144.202.81.146 name=6to4-router remote-qaddress=REMOVED
 /interface 6to4 add comment=router-backup !keepalive local-address=144.202.81.146 name=6to4-router-backup remote-qaddress=REMOVED
@@ -31,9 +31,12 @@
 /ip firewall connection tracking set loose-tcp-tracking=no
 /ip settings set tcp-syncookies=yes
 /ipv6 settings set accept-redirects=no accept-router-advertisements=no
-/interface wireguard peers add allowed-address=10.0.0.0/8,10.99.1.1/32 interface=wg-s2s is-responder=yes name=router persistent-keepalive=25s public-key="nCTAIMDv50QhwjCw72FwP2u2pKGMcqxJ09DQ9wJdxH0="
-/interface wireguard peers add allowed-address=10.99.1.2/32 interface=wg-s2s is-responder=yes name=router-backup persistent-keepalive=25s public-key="8zUl7b1frvuzcBrIA5lNsegzzyAOniaZ4tczSdoqcWM="
+/interface ovpn-server server add mac-address=FE:1A:33:D1:6D:A9 name=ovpn-server1
+/interface wireguard peers add allowed-address=10.0.0.0/8,10.99.1.1/32 interface=wg-s2s name=router persistent-keepalive=25s public-key="nCTAIMDv50QhwjCw72FwP2u2pKGMcqxJ09DQ9wJdxH0=" responder=yes
+/interface wireguard peers add allowed-address=10.99.1.2/32 interface=wg-s2s name=router-backup persistent-keepalive=25s public-key="8zUl7b1frvuzcBrIA5lNsegzzyAOniaZ4tczSdoqcWM=" responder=yes
 /interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=23.239.97.10 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
+/iot lora traffic options set crc-errors=no
+/iot lora traffic options set crc-errors=no
 /ip address add address=144.202.81.146/23 interface=eth0 network=144.202.80.0
 /ip address add address=10.99.10.1/16 interface=wg-s2s network=10.99.0.0
 /ip dhcp-client add disabled=yes interface=eth0
@@ -47,8 +50,8 @@
 /ip firewall filter add action=accept chain=input comment=WireGuard dst-port=13232 protocol=udp
 /ip firewall filter add action=accept chain=input comment=6to4 protocol=ipv6-encap
 /ip firewall filter add action=accept chain=input in-interface=wg-s2s
-/ip firewall filter add action=drop chain=input log=yes
-/ip firewall filter add action=drop chain=forward log=yes
+/ip firewall filter add action=drop chain=input
+/ip firewall filter add action=drop chain=forward
 /ip ipsec profile set [ find default=yes ] dpd-interval=2m dpd-maximum-failures=5
 /ip route add gateway=144.202.80.1
 /ip route add blackhole disabled=no dst-address=192.168.0.0/16 gateway="" routing-table=main suppress-hw-offload=no
@@ -95,7 +98,6 @@
 /routing filter rule add chain=router-in disabled=no rule="if (dst in bgp6-router) { set gw 2a0e:7d44:f000:a::2; set distance 50; accept; }"
 /routing filter rule add chain=route-backup-in disabled=no rule="if (dst in bgp6-router-backup) { set gw 2a0e:7d44:f000:b::2; set distance 60; accept; }"
 /routing filter rule add chain=reject-all disabled=no rule="reject;"
-/system clock set time-zone-name=America/Los_Angeles
 /system identity set name=redfox
 /system note set show-at-login=no
 /system ntp client set enabled=yes
