@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.17
+# ____-__-__ __:__:__ by RouterOS 7.17.2
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -145,7 +145,7 @@
 /interface wireguard peers add allowed-address=10.100.10.2/32 interface=wg-vpn name=capefox public-key="axzlQbYqVu5aoh62tLB+vWNKnQJvBxj9aV3dJmz/sBo=" responder=yes
 /interface wireguard peers add allowed-address=10.100.10.3/32 interface=wg-vpn name=dori-phone public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g=" responder=yes
 /interface wireguard peers add allowed-address=10.100.10.4/32 interface=wg-vpn name=wizzy-laptop public-key="aL7QLtq2YoYVb0bhueG1InlbAdyZE0bmdmRPQ67rNjk=" responder=yes
-/interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=23.239.97.10 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
+/interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=65.21.120.225 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="6wduMejq9ytlzbwgurknWQVN+eUJ33iC/VbRFl6TJTE="
 /interface wireguard peers add allowed-address=10.100.10.5/32 interface=wg-vpn name=wizzy-desktop public-key="TZmEOXXV8R3CajG/Y3msO1IAy5bqPTlqnKIClwq4blc=" responder=yes
 /interface wireguard peers add allowed-address=10.99.10.1/32 endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s name=redfox persistent-keepalive=25s public-key="s1COjkpfpzfQ05ZLNLGQrlEhomlzwHv+APvUABzbSh8="
 /interface wireguard peers add allowed-address=10.100.10.6/32 interface=wg-vpn name=vixen public-key="Rc9Qxwi5lASfR1/urnWTKhuzXx0cDHVU+glTQgTbCBY=" responder=yes

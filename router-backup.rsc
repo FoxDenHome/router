@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.17
+# ____-__-__ __:__:__ by RouterOS 7.17.2
 # software id = REMOVED
 #
 # model = RB5009UG+S+
@@ -23,36 +23,36 @@
 /interface veth add address=172.17.0.2/24 gateway=172.17.0.1 gateway6="" name=veth-snirouter
 /interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
 /interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
-/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=25 version=2 vrid=53
-/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=25 version=2
-/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway6 priority=25 v3-protocol=ipv6 vrid=2
-/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=25 version=2 vrid=123
+/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=5 version=2 vrid=53
+/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=5 version=2
+/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway6 priority=5 v3-protocol=ipv6 vrid=2
+/interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-ntp priority=5 version=2 vrid=123
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-dmz vlan-id=3
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-hypervisor vlan-id=6
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-labnet vlan-id=4
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-lan vlan-id=2
 /interface vlan add interface=vlan-mgmt name=vlan-retro vlan-id=7
 /interface vlan add interface=vlan-mgmt mtu=9000 name=vlan-security vlan-id=5
-/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=25 version=2 vrid=53
-/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=25 version=2
-/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway6 priority=25 v3-protocol=ipv6 vrid=2
-/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=25 version=2 vrid=123
-/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-dns priority=25 version=2 vrid=53
-/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway priority=25 version=2
-/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway6 priority=25 v3-protocol=ipv6 vrid=2
-/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-ntp priority=25 version=2 vrid=123
-/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=25 version=2 vrid=53
-/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=25 version=2
-/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway6 priority=25 v3-protocol=ipv6 vrid=2
-/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-labnet mtu=9000 name=vrrp-labnet-ntp priority=25 version=2 vrid=123
-/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=25 version=2 vrid=53
-/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=25 version=2
-/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-lan mtu=9000 name=vrrp-lan-gateway6 priority=25 v3-protocol=ipv6 vrid=2
-/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=25 version=2 vrid=123
-/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=25 version=2 vrid=53
-/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=25 version=2
-/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-security mtu=9000 name=vrrp-security-gateway6 priority=25 v3-protocol=ipv6 vrid=2
-/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=25 version=2 vrid=123
+/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-dmz mtu=9000 name=vrrp-dmz-dns priority=5 version=2 vrid=53
+/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway priority=5 version=2
+/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-dmz mtu=9000 name=vrrp-dmz-gateway6 priority=5 v3-protocol=ipv6 vrid=2
+/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-dmz mtu=9000 name=vrrp-dmz-ntp priority=5 version=2 vrid=123
+/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-dns priority=5 version=2 vrid=53
+/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway priority=5 version=2
+/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-gateway6 priority=5 v3-protocol=ipv6 vrid=2
+/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-hypervisor mtu=9000 name=vrrp-hypervisor-ntp priority=5 version=2 vrid=123
+/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-labnet mtu=9000 name=vrrp-labnet-dns priority=5 version=2 vrid=53
+/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway priority=5 version=2
+/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-labnet mtu=9000 name=vrrp-labnet-gateway6 priority=5 v3-protocol=ipv6 vrid=2
+/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-labnet mtu=9000 name=vrrp-labnet-ntp priority=5 version=2 vrid=123
+/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-lan mtu=9000 name=vrrp-lan-dns priority=5 version=2 vrid=53
+/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-lan mtu=9000 name=vrrp-lan-gateway priority=5 version=2
+/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-lan mtu=9000 name=vrrp-lan-gateway6 priority=5 v3-protocol=ipv6 vrid=2
+/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-lan mtu=9000 name=vrrp-lan-ntp priority=5 version=2 vrid=123
+/interface vrrp add group-authority=vrrp-mgmt-dns interface=vlan-security mtu=9000 name=vrrp-security-dns priority=5 version=2 vrid=53
+/interface vrrp add group-authority=vrrp-mgmt-gateway interface=vlan-security mtu=9000 name=vrrp-security-gateway priority=5 version=2
+/interface vrrp add group-authority=vrrp-mgmt-gateway6 interface=vlan-security mtu=9000 name=vrrp-security-gateway6 priority=5 v3-protocol=ipv6 vrid=2
+/interface vrrp add group-authority=vrrp-mgmt-ntp interface=vlan-security mtu=9000 name=vrrp-security-ntp priority=5 version=2 vrid=123
 /interface list add name=iface-mgmt
 /interface list add name=iface-lan
 /interface list add name=iface-dmz
@@ -137,7 +137,7 @@
 /interface wireguard peers add allowed-address=10.100.10.2/32 interface=wg-vpn name=capefox public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs=" responder=yes
 /interface wireguard peers add allowed-address=10.100.10.3/32 interface=wg-vpn name=dori-phone public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g=" responder=yes
 /interface wireguard peers add allowed-address=10.100.10.4/32 interface=wg-vpn name=wizzy-laptop public-key="aL7QLtq2YoYVb0bhueG1InlbAdyZE0bmdmRPQ67rNjk=" responder=yes
-/interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=23.239.97.10 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="t4vx8Lz7TNazvwid9I3jtbowkfb8oNM4TpdttEIUjRs="
+/interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=65.21.120.225 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="6wduMejq9ytlzbwgurknWQVN+eUJ33iC/VbRFl6TJTE="
 /interface wireguard peers add allowed-address=10.100.10.5/32 interface=wg-vpn name=wizzy-desktop public-key="L+Wtsz9ywb+MrY8nn+JzDRxAwEWDIpeSgbk32MA66B0=" responder=yes
 /interface wireguard peers add allowed-address=10.99.10.1/32 endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s name=redfox persistent-keepalive=25s public-key="s1COjkpfpzfQ05ZLNLGQrlEhomlzwHv+APvUABzbSh8="
 /interface wireguard peers add allowed-address=10.100.10.6/32 interface=wg-vpn name=vixen public-key="Rc9Qxwi5lASfR1/urnWTKhuzXx0cDHVU+glTQgTbCBY=" responder=yes
@@ -479,13 +479,13 @@
 /ipv6 firewall filter add action=accept chain=input in-interface-list=zone-local
 /ipv6 firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
 /ipv6 firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu protocol=tcp tcp-flags=syn
-/ipv6 nd set [ find default=yes ] advertise-dns=no disabled=yes ra-interval=1m-3m
-/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-dmz ra-interval=1m-3m
-/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-hypervisor ra-interval=1m-3m
-/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-labnet ra-interval=1m-3m
-/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-lan ra-interval=1m-3m
-/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-mgmt ra-interval=1m-3m
-/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-security ra-interval=1m-3m
+/ipv6 nd set [ find default=yes ] advertise-dns=no disabled=yes ra-interval=1m-3m ra-preference=low
+/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-dmz ra-interval=1m-3m ra-preference=low
+/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-hypervisor ra-interval=1m-3m ra-preference=low
+/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-labnet ra-interval=1m-3m ra-preference=low
+/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-lan ra-interval=1m-3m ra-preference=low
+/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-mgmt ra-interval=1m-3m ra-preference=low
+/ipv6 nd add advertise-dns=no disabled=yes interface=vlan-security ra-interval=1m-3m ra-preference=low
 /ipv6 nd prefix default set preferred-lifetime=15m valid-lifetime=1h
 /radius add accounting-port=1812 address=10.2.11.20 require-message-auth=no service=login
 /radius add accounting-port=1812 address=10.2.10.1 disabled=yes require-message-auth=no service=login
@@ -886,7 +886,9 @@
     \n    }\r\
     \n} while ([:len \$certificates] > 0)\r\
     \n"
-/tool netwatch add comment=monitor-default disabled=no down-script="/system/script/run wan-online-adjust\r\
+/tool netwatch
+# Warning: probe waiting startup-delay=1m; 4s remaining
+add comment=monitor-default disabled=no down-script="/system/script/run wan-online-adjust\r\
     \n" host=8.8.8.8 http-codes="" interval=30s startup-delay=1m test-script="" timeout=1s type=icmp up-script="/system/script/run wan-online-adjust\r\
     \n"
 /user aaa set accounting=no use-radius=yes
