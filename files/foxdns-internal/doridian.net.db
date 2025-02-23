@@ -20,8 +20,8 @@ dav IN CNAME icefox.doridian.net.
 
 redfox IN A 144.202.81.146
 
-arcticfox IN A 23.239.97.14
-arcticfox IN AAAA 2606:c700:4020:af::6
+arcticfox IN A 65.21.120.223
+arcticfox IN AAAA 2a01:4f9:3b:4960:1::2
 www.arcticfox IN CNAME arcticfox.doridian.net.
 mysql IN CNAME arcticfox.doridian.net.
 
