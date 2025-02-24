@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.17.2
+# ____-__-__ __:__:__ by RouterOS 7.18
 # software id = REMOVED
 #
 # model = CCR2004-1G-12S+2XS
@@ -23,11 +23,11 @@
 /interface ethernet set [ find default-name=sfp28-2 ] auto-negotiation=no comment=sfpx2-rackswitch-agg fec-mode=fec74 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus12 ] comment=sfp1 name=wan rx-flow-control=on tx-flow-control=on
 /interface 6to4 add !keepalive mtu=1480 name=6to4-redfox remote-address=144.202.81.146
+/interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
+/interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface veth add address=172.17.1.2/24 gateway=172.17.1.1 gateway6="" name=veth-foxdns
 /interface veth add address=172.17.2.2/24 gateway=172.17.2.1 gateway6="" name=veth-foxdns-internal
 /interface veth add address=172.17.0.2/24 gateway=172.17.0.1 gateway6="" name=veth-snirouter
-/interface wireguard add listen-port=13232 mtu=1420 name=wg-s2s
-/interface wireguard add listen-port=13231 mtu=1420 name=wg-vpn
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-dns priority=50 version=2 vrid=53
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway priority=50 version=2
 /interface vrrp add group-authority=self interface=vlan-mgmt mtu=9000 name=vrrp-mgmt-gateway6 priority=50 v3-protocol=ipv6 vrid=2
@@ -101,6 +101,7 @@
 /queue simple add disabled=yes max-limit=950M/950M name=queue-wan queue=cake-internet/cake-internet target=wan
 /snmp community set [ find default=yes ] disabled=yes
 /snmp community add addresses=::/0 name=monitor_REMOVED
+/user group add name=monitoring policy=read,api,!local,!telnet,!ssh,!ftp,!reboot,!write,!policy,!test,!winbox,!password,!web,!sniff,!sensitive,!romon,!rest-api
 /container add interface=veth-snirouter logging=yes mounts=snirouter-config start-on-boot=yes workdir=/
 /container add interface=veth-foxdns logging=yes mounts=foxdns-config start-on-boot=yes workdir=/config
 /container add interface=veth-foxdns-internal logging=yes mounts=foxdns-internal-config start-on-boot=yes workdir=/config
@@ -478,6 +479,7 @@
 /ipv6 firewall address-list add address=2a0e:7d44:f00a::/48 list=bgp-redfox
 /ipv6 firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ipv6 firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
+/ipv6 firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related
 /ipv6 firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
 /ipv6 firewall filter add action=accept chain=forward protocol=icmpv6
 /ipv6 firewall filter add action=accept chain=forward in-interface=oob
@@ -492,7 +494,6 @@
 /ipv6 firewall filter add action=accept chain=input in-interface=oob
 /ipv6 firewall filter add action=accept chain=input in-interface-list=zone-local
 /ipv6 firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
-/ipv6 firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu protocol=tcp tcp-flags=syn
 /ipv6 nd set [ find default=yes ] advertise-dns=no disabled=yes ra-interval=1m-3m ra-preference=high
 /ipv6 nd add advertise-dns=no interface=vlan-dmz ra-interval=1m-3m ra-preference=high
 /ipv6 nd add advertise-dns=no interface=vlan-hypervisor ra-interval=1m-3m ra-preference=high
@@ -902,4 +903,3 @@
     \n" host=8.8.8.8 http-codes="" interval=30s startup-delay=1m test-script="" timeout=1s type=icmp up-script="/system/script/run wan-online-adjust\r\
     \n"
 /tool sniffer set file-name=dns.pcap filter-interface=all filter-port=dns
-/user group add name=monitoring policy=read,api,!local,!telnet,!ssh,!ftp,!reboot,!write,!policy,!test,!winbox,!password,!web,!sniff,!sensitive,!romon,!rest-api

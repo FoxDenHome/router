@@ -1,4 +1,4 @@
-# ____-__-__ __:__:__ by RouterOS 7.17.2
+# ____-__-__ __:__:__ by RouterOS 7.18
 # system id = REMOVED
 #
 /disk set slot1 slot=slot1
@@ -43,7 +43,6 @@
 /ip dns set servers=8.8.8.8,8.8.4.4
 /ip firewall filter add action=fasttrack-connection chain=forward comment="established, related" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="established, related" connection-state=established,related
-/ip firewall filter add action=fasttrack-connection chain=input comment="established, related" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=input comment="established, related" connection-state=established,related
 /ip firewall filter add action=accept chain=input comment=loopback in-interface=lo
 /ip firewall filter add action=accept chain=input comment=ICMP protocol=icmp
@@ -86,6 +85,7 @@
 /ipv6 firewall filter add action=accept chain=input comment=ICMPv6 protocol=icmpv6
 /ipv6 firewall filter add action=accept chain=input comment=WireGuard dst-port=13232 protocol=udp
 /ipv6 firewall filter add action=drop chain=input
+/ipv6 firewall filter add action=fasttrack-connection chain=forward
 /ipv6 firewall filter add action=accept chain=forward
 /ipv6 firewall raw add action=notrack chain=prerouting dst-address=2a0e:7d44:f000::/40
 /ipv6 firewall raw add action=notrack chain=prerouting src-address=2a0e:7d44:f000::/40
