@@ -12,8 +12,8 @@ ns3 IN A 10.3.0.53
 ns4 IN A 10.3.0.53
 
 icefox IN A 10.99.10.2
-archlinux IN A 65.21.120.220
 
+archlinux IN CNAME icefox.doridian.net.
 syncthing IN CNAME icefox.doridian.net.
 dldr.icefox IN CNAME icefox.doridian.net.
 
