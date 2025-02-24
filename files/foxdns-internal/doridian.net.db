@@ -16,7 +16,6 @@ archlinux IN A 65.21.120.220
 
 syncthing IN CNAME icefox.doridian.net.
 dldr.icefox IN CNAME icefox.doridian.net.
-dav IN CNAME icefox.doridian.net.
 
 redfox IN A 144.202.81.146
 
@@ -32,4 +31,3 @@ tts-cdn.spaceage IN CNAME d2ebj9zmmxo6g8.cloudfront.net.
 api.spaceage IN A 55.69.1.2
 
 mc IN CNAME minecraft.foxden.network.
-
