@@ -540,91 +540,90 @@
     \n:global RAPriorityOnline \"high\"\r\
     \n:global RAPriorityOffline \"low\"\r\
     \n"
-/system script add dont-require-permissions=no name=dhcp-propagate-changes owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local topdomain\r\
-    \n\r\
-    \n:set topdomain \"foxden.network\"\r\
-    \n\r\
-    \n:put \"Adjusting lease times\"\r\
-    \n/ip/dhcp-server/lease set [/ip/dhcp-server/lease find dynamic=no] lease-time=1d\r\
-    \n\r\
-    \n:put \"Appending zone file foxden.network\"\r\
-    \n\r\
-    \n:local loadscript \":put \\\"\\\\\\\$TTL 300\\\"\r\
-    \n:put \\\"@ 3600 DS 56289 13 2 E0198538615845C4226057A4A9D3908FF76A054A49B76E72954D63BFCB88A257\\\"\r\
-    \n:put \\\"@ 3600 DS 26212 13 2 9C50921B3FDB72B43A78713AF57E66D2BBA87C6CFDEC4FC2EA1320686B31FED4\\\"\r\
-    \n:put \\\"@ IN NS ns1.foxden.network.\\\"\r\
-    \n:put \\\"@ IN NS ns2.foxden.network.\\\"\r\
-    \n:put \\\"@ IN NS ns3.foxden.network.\\\"\r\
-    \n:put \\\"@ IN NS ns4.foxden.network.\\\"\r\
-    \n:put \\\"ns1 IN A 10.3.0.53\\\"\r\
-    \n:put \\\"ns2 IN A 10.3.0.53\\\"\r\
-    \n:put \\\"ns3 IN A 10.3.0.53\\\"\r\
-    \n:put \\\"ns4 IN A 10.3.0.53\\\"\r\
-    \n:put \\\"nas IN CNAME bengalfox.foxden.network.\\\"\r\
-    \n:put \\\"dav IN CNAME bengalfox.foxden.network.\\\"\r\
-    \n:put \\\"nas-ro IN CNAME icefox.doridian.net.\\\"\r\
-    \n:put \\\"@ IN A 23.239.97.13\\\"\r\
-    \n:put \\\"@ IN AAAA 2606:c700:4020:af::5\\\"\r\
-    \n:put \\\"xmpp IN A 23.239.97.13\\\"\r\
-    \n:put \\\"xmpp IN AAAA 2606:c700:4020:af::5\\\"\r\
-    \n:put \\\"upload.xmpp IN CNAME xmpp.foxden.network.\\\"\r\
-    \n:put \\\"muc.xmpp IN CNAME xmpp.foxden.network.\\\"\r\
-    \n:put \\\"proxy.xmpp IN CNAME xmpp.foxden.network.\\\"\r\
-    \n:put \\\"pubsub.xmpp IN CNAME xmpp.foxden.network.\\\"\r\
-    \n:put \\\"_xmpp-client._tcp IN SRV 5 0 5222 xmpp.foxden.network.\\\"\r\
-    \n:put \\\"_xmpps-client._tcp SRV 5 0 5223 xmpp.foxden.network.\\\"\r\
-    \n:put \\\"_xmpp-server._tcp SRV 5 0 5269 xmpp.foxden.network.\\\"\r\
-    \n\r\
-    \n:local hostshort\r\
-    \n:local dhcpent\r\
-    \n:foreach i in=[/ip/dhcp-server/lease/find comment dynamic=no] do={\r\
-    \n    :set dhcpent [/ip/dhcp-server/lease/get \\\$i]\r\
-    \n    :set hostshort (\\\$dhcpent->\\\"comment\\\")\r\
-    \n\r\
-    \n    :if (\\\$hostshort != \\\"ntp\\\" && \\\$hostshort != \\\"dns\\\" && \\\$hostshort != \\\"gateway\\\") do={\r\
-    \n      :put (\\\$hostshort . \\\" IN A \\\" . (\\\$dhcpent->\\\"address\\\"))\r\
-    \n    }\r\
-    \n}\"\r\
-    \n\r\
-    \n:put \$loadscript\r\
-    \n:execute script=\$loadscript file=foxdns-internal/foxden.network.txt\r\
-    \n\r\
-    \n:put \"Appending zone file 10.in-addr.arpa\"\r\
-    \n\r\
-    \n:local loadscript \":put \\\"\\\\\\\$TTL 300\\\"\r\
-    \n:put \\\"@ IN NS ns1.foxden.network.\\\"\r\
-    \n:put \\\"@ IN NS ns2.foxden.network.\\\"\r\
-    \n:put \\\"@ IN NS ns3.foxden.network.\\\"\r\
-    \n:put \\\"@ IN NS ns4.foxden.network.\\\"\r\
-    \n:for i from=1 to=9 do={ \r\
-    \n    :put \\\"1.0.\\\$i IN PTR gateway.foxden.network.\\\"\r\
-    \n    :put \\\"53.0.\\\$i IN PTR dns.foxden.network.\\\"\r\
-    \n    :put \\\"123.0.\\\$i IN PTR ntp.foxden.network.\\\"\r\
-    \n    :put \\\"1.1.\\\$i IN PTR router.foxden.network.\\\"\r\
-    \n    :put \\\"2.1.\\\$i IN PTR router-backup.foxden.network.\\\"\r\
-    \n    :put \\\"123.1.\\\$i IN PTR ntpi.foxden.network.\\\"\r\
-    \n}\r\
-    \n:local hostname\r\
-    \n:local hostshort\r\
-    \n:local dhcpent\r\
-    \n:local ipNum\r\
-    \n:local reverseIpString\r\
-    \n:foreach i in=[/ip/dhcp-server/lease/find comment dynamic=no] do={\r\
-    \n    :set dhcpent [/ip/dhcp-server/lease/get \\\$i]\r\
-    \n    :set hostshort (\\\$dhcpent->\\\"comment\\\")\r\
-    \n\r\
-    \n    :if (\\\$hostshort != \\\"ntp\\\" && \\\$hostshort != \\\"dns\\\" && \\\$hostshort != \\\"gateway\\\") do={\r\
-    \n      :set hostname (\\\$hostshort . \\\".\$topdomain.\\\")\r\
-    \n      :set ipNum [ :tonum [ :toip (\\\$dhcpent->\\\"address\\\") ] ]\r\
-    \n      :set reverseIpString ((\\\$ipNum & 255) . \\\".\\\" . ((\\\$ipNum >> 8) & 255) . \\\".\\\" . ((\\\$ipNum >> 16) & 255))\r\
-    \n      :put (\\\$reverseIpString . \\\" IN PTR \\\" . \\\$hostname)\r\
-    \n    }\r\
-    \n}\"\r\
-    \n\r\
-    \n:put \$loadscript\r\
-    \n:execute script=\$loadscript file=foxdns-internal/10.in-addr.arpa.txt\r\
-    \n\r\
-    \n:put Done\r\
+/system script add dont-require-permissions=no name=dhcp-propagate-changes owner=admin policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":local topdomain\
+    \n\
+    \n:set topdomain \"foxden.network\"\
+    \n\
+    \n:put \"Adjusting lease times\"\
+    \n/ip/dhcp-server/lease set [/ip/dhcp-server/lease find dynamic=no] lease-time=1d\
+    \n\
+    \n:put \"Appending zone file foxden.network\"\
+    \n\
+    \n:local loadscript \":put \\\"\\\\\\\$TTL 300\\\"\
+    \n:put \\\"@ 3600 DS 56289 13 2 E0198538615845C4226057A4A9D3908FF76A054A49B76E72954D63BFCB88A257\\\"\
+    \n:put \\\"@ 3600 DS 26212 13 2 9C50921B3FDB72B43A78713AF57E66D2BBA87C6CFDEC4FC2EA1320686B31FED4\\\"\
+    \n:put \\\"@ IN NS ns1.foxden.network.\\\"\
+    \n:put \\\"@ IN NS ns2.foxden.network.\\\"\
+    \n:put \\\"@ IN NS ns3.foxden.network.\\\"\
+    \n:put \\\"@ IN NS ns4.foxden.network.\\\"\
+    \n:put \\\"ns1 IN A 10.3.0.53\\\"\
+    \n:put \\\"ns2 IN A 10.3.0.53\\\"\
+    \n:put \\\"ns3 IN A 10.3.0.53\\\"\
+    \n:put \\\"ns4 IN A 10.3.0.53\\\"\
+    \n:put \\\"nas IN CNAME bengalfox.foxden.network.\\\"\
+    \n:put \\\"nas-ro IN CNAME icefox.doridian.net.\\\"\
+    \n:put \\\"@ IN A 65.21.120.225\\\"\
+    \n:put \\\"@ IN AAAA 2a01:4f9:3b:4960::4\\\"\
+    \n:put \\\"xmpp IN A 65.21.120.225\\\"\
+    \n:put \\\"xmpp IN AAAA 2a01:4f9:3b:4960::4\\\"\
+    \n:put \\\"upload.xmpp IN CNAME xmpp.foxden.network.\\\"\
+    \n:put \\\"muc.xmpp IN CNAME xmpp.foxden.network.\\\"\
+    \n:put \\\"proxy.xmpp IN CNAME xmpp.foxden.network.\\\"\
+    \n:put \\\"pubsub.xmpp IN CNAME xmpp.foxden.network.\\\"\
+    \n:put \\\"_xmpp-client._tcp IN SRV 5 0 5222 xmpp.foxden.network.\\\"\
+    \n:put \\\"_xmpps-client._tcp SRV 5 0 5223 xmpp.foxden.network.\\\"\
+    \n:put \\\"_xmpp-server._tcp SRV 5 0 5269 xmpp.foxden.network.\\\"\
+    \n\
+    \n:local hostshort\
+    \n:local dhcpent\
+    \n:foreach i in=[/ip/dhcp-server/lease/find comment dynamic=no] do={\
+    \n    :set dhcpent [/ip/dhcp-server/lease/get \\\$i]\
+    \n    :set hostshort (\\\$dhcpent->\\\"comment\\\")\
+    \n\
+    \n    :if (\\\$hostshort != \\\"ntp\\\" && \\\$hostshort != \\\"dns\\\" && \\\$hostshort != \\\"gateway\\\") do={\
+    \n      :put (\\\$hostshort . \\\" IN A \\\" . (\\\$dhcpent->\\\"address\\\"))\
+    \n    }\
+    \n}\"\
+    \n\
+    \n:put \$loadscript\
+    \n:execute script=\$loadscript file=foxdns-internal/foxden.network.txt\
+    \n\
+    \n:put \"Appending zone file 10.in-addr.arpa\"\
+    \n\
+    \n:local loadscript \":put \\\"\\\\\\\$TTL 300\\\"\
+    \n:put \\\"@ IN NS ns1.foxden.network.\\\"\
+    \n:put \\\"@ IN NS ns2.foxden.network.\\\"\
+    \n:put \\\"@ IN NS ns3.foxden.network.\\\"\
+    \n:put \\\"@ IN NS ns4.foxden.network.\\\"\
+    \n:for i from=1 to=9 do={ \
+    \n    :put \\\"1.0.\\\$i IN PTR gateway.foxden.network.\\\"\
+    \n    :put \\\"53.0.\\\$i IN PTR dns.foxden.network.\\\"\
+    \n    :put \\\"123.0.\\\$i IN PTR ntp.foxden.network.\\\"\
+    \n    :put \\\"1.1.\\\$i IN PTR router.foxden.network.\\\"\
+    \n    :put \\\"2.1.\\\$i IN PTR router-backup.foxden.network.\\\"\
+    \n    :put \\\"123.1.\\\$i IN PTR ntpi.foxden.network.\\\"\
+    \n}\
+    \n:local hostname\
+    \n:local hostshort\
+    \n:local dhcpent\
+    \n:local ipNum\
+    \n:local reverseIpString\
+    \n:foreach i in=[/ip/dhcp-server/lease/find comment dynamic=no] do={\
+    \n    :set dhcpent [/ip/dhcp-server/lease/get \\\$i]\
+    \n    :set hostshort (\\\$dhcpent->\\\"comment\\\")\
+    \n\
+    \n    :if (\\\$hostshort != \\\"ntp\\\" && \\\$hostshort != \\\"dns\\\" && \\\$hostshort != \\\"gateway\\\") do={\
+    \n      :set hostname (\\\$hostshort . \\\".\$topdomain.\\\")\
+    \n      :set ipNum [ :tonum [ :toip (\\\$dhcpent->\\\"address\\\") ] ]\
+    \n      :set reverseIpString ((\\\$ipNum & 255) . \\\".\\\" . ((\\\$ipNum >> 8) & 255) . \\\".\\\" . ((\\\$ipNum >> 16) & 255))\
+    \n      :put (\\\$reverseIpString . \\\" IN PTR \\\" . \\\$hostname)\
+    \n    }\
+    \n}\"\
+    \n\
+    \n:put \$loadscript\
+    \n:execute script=\$loadscript file=foxdns-internal/10.in-addr.arpa.txt\
+    \n\
+    \n:put Done\
     \n"
 /system script add dont-require-permissions=yes name=dyndns-update owner=admin policy=ftp,read,write,policy,test source=":local ipaddrfind [ /ip/address/find interface=wan ]\r\
     \n:if ([:len \$ipaddrfind] < 1) do={\r\
