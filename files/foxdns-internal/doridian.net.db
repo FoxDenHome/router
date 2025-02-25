@@ -11,10 +11,11 @@ ns2 IN A 10.3.0.53
 ns3 IN A 10.3.0.53
 ns4 IN A 10.3.0.53
 
-icefox IN A 10.99.10.2
 icefox-ext IN A 65.21.120.225
+restic IN CNAME icefox-ext.doridian.net.
+archlinux IN CNAME icefox-ext.doridian.net.
 
-archlinux IN CNAME icefox.doridian.net.
+icefox IN A 10.99.10.2
 syncthing IN CNAME icefox.doridian.net.
 dldr.icefox IN CNAME icefox.doridian.net.
 
