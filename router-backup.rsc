@@ -316,7 +316,7 @@
 /ip dhcp-server lease add address=10.5.11.9 comment=camera-server-room lease-time=1d mac-address=F4:E2:C6:0C:E8:3C server=dhcp-security
 /ip dhcp-server lease add address=10.1.13.2 comment=pikvm-rack lease-time=1d mac-address=D8:3A:DD:A3:82:A8 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.3.10.11 comment=archlinux lease-time=1d mac-address=CA:1B:F1:2D:6D:B3 server=dhcp-dmz
-/ip dhcp-server lease add address=10.2.11.20 comment=auth lease-time=1d mac-address=A6:92:B3:68:21:9D server=dhcp-lan
+/ip dhcp-server lease add address=10.6.11.4 comment=auth lease-time=1d mac-address=A6:92:B3:68:21:9D server=dhcp-hypervisor
 /ip dhcp-server lease add address=10.3.10.12 comment=e621 lease-time=1d mac-address=F2:6C:78:D6:DD:E6 server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.13 comment=furaffinity lease-time=1d mac-address=F2:6C:78:D6:DE:E6 server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.2 comment=git lease-time=1d mac-address=A6:92:B3:68:D1:AD server=dhcp-dmz
@@ -376,17 +376,17 @@
 /ip firewall filter add action=accept chain=lan-out-forward comment=Grafana dst-address=10.2.11.5 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=NAS dst-address=10.2.11.1 dst-port=22,80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=restic dst-address=10.2.11.12 dst-port=80,443 protocol=tcp
-/ip firewall filter add action=accept chain=lan-out-forward comment="auth (TCP)" dst-address=10.2.11.20 dst-port=80,443,1812 protocol=tcp
-/ip firewall filter add action=accept chain=lan-out-forward comment="auth (UDP)" dst-address=10.2.11.20 dst-port=1812 protocol=udp
 /ip firewall filter add action=accept chain=lan-out-forward comment=syncthing dst-address=10.2.11.2 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=bengalfox-syncthing dst-address=10.2.11.15 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Hashtopolis dst-address=10.2.11.17 dst-port=80,443 protocol=tcp
-/ip firewall filter add action=accept chain=lan-out-forward comment=jellyfin dst-address=10.2.11.18 dst-port=80,443 protocol=tcp
+/ip firewall filter add action=accept chain=lan-out-forward comment=jellyfin disabled=yes dst-address=10.2.11.18 dst-port=80,443 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment=Plex dst-address=10.2.11.3 dst-port=32400 protocol=tcp
 /ip firewall filter add action=accept chain=lan-out-forward comment="LabNet -> NAS" dst-address=10.2.11.1 in-interface-list=iface-labnet
 /ip firewall filter add action=accept chain=lan-out-forward comment="Retro -> NAS" dst-address=10.2.11.1 in-interface=vlan-retro
 /ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=8883 protocol=tcp
 /ip firewall filter add action=accept chain=security-out-forward comment="LAN -> NVR" dst-address=10.5.10.1 in-interface-list=iface-lan
+/ip firewall filter add action=accept chain=hypervisor-out-forward comment="auth (TCP)" dst-address=10.6.11.4 dst-port=80,443,1812 protocol=tcp
+/ip firewall filter add action=accept chain=hypervisor-out-forward comment="auth (UDP)" dst-address=10.6.11.4 dst-port=1812 protocol=udp
 /ip firewall filter add action=accept chain=s2s-out-forward comment="LAN -> IceFox" disabled=yes dst-address=10.99.10.2 in-interface-list=iface-lan
 /ip firewall filter add action=accept chain=s2s-out-forward comment="LAN -> IceFoxSub" disabled=yes dst-address=10.99.12.0/24 in-interface-list=iface-lan
 /ip firewall filter add action=accept chain=s2s-out-forward comment=IceFox:Sub dst-address=10.99.12.0/24 in-interface-list=zone-local
