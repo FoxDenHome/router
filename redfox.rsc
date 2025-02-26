@@ -34,7 +34,7 @@
 /interface ovpn-server server add mac-address=FE:1A:33:D1:6D:A9 name=ovpn-server1
 /interface wireguard peers add allowed-address=10.0.0.0/8,10.99.1.1/32 interface=wg-s2s name=router persistent-keepalive=25s public-key="nCTAIMDv50QhwjCw72FwP2u2pKGMcqxJ09DQ9wJdxH0=" responder=yes
 /interface wireguard peers add allowed-address=10.99.1.2/32 interface=wg-s2s name=router-backup persistent-keepalive=25s public-key="8zUl7b1frvuzcBrIA5lNsegzzyAOniaZ4tczSdoqcWM=" responder=yes
-/interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=65.21.120.225 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="6wduMejq9ytlzbwgurknWQVN+eUJ33iC/VbRFl6TJTE="
+/interface wireguard peers add allowed-address=10.99.10.2/32,10.99.12.0/24 endpoint-address=65.21.120.225 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="6wduMejq9ytlzbwgurknWQVN+eUJ33iC/VbRFl6TJTE="
 /iot lora traffic options set crc-errors=no
 /iot lora traffic options set crc-errors=no
 /ip address add address=144.202.81.146/23 interface=eth0 network=144.202.80.0

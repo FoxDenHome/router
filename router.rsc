@@ -146,7 +146,7 @@
 /interface wireguard peers add allowed-address=10.100.10.2/32 interface=wg-vpn name=capefox public-key="axzlQbYqVu5aoh62tLB+vWNKnQJvBxj9aV3dJmz/sBo=" responder=yes
 /interface wireguard peers add allowed-address=10.100.10.3/32 interface=wg-vpn name=dori-phone public-key="keEyvK/AutdYbAYkkXffsvGEOCKZjlp6A0gDBsI8F0g=" responder=yes
 /interface wireguard peers add allowed-address=10.100.10.4/32 interface=wg-vpn name=wizzy-laptop public-key="aL7QLtq2YoYVb0bhueG1InlbAdyZE0bmdmRPQ67rNjk=" responder=yes
-/interface wireguard peers add allowed-address=10.99.10.2/32 endpoint-address=65.21.120.225 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="6wduMejq9ytlzbwgurknWQVN+eUJ33iC/VbRFl6TJTE="
+/interface wireguard peers add allowed-address=10.99.10.2/32,10.99.12.0/24 endpoint-address=65.21.120.225 endpoint-port=13232 interface=wg-s2s name=icefox persistent-keepalive=25s public-key="6wduMejq9ytlzbwgurknWQVN+eUJ33iC/VbRFl6TJTE="
 /interface wireguard peers add allowed-address=10.100.10.5/32 interface=wg-vpn name=wizzy-desktop public-key="TZmEOXXV8R3CajG/Y3msO1IAy5bqPTlqnKIClwq4blc=" responder=yes
 /interface wireguard peers add allowed-address=10.99.10.1/32 endpoint-address=144.202.81.146 endpoint-port=13232 interface=wg-s2s name=redfox persistent-keepalive=25s public-key="s1COjkpfpzfQ05ZLNLGQrlEhomlzwHv+APvUABzbSh8="
 /interface wireguard peers add allowed-address=10.100.10.6/32 interface=wg-vpn name=vixen public-key="Rc9Qxwi5lASfR1/urnWTKhuzXx0cDHVU+glTQgTbCBY=" responder=yes
@@ -396,8 +396,10 @@
 /ip firewall filter add action=accept chain=lan-out-forward comment="Retro -> NAS" dst-address=10.2.11.1 in-interface=vlan-retro
 /ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=8883 protocol=tcp
 /ip firewall filter add action=accept chain=security-out-forward comment="LAN -> NVR" dst-address=10.5.10.1 in-interface-list=iface-lan
-/ip firewall filter add action=accept chain=s2s-out-forward comment="LAN -> IceFox" dst-address=10.99.10.2 in-interface-list=iface-lan
-/ip firewall filter add action=accept chain=s2s-out-forward comment="Hypervisor -> IceFox" dst-address=10.99.10.2 dst-port=22,8000 in-interface-list=iface-hypervisor protocol=tcp
+/ip firewall filter add action=accept chain=s2s-out-forward comment="LAN -> IceFox" disabled=yes dst-address=10.99.10.2 in-interface-list=iface-lan
+/ip firewall filter add action=accept chain=s2s-out-forward comment="LAN -> IceFoxSub" disabled=yes dst-address=10.99.12.0/24 in-interface-list=iface-lan
+/ip firewall filter add action=accept chain=s2s-out-forward comment=IceFox:Sub dst-address=10.99.12.0/24 in-interface-list=zone-local
+/ip firewall filter add action=accept chain=s2s-out-forward comment=IceFox dst-address=10.99.10.2 in-interface-list=zone-local
 /ip firewall filter add action=accept chain=input connection-state=established,related
 /ip firewall filter add action=accept chain=input protocol=ipv6-encap
 /ip firewall filter add action=accept chain=input protocol=icmp
@@ -561,11 +563,9 @@
     \n:put \\\"ns3 IN A 10.3.0.53\\\"\
     \n:put \\\"ns4 IN A 10.3.0.53\\\"\
     \n:put \\\"nas IN CNAME bengalfox.foxden.network.\\\"\
-    \n:put \\\"nas-ro IN CNAME icefox.doridian.net.\\\"\
-    \n:put \\\"@ IN A 65.21.120.225\\\"\
-    \n:put \\\"@ IN AAAA 2a01:4f9:3b:4960::4\\\"\
-    \n:put \\\"xmpp IN A 65.21.120.225\\\"\
-    \n:put \\\"xmpp IN AAAA 2a01:4f9:3b:4960::4\\\"\
+    \n:put \\\"nas-ro IN A 10.99.12.5\\\"\
+    \n:put \\\"@ IN A 10.99.12.4\\\"\
+    \n:put \\\"xmpp IN A 10.99.12.4\\\"\
     \n:put \\\"upload.xmpp IN CNAME xmpp.foxden.network.\\\"\
     \n:put \\\"muc.xmpp IN CNAME xmpp.foxden.network.\\\"\
     \n:put \\\"proxy.xmpp IN CNAME xmpp.foxden.network.\\\"\
