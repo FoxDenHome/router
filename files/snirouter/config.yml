@@ -19,9 +19,9 @@ templates:
       host: 10.3.1.1
   auth:
     http:
-      host: 10.6.11.4
+      host: 10.69.69.10
     https:
-      host: 10.6.11.4
+      host: 10.69.69.10
   router-backup:
     http:
       host: 10.3.1.2
