@@ -324,6 +324,7 @@
 /ip dhcp-server lease add address=10.2.13.29 comment=dori-office-hifi lease-time=1d mac-address=B8:27:EB:BF:3A:4C server=dhcp-lan
 /ip dhcp-server lease add address=10.2.13.30 comment=btproxy-living-room lease-time=1d mac-address=94:E6:86:48:E9:87 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.12 comment=restic lease-time=1d mac-address=A6:92:B3:68:DD:AD server=dhcp-lan
+/ip dhcp-server lease add address=10.5.10.3 client-id=1:b8:27:eb:ed:f:4b comment=crossfox lease-time=1d mac-address=B8:27:EB:ED:0F:4B server=dhcp-security
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 next-server=10.2.0.1 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
