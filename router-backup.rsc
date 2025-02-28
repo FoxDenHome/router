@@ -7,12 +7,12 @@
 /container mounts add dst=/config name=foxdns-config src=/foxdns
 /container mounts add dst=/config name=foxdns-internal-config src=/foxdns-internal
 /disk add slot=tmpfs-scratch tmpfs-max-size=16000000 type=tmpfs
+/interface ethernet set [ find default-name=ether7 ] comment=eth7 name=auth rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether2 ] disabled=yes name=eth2 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether3 ] disabled=yes name=eth3 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether4 ] disabled=yes name=eth4 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether5 ] disabled=yes name=eth5 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether6 ] disabled=yes name=eth6 rx-flow-control=on tx-flow-control=on
-/interface ethernet set [ find default-name=ether7 ] disabled=yes name=eth7 rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether8 ] comment=eth8 name=oob rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=sfp-sfpplus1 ] comment=sfp1 l2mtu=9092 mtu=9000 name=vlan-mgmt rx-flow-control=on tx-flow-control=on
 /interface ethernet set [ find default-name=ether1 ] advertise=1G-baseT-full,2.5G-baseT comment=eth1 name=wan rx-flow-control=on tx-flow-control=on
@@ -59,7 +59,7 @@
 /interface list add name=iface-labnet
 /interface list add name=iface-security
 /interface list add name=iface-hypervisor
-/interface list add include=iface-dmz,iface-hypervisor,iface-labnet,iface-lan,iface-mgmt,iface-security name=zone-local
+/interface list add include=iface-dmz,iface-hypervisor,iface-labnet,iface-lan,iface-mgmt,iface-security,all name=zone-local
 /interface list add name=zone-wan
 /iot lora servers add address=eu.mikrotik.thethings.industries name=TTN-EU protocol=UDP
 /iot lora servers add address=us.mikrotik.thethings.industries name=TTN-US protocol=UDP
@@ -79,6 +79,7 @@
 /ip pool add name=pool-security ranges=10.5.150.0-10.5.199.255
 /ip pool add name=pool-hypervisor ranges=10.6.150.0-10.6.199.255
 /ip pool add name=pool-oob ranges=192.168.88.100-192.168.88.200
+/ip pool add name=pool-auth ranges=10.77.77.200-10.77.77.250
 /ip dhcp-server add address-pool=pool-labnet authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-labnet lease-time=1h name=dhcp-labnet
 /ip dhcp-server add address-pool=pool-lan authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-lan lease-time=1h name=dhcp-lan
 /ip dhcp-server add address-pool=pool-dmz authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-dmz lease-time=1h name=dhcp-dmz
@@ -86,6 +87,7 @@
 /ip dhcp-server add address-pool=pool-security authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-security lease-time=1h name=dhcp-security
 /ip dhcp-server add address-pool=pool-hypervisor authoritative=after-2sec-delay dhcp-option-set=default-classless interface=vlan-hypervisor lease-time=1h name=dhcp-hypervisor
 /ip dhcp-server add address-pool=pool-oob bootp-support=none interface=oob lease-time=1h name=dhcp-oob
+/ip dhcp-server add address-pool=pool-auth bootp-support=none interface=auth lease-time=1h name=dhcp-auth
 /ip smb users set [ find default=yes ] disabled=yes
 /port set 0 baud-rate=115200
 /routing bgp template set default disabled=yes routing-table=main
@@ -132,6 +134,7 @@
 /interface list member add interface=veth-foxdns list=zone-local
 /interface list member add interface=veth-foxdns-internal list=zone-local
 /interface list member add interface=6to4-redfox list=zone-wan
+/interface list member add interface=auth list=zone-local
 /interface ovpn-server server add mac-address=FE:8C:1D:BF:62:A3 name=ovpn-server1
 /interface wireguard peers add allowed-address=10.100.10.1/32 interface=wg-vpn name=fennec public-key="i/thQFtyJPTmq8QC44PV6QeETM6VlMQQs1tKWzTCqDU=" responder=yes
 /interface wireguard peers add allowed-address=10.100.10.2/32 interface=wg-vpn name=capefox public-key="jay5WNfSd0Wo5k+FMweulWnaoxm1I82gom7JNkEjUBs=" responder=yes
@@ -175,6 +178,7 @@
 /ip address add address=172.17.0.1/24 interface=veth-snirouter network=172.17.0.0
 /ip address add address=172.17.1.1/24 interface=veth-foxdns network=172.17.1.0
 /ip address add address=172.17.2.1/24 interface=veth-foxdns-internal network=172.17.2.0
+/ip address add address=10.69.69.2/24 interface=auth network=10.69.69.0
 /ip cloud set update-time=no
 /ip dhcp-client add default-route-distance=5 interface=wan script="/system/script/run wan-online-adjust\r\
     \n" use-peer-ntp=no
@@ -316,7 +320,6 @@
 /ip dhcp-server lease add address=10.5.11.9 comment=camera-server-room lease-time=1d mac-address=F4:E2:C6:0C:E8:3C server=dhcp-security
 /ip dhcp-server lease add address=10.1.13.2 comment=pikvm-rack lease-time=1d mac-address=D8:3A:DD:A3:82:A8 server=dhcp-mgmt
 /ip dhcp-server lease add address=10.3.10.11 comment=archlinux lease-time=1d mac-address=CA:1B:F1:2D:6D:B3 server=dhcp-dmz
-/ip dhcp-server lease add address=10.6.11.4 comment=auth lease-time=1d mac-address=A6:92:B3:68:21:9D server=dhcp-hypervisor
 /ip dhcp-server lease add address=10.3.10.12 comment=e621 lease-time=1d mac-address=F2:6C:78:D6:DD:E6 server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.13 comment=furaffinity lease-time=1d mac-address=F2:6C:78:D6:DE:E6 server=dhcp-dmz
 /ip dhcp-server lease add address=10.3.10.2 comment=git lease-time=1d mac-address=A6:92:B3:68:D1:AD server=dhcp-dmz
@@ -325,6 +328,7 @@
 /ip dhcp-server lease add address=10.2.13.30 comment=btproxy-living-room lease-time=1d mac-address=94:E6:86:48:E9:87 server=dhcp-lan
 /ip dhcp-server lease add address=10.2.11.12 comment=restic lease-time=1d mac-address=A6:92:B3:68:DD:AD server=dhcp-lan
 /ip dhcp-server lease add address=10.5.10.3 client-id=1:b8:27:eb:ed:f:4b comment=crossfox lease-time=1d mac-address=B8:27:EB:ED:0F:4B server=dhcp-security
+/ip dhcp-server lease add address=10.69.69.10 comment=auth lease-time=1d mac-address=00:0E:C6:D2:C9:DD server=dhcp-auth
 /ip dhcp-server network add address=10.1.0.0/16 dns-server=10.1.0.53 domain=foxden.network gateway=10.1.0.1 netmask=16 ntp-server=10.1.0.123
 /ip dhcp-server network add address=10.2.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.2.0.53 domain=foxden.network gateway=10.2.0.1 netmask=16 next-server=10.2.0.1 ntp-server=10.2.0.123
 /ip dhcp-server network add address=10.3.0.0/16 dns-server=10.3.0.53 domain=foxden.network gateway=10.3.0.1 netmask=16 ntp-server=10.3.0.123
@@ -332,6 +336,7 @@
 /ip dhcp-server network add address=10.5.0.0/16 dns-server=10.5.0.53 domain=foxden.network gateway=10.5.0.1 netmask=16 ntp-server=10.5.0.123
 /ip dhcp-server network add address=10.6.0.0/16 boot-file-name=ipxe-arch-signed.efi dns-server=10.6.0.53 domain=foxden.network gateway=10.6.0.1 netmask=16 next-server=10.6.0.1 ntp-server=10.6.0.123
 /ip dhcp-server network add address=10.7.0.0/16 dns-server=10.7.1.1 domain=foxden.network gateway=10.7.1.1 netmask=16 ntp-server=10.7.1.1
+/ip dhcp-server network add address=10.69.69.0/24 dns-server=10.69.69.1,10.69.69.2 domain=foxden.network gateway=10.69.69.1,10.69.69.2 netmask=24 ntp-server=10.69.69.1,10.69.69.2
 /ip dhcp-server network add address=192.168.88.0/24 dns-none=yes
 /ip dns set cache-max-ttl=1d max-udp-packet-size=512 verify-doh-cert=yes
 /ip dns static add name=wpad ttl=5m type=NXDOMAIN
@@ -349,12 +354,15 @@
 /ip firewall address-list add address=10.8.0.0/23 list=local-dns-ip
 /ip firewall address-list add address=10.9.0.0/23 list=local-dns-ip
 /ip firewall address-list add address=10.100.0.1 list=local-dns-ip
+/ip firewall address-list add address=10.69.69.1 list=local-dns-ip
+/ip firewall address-list add address=10.69.69.2 list=local-dns-ip
 /ip firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ip firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related hw-offload=yes
 /ip firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
 /ip firewall filter add action=accept chain=forward comment="dstnat'd" connection-nat-state=dstnat
 /ip firewall filter add action=accept chain=forward out-interface-list=zone-wan
 /ip firewall filter add action=accept chain=forward in-interface=wg-vpn
+/ip firewall filter add action=accept chain=forward in-interface=auth
 /ip firewall filter add action=accept chain=forward in-interface=oob
 /ip firewall filter add action=accept chain=forward in-interface-list=iface-mgmt
 /ip firewall filter add action=accept chain=forward comment="Prometheus -> NodeExporter" dst-port=9100 in-interface-list=iface-hypervisor protocol=tcp src-address=10.6.11.1
@@ -364,6 +372,7 @@
 /ip firewall filter add action=jump chain=forward comment="Hypervisor allowlist" jump-target=hypervisor-out-forward out-interface-list=iface-hypervisor
 /ip firewall filter add action=jump chain=forward comment="Security allowlist" jump-target=security-out-forward out-interface-list=iface-security
 /ip firewall filter add action=jump chain=forward comment="Retro allowlist" jump-target=retro-out-forward out-interface=vlan-retro
+/ip firewall filter add action=jump chain=forward comment="Auth allowlist" jump-target=auth-out-forward out-interface=auth
 /ip firewall filter add action=jump chain=forward comment="S2S allowlist" jump-target=s2s-out-forward out-interface=wg-s2s
 /ip firewall filter add action=accept chain=forward out-interface-list=iface-dmz
 /ip firewall filter add action=reject chain=forward reject-with=icmp-admin-prohibited
@@ -386,8 +395,8 @@
 /ip firewall filter add action=accept chain=lan-out-forward comment="Retro -> NAS" dst-address=10.2.11.1 in-interface=vlan-retro
 /ip firewall filter add action=accept chain=labnet-out-forward comment="Bambu X1 MQTT" dst-address=10.4.10.1 dst-port=8883 protocol=tcp
 /ip firewall filter add action=accept chain=security-out-forward comment="LAN -> NVR" dst-address=10.5.10.1 in-interface-list=iface-lan
-/ip firewall filter add action=accept chain=hypervisor-out-forward comment="auth (TCP)" dst-address=10.6.11.4 dst-port=80,443,1812 protocol=tcp
-/ip firewall filter add action=accept chain=hypervisor-out-forward comment="auth (UDP)" dst-address=10.6.11.4 dst-port=1812 protocol=udp
+/ip firewall filter add action=accept chain=auth-out-forward comment="auth (TCP)" dst-address=10.69.69.10 dst-port=80,443,4444 protocol=tcp
+/ip firewall filter add action=accept chain=auth-out-forward comment="auth (UDP)" dst-address=10.69.69.10 dst-port=443,1812 protocol=udp
 /ip firewall filter add action=accept chain=s2s-out-forward comment="LAN -> IceFox" disabled=yes dst-address=10.99.10.2 in-interface-list=iface-lan
 /ip firewall filter add action=accept chain=s2s-out-forward comment="LAN -> IceFoxSub" disabled=yes dst-address=10.99.12.0/24 in-interface-list=iface-lan
 /ip firewall filter add action=accept chain=s2s-out-forward comment=IceFox:Sub dst-address=10.99.12.0/24 in-interface-list=zone-local
@@ -402,11 +411,13 @@
 /ip firewall filter add action=accept chain=input in-interface=oob
 /ip firewall filter add action=accept chain=input in-interface-list=zone-local
 /ip firewall filter add action=reject chain=input reject-with=icmp-admin-prohibited
-/ip firewall mangle add action=change-mss chain=forward comment="Clamp MSS" new-mss=clamp-to-pmtu protocol=tcp tcp-flags=syn
+/ip firewall mangle add action=change-mss chain=forward comment="Clamp MSS" disabled=yes new-mss=clamp-to-pmtu protocol=tcp tcp-flags=syn
 /ip firewall nat add action=endpoint-independent-nat chain=srcnat disabled=yes out-interface=wan protocol=udp randomise-ports=yes
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wan
 /ip firewall nat add action=masquerade chain=srcnat out-interface=wg-s2s
 /ip firewall nat add action=masquerade chain=srcnat src-address=172.17.0.0/16
+/ip firewall nat add action=dst-nat chain=dstnat comment="auth (TCP)" disabled=yes dst-address=55.69.77.10 dst-port=80,443,4444 in-interface-list=zone-local protocol=tcp to-addresses=10.69.69.10
+/ip firewall nat add action=dst-nat chain=dstnat comment="auth (UDP)" disabled=yes dst-address=55.69.77.10 dst-port=443,1812 in-interface-list=zone-local protocol=udp to-addresses=10.69.69.10
 /ip firewall nat add action=dst-nat chain=dstnat comment=spaceage-website dst-address=55.69.1.1 in-interface-list=zone-local to-addresses=10.3.10.9
 /ip firewall nat add action=dst-nat chain=dstnat comment=spaceage-web dst-address=55.69.1.2 in-interface-list=zone-local to-addresses=10.3.10.5
 /ip firewall nat add action=jump chain=dstnat comment=dns dst-address=55.53.53.53 in-interface-list=zone-local jump-target=dns-port-forward to-addresses=10.3.0.53
@@ -466,6 +477,8 @@
 /ipv6 firewall address-list add address=2a0e:7d44:f00b::/48 list=bgp-redfox
 /ipv6 firewall address-list add address=2a0e:7d44:f069::/48 comment=primary list=bgp-redfox
 /ipv6 firewall filter add action=accept chain=forward out-interface-list=iface-dmz
+/ipv6 firewall filter add action=drop chain=forward comment=auth in-interface=auth
+/ipv6 firewall filter add action=drop chain=forward comment=auth out-interface=auth
 /ipv6 firewall filter add action=reject chain=forward comment=invalid connection-state=invalid reject-with=icmp-admin-prohibited
 /ipv6 firewall filter add action=fasttrack-connection chain=forward comment="related, established" connection-state=established,related
 /ipv6 firewall filter add action=accept chain=forward comment="related, established" connection-state=established,related
@@ -490,8 +503,7 @@
 /ipv6 nd add advertise-dns=no disabled=yes interface=vlan-mgmt ra-interval=1m-3m
 /ipv6 nd add advertise-dns=no disabled=yes interface=vlan-security ra-interval=1m-3m
 /ipv6 nd prefix default set preferred-lifetime=15m valid-lifetime=1h
-/radius add accounting-port=1812 address=10.2.11.20 require-message-auth=no service=login
-/radius add accounting-port=1812 address=10.2.10.1 disabled=yes require-message-auth=no service=login
+/radius add accounting-port=1812 address=10.69.69.10 require-message-auth=no service=login
 /routing bgp connection add address-families=ipv6 as=64602 connect=yes disabled=no listen=yes local.address=10.99.1.2 .role=ebgp multihop=yes name=bgp-redfox output.default-originate=never .network=bgp-redfox remote.address=10.99.10.1/32 .as=207618 router-id=10.99.1.2 routing-table=main
 /snmp set contact=admin@foxden.network enabled=yes location="Server room" trap-generators=""
 /system clock set time-zone-autodetect=no time-zone-name=America/Los_Angeles
@@ -551,6 +563,7 @@
     \n:put \\\"ns3 IN A 10.3.0.53\\\"\
     \n:put \\\"ns4 IN A 10.3.0.53\\\"\
     \n:put \\\"nas IN CNAME bengalfox.foxden.network.\\\"\
+    \n:put \\\"auth-ext IN A 55.69.77.10\\\"\
     \n:put \\\"nas-ro IN A 10.99.12.5\\\"\
     \n:put \\\"@ IN A 10.99.12.4\\\"\
     \n:put \\\"xmpp IN A 10.99.12.4\\\"\

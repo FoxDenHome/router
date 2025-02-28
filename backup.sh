@@ -35,6 +35,7 @@ mtik_backup() {
     $SED 's~^# software id = .*$~# software id = REMOVED~g' -i "${RHOST}.rsc"
     $SED 's~^# system id = .*$~# system id = REMOVED~g' -i "${RHOST}.rsc"
     $SED 's~^# serial number = .*$~# serial number = REMOVED~g' -i "${RHOST}.rsc"
+    $SED 's~private-key="[^"]*"~private-key="REMOVED"~g' -i "${RHOST}.rsc"
     $SED 's~name=monitor_[^ ]*~name=monitor_REMOVED~g' -i "${RHOST}.rsc"
     $SED 's~identity=[^ ]*~identity=REMOVED~g' -i "${RHOST}.rsc"
     $SED 's~comment=Hairpin dst-address=.* ~comment=Hairpin dst-address=REMOVED ~g' -i "${RHOST}.rsc"
